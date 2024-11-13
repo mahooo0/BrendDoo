@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../components/Header';
 import TikTokSlider from '../components/TikTokSwipper';
 import NoneToBlue from '../components/buttons/NoneT0Blue';

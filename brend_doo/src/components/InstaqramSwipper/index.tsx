@@ -1,26 +1,25 @@
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 // Sample slider items
-const sliderItems = [
-    {
-        id: 1,
-        content: 'Slide 1 Content',
-        imageUrl: 'https://via.placeholder.com/600x400/ff7f7f',
-    },
-    {
-        id: 2,
-        content: 'Slide 2 Content',
-        imageUrl: 'https://via.placeholder.com/600x400/7f7fff',
-    },
-    {
-        id: 3,
-        content: 'Slide 3 Content',
-        imageUrl: 'https://via.placeholder.com/600x400/7fff7f',
-    },
-    // Add more slides as needed
-];
+// const sliderItems = [
+//     {
+//         id: 1,
+//         content: 'Slide 1 Content',
+//         imageUrl: 'https://via.placeholder.com/600x400/ff7f7f',
+//     },
+//     {
+//         id: 2,
+//         content: 'Slide 2 Content',
+//         imageUrl: 'https://via.placeholder.com/600x400/7f7fff',
+//     },
+//     {
+//         id: 3,
+//         content: 'Slide 3 Content',
+//         imageUrl: 'https://via.placeholder.com/600x400/7fff7f',
+//     },
+//     // Add more slides as needed
+// ];
 
 export default function InstaqramSlider() {
     return (
