@@ -6,13 +6,17 @@ import InstaqramSlider from '../components/InstaqramSwipper/index.tsx';
 import ImageSwipper from '../components/İmgSwipper.tsx/index.tsx';
 import ProductSwipperShort from '../components/ProductSwipperShort.tsx/index.tsx';
 import { Footer } from '../components/Footer/index.tsx';
+import GrabCursorSwiper from '../components/StoriesSwipper/index.tsx';
+import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
+import { useState } from 'react';
 
 export default function Home() {
+    const [isStoriesSwipperOpen, setisStoriesSwipperOpen] = useState<any>(true);
     return (
-        <div>
+        <div className=" relative">
             <Header />
             <main className=" flex flex-col justify-center">
-                <section className="relative rounded-[20px] overflow-hidden mt-[20px] mx-[40px]">
+                <section className="relative rounded-[20px] overflow-hidden mt-[200px] mx-[40px]">
                     {/* Background Video */}
                     <video
                         autoPlay
@@ -487,6 +491,11 @@ export default function Home() {
                 </section>
             </main>
             <Footer />
+            {/* <GrabCursorSwiper /> */}
+            <StoriesSwipper
+                isopen={isStoriesSwipperOpen}
+                onclose={() => setisStoriesSwipperOpen(false)}
+            />
         </div>
     );
 }

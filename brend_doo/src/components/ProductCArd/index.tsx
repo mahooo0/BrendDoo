@@ -13,7 +13,7 @@ export default function ProductCard({
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
 
     return (
-        <div className="flex flex-col pb-5 text-base text-black max-w-[325px]">
+        <div className="flex flex-col pb-5 text-base text-black max-w-[325px] ">
             <div
                 className={`flex w-full relative bg-${
                     bg === 'white' ? 'white' : '[#F5F5F5]'
