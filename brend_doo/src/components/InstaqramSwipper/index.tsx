@@ -21,7 +21,7 @@ import 'swiper/swiper-bundle.css';
 //     // Add more slides as needed
 // ];
 
-export default function InstaqramSlider() {
+export default function InstaqramSlider({ action }: { action: () => void }) {
     return (
         <div className="slider-container mt-[40px]">
             <Swiper
@@ -34,7 +34,10 @@ export default function InstaqramSlider() {
             >
                 {Array.from({ length: 20 }).map((_, i) => (
                     <SwiperSlide className="!w-fit" key={i}>
-                        <div className="flex flex-col self-stretch my-auto w-[120px]">
+                        <div
+                            className="flex flex-col self-stretch my-auto w-[120px]"
+                            onClick={() => action()}
+                        >
                             <img
                                 loading="lazy"
                                 srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"

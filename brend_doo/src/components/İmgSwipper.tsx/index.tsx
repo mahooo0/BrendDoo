@@ -18,7 +18,7 @@ export default function ImageSwipper() {
         }
     };
     return (
-        <div className="slider-container   lg:w-[40%] w-full  aspect-square rounded-[20px] overflow-hidden relative">
+        <div className="slider-container   lg:w-[60%] w-full  aspect-square rounded-[20px] overflow-hidden relative">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides

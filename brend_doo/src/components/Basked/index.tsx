@@ -1,5 +1,10 @@
+import { useState } from 'react';
+
 export default function BaskedForum() {
     const [checkbox1, setcheckbox1] = useState<boolean>(false);
+    const [checkbox2, setcheckbox2] = useState<boolean>(false);
+    const [checkbox3, setcheckbox3] = useState<boolean>(false);
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
     return (
         <div>
             {' '}
@@ -22,12 +27,21 @@ export default function BaskedForum() {
                                 <input
                                     type="email"
                                     placeholder="Email@gmail.com"
-                                    className="overflow-hidden self-stretch px-5 py-5 my-auto bg-white border border-solid border-black border-opacity-10 min-w-[240px] rounded-[100px] w-[388px]"
+                                    className="overflow-hidden self-stretch px-5 py-5 my-auto bg-white border border-solid border-black border-opacity-10 min-w-[240px] rounded-[100px] lg:w-[388px] w-full"
                                 />
                                 <input
                                     type="tel"
                                     placeholder="+994 00 000 00 00"
-                                    className="overflow-hidden self-stretch px-5 py-5 my-auto bg-white border border-solid border-black border-opacity-10 min-w-[240px] rounded-[100px] w-[388px]"
+                                    className="overflow-hidden self-stretch px-5 py-5 my-auto bg-white border border-solid border-black border-opacity-10 min-w-[240px] rounded-[100px] lg:w-[388px] w-full"
+                                    value={phoneNumber}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setPhoneNumber(
+                                            value.startsWith('+994')
+                                                ? value
+                                                : '+994' + value
+                                        );
+                                    }}
                                 />
                             </div>
                         </div>
@@ -48,7 +62,7 @@ export default function BaskedForum() {
                                     className="appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600"
                                 />
                                 <div
-                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
+                                    className="flex bg-white overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
                                     onClick={() =>
                                         setcheckbox1((prew) => !prew)
                                     }
@@ -124,9 +138,9 @@ export default function BaskedForum() {
                                     className="appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600"
                                 />
                                 <div
-                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
+                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 bg-white border-slate-300 min-w-[240px] rounded-[100px]"
                                     onClick={() =>
-                                        setcheckbox1((prew) => !prew)
+                                        setcheckbox2((prew) => !prew)
                                     }
                                 >
                                     <div className="flex gap-3 items-center">
@@ -140,7 +154,7 @@ export default function BaskedForum() {
                                         </div>
                                     </div>
                                     {/* checked */}
-                                    {checkbox1 ? (
+                                    {checkbox2 ? (
                                         <svg
                                             width="24"
                                             height="24"
@@ -179,12 +193,12 @@ export default function BaskedForum() {
                                     className="appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600"
                                 />
                                 <div
-                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
+                                    className="flex bg-white overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
                                     onClick={() =>
-                                        setcheckbox1((prew) => !prew)
+                                        setcheckbox3((prew) => !prew)
                                     }
                                 >
-                                    <div className="flex gap-3 items-center">
+                                    <div className="flex gap-3  items-center">
                                         <img
                                             loading="lazy"
                                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/1f60eea4ee162ee2b5c7808ce1ebc60e48a0e5052b9462924149ca80f8329d06?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -195,7 +209,7 @@ export default function BaskedForum() {
                                         </div>
                                     </div>
                                     {/* checked */}
-                                    {checkbox1 ? (
+                                    {checkbox3 ? (
                                         <svg
                                             width="24"
                                             height="24"

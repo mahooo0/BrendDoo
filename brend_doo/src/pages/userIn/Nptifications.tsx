@@ -1,15 +1,13 @@
-import React from 'react';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
-import ProductCard from '../../components/ProductCArd';
 
 export default function Notification() {
     return (
         <div>
             <Header />
-            <div className="mt-[180px]" />
+            <div className="" />
             <main className="flex flex-row w-full gap-5 p-5">
-                <UserAside active={0} />
+                <UserAside active={3} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] p-[40px]">
                     <h1 className="text-[28px] font-semibold mb-[40px]">
                         Bəyəndiklərim
@@ -52,7 +50,7 @@ export default function Notification() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full !h-[80%] fixed  top-[180px] left-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+                <div className="w-full !h-[100%] hidden fixed  top-[0] left-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
                     <div className="flex overflow-hidden flex-col justify-center p-10 bg-white rounded-3xl max-w-[520px] max-md:px-5 relative">
                         <div className="flex flex-col max-md:max-w-full">
                             <div className="text-xl font-semibold text-black max-md:max-w-full">

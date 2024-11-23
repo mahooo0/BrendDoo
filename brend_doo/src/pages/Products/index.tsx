@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import ProductCard from '../../components/ProductCArd';
 import { Pagination } from '../../components/Pagination';
+import { Link } from 'react-router-dom';
+// import Liked from '../Liked';
 const DropdownItem = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -46,11 +48,14 @@ const DropdownItem = () => {
         </div>
     );
 };
+
 export default function Products() {
+    // const checkref = useRef<any>();
+    const [checked, setChecked] = useState(false);
     return (
         <div className=" relative">
             <Header />
-            <main className="lg:mt-[180px] mt-0">
+            <main className=" mt-0">
                 <section className="flex overflow-hidden  flex-col bg-neutral-100">
                     <div className="flex relative flex-col pt-10 pr-20 pb-36 pl-10 w-full min-h-[324px] max-md:px-5 max-md:pb-24 max-md:max-w-full">
                         <img
@@ -59,9 +64,11 @@ export default function Products() {
                             className="object-cover absolute inset-0 size-full"
                         />
                         <div className="flex relative gap-2 items-center self-start text-base">
-                            <div className="self-stretch my-auto text-white">
-                                Ana səhifə
-                            </div>
+                            <Link to={'/'}>
+                                <div className="self-stretch my-auto text-white">
+                                    Ana səhifə
+                                </div>
+                            </Link>
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/a06e1c6285cb46f6524f6d6023531f25dabadfc0b9b5097943e091c33f26f94a?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -105,7 +112,24 @@ export default function Products() {
                                         </div>
                                     </div>
                                     <div className="flex gap-3 items-center self-start mt-4 font-medium text-black text-opacity-80">
-                                        <div className="flex shrink-0 self-stretch my-auto w-6 h-6 border border-solid border-black border-opacity-40 rounded-[100px]" />
+                                        <input
+                                            type="checkbox"
+                                            style={{ display: 'none' }}
+                                        />
+                                        {checked ? (
+                                            <div
+                                                onClick={() =>
+                                                    setChecked(false)
+                                                }
+                                                className="flex  shrink-0 self-stretch my-auto w-6 h-6 border border-solid border-black border-opacity-40 rounded-[100px]"
+                                            />
+                                        ) : (
+                                            <div
+                                                onClick={() => setChecked(true)}
+                                                className="flex bg-[#3873C3] shrink-0 self-stretch my-auto w-6 h-6 border border-solid border-black border-opacity-40 rounded-[100px]"
+                                            />
+                                        )}
+                                        {/* <div className="flex shrink-0 self-stretch my-auto w-6 h-6 border border-solid border-black border-opacity-40 rounded-[100px]" /> */}
                                         <div className="self-stretch my-auto">
                                             Endirimli məhsullar
                                         </div>
@@ -113,6 +137,7 @@ export default function Products() {
                                 </div>
                             </div>
                         </section>
+
                         <section className="flex flex-col rounded-none w-full">
                             <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full">
                                 <div className="my-auto text-base font-medium text-black">
@@ -162,15 +187,15 @@ export default function Products() {
                                 <ProductCard bg="grey" />
                                 <ProductCard bg="grey" />
                             </div>
+                            <section>
+                                <Pagination
+                                    currentPage={1}
+                                    totalPages={10}
+                                    onPageChange={() => {}}
+                                />
+                            </section>
                         </section>
                     </div>
-                </section>
-                <section>
-                    <Pagination
-                        currentPage={1}
-                        totalPages={10}
-                        onPageChange={() => {}}
-                    />
                 </section>
             </main>
             <Footer />

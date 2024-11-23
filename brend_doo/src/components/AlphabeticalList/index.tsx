@@ -8,7 +8,7 @@ const AlphabeticalList: React.FC<AlphabeticalListProps> = ({ letters }) => {
     return (
         <section className="flex flex-col whitespace-nowrap">
             <div className="flex flex-col w-full text-xl font-light text-black  max-md:max-w-full">
-                <nav className="flex flex-wrap gap-7 items-center max-md:max-w-full">
+                <nav className="flex flex-wrap gap-7 items-center max-md:max-w-full justify-between">
                     {letters.map((letter) => (
                         <div key={letter} className="self-stretch my-auto">
                             {letter}

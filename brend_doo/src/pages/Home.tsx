@@ -6,17 +6,19 @@ import InstaqramSlider from '../components/InstaqramSwipper/index.tsx';
 import ImageSwipper from '../components/İmgSwipper.tsx/index.tsx';
 import ProductSwipperShort from '../components/ProductSwipperShort.tsx/index.tsx';
 import { Footer } from '../components/Footer/index.tsx';
-import GrabCursorSwiper from '../components/StoriesSwipper/index.tsx';
 import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
-    const [isStoriesSwipperOpen, setisStoriesSwipperOpen] = useState<any>(true);
+    const [isStoriesSwipperOpen, setisStoriesSwipperOpen] =
+        useState<any>(false);
+    const navigate = useNavigate();
     return (
         <div className=" relative">
             <Header />
             <main className=" flex flex-col justify-center">
-                <section className="relative rounded-[20px] overflow-hidden mt-[200px] mx-[40px]">
+                <section className="relative rounded-[20px] overflow-hidden mt-[40px] mx-[40px]">
                     {/* Background Video */}
                     <video
                         autoPlay
@@ -43,7 +45,10 @@ export default function Home() {
                                     printing and typesetting industry.
                                 </div>
                             </div>
-                            <button className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5">
+                            <button
+                                className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
+                                onClick={() => navigate('/poducts')}
+                            >
                                 Yeni məhsullar
                             </button>
                         </div>
@@ -97,7 +102,9 @@ export default function Home() {
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] ">
                         Tiktok hekayələr
                     </h2>
-                    <TikTokSlider />
+                    <TikTokSlider
+                        action={() => setisStoriesSwipperOpen(true)}
+                    />{' '}
                 </section>
                 <section className="mt-[100px] px-[40px]">
                     <div className="flex flex-row flex-wrap justify-between ">
@@ -105,7 +112,7 @@ export default function Home() {
                             Tiktok hekayələr
                         </h2>
                         <div className="flex flex-row flex-wrap justify-between gap-3">
-                            <NoneToBlue>Hamısı</NoneToBlue>
+                            <NoneToBlue isactive={true}>Hamısı</NoneToBlue>
                             <NoneToBlue>Elektronika</NoneToBlue>
                             <NoneToBlue>Geyim</NoneToBlue>
                             <NoneToBlue>Kosmetika</NoneToBlue>
@@ -118,7 +125,10 @@ export default function Home() {
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
-                        <button className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10">
+                        <button
+                            onClick={() => navigate('/poducts')}
+                            className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                        >
                             {' '}
                             Hamısına bax
                         </button>{' '}
@@ -141,7 +151,12 @@ export default function Home() {
                                         Qeydiyyatdan keç və doya-doya alış-veriş
                                         et!
                                     </div>
-                                    <button className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5">
+                                    <button
+                                        className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
+                                        onClick={() =>
+                                            navigate('/user/register')
+                                        }
+                                    >
                                         Qeydiyyatdan keç{' '}
                                     </button>
                                 </div>
@@ -160,7 +175,9 @@ export default function Home() {
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] text-center ">
                         İnstaqram heyakələr{' '}
                     </h2>
-                    <InstaqramSlider />
+                    <InstaqramSlider
+                        action={() => setisStoriesSwipperOpen(true)}
+                    />
                 </section>
                 <section className="mt-[100px] flex justify-center gap-5 px-[40px] lg:flex-row flex-col">
                     <ImageSwipper />
@@ -180,7 +197,10 @@ export default function Home() {
                                     text ever
                                 </div>
                             </div>
-                            <button className="gap-2.5 self-start px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5">
+                            <button
+                                className="gap-2.5 self-start px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
+                                onClick={() => navigate('/poducts')}
+                            >
                                 Məhsullara bax
                             </button>
                         </div>
@@ -192,7 +212,10 @@ export default function Home() {
                             Brendlər
                         </div>
                         <div className="self-stretch my-auto text-base font-medium text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                            <span className="text-[#3873C3] underline">
+                            <span
+                                className="text-[#3873C3] underline"
+                                onClick={() => navigate('/brends')}
+                            >
                                 Hamısına bax
                             </span>
                         </div>
@@ -308,7 +331,10 @@ export default function Home() {
                             Tiktok hekayələr
                         </h2>
                         <div>
-                            <button className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10">
+                            <button
+                                className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                                onClick={() => navigate('/poducts')}
+                            >
                                 {' '}
                                 Hamısına bax
                             </button>{' '}
@@ -355,14 +381,17 @@ export default function Home() {
                                     text ever
                                 </div>
                             </div>
-                            <div className="gap-2.5 self-start px-10 py-4 mt-10 text-lg font-medium text-white border border-white border-solid rounded-[100px] max-md:px-5">
+                            <button
+                                onClick={() => navigate('/poducts')}
+                                className="gap-2.5 self-start px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
+                            >
                                 Məhsullara bax
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </section>
-                <section className="flex flex-row flex-wrap px-[40px] mt-[100px] gap-5 w-fit">
-                    <div className=" w-[29%]  flex items-center justify-between">
+                <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center px-[40px] mt-[100px] gap-5 w-fit">
+                    <div className="   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
                                 <div className="text-4xl font-semibold text-slate-900">
@@ -375,13 +404,16 @@ export default function Home() {
                                     text ever
                                 </div>
                             </div>
-                            <div className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5">
+                            <div
+                                className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                                onClick={() => navigate('/poducts')}
+                            >
                                 Hamısına bax
                             </div>
                         </div>
                     </div>
                     <div
-                        className="flex flex-col w-[29%] max-md:ml-0 max-md:w-full rounded-3xl "
+                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
                         style={{
                             backgroundImage:
                                 'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
@@ -405,7 +437,7 @@ export default function Home() {
                         </div>
                     </div>
                     <div
-                        className="flex flex-col w-[29%] max-md:ml-0 max-md:w-full rounded-3xl "
+                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
                         style={{
                             backgroundImage:
                                 'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
@@ -429,7 +461,7 @@ export default function Home() {
                         </div>
                     </div>
                     <div
-                        className="flex flex-col w-[29%] max-md:ml-0 max-md:w-full rounded-3xl "
+                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
                         style={{
                             backgroundImage:
                                 'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
@@ -453,7 +485,7 @@ export default function Home() {
                         </div>
                     </div>
                     <div
-                        className="flex flex-col w-[29%] max-md:ml-0 max-md:w-full rounded-3xl "
+                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
                         style={{
                             backgroundImage:
                                 'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
@@ -482,7 +514,10 @@ export default function Home() {
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
-                        <button className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10">
+                        <button
+                            className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                            onClick={() => navigate('/producs')}
+                        >
                             {' '}
                             Hamısına bax
                         </button>{' '}

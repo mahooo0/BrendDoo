@@ -15,7 +15,7 @@ const CategoryHeader: React.FC<CategoryProps> = ({
     isOpen,
     onToggle,
 }) => (
-    <header className="flex gap-10 justify-between items-center w-full">
+    <div className="flex gap-10 justify-between items-center w-full">
         <h2 className="self-stretch my-auto text-lg font-medium text-black">
             {title}
         </h2>
@@ -25,14 +25,36 @@ const CategoryHeader: React.FC<CategoryProps> = ({
             onClick={onToggle}
         >
             <span
-                className={`flex  transform font-medium text-[30px] ${
-                    isOpen ? 'rotate-[45deg]' : 'rotate-0'
-                } transition-transform`}
+                className={`flex  transform font-medium text-[30px] transition-transform`}
             >
-                +
+                {isOpen ? (
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M14 7.99805H8V13.998H6V7.99805H0V5.99805H6V-0.00195312H8V5.99805H14V7.99805Z"
+                            fill="black"
+                            fill-opacity="0.8"
+                        />
+                    </svg>
+                ) : (
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M19 12.998H5V10.998H19V12.998Z" fill="black" />
+                    </svg>
+                )}
             </span>
         </button>
-    </header>
+    </div>
 );
 
 interface ClothingListProps {
@@ -41,7 +63,7 @@ interface ClothingListProps {
 
 const ClothingList: React.FC<ClothingListProps> = ({ items }) => (
     <ul
-        className="flex flex-col justify-center items-center px-5 mt-4 w-full text-base text-black whitespace-nowrap rounded-3xl aspect-square bg-stone-50 max-h-[200px] overflow-y-scroll"
+        className="flex flex-col  py-3 items-center px-5 mt-4 w-full text-base text-black whitespace-nowrap rounded-3xl aspect-square bg-stone-50 max-h-[150px] overflow-y-scroll"
         style={{
             scrollbarWidth: 'thin', // For Firefox
             scrollbarColor: '#a0aec0 #edf2f7', // thumb color and track color for Firefox

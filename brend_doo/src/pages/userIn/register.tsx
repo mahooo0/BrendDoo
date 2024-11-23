@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
@@ -63,7 +63,7 @@ const Register = () => {
                                 console.log(values);
                             }}
                         >
-                            {({ setFieldValue }) => (
+                            {({}) => (
                                 <Form className="flex flex-col items-center mt-10 w-full max-md:max-w-full">
                                     <div className="flex flex-col w-full max-md:max-w-full">
                                         <Field

@@ -1,16 +1,13 @@
-import React from 'react';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
-import ProductCard from '../../components/ProductCArd';
-import NoneToBlue from '../../components/buttons/NoneT0Blue';
 
 export default function OrderId() {
     return (
         <div>
             <Header />
-            <div className="mt-[180px]" />
+            {/* <div className="mt-[180px]" /> */}
             <main className="flex flex-row w-full gap-5 p-5">
-                <UserAside active={0} />
+                <UserAside active={1} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] p-[40px]">
                     <div className="flex flex-col items-start ">
                         <div className="flex flex-col max-w-full whitespace-nowrap w-[162px]">
@@ -136,7 +133,7 @@ export default function OrderId() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex overflow-hidden flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5">
+                    <div className="flex overflow-hidden flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5 mt-4">
                         <div className="flex gap-5 items-center">
                             <div className="flex gap-5 items-center self-stretch my-auto">
                                 <img
@@ -172,7 +169,7 @@ export default function OrderId() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex gap-2.5 justify-center items-center px-7 py-3.5 my-auto text-base font-medium text-center text-white bg-blue-600 rounded-xl border border-solid border-neutral-100 max-md:px-5">
+                        <button className="flex gap-2.5 justify-center items-center px-7 py-3.5 my-auto text-base font-medium text-center text-white bg-[#3873C3] rounded-xl border border-solid border-neutral-100 max-md:px-5">
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f94626f29baa40253df5d994693071ebb35e01a27694c2109f8aa983ec4265d5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -181,7 +178,7 @@ export default function OrderId() {
                             <div className="self-stretch my-auto">
                                 Faktura yüklə
                             </div>
-                        </div>
+                        </button>
                     </div>
                     <div className="flex flex-col mt-[30px]">
                         <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">

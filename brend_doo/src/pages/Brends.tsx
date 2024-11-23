@@ -1,9 +1,6 @@
-import React from 'react';
 import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 import { BreadCump } from '../components/BroadCump';
-import CommentsSection from '../components/Comments';
-import ProductCard from '../components/ProductCArd';
 import AlphabeticalList from '../components/AlphabeticalList';
 
 export default function Brends() {
@@ -45,7 +42,7 @@ export default function Brends() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[220px] mt-0">
+            <main className=" lg:mt-[40px] mt-0 mb-[100px]">
                 <div className="px-[40px]">
                     <BreadCump />
                 </div>

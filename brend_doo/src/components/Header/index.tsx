@@ -1,6 +1,19 @@
 import { useState } from 'react';
 import ClothingMenu from '../ClothingMenu';
-
+import { Link } from 'react-router-dom';
+function disableScrolling() {
+    // const scrollTop = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    // document.body.style.position = 'fixed';
+    // document.body.style.top = `-${scrollTop}px`;
+}
+function enableScrolling() {
+    const scrollTop = Math.abs(parseInt(document.body.style.top, 10)) || 0;
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, scrollTop);
+}
 export default function Header() {
     const [isCatalogOpen, setIsClothingOpen] = useState<boolean>(false);
     const [isBaskedOpen, setIsBaskedOpen] = useState<boolean>(false);
@@ -8,37 +21,62 @@ export default function Header() {
     console.log(SearchValue);
 
     return (
-        <div className=" lg:fixed block w-full z-[99999999999] top-0">
+        <div className="  block w-full z-[99999999999] top-0">
             <div className="flex flex-col relative bg-white">
+                <div className="w-full bg-[#3873C3] h-[40px] text-center text-[14px] font-normal text-white flex items-center justify-center">
+                    p5 noyabr-25 noyabr 30% endirim
+                </div>
                 <div className="flex overflow-hidden flex-wrap gap-5  justify-between items-center px-10 py-2.5 w-full text-black border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
-                    <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                        className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
-                    />
-                    <div className="flex flex-wrap gap-6 justify-center items-center self-stretch my-auto text-base max-md:max-w-full lg:ml-[10%] ml-0">
-                        <div className="self-stretch my-auto">Geyim</div>
-                        <div className="self-stretch my-auto">Elektronika</div>
-                        <div className="self-stretch my-auto">Kosmetika</div>
-                        <div className="self-stretch my-auto">Brendlər</div>
-                        <div className="self-stretch my-auto">Endirim</div>
-                        <div className="self-stretch my-auto">
-                            Bütün məhsullar
-                        </div>
+                    <Link to={'/'}>
+                        <img
+                            loading="lazy"
+                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                        />
+                    </Link>
+
+                    <div className="flex flex-wrap gap-6 justify-center items-center self-stretch my-auto text-base max-md:max-w-full ">
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">Geyim</div>
+                        </Link>
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">
+                                Elektronika
+                            </div>
+                        </Link>
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">
+                                Kosmetika
+                            </div>
+                        </Link>
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">Brendlər</div>
+                        </Link>
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">Endirim</div>
+                        </Link>
+                        <Link to={'/poducts'}>
+                            <div className="self-stretch my-auto">
+                                Bütün məhsullar
+                            </div>
+                        </Link>
                     </div>
                     <div className="flex gap-6 items-center self-stretch my-auto text-sm">
                         <div className="flex gap-5 items-center self-stretch my-auto ">
-                            <div className="flex gap-3 items-center self-stretch my-auto">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
-                                />
-                                <div className="self-stretch my-auto">
-                                    Şəxsi kabinet
+                            <Link to={'/user/login'}>
+                                <div className="flex gap-3 items-center self-stretch my-auto">
+                                    <img
+                                        loading="lazy"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
+                                    />
+                                    <div className="self-stretch my-auto">
+                                        Şəxsi kabinet
+                                    </div>
                                 </div>
-                            </div>
-                            <div className=" flex flex-row gap-2">
+                            </Link>
+
+                            {/* <div className=" flex flex-row gap-2">
                                 <div className="w-[36px] h-[36px] rounded-md bg-[#B1C7E4] text-black flex justify-center items-center">
                                     AZ
                                 </div>
@@ -48,15 +86,22 @@ export default function Header() {
                                 <div className="w-[36px] h-[36px] rounded-md bg-[#F5F5F5] text-black flex justify-center items-center">
                                     AZ
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-                <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
+                <div className="flex overflow-hidden  flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
                     <div className="flex flex-col justify-center self-stretch px-7 py-3 my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5">
                         <button
-                            className="flex gap-3 items-center w-full"
-                            onClick={() => setIsClothingOpen((prew) => !prew)}
+                            className="flex gap-3 items-center w-full "
+                            onClick={() => {
+                                setIsClothingOpen((prew) => !prew);
+                                if (!isCatalogOpen) {
+                                    disableScrolling();
+                                } else {
+                                    enableScrolling();
+                                }
+                            }}
                         >
                             <img
                                 loading="lazy"
@@ -74,6 +119,11 @@ export default function Header() {
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                                 setSearchValue(e.target.value);
+                                if (e.target.value !== '') {
+                                    disableScrolling();
+                                } else {
+                                    enableScrolling();
+                                }
                             }}
                             className="bg-transparent outline-none flex-1 text-black text-opacity-60 my-auto"
                         />
@@ -85,18 +135,28 @@ export default function Header() {
                         />
                     </div>
                     <div className="flex gap-6 self-stretch my-auto text-sm text-black">
-                        <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                            className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
-                        />
+                        <Link to={'/liked'}>
+                            <img
+                                loading="lazy"
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
+                            />
+                        </Link>
+
                         <button
                             className="flex gap-3 items-center"
-                            onClick={() => setIsBaskedOpen((prew) => !prew)}
+                            onClick={() => {
+                                setIsBaskedOpen((prev) => !prev);
+                                if (!isBaskedOpen) {
+                                    disableScrolling();
+                                } else {
+                                    enableScrolling();
+                                }
+                            }}
                         >
                             <div className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
                                 <img src="/svg/basked.svg" />
-                                <div className="w-[12px] h-[12px] flex justify-center items-center text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
+                                <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
                                     2
                                 </div>
                             </div>
@@ -105,7 +165,7 @@ export default function Header() {
                     </div>
                 </div>
                 <div
-                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2"
+                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999]"
                     style={
                         isCatalogOpen
                             ? { display: 'block' }
@@ -115,7 +175,7 @@ export default function Header() {
                     <ClothingMenu />
                 </div>
                 <div
-                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2"
+                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999]"
                     style={
                         SearchValue === ''
                             ? { display: 'none' }
@@ -201,7 +261,7 @@ export default function Header() {
                     </div>
                 </div>
                 <div
-                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2"
+                    className="bg-black bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999]"
                     style={
                         !isBaskedOpen
                             ? { display: 'none' }
@@ -214,9 +274,12 @@ export default function Header() {
                                 Səbətdəki məhsullarım
                             </div>
                             <div className="flex gap-2 items-center py-0.5 text-sm font-medium text-blue-600 whitespace-nowrap border-b border-solid border-b-blue-600">
-                                <div className="self-stretch my-auto">
-                                    Səbətim
-                                </div>
+                                <Link to="/user/basked">
+                                    <div className="self-stretch my-auto">
+                                        Səbətim
+                                    </div>
+                                </Link>
+
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7f2acd9a318cf187f0283026a4fe39d7a878ed09e47ff9f7a31b2fad77b951f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -224,7 +287,7 @@ export default function Header() {
                                 />
                             </div>
                         </div>
-                        <div className="flex gap-8 items-center mt-6 max-md:max-w-full mx-[40px]">
+                        <div className="flex gap-8 items-center mt-[4px] max-md:max-w-full mx-[40px]">
                             <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
                                 <img
                                     loading="lazy"
@@ -249,7 +312,7 @@ export default function Header() {
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
                                 />
-                                <div className="overflow-hidden self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
+                                <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
                                     01
                                 </div>
                                 <img
@@ -297,7 +360,7 @@ export default function Header() {
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3867314953380c812a63ca086119d5c9a8fff520af0fa43467a9c11c3713e0c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
                                 />
-                                <div className="overflow-hidden self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
+                                <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
                                     01
                                 </div>
                                 <img

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 export default function Login() {
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [formStatus, setFormStatus] = useState<{
         message: string;
         success: boolean;
@@ -114,15 +115,28 @@ export default function Login() {
                                             <div className="flex flex-col mt-3 w-full max-md:max-w-full">
                                                 <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                     <Field
-                                                        type="password"
+                                                        type={
+                                                            showPassword
+                                                                ? 'text'
+                                                                : 'password'
+                                                        }
                                                         name="password"
                                                         placeholder="Şifrə"
                                                         className="w-full bg-transparent outline-none"
                                                     />
                                                     <img
                                                         loading="lazy"
-                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                        className="object-contain shrink-0 w-6 aspect-square"
+                                                        src={
+                                                            !showPassword
+                                                                ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
+                                                                : '/svg/closedaye.svg'
+                                                        }
+                                                        className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
+                                                        onClick={() =>
+                                                            setShowPassword(
+                                                                !showPassword
+                                                            )
+                                                        }
                                                     />
                                                 </div>
                                                 <ErrorMessage

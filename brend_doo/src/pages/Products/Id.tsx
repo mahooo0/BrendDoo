@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { BreadCump } from '../../components/BroadCump';
@@ -9,7 +8,7 @@ export default function ProductId() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[220px] mt-0">
+            <main className=" lg:mt-[20px] mt-0">
                 <div className="px-[40px]">
                     <BreadCump />
                 </div>
@@ -17,12 +16,13 @@ export default function ProductId() {
                     <div className="relative lg:w-[40%] w-full ">
                         {' '}
                         {/* Parent container with height */}
-                        <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-[630px] h-fit  sticky top-[180px]">
+                        <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-[630px] h-fit  sticky top-[10px]">
                             <section
-                                className="flex flex-col  lg:h-[670px] h-fit  overflow-y-scroll mt-[28px] gap-5"
+                                className="flex flex-col  lg:h-[670px] h-fit  overflow-y-scroll mt-[28px] gap-5 custom-scrollbar"
                                 style={{
-                                    scrollbarWidth: 'thin', // Makes the scrollbar thinner in Firefox
+                                    scrollbarWidth: 'thin',
                                     overflowY: 'scroll',
+                                    scrollbarColor: '#888 transparent',
                                 }}
                             >
                                 <div className="flex overflow-hidden flex-col w-full  min-h-[670px] rounded-3xl bg-neutral-100 max-md:max-w-full">
@@ -68,7 +68,7 @@ export default function ProductId() {
                     <section className="flex flex-col max-w-[650px]">
                         <div className="flex flex-col w-full max-md:max-w-full">
                             <div className="flex flex-col w-full text-black text-opacity-80 max-md:max-w-full">
-                                <div className="gap-2.5 self-start px-3 py-2 text-xs font-medium text-white bg-rose-500 rounded-[100px]">
+                                <div className="gap-2.5 self-start px-3 py-2 text-xs font-medium text-white bg-[#FF3C79] rounded-[100px]">
                                     10% endirim
                                 </div>
                                 <div className="mt-4 w-full text-3xl font-semibold text-black max-md:max-w-full">
@@ -114,11 +114,11 @@ export default function ProductId() {
                             <div className="text-sm text-black text-opacity-60">
                                 Ölçü
                             </div>
-                            <div className="flex gap-2 mt-3 w-full text-xs text-black rounded">
-                                <div className="px-3 py-3.5 text-center rounded border border-solid border-neutral-400">
+                            <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
+                                <div className="px-3 py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     XS
                                 </div>
-                                <div className="px-4 w-10 h-10 text-white bg-black rounded border border-solid border-neutral-400">
+                                <div className="px-4 !w-10  text-white bg-black h-full flex items-center justify-center rounded border border-solid border-neutral-400">
                                     S
                                 </div>
                                 <div className="px-3.5 py-3.5 rounded border border-solid border-neutral-400">

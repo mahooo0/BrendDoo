@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 export function Footer() {
+    const navigate = useNavigate();
+
     return (
         <div className="overflow-hidden bg-black">
             <div className="flex gap-5 max-md:flex-col">
@@ -20,15 +24,38 @@ export function Footer() {
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar
                                                 </div>
-                                                <div className="flex flex-col mt-5 w-full text-base text-white text-opacity-80">
-                                                    <div>Kosmetika</div>
-                                                    <div className="mt-4">
+                                                <div
+                                                    className="flex flex-col mt-5 w-full text-base text-white text-opacity-80"
+                                                    onClick={() =>
+                                                        navigate('/poducts')
+                                                    }
+                                                >
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/poducts')
+                                                        }
+                                                    >
+                                                        Kosmetika
+                                                    </div>
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/poducts')
+                                                        }
+                                                    >
                                                         Geyim
                                                     </div>
-                                                    <div className="mt-4">
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/poducts')
+                                                        }
+                                                    >
                                                         Elektronika
                                                     </div>
-                                                    <div className="mt-4">
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/poducts')
+                                                        }
+                                                    >
                                                         Endirimli məhsullar
                                                     </div>
                                                 </div>
@@ -38,9 +65,12 @@ export function Footer() {
                                                     Şirkət
                                                 </div>
                                                 <div className="flex flex-col mt-5 text-base text-white text-opacity-80">
-                                                    <div>Şirkət haqqında</div>
-                                                    <div className="mt-4">
-                                                        Tez-tez verilən suallar
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/aboutus')
+                                                        }
+                                                    >
+                                                        Şirkət haqqında
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,14 +79,39 @@ export function Footer() {
                                                     Digər keçidlər
                                                 </div>
                                                 <div className="flex flex-col mt-5 max-w-full text-base text-white text-opacity-80 w-[164px]">
-                                                    <div>Əlaqə</div>
-                                                    <div className="mt-4">
+                                                    <div
+                                                        onClick={() =>
+                                                            navigate('/contact')
+                                                        }
+                                                    >
+                                                        Əlaqə
+                                                    </div>
+                                                    <div
+                                                        className="mt-4"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                '/deliveryrules'
+                                                            )
+                                                        }
+                                                    >
                                                         Çatdırılma və ödəniş
                                                     </div>
-                                                    <div className="mt-4">
+                                                    <div
+                                                        className="mt-4"
+                                                        onClick={() =>
+                                                            navigate('/brends')
+                                                        }
+                                                    >
                                                         Brendlər
                                                     </div>
-                                                    <div className="mt-4">
+                                                    <div
+                                                        className="mt-4"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                '/userrules'
+                                                            )
+                                                        }
+                                                    >
                                                         Qaydalar və şərtlər
                                                     </div>
                                                 </div>

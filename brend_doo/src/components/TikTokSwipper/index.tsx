@@ -3,7 +3,7 @@ import 'swiper/swiper-bundle.css';
 
 // Sample slider items
 
-export default function TikTokSlider() {
+export default function TikTokSlider({ action }: { action: () => void }) {
     return (
         <div className="slider-container mt-[40px]">
             <Swiper
@@ -16,7 +16,10 @@ export default function TikTokSlider() {
             >
                 {Array.from({ length: 10 }).map((_, i) => (
                     <SwiperSlide className="!w-fit" key={i}>
-                        <div className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white max-w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]">
+                        <div
+                            onClick={action}
+                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white max-w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
+                        >
                             <div className="flex overflow-hidden flex-col rounded-3xl bg-neutral-100">
                                 <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714]">
                                     <img
