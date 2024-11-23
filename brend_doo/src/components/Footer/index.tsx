@@ -31,6 +31,7 @@ export function Footer() {
                                                     }
                                                 >
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/poducts')
                                                         }
@@ -38,6 +39,7 @@ export function Footer() {
                                                         Kosmetika
                                                     </div>
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/poducts')
                                                         }
@@ -45,6 +47,7 @@ export function Footer() {
                                                         Geyim
                                                     </div>
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/poducts')
                                                         }
@@ -52,6 +55,7 @@ export function Footer() {
                                                         Elektronika
                                                     </div>
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/poducts')
                                                         }
@@ -66,6 +70,7 @@ export function Footer() {
                                                 </div>
                                                 <div className="flex flex-col mt-5 text-base text-white text-opacity-80">
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/aboutus')
                                                         }
@@ -80,6 +85,7 @@ export function Footer() {
                                                 </div>
                                                 <div className="flex flex-col mt-5 max-w-full text-base text-white text-opacity-80 w-[164px]">
                                                     <div
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/contact')
                                                         }
@@ -87,7 +93,7 @@ export function Footer() {
                                                         Əlaqə
                                                     </div>
                                                     <div
-                                                        className="mt-4"
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate(
                                                                 '/deliveryrules'
@@ -97,7 +103,7 @@ export function Footer() {
                                                         Çatdırılma və ödəniş
                                                     </div>
                                                     <div
-                                                        className="mt-4"
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/brends')
                                                         }
@@ -105,7 +111,7 @@ export function Footer() {
                                                         Brendlər
                                                     </div>
                                                     <div
-                                                        className="mt-4"
+                                                        className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate(
                                                                 '/userrules'
