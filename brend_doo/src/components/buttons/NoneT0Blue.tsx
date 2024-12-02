@@ -13,9 +13,11 @@ const NoneToBlue: React.FC<NoneToBlueProps> = ({
         <button
             className={`rounded-[100px] duration-300 ${
                 isactive ? 'bg-[#3873C3] text-white ' : 'bg-none'
-            }  px-[28px] py-[14px] border border-black border-opacity-10`}
+            }  px-[28px] py-[14px]   border border-black border-opacity-10`}
         >
-            {children}
+            <p className="text-[16px] font-medium leading-[19.5px]">
+                {children}
+            </p>
         </button>
     );
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,7 @@ const Register = () => {
             .min(6, 'Şifrə ən az 6 simvoldan ibarət olmalıdır')
             .required('Şifrə daxil edin'),
     });
+    const navigate = useNavigate();
 
     return (
         <div className="flex overflow-hidden flex-col bg-white">
@@ -31,7 +33,10 @@ const Register = () => {
                     srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9f57b393c120b19ab9db1e7a4aa3dc11e48fdaa0526b775a0fd5a02c9292e45c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                     className="object-cover absolute inset-0 size-full"
                 />
-                <div className="rounded-full bg-white w-[56px] h-[56px] bg-opacity-60 z-50 absolute top-10 left-10">
+                <div
+                    onClick={() => navigate(-1)}
+                    className="rounded-full bg-white w-[56px] h-[56px] bg-opacity-60 z-50 absolute top-10 left-10"
+                >
                     <img
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1d01662ce302f4f64e209cc8ecd0540b6f0e5fb3d4ccd79eead1b316a272d11?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"

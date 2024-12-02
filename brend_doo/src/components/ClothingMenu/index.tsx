@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface ClothingItem {
     name: string;
@@ -97,11 +97,39 @@ const ClothingList: React.FC<ClothingListProps> = ({ items }) => (
 //     </div>
 // );
 
-const ClothingMenu: React.FC = () => {
+interface ClothingMenuProps {
+    setIsCatalogOpen: (value: boolean) => void;
+}
+
+const ClothingMenu: React.FC<ClothingMenuProps> = ({ setIsCatalogOpen }) => {
     const [isClothingOpen, setIsClothingOpen] = useState(false);
     const [isElektronikaOpen, setIsElektronikaOpen] = useState(false);
     const [isKosmetikaOpen, setIsKosmetikaOpen] = useState(false);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    console.log(
+                        entry.isIntersecting
+                            ? 'visible'
+                            : setIsCatalogOpen(false)
+                    );
+                });
+            },
+            { threshold: 0 }
+        );
 
+        const element = document.querySelector('.catalog-bar');
+        if (element) {
+            observer.observe(element);
+        }
+
+        return () => {
+            if (element) {
+                observer.unobserve(element);
+            }
+        };
+    }, []);
     const clothingItems: ClothingItem[] = [
         { name: 'Palto' },
         { name: 'Şalvar' },
@@ -130,7 +158,12 @@ const ClothingMenu: React.FC = () => {
     };
 
     return (
-        <section className="flex overflow-hidden flex-col px-7 py-10 bg-white rounded-3xl max-w-[408px] shadow-[0px_0px_12px_rgba(6,27,62,0.12)]">
+        <section
+            style={{
+                scrollbarWidth: 'none',
+            }}
+            className="catalog-bar  scrollbar-hide max-h-[60vh] overflow-y-scroll flex overflow-hidden flex-col px-7 py-10 bg-white rounded-3xl max-w-[408px] shadow-[0px_0px_12px_rgba(6,27,62,0.12)] z-[1000] "
+        >
             <CategoryHeader
                 title="Geyim"
                 isOpen={isClothingOpen}

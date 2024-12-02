@@ -24,7 +24,7 @@ export default function ProductCard({
                 <img
                     onClick={() => navigate(`/poducts/aa`)}
                     className="rounded-3xl hover:scale-110 duration-300 object-cover w-full h-full"
-                    src="https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__"
+                    src="https://s3-alpha-sig.figma.com/img/af34/0b4a/d14e809defed0b62ae2ad984556af37d?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=l8PLdqoRPYhRzk4BjTlGS~Xe~ebrE4UHTxZrWg9hldO~VafdHKuJCuZuu60r0Z1ONvhm2Gh6LFMr5PEHaxtwzyn8Ta7W1xwNOKbe196EK7sFknzRBtqfqeamlaaopWb3Ux4r9mvieQySOW6A1yKU3I0jRP2jOyyIcpZvveMR1Mfoy8Uu7sKw2UfqAqEMTtwYdKsuwIGL1orLz2XNJp7Nb4cTRf2h7aeOMtpPNceanyZIz8dzhO1L0WRgjeGfuTck90S390MK-Bc2dXv6beruw8mmlp6TTWP-8wrE5jCk683nlGYM5YPZjMW6X59LG-JQFiM~VyQQi7R7LzedF86hBA__"
                     alt=""
                 />
                 <div
@@ -40,12 +40,12 @@ export default function ProductCard({
                 </div>
                 {isnew && (
                     <div className="bg-[#8E98B8] text-white px-3 py-2  rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text">Yeni</p>{' '}
+                        <p className="text-[12px] font-medium">Yeni</p>{' '}
                     </div>
                 )}
                 {issale && (
                     <div className="bg-[#FF3C79] text-white px-3 py-2  rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text">10% endirim</p>{' '}
+                        <p className="text-[12px] font-medium">10% endirim</p>{' '}
                     </div>
                 )}
                 <div

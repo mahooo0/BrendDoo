@@ -1,5 +1,5 @@
 // src/App.tsx
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductId from './pages/Products/Id';
@@ -19,9 +19,16 @@ import Order from './pages/userIn/Order';
 import OrderId from './pages/userIn/OrderId';
 import BaskedConfirm from './pages/userIn/BaskedConfirm';
 import Basked from './pages/userIn/Basked';
+import { useEffect } from 'react';
 // import Basked from './pages/userIn/Basked';
 
 const App = () => {
+    const location = useLocation(); // Hook to get the current route
+
+    useEffect(() => {
+        // Scroll to the top of the page whenever the route changes
+        window.scrollTo(0, 0);
+    }, [location]);
     return (
         <Routes>
             <Route path="/" element={<Home />} />

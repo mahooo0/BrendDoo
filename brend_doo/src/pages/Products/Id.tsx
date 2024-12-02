@@ -18,11 +18,10 @@ export default function ProductId() {
                         {/* Parent container with height */}
                         <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-[630px] h-fit  sticky top-[10px]">
                             <section
-                                className="flex flex-col  lg:h-[670px] h-fit  overflow-y-scroll mt-[28px] gap-5 custom-scrollbar"
+                                className=" sroll- flex flex-col  lg:h-[670px] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 custom-scrollbar pb-[0px]"
                                 style={{
-                                    scrollbarWidth: 'thin',
-                                    overflowY: 'scroll',
-                                    scrollbarColor: '#888 transparent',
+                                    scrollbarWidth: 'thin', // For Firefox
+                                    scrollbarColor: '#888 transparent', // For Firefox
                                 }}
                             >
                                 <div className="flex overflow-hidden flex-col w-full  min-h-[670px] rounded-3xl bg-neutral-100 max-md:max-w-full">
@@ -32,14 +31,6 @@ export default function ProductId() {
                                         className="object-cover w-full h-[670px] max-md:max-w-full"
                                     />
                                 </div>
-                                <div className="flex overflow-hidden flex-col w-full  min-h-[500px] rounded-3xl bg-neutral-100 max-md:max-w-full">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-cover w-full h-[500px] max-md:max-w-full"
-                                    />
-                                </div>
-
                                 <div className="mt-5 w-full max-md:max-w-full">
                                     <div className="flex gap-5 max-md:flex-col">
                                         <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
@@ -61,6 +52,13 @@ export default function ProductId() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="flex overflow-hidden flex-col w-full  min-h-[500px] rounded-3xl bg-neutral-100 max-md:max-w-full">
+                                    <img
+                                        loading="lazy"
+                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-cover w-full h-[500px] max-md:max-w-full"
+                                    />
                                 </div>
                             </section>
                         </section>
@@ -207,6 +205,15 @@ export default function ProductId() {
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
+                            </p>{' '}
+                            <p>
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
+                                DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
                             </p>{' '}
                             <p>
@@ -219,22 +226,8 @@ export default function ProductId() {
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
                             </p>{' '}
                             <p>
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                            </p>{' '}
-                            <p>
-                                DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
@@ -349,7 +342,7 @@ export default function ProductId() {
                                     />
                                     <img
                                         loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                         className="object-contain shrink-0 aspect-square w-[18px]"
                                     />
                                     <img

@@ -19,7 +19,7 @@ export function Footer() {
                                         />
                                     </div>
                                     <div className="flex flex-col ml-5 w-[84%] max-md:ml-0 max-md:w-full">
-                                        <div className="flex flex-wrap gap-10 items-start max-md:mt-10 max-md:max-w-full">
+                                        <div className="flex flex-wrap justify-between gap-10 items-start max-md:mt-10 max-md:max-w-full">
                                             <div className="flex flex-col w-[158px]">
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar

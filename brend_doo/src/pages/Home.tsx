@@ -213,7 +213,7 @@ export default function Home() {
                         </div>
                         <div className="self-stretch my-auto text-base font-medium text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
                             <span
-                                className="text-[#3873C3] underline"
+                                className="text-[#3873C3] underline cursor-pointer"
                                 onClick={() => navigate('/brends')}
                             >
                                 Hamısına bax
@@ -358,7 +358,7 @@ export default function Home() {
                     </video>
 
                     <div
-                        className="flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
+                        className="mt-[100px] flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
                         style={{
                             background:
                                 'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',
@@ -412,102 +412,33 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <div
-                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
-                        style={{
-                            backgroundImage:
-                                'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                        }}
-                    >
-                        <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
-                                <div className="flex flex-col">
-                                    <div>
-                                        İki tərəfli zara kolleksiyasından qalın
-                                        pencək
-                                    </div>
-                                    <div className="mt-3 font-semibold">
-                                        298 AZN
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
-                        style={{
-                            backgroundImage:
-                                'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                        }}
-                    >
-                        <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
-                                <div className="flex flex-col">
-                                    <div>
-                                        İki tərəfli zara kolleksiyasından qalın
-                                        pencək
-                                    </div>
-                                    <div className="mt-3 font-semibold">
-                                        298 AZN
+                    {Array.from({ length: 5 }).map((_, i) => (
+                        <div
+                            key={i}
+                            className="flex flex-col w-full min-h-[510px] max-md:ml-0 max-md:w-full rounded-3xl"
+                            style={{
+                                backgroundImage:
+                                    'url("https://placehold.co/600x400")',
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                            }}
+                        >
+                            <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
+                                <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
+                                    <div className="flex flex-col">
+                                        <div>
+                                            İki tərəfli zara kolleksiyasından
+                                            qalın pencək
+                                        </div>
+                                        <div className="mt-3 font-semibold">
+                                            298 AZN
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div
-                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
-                        style={{
-                            backgroundImage:
-                                'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                        }}
-                    >
-                        <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
-                                <div className="flex flex-col">
-                                    <div>
-                                        İki tərəfli zara kolleksiyasından qalın
-                                        pencək
-                                    </div>
-                                    <div className="mt-3 font-semibold">
-                                        298 AZN
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="flex flex-col  max-md:ml-0 max-md:w-full rounded-3xl "
-                        style={{
-                            backgroundImage:
-                                'url("https://s3-alpha-sig.figma.com/img/d098/fc21/21f632847e78f6c23b06739006833a33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=p2T7KmYOqmEcB~gVgUdzDLrNcgDjymTsavsuIn5rbpvC5Y9UGWA2~8eXLOPbkRHcthpOpsBPZiKhb1Z~nnphLGGvD1nUrAFnefGh7etLqI3L5HEc~c6ASNzDw-pE1wdNfJlGkMBjx6er-dxY~NoCvLTrT6pxUjpqPv2eQg19Q5pwaqhOrAiHRzm5OrEPeL7PvfcWjKY8owbx5l8WgoV2g535h2VBhJTEFvCuqzLw4zHd-lcKzrDVHzUIyqI-db2GPVdiYGYC9WCEDP9pFal-a1sPvMLqsLkI08Tb6zbtHL0fTtamppL9dhaeagkUoP7gjcxUb1QiRYHay64iryjhyg__")',
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                        }}
-                    >
-                        <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
-                                <div className="flex flex-col">
-                                    <div>
-                                        İki tərəfli zara kolleksiyasından qalın
-                                        pencək
-                                    </div>
-                                    <div className="mt-3 font-semibold">
-                                        298 AZN
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </section>
                 <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px]">
                     <div className="flex flex-row flex-wrap justify-between ">
@@ -515,7 +446,7 @@ export default function Home() {
                             Tiktok hekayələr
                         </h2>
                         <button
-                            className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                            className="rounded-[100px] duration-300  bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
                             onClick={() => navigate('/producs')}
                         >
                             {' '}

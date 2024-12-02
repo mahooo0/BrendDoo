@@ -18,7 +18,7 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                     <SwiperSlide className="!w-fit" key={i}>
                         <div
                             onClick={action}
-                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white max-w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
+                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
                         >
                             <div className="flex overflow-hidden flex-col rounded-3xl bg-neutral-100">
                                 <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714]">

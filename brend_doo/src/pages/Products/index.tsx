@@ -53,7 +53,7 @@ export default function Products() {
     // const checkref = useRef<any>();
     const [checked, setChecked] = useState(false);
     return (
-        <div className=" relative">
+        <div className="relative">
             <Header />
             <main className=" mt-0">
                 <section className="flex overflow-hidden  flex-col bg-neutral-100">
@@ -139,7 +139,7 @@ export default function Products() {
                         </section>
 
                         <section className="flex flex-col rounded-none w-full">
-                            <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full">
+                            <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full mt-[44px]">
                                 <div className="my-auto text-base font-medium text-black">
                                     1200 məhsul
                                 </div>

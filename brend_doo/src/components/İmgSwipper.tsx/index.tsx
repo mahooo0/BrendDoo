@@ -31,9 +31,9 @@ export default function ImageSwipper() {
                 {Array.from({ length: 10 }).map((_, i) => (
                     <SwiperSlide key={i}>
                         <img
-                            src="https://s3-alpha-sig.figma.com/img/5d58/069d/b1a719853f273675298a6f5d6c52ad29?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JBr-i4tNxaPmbeLcecsQ5N3np3y8drF74P6KkzFV0-T9S8g5nzePobmhX7E-SNaWnhdnq-409Zmbpzuky3Ht101MshACYhjnryhy-z947GBG1p3o1MkGMapDAiY3bgBVJvM4bz-oDaCrOm2woovqk1lYSbTVQAZZ8HVpkuv0GAji27v7Ls8emTakyeKdH7IV8Ku74PVQriJw8b4crw9IJ-gAYood5eHdlNJlUo3gsSlnKYbKYRX~C0VMDinspWXQNi7~HfuLhO3OJFYtUNefUYK6~rgLuw3XPnYuRGugxKwbrI-Vh8xnOw3Sq4v3eqSgzNfgIG6ycav-D2nXuuJcaw__"
+                            src="https://placehold.co/600x400"
                             alt=""
-                            className="w-full  h-full"
+                            className="w-full  h-full object-cover"
                         />
                     </SwiperSlide>
                 ))}
@@ -56,19 +56,54 @@ export default function ImageSwipper() {
                         </div>
                     </div>
                     <div className="flex gap-3 items-center my-auto text-base whitespace-nowrap text-black text-opacity-80">
-                        <img
+                        <button
+                            style={{
+                                boxShadow: '0px 0px 12px rgba(0,0,0,0.08)',
+                            }}
                             onClick={handlePrev}
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8367e21eaf9400e5b25e9edc713db3ebb71d70566c228f2316cb5c7833aede65?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                            className="object-contain shrink-0 self-stretch my-auto w-11 aspect-square rounded-[100px] shadow-[0px_0px_12px_rgba(0,0,0,0.08)] cursor-pointer"
-                        />
+                            className="cursor-pointer w-[44px] h-[44px] bg-white flex justify-center items-center rounded-full rotate-180 bg-opacity-[22%] hover:bg-opacity-[40%] duration-300"
+                        >
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9.5 6L15.5 12L9.5 18"
+                                    stroke="black"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </button>
+
                         <div className="self-stretch my-auto">1/10</div>
-                        <img
+                        <button
                             onClick={handleNext}
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a323f628fba0718a3972323289120c24662ad3410e213ca18a6889f61e57cc68?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                            className="object-contain shrink-0 self-stretch my-auto w-11 aspect-square rounded-[100px] shadow-[0px_0px_12px_rgba(0,0,0,0.08)] cursor-pointer"
-                        />
+                            style={{
+                                boxShadow: '0px 0px 12px rgba(0,0,0,0.08)',
+                            }}
+                            className="cursor-pointer w-[44px] h-[44px] bg-white flex justify-center items-center rounded-full bg-opacity-[22%] hover:bg-opacity-[40%] duration-300"
+                        >
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9.5 6L15.5 12L9.5 18"
+                                    stroke="black"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </section>
