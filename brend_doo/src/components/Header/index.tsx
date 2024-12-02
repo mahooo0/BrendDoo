@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ClothingMenu from '../ClothingMenu';
 import { Link } from 'react-router-dom';
 import { CatalogBar } from '../Cattalogbar';
 function disableScrolling() {
@@ -9,7 +8,6 @@ function disableScrolling() {
     // document.body.style.top = `-${scrollTop}px`;
 }
 function enableScrolling() {
-    const scrollTop = Math.abs(parseInt(document.body.style.top, 10)) || 0;
     document.body.style.overflow = '';
     document.body.style.position = '';
     // document.body.style.top = '';
