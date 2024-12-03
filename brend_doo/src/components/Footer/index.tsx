@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import { HashLink } from 'react-router-hash-link';
 export function Footer() {
     const navigate = useNavigate();
 
@@ -77,6 +77,15 @@ export function Footer() {
                                                     >
                                                         Şirkət haqqında
                                                     </div>
+                                                </div>
+                                                <div className="flex flex-col mt-5 text-base text-white text-opacity-80">
+                                                    <HashLink
+                                                        to="/aboutus#faq"
+                                                        className="cursor-pointer"
+                                                        smooth
+                                                    >
+                                                        Tez-tez verilən suallar{' '}
+                                                    </HashLink>
                                                 </div>
                                             </div>
                                             <div className="flex flex-col w-[164px]">

@@ -75,7 +75,7 @@ const CommentsSection = () => {
                     >
                         Sırala
                     </label>
-                    <div className="flex overflow-hidden gap-10 self-stretch p-3 my-auto text-base bg-white rounded-xl min-w-[240px] text-black text-opacity-90 w-[283px]">
+                    <div className="flex overflow-hidden gap-10 self-stretch p-3 my-auto text-base bg-white rounded-[100px] min-w-[240px] text-black text-opacity-90 w-[283px]">
                         <select
                             id="sortDropdown"
                             className="flex-grow bg-transparent border-none outline-none"
@@ -88,7 +88,7 @@ const CommentsSection = () => {
                     </div>
                 </div>
             </header>
-            <main className="flex flex-col mt-7 w-full max-md:max-w-full pb-[100px]">
+            <main className="flex flex-col mt-7 w-full max-md:max-w-full pb-[20px]">
                 {sortedReviews.map((review) => (
                     <article
                         key={review.id}

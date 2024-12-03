@@ -15,7 +15,7 @@ export default function ProductCard({
     const [variant, setvariant] = useState<number>(1);
     const navigate = useNavigate();
     return (
-        <div className="flex flex-col pb-5 text-base text-black max-w-[325px] ">
+        <div className="flex cursor-pointer flex-col pb-5 text-base text-black max-w-[360px] w-full ">
             <div
                 className={`flex w-full relative bg-${
                     bg === 'white' ? 'white' : '[#F5F5F5]'

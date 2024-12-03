@@ -119,14 +119,17 @@ function FAQSection({
     };
 
     return (
-        <section className="flex flex-wrap gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] px-[30px] py-[100px]">
+        <section
+            id="faq"
+            className="flex mx-[40px] rounded-[20px] mb-[100px] lg:flex-row flex-col gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] px-[30px] py-[100px]"
+        >
             <div className="flex flex-col max-w-[414px]">
                 <div className="flex flex-col w-full">
-                    <h3 className="text-4xl font-semibold text-slate-900">
+                    <h3 className="text-[40px]  font-semibold text-slate-900">
                         {Title}{' '}
                     </h3>
                     {!isContact && (
-                        <p className="mt-5 text-base text-black text-opacity-80">
+                        <p className="mt-5 text-base text-black text-opacity-80 ">
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been{' '}
                         </p>
@@ -138,8 +141,8 @@ function FAQSection({
                     </button>
                 )}
             </div>
-            <div className="flex flex-col text-base font-medium text-center text-black min-w-[240px] w-[795px] max-md:max-w-full">
-                <div className="flex flex-row flex-wrap w-full lg:justify-end justify-center gap-3 mb-[35px]">
+            <div className="flex flex-col text-base font-medium text-center text-black min-w-[240px] w-full max-md:max-w-full">
+                <div className="flex flex-row flex-wrap w-full lg:justify-end justify-center gap-3 mb-[30px]">
                     <NoneTolightBlue isactive={true}>Hamısı</NoneTolightBlue>
                     <NoneTolightBlue>Geri qaytarılma</NoneTolightBlue>
                     <NoneTolightBlue>Ödəniş</NoneTolightBlue>

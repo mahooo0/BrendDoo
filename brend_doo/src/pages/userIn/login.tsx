@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -89,11 +89,11 @@ export default function Login() {
                                 </div>
                             </div>
                             <div className="flex gap-10 items-center mt-7 text-xs text-center text-white w-full">
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[40%]" />
+                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                 <div className="self-stretch my-auto text-nowrap">
                                     Və ya
                                 </div>
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[40%]" />
+                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                             </div>
 
                             <Formik
@@ -184,7 +184,13 @@ export default function Login() {
                             )}
                         </div>
                         <div className="mt-16 text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full">
-                            <span>Hesabın yoxdur?</span> Qeydiyyatdan keç
+                            <span>Hesabın yoxdur? </span>
+                            <Link
+                                to="/user/register"
+                                className="hover:underline"
+                            >
+                                Qeydiyyatdan keç
+                            </Link>
                         </div>
                     </div>
                 </div>

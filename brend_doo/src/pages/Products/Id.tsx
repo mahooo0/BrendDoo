@@ -31,7 +31,7 @@ export default function ProductId() {
                                         className="object-cover w-full h-[670px] max-md:max-w-full"
                                     />
                                 </div>
-                                <div className="mt-5 w-full max-md:max-w-full">
+                                <div className=" w-full max-md:max-w-full">
                                     <div className="flex gap-5 max-md:flex-col">
                                         <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
                                             <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 max-md:mt-5">
@@ -42,7 +42,7 @@ export default function ProductId() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+                                        <div className="flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
                                             <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 max-md:mt-5">
                                                 <img
                                                     loading="lazy"
@@ -63,7 +63,7 @@ export default function ProductId() {
                             </section>
                         </section>
                     </div>
-                    <section className="flex flex-col max-w-[650px]">
+                    <section className="flex flex-col max-w-[650px] mt-[24px]">
                         <div className="flex flex-col w-full max-md:max-w-full">
                             <div className="flex flex-col w-full text-black text-opacity-80 max-md:max-w-full">
                                 <div className="gap-2.5 self-start px-3 py-2 text-xs font-medium text-white bg-[#FF3C79] rounded-[100px]">
@@ -113,22 +113,23 @@ export default function ProductId() {
                                 Ölçü
                             </div>
                             <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
-                                <div className="px-3 py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     XS
                                 </div>
-                                <div className="px-4 !w-10  text-white bg-black h-full flex items-center justify-center rounded border border-solid border-neutral-400">
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     S
                                 </div>
-                                <div className="px-3.5 py-3.5 rounded border border-solid border-neutral-400">
+
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     M
                                 </div>
-                                <div className="px-4 py-3.5 rounded border border-solid border-neutral-400">
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     L
                                 </div>
-                                <div className="p-3.5 rounded border border-solid border-neutral-400">
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     XL
                                 </div>
-                                <div className="p-3.5 rounded border border-solid border-neutral-400">
+                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
                                     2X
                                 </div>
                             </div>
@@ -357,7 +358,10 @@ export default function ProductId() {
                                     </div>
                                 </div>
                                 <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div className="text-center text-zinc-900">
+                                    <div
+                                        className="
+                                     text-zinc-900"
+                                    >
                                         24%
                                     </div>
                                     <div className="text-slate-500">
@@ -499,7 +503,7 @@ export default function ProductId() {
                     <h3 className="text-[28px] font-semibold mt-[100px]">
                         Tövsiyyələr
                     </h3>{' '}
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px]">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] gap-5">
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />

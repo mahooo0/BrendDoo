@@ -15,7 +15,7 @@ export default function Contact() {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundImage:
-                            'url("https://s3-alpha-sig.figma.com/img/4cff/483f/16da630a3596c452b3b3a9e3835ca986?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=N1YywjClauG~WZaq9tfrxTuE6LfzXBFVtaylegbXGJwicErKBeu83JDxtmBT8tG~fI9Ty3MjMnUbk6Ps2k299tSgKm236Md31-J3NJsfvyF7B9MdQ02KnFlw08t9G-bg9cgph6gpr1gxIai99~Z2lbDOLe1lgNmKqhuK7y9Y2CGWVeS3dplN6ge-ghOkMfRlXyCB08z2srDmiO3LtewMIvcDRoxhnaO9exBFzrMxLrwVY77PCK~i0~xODbOSLWDjEvYNzOVxb8dLBj48ZoqDJwfDtuXmimNkblOXX6blKYiNSUBFAOPjnDh9YDYbSjYj0t76a8Q~4oI7HnW~BFzETg__")',
+                            'url("https://s3-alpha-sig.figma.com/img/4cff/483f/16da630a3596c452b3b3a9e3835ca986?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=F97I~eBSOUHQiQK-Bbf9M3DP2C3SljoFIOKPV21upRyL-qsCF-WBagacQOEnNV9~CivZTtGuTbj6WAFJAxmQOExp5mIsHtnDU-j90u2-LzwHkHFWZrbwL0TjyxgCAho0m40vUes1WYviRtSnFG-IKpJkeB45SyWzJcLARuYdsmRmgwgC2DNCJTGxuKKFcB3gMZ2y9~jZ4vSqSOnyRRjMDt8Eru~PVFI5TlN2JgLwoyJSCZVOZWj6LTOV4s0cjTRs4wD37L5H-XHcWlk4BeTJK-p4MHLQgGdjk2Iopgla9PqbrZ2rJYl1syHzi3zu7s1nr1UyuDB07qGsHLKFUOwaXg__")',
                     }}
                 >
                     <BreadCump />
@@ -27,7 +27,7 @@ export default function Contact() {
                 <section className="rounded-3xl px-[40px] my-[20px]">
                     <div className="flex gap-5 lg:flex-row flex-col ">
                         <div className="flex flex-col lg:w-[41%] w-full max-md:ml-0 max-md:w-full">
-                            <div className="flex overflow-hidden flex-col grow items-start pt-10 pr-20 pb-52 pl-10 w-full rounded-3xl bg-slate-400 max-md:px-5 max-md:pb-24 max-md:mt-5 max-md:max-w-full">
+                            <div className="flex overflow-hidden flex-col grow items-start pt-10 pr-20 pb-52 pl-10 w-full rounded-3xl bg-[#8E98B8] max-md:px-5 max-md:pb-24 max-md:mt-5 max-md:max-w-full">
                                 <div className="flex flex-col max-w-full text-white w-[391px]">
                                     <div className="text-xl font-semibold">
                                         Əlaqə məlumatları
@@ -88,8 +88,8 @@ export default function Contact() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col ml-5 lg:w-[59%] w-full max-md:ml-0 max-md:w-full">
-                            <form className="flex overflow-hidden flex-col grow px-10 py-11 w-full rounded-3xl bg-slate-400 max-md:px-5 max-md:mt-5 max-md:max-w-full">
+                        <div className="flex flex-col  lg:w-[59%] w-full max-md:ml-0 max-md:w-full">
+                            <form className="flex overflow-hidden flex-col grow px-10 py-11 w-full rounded-3xl bg-[#8E98B8] max-md:px-5 max-md:mt-5 max-md:max-w-full">
                                 <div className="self-center text-xl font-semibold text-center text-white">
                                     Formu doldur, biz əlaqə saxlayaq!
                                 </div>

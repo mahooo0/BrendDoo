@@ -47,7 +47,7 @@ export default function Brends() {
                     <BreadCump />
                 </div>
 
-                <section className="px-[28px]">
+                <section className="px-[40px]">
                     <h3 className="text-[40px] font-semibold mt-[28px] mb-[40px]">
                         Brendlər{' '}
                     </h3>{' '}

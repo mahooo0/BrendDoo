@@ -48,7 +48,7 @@ export default function Header() {
                                 Kosmetika
                             </div>
                         </Link>
-                        <Link to={'/poducts'}>
+                        <Link to={'/brends'}>
                             <div className="self-stretch my-auto">Brendlər</div>
                         </Link>
                         <Link to={'/poducts'}>
@@ -584,7 +584,7 @@ export default function Header() {
                                 </Link>
                             </div>
                             <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts">
+                                <Link to="/brends">
                                     <div>Brendlər</div>
                                 </Link>
                             </div>

@@ -15,10 +15,10 @@ export default function Aboutus() {
                     <div
                         className="w-full h-[500px] bg-cover bg-center flex items-center justify-end"
                         style={{
-                            backgroundImage: `url("https://s3-alpha-sig.figma.com/img/03d2/47b7/389aec573f263f50b99f617dc9179cdc?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VeC5-e87DqbWyRKTCqX1WXN-MBupxYSE38nzh-x9Y89GnUVyT82IZECTSYwZGen1UdY5DhXLQDoE3jJoUGQG3l~SPuPe9HcuHfUV5x0jqpyjyI8tmsf50Ip-GhbAh1Xfq8l5MS3P-PqR1pZN3GzprZsdwi9vzI0Zfl0nAY40n62kXJnQwJVJyeRFuqYQJ4eWikquBUwfzoH-iCodPzDeGCZU1CtGripWvy2cbWFLIbfBsE9GEpmS-uC7crBy1fKPin7xfZhPZWnWXQQ5dHIZjUk9rod26OGCA1sW~Zc93-VPIZkM7KRQJOYmzU33HiHRulvfZyIMDiumLtYrbKBkiQ__")`,
+                            backgroundImage: `url("https://s3-alpha-sig.figma.com/img/03d2/47b7/389aec573f263f50b99f617dc9179cdc?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GmqOdCOiArs1ztUovwJcY24lXGzVhEh05tq2UpxqMQbZfOf9E7qqspdOY6bXxueefW2fE5BWBrjWVVJZkaneoLi3kT1L~q-63YccFJWilRywTITbdpElsDY2EVdM8l8I8NaYKnC4pEsIyF1AJ-hFToJguVq4QFnHypNzTqNoPxQhoqDc~~-zfbpSeNJHMMUf~hIhSYB~k6QTZcplkQspr9SUyNaHMHcUZBulAM5-VLOb-w3TRhnwJwvk~Ey5l1De-V48K0ooL5o8fgB1e8rJMwjyQq6Geeiwd1sZT4CpJMrc7B3BWEDBN-UGJ1kHhU98ez2zPiMm1RkhF3pG0tjp9g__")`,
                         }}
                     >
-                        <h1 className="text-4xl font-bold text-[#081D39] max-w-[680px] text-wrap: pr-[100px]">
+                        <h1 className="text-[40px] font-bold text-[#081D39] max-w-[680px] text-wrap: pr-[100px]">
                             “Brendo MMC” şirkəti olaraq hər zaman güvənli
                             alış-ceriş təklif edirik!{' '}
                         </h1>
@@ -34,7 +34,7 @@ export default function Aboutus() {
                         </p>
                     </div>
                 </section>
-                <FAQSection Title="ssss" />
+                <FAQSection Title="Tez-tez verilən suallar" />
             </main>
             <Footer />
         </div>
