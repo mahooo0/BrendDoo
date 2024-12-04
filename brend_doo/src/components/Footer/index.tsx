@@ -139,22 +139,22 @@ export function Footer() {
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c891e0d2e270a6c2698c5da6121f1272da234ccd0fec708d0d297b73a3e1868?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                    className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
                                 />
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/e06bb4cf3fc4b77ac6b044ac7bdda391aba00d1bcca1a4249df9e7464d23e24e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                    className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
                                 />
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/c41d5cc5afe0acbdb644fa2679576ddbe04783fb7c40be5776c38c21dceafdc5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                    className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
                                 />
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/bf9c6260e063308a546a293046cfcff2f5c69c163e27c20ee30538b452a359ca?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                    className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
                                 />
                             </div>
                         </div>

@@ -90,7 +90,7 @@ export default function ProductSwipper({ bg }: Proops) {
             </button>
             <button
                 onClick={handleNext}
-                className=" absolute right-[0] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white rotate-180"
+                className=" absolute right-[-18px] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white rotate-180"
             >
                 <svg
                     width="24"

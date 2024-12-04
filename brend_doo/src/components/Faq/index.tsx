@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NoneTolightBlue } from '../buttons/NoneT0Blue';
+import { useNavigate } from 'react-router-dom';
 
 const faqData = [
     {
@@ -117,7 +118,7 @@ function FAQSection({
     const handleToggle = (index: any) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-
+    const navigate = useNavigate();
     return (
         <section
             id="faq"
@@ -136,7 +137,10 @@ function FAQSection({
                     )}
                 </div>
                 {!isContact && (
-                    <button className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]">
+                    <button
+                        onClick={() => navigate('/contact')}
+                        className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
+                    >
                         Bizimlə əlaqə
                     </button>
                 )}

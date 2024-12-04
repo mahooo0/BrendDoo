@@ -405,7 +405,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div
-                                className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                                className="cursor-pointer gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
                                 Hamısına bax
