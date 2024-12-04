@@ -35,16 +35,16 @@ const Register = () => {
                 />
                 <div
                     onClick={() => navigate(-1)}
-                    className="rounded-full bg-white w-[56px] h-[56px] bg-opacity-60 z-50 absolute top-10 left-10"
+                    className="rounded-full bg-white lg:w-[56px] lg:h-[56px] w-[35px] h-[35px] bg-opacity-60 z-50 absolute top-5 left-5 cursor-pointer"
                 >
                     <img
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1d01662ce302f4f64e209cc8ecd0540b6f0e5fb3d4ccd79eead1b316a272d11?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                        className="object-contain w-14 aspect-square rounded-[100px]"
+                        className="object-contain w-14 aspect-square rounded-full"
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center px-16 py-6 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
+                <div className="flex overflow-hidden relative flex-col justify-center self-center lg:px-16  lg:py-6 p-[10px] mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] ">
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
@@ -80,7 +80,7 @@ const Register = () => {
                                             Google ilə davam et
                                         </div>
                                     </div>
-                                    <div className="flex gap-10 items-center mt-4 text-xs text-center text-white w-full mb-4">
+                                    <div className="flex lg:gap-10 gap-5 items-center mt-4 text-xs text-center text-white w-full mb-4">
                                         <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                         <div className="self-stretch my-auto text-nowrap">
                                             Və ya
@@ -172,7 +172,7 @@ const Register = () => {
                                             className="text-red-500 text-xs mt-1"
                                         />
 
-                                        <div className="gap-2.5 self-stretch px-10 py-4 mt-7 w-full text-base font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px] max-md:px-5 max-md:max-w-full">
+                                        <div className="gap-2.5 self-stretch px-10 py-4 lg:mt-7 mt-4 w-full text-base font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px] max-md:px-5 max-md:max-w-full">
                                             <button
                                                 type="submit"
                                                 className="w-full cursor-pointer"
@@ -187,7 +187,7 @@ const Register = () => {
                     </div>
 
                     <div
-                        className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full"
+                        className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full"
                         onClick={() => {
                             navigate('/user/login');
                         }}

@@ -58,7 +58,7 @@ export default function Login() {
                 />
                 <div
                     onClick={() => navigate(-1)}
-                    className="rounded-full bg-white w-[56px] h-[56px] bg-opacity-60 z-50 absolute top-10 left-10 cursor-pointer"
+                    className="rounded-full bg-white lg:w-[56px] lg:h-[56px] w-[35px] h-[35px] bg-opacity-60 z-50 absolute top-5 left-5 cursor-pointer"
                 >
                     <img
                         loading="lazy"
@@ -67,7 +67,7 @@ export default function Login() {
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center px-16 py-6 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
+                <div className="flex overflow-hidden relative flex-col justify-center self-center px-16 py-6  max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 ">
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
@@ -77,7 +77,7 @@ export default function Login() {
                                 Hesabınıza daxil olun və ya qeydiyyatdan keçin.
                             </div>
                         </div>
-                        <div className="flex flex-col items-center mt-10 w-full max-md:max-w-full">
+                        <div className="flex flex-col items-center lg:mt-10 mt-4 w-full max-md:max-w-full">
                             <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
                                 <img
                                     loading="lazy"
@@ -88,7 +88,7 @@ export default function Login() {
                                     Google ilə davam et
                                 </div>
                             </div>
-                            <div className="flex gap-10 items-center mt-7 text-xs text-center text-white w-full">
+                            <div className="flex lg:gap-10 gap-5 items-center mt-7 text-xs text-center text-white w-full">
                                 <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                 <div className="self-stretch my-auto text-nowrap">
                                     Və ya
@@ -191,7 +191,7 @@ export default function Login() {
                                 </div>
                             )}
                         </div>
-                        <div className="mt-16 text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full">
+                        <div className=" lg:mt-16 mt-4 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
                             <span>Hesabın yoxdur? </span>
                             <Link
                                 to="/user/register"

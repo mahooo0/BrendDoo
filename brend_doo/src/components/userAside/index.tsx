@@ -35,7 +35,7 @@ function UserAside({ active }: { active: number }) {
     // };
 
     return (
-        <section className="flex overflow-hidden flex-col grow px-5 pt-5 lg:w-full min-w-[88px] w-[88px]  text-base bg-[#F8F8F8] rounded-[20px]  max-md:pb-24 max-md:mt-3 max-w-[325px] ">
+        <section className="flex overflow-hidden flex-col grow px-5 pt-5 lg:w-full min-w-[88px] w-[88px]  text-base bg-[#F8F8F8] rounded-[20px]  max-md:pb-24  max-w-[325px] ">
             <div className="flex flex-col self-center max-w-full font-medium text-black w-[122px]">
                 <img
                     loading="lazy"
@@ -50,7 +50,7 @@ function UserAside({ active }: { active: number }) {
             <hr className="mt-4 w-full border border-solid border-black border-opacity-10" />
             <Link to="/user">
                 <div
-                    className={`flex w-full overflow-hidden flex-col h-[56px] text-black justify-center p-1 ${
+                    className={`flex w-full overflow-hidden flex-col lg:h-[56px] h-fit text-black justify-center p-1 ${
                         active === 0 ? 'bg-[#B1C7E4]' : 'bg-white'
                     } rounded-3xl mt-2`}
                 >
@@ -89,7 +89,7 @@ function UserAside({ active }: { active: number }) {
             </Link>
             <Link to="/user/orders">
                 <div
-                    className={`flex w-full overflow-hidden flex-col h-[56px] text-black justify-center p-1 ${
+                    className={`flex w-full overflow-hidden flex-col lg:h-[56px] h-fit text-black justify-center p-1 ${
                         active === 1 ? 'bg-[#B1C7E4]' : 'bg-white'
                     } rounded-3xl mt-2`}
                 >
@@ -143,7 +143,7 @@ function UserAside({ active }: { active: number }) {
             </Link>
             <Link to="/user/liked">
                 <div
-                    className={`flex w-full overflow-hidden h-[56px] flex-col text-black justify-center p-1 ${
+                    className={`flex w-full overflow-hidden lg:h-[56px] h-fit flex-col text-black justify-center p-1 ${
                         active === 2 ? 'bg-[#B1C7E4]' : 'bg-white'
                     } rounded-3xl mt-2`}
                 >
@@ -174,7 +174,7 @@ function UserAside({ active }: { active: number }) {
             </Link>
             <Link to="/user/notifications">
                 <div
-                    className={`flex w-full h-[56px] overflow-hidden flex-col text-black justify-center p-1 ${
+                    className={`flex w-full lg:h-[56px] h-fit overflow-hidden flex-col text-black justify-center p-1 ${
                         active === 3 ? 'bg-[#B1C7E4]' : 'bg-white'
                     } rounded-3xl mt-2`}
                 >
@@ -219,7 +219,7 @@ function UserAside({ active }: { active: number }) {
             </Link>
 
             <div
-                className={`flex h-[56px] w-full overflow-hidden flex-col text-black justify-center p-1 ${
+                className={`flex lg:h-[56px] h-fit w-full overflow-hidden flex-col text-black justify-center p-1 ${
                     active === 4 ? 'bg-[#B1C7E4]' : 'bg-white'
                 } rounded-3xl mt-2`}
             >

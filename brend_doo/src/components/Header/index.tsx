@@ -434,7 +434,7 @@ export default function Header() {
                 </Link>{' '}
                 <div className="flex gap-4 items-center">
                     <div
-                        className={`absolute top-4 flex justify-between ease-in-out  duration-500  pr-[16px] z-[999999999] ${
+                        className={`absolute top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[999999999] ${
                             isSearchOpen
                                 ? ' left-[16px] h-[40px]  w-[93%] bg-[#F5F5F5] rounded-[100px] '
                                 : 'lg:left-[81px] md:left-[80%] sm:left-[75%] left-[58%] w-fit '

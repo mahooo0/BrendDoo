@@ -56,7 +56,7 @@ export default function StoriesSwipper({
                                         currentslide === i
                                             ? 'lg:scale-[1.2]'
                                             : ' lg:scale-[0.9]'
-                                    }   transition-all duration-300  h-full flex justify-center items-center py-[100px]  overflow-hidden relative`}
+                                    }   transition-all duration-300 w-[100%]  h-full flex justify-center items-center py-[100px]  overflow-hidden relative`}
                                 >
                                     <div
                                         className={`relative ${
@@ -66,9 +66,9 @@ export default function StoriesSwipper({
                                         }`}
                                     >
                                         <img
-                                            src="https://s3-alpha-sig.figma.com/img/33bd/8975/30d2e4e402d505a697e88ae6dfdf32b3?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Y9qoYSbSkrAUVq4qlBiIElQ7bHC8X~fvpEfu3lFzVdtVMeu8ZHdDMUxmht74aRaUQWLPccvC6WVBhwTn80qUroeq-ULmCqWW-0Pyn4~7bjH8sFiHem~0mLMMRr4hhPWHGDbM7wCOSiWbssF5G0lWHdaG2kblbbHxSI70n7PBFVde24KNX9nioHERWtANLWbMlmkUn3E~RZWl1SDTTvboP5yFKD~jZcmEI3dUKucj~-EBwYM4kTiUcY-SHf5RFLPkNhe5Mbc8ju95BULz~v0yKmxM4AtmRfgfJJoQTyu7CwKAuQoDHzHocRgQysy1qExzVRs1AXNRnb6b5cgRHCLfSQ__"
+                                            src="https://placehold.co/600x400"
                                             alt=""
-                                            className="rounded-[20px]"
+                                            className="rounded-[20px]  object-cover w-[300px] h-[400px]"
                                         />
                                         {/* {currentslide === i && (
                                             <div className=" absolute bottom-0 z-[9999]  w-full h-[20%] p-[12px}">

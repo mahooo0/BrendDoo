@@ -11,8 +11,8 @@ export default function UserSettings() {
             {/* <div className="mt-[180px]" /> */}
             <main className="flex flex-row w-full gap-5 p-5">
                 <UserAside active={0} />
-                <div className="flex overflow-hidden flex-col px-10 pt-10 pb-96 min-w-[230px] rounded-3xl bg-[#F8F8F8] max-md:px-5 max-md:pb-24 w-full">
-                    <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-[84%]">
+                <div className="flex overflow-hidden flex-col   lg:px-10 px-4 pt-10 pb-96 min-w-[230px] rounded-3xl bg-[#F8F8F8]  max-md:pb-24 w-full">
+                    <div className="flex flex-wrap gap-5 justify-between w-full ">
                         <div className="text-3xl font-semibold text-black">
                             Tənzimləmələr
                         </div>
@@ -21,44 +21,44 @@ export default function UserSettings() {
                         </button>
                     </div>
 
-                    <div className="flex flex-col mt-10 w-full text-base text-black text-opacity-90 max-md:max-w-[84%]">
-                        <div className="flex flex-wrap gap-3 items-center w-full max-md:max-w-[84%]">
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
+                    <div className="flex flex-col mt-10 w-full text-base text-black text-opacity-90 ">
+                        <div className="flex flex-wrap gap-3 items-center w-full ">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                 <input
                                     type="text"
                                     placeholder="İlahə Nəzərova"
-                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]"
+                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] "
                                 />
                             </div>
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                 <input
                                     type="email"
                                     placeholder="Email@gmail.com"
-                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]"
+                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] "
                                 />
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-3 items-center mt-3 w-full max-md:max-w-[84%]">
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
+                        <div className="flex flex-wrap gap-3 items-center mt-3 w-full ">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                 <input
                                     type="tel"
                                     placeholder="+994 00 000 00 00"
-                                    className="overflow-hidden px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]"
+                                    className="overflow-hidden px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] "
                                 />
                             </div>
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                 <input
                                     type="password"
                                     placeholder="Mövcud şifrə"
-                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]"
+                                    className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] "
                                 />
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-3 items-center mt-3 w-full text-black text-opacity-60 max-md:max-w-[84%]">
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
-                                <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]">
+                        <div className="flex flex-wrap gap-3 items-center mt-3 w-full text-black text-opacity-60 ">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
+                                <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
                                     <input
                                         type={
                                             !showPassword ? 'password' : 'text'
@@ -80,8 +80,8 @@ export default function UserSettings() {
                                     />
                                 </div>
                             </div>
-                            <div className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[370px] max-md:max-w-[84%]">
-                                <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] max-md:max-w-[84%]">
+                            <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
+                                <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
                                     <input
                                         type={
                                             showPassword2 ? 'password' : 'text'
@@ -106,7 +106,7 @@ export default function UserSettings() {
                         </div>
                     </div>
 
-                    <button className="gap-2.5 self-start px-10 py-4 mt-7 text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5">
+                    <button className="gap-2.5 self-start px-10 py-4 mt-7 lg:w-fit w-full text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5">
                         Yadda saxla
                     </button>
                 </div>
