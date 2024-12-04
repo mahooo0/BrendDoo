@@ -421,6 +421,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+            {/* mobil header */}
             <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full">
                 <Link to={'/'}>
                     <img
@@ -598,6 +599,11 @@ export default function Header() {
                             <div className="block px-4 py-2 text-sm text-gray-700">
                                 <Link to="/poducts">
                                     <div>Bütün məhsullar</div>
+                                </Link>
+                            </div>
+                            <div className="block px-4 py-2 text-sm text-gray-700">
+                                <Link to="/user/login">
+                                    <div>Daxil ol</div>
                                 </Link>
                             </div>
                         </div>
