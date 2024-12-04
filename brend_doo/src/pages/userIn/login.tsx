@@ -67,7 +67,7 @@ export default function Login() {
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center p-16 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
+                <div className="flex overflow-hidden relative flex-col justify-center self-center px-16 py-6 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
@@ -104,7 +104,7 @@ export default function Login() {
                                 {() => (
                                     <Form className="flex flex-col self-stretch mt-7 w-full max-md:max-w-full">
                                         <div className="flex flex-col w-full max-md:max-w-full">
-                                            <div className="overflow-hidden px-5 py-5 w-full text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
+                                            <div className="overflow-hidden px-5  flex justify-center items-center w-full h-[56px] text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                 <Field
                                                     type="email"
                                                     name="email"
@@ -118,7 +118,7 @@ export default function Login() {
                                                 className="text-red-500 text-sm mt-1"
                                             />
                                             <div className="flex flex-col mt-3 w-full max-md:max-w-full">
-                                                <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
+                                                <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                     <Field
                                                         type={
                                                             showPassword
@@ -149,7 +149,14 @@ export default function Login() {
                                                     component="div"
                                                     className="text-red-500 text-sm mt-1"
                                                 />
-                                                <div className="mt-3 text-sm text-right text-white max-md:max-w-full">
+                                                <div
+                                                    onClick={() =>
+                                                        navigate(
+                                                            '/user/newPasword'
+                                                        )
+                                                    }
+                                                    className="mt-3 text-sm text-right text-white max-md:max-w-full cursor-pointer hover:underline"
+                                                >
                                                     Şifrəmi unutdum
                                                 </div>
                                             </div>
@@ -157,6 +164,7 @@ export default function Login() {
                                         <button
                                             type="submit"
                                             disabled={loading}
+                                            onClick={() => navigate('/user')}
                                             className={`gap-2.5 self-stretch px-10 py-4 mt-7 w-full text-base font-medium text-black border border-solid ${
                                                 loading
                                                     ? 'bg-gray-400'

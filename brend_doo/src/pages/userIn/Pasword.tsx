@@ -77,24 +77,6 @@ export default function Password() {
                             </div>
                         </div>
                         <div className="flex flex-col items-center mt-10 w-full max-md:max-w-full">
-                            <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
-                                />
-                                <div className="self-stretch my-auto">
-                                    Google ilə davam et
-                                </div>
-                            </div>
-                            <div className="flex gap-10 items-center mt-7 text-xs text-center text-white w-full">
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[40%]" />
-                                <div className="self-stretch my-auto text-nowrap">
-                                    Və ya
-                                </div>
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[40%]" />
-                            </div>
-
                             <Formik
                                 initialValues={initialValues}
                                 validationSchema={validationSchema}
@@ -168,9 +150,6 @@ export default function Password() {
                                     {formStatus.message}
                                 </div>
                             )}
-                        </div>
-                        <div className="mt-16 text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full">
-                            <span>Hesabın yoxdur?</span> Qeydiyyatdan keç
                         </div>
                     </div>
                 </div>

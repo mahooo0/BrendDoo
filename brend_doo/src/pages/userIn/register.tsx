@@ -44,7 +44,7 @@ const Register = () => {
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center p-16 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
+                <div className="flex overflow-hidden relative flex-col justify-center self-center px-16 py-6 mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 max-md:mb-2.5">
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
@@ -69,12 +69,29 @@ const Register = () => {
                             }}
                         >
                             {({}) => (
-                                <Form className="flex flex-col items-center mt-10 w-full max-md:max-w-full">
+                                <Form className="flex flex-col items-center mt-4 w-full max-md:max-w-full">
+                                    <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
+                                        <img
+                                            loading="lazy"
+                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                            className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
+                                        />
+                                        <div className="self-stretch my-auto">
+                                            Google ilə davam et
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-10 items-center mt-4 text-xs text-center text-white w-full mb-4">
+                                        <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
+                                        <div className="self-stretch my-auto text-nowrap">
+                                            Və ya
+                                        </div>
+                                        <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
+                                    </div>
                                     <div className="flex flex-col w-full max-md:max-w-full">
                                         <Field
                                             name="name"
-                                            className="overflow-hidden px-5 py-5 w-full text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
-                                            placeholder="Ad"
+                                            className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
+                                            placeholder="Ad - Soyad"
                                         />
                                         <ErrorMessage
                                             name="name"
@@ -82,11 +99,16 @@ const Register = () => {
                                             className="text-red-500 text-xs mt-1"
                                         />
 
-                                        <Field
-                                            name="phone"
-                                            className="overflow-hidden px-5 py-5 w-full text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
-                                            placeholder="Telefon Nömrəsi"
-                                        />
+                                        <div className="flex  overflow-hidden px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
+                                            <span className="text-black text-opacity-60 flex justify-center items-center">
+                                                +994
+                                            </span>
+                                            <Field
+                                                name="phone"
+                                                className="outline-none bg-transparent ml-1 w-full h-[56px]"
+                                                placeholder="XX XXX XX XX"
+                                            />
+                                        </div>
                                         <ErrorMessage
                                             name="phone"
                                             component="div"
@@ -95,7 +117,7 @@ const Register = () => {
 
                                         <Field
                                             name="email"
-                                            className="overflow-hidden px-5 py-5 w-full text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
+                                            className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
                                             placeholder="Email"
                                         />
                                         <ErrorMessage
@@ -104,7 +126,7 @@ const Register = () => {
                                             className="text-red-500 text-xs mt-1"
                                         />
 
-                                        <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
+                                        <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
                                             <Field
                                                 type={
                                                     showPassword
@@ -113,7 +135,7 @@ const Register = () => {
                                                 }
                                                 name="password"
                                                 placeholder="Şifrə"
-                                                className="outline-none bg-transparent w-full"
+                                                className="outline-none bg-transparent w-full h-[56px]"
                                             />
                                             <img
                                                 loading="lazy"
@@ -122,8 +144,8 @@ const Register = () => {
                                                 }
                                                 src={
                                                     showPassword
-                                                        ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/visible-icon.png'
-                                                        : 'https://cdn.builder.io/api/v1/image/assets/TEMP/invisible-icon.png'
+                                                        ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
+                                                        : '/svg/closedaye.svg'
                                                 }
                                                 className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
                                                 alt="Toggle Password Visibility"
@@ -134,11 +156,26 @@ const Register = () => {
                                             component="div"
                                             className="text-red-500 text-xs mt-1"
                                         />
+                                        <div className="flex items-center mt-4">
+                                            <Field
+                                                type="checkbox"
+                                                name="acceptTerms"
+                                                className="mr-2 w-[14px] h-[14px]"
+                                            />
+                                            <label className="text-sm font-semibold text-white ">
+                                                İstifadəçi qaydaları ilə razıyam
+                                            </label>
+                                        </div>
+                                        <ErrorMessage
+                                            name="acceptTerms"
+                                            component="div"
+                                            className="text-red-500 text-xs mt-1"
+                                        />
 
                                         <div className="gap-2.5 self-stretch px-10 py-4 mt-7 w-full text-base font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px] max-md:px-5 max-md:max-w-full">
                                             <button
                                                 type="submit"
-                                                className="w-full"
+                                                className="w-full cursor-pointer"
                                             >
                                                 Qeydiyyatdan Keç
                                             </button>
@@ -149,7 +186,12 @@ const Register = () => {
                         </Formik>
                     </div>
 
-                    <div className="mt-16 text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full">
+                    <div
+                        className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 max-md:mt-10 max-md:max-w-full"
+                        onClick={() => {
+                            navigate('/user/login');
+                        }}
+                    >
                         <span>Hesabınız var?</span> Daxil olun
                     </div>
                 </div>

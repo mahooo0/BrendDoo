@@ -9,11 +9,11 @@ export default function UserLiked() {
             {/* <div className="mt-[180px]" /> */}
             <main className="flex flex-row w-full gap-5 p-5">
                 <UserAside active={2} />
-                <div className="w-full rounded-[20px] bg-[#F8F8F8] p-[40px]">
+                <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <h1 className="text-[28px] font-semibold mb-[40px]">
                         Bəyəndiklərim
                     </h1>
-                    <div className=" grid lg:grid-cols-3 grid-cols-1 justify-items-center w-full ">
+                    <div className=" grid lg:grid-cols-3 grid-cols-1 justify-items-center w-full gap-5 ">
                         <ProductCard bg="white" />
                         <ProductCard bg="white" />
                         <ProductCard bg="white" />

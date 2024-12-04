@@ -2,6 +2,7 @@ import { BreadCump } from '../../components/BroadCump';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import ProductSwipper from '../../components/ProductSwipper.tsx';
+import { Link } from 'react-router-dom';
 
 export default function Basked() {
     return (
@@ -16,8 +17,8 @@ export default function Basked() {
                         Brendlər{' '}
                     </h3>{' '}
                 </section>
-                <section className="flex lg:flex-row flex-col gap-3 h-fit px-[40px] justify-between mb-[100px]">
-                    <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 w-full gap-[65px] max-md:px-5">
+                <section className="flex lg:flex-row flex-col gap-3 h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
+                    <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 w-full gap-[65px] h-fit max-md:px-5">
                         <div className="flex flex-col max-md:max-w-full">
                             <div className="flex flex-wrap gap-10 items-center justify-between mt-5 max-md:max-w-full">
                                 <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
@@ -154,11 +155,13 @@ export default function Basked() {
                                             </div>
                                         </div>
                                     </div>
-                                    <button className="flex overflow-hidden flex-col justify-center items-center px-16 py-3.5 mt-6 w-full text-base font-medium text-white bg-[#3873C3] rounded-[100px]">
-                                        <div className="gap-2 self-stretch">
-                                            Ödəniş et
-                                        </div>
-                                    </button>
+                                    <Link to="/user/basked/confirm">
+                                        <button className="flex overflow-hidden flex-col justify-center items-center px-16 py-3.5 mt-6 w-full text-base font-medium text-white bg-[#3873C3] rounded-[100px]">
+                                            <div className="gap-2 self-stretch">
+                                                sifarish et
+                                            </div>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

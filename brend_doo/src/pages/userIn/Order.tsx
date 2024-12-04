@@ -10,7 +10,7 @@ export default function Order() {
             {/* <div className="mt-[180px]" /> */}
             <main className="flex flex-row w-full gap-5 p-5">
                 <UserAside active={1} />
-                <div className="w-full rounded-[20px] bg-[#F8F8F8] p-[40px]">
+                <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <div className="flex flex-row flex-wrap justify-between">
                         <h1 className="text-[28px] font-semibold mb-[40px]">
                             Bəyəndiklərim

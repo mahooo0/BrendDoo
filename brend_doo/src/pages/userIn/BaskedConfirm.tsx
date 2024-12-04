@@ -16,7 +16,7 @@ export default function BaskedConfirm() {
                         Brendlər{' '}
                     </h3>{' '}
                 </section>
-                <section className="flex lg:flex-row flex-col gap-3 h-fit px-[40px] justify-between mb-[100px]">
+                <section className="flex lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
                     <BaskedForum />
                     <div className="w-[2px] h-[500px] bg-black lg:block hidden  opacity-10" />
                     <div className="flex flex-col rounded-3xl min-w-[306px]">
@@ -82,7 +82,7 @@ export default function BaskedConfirm() {
                                         placeholder="Kupon"
                                         className="overflow-hidden px-4 py-3.5 w-full whitespace-nowrap bg-white rounded-[100px] text-black text-opacity-60"
                                     />
-                                    <button className="gap-2.5 self-stretch px-10 py-4 mt-3 w-full font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px]">
+                                    <button className="gap-2.5 self-stretch px-10 py-4 mt-3 w-full font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px]">
                                         Təsdiq et
                                     </button>
                                 </div>

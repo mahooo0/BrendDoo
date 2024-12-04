@@ -148,10 +148,10 @@ export default function Header() {
                         </Link>
 
                         <button
-                            className="flex gap-3 items-center"
+                            className="flex gap-3  items-center"
                             onClick={() => {
                                 setIsBaskedOpen((prev) => !prev);
-                                if (!isBaskedOpen) {
+                                if (!isBaskedOpen && SearchValue === '') {
                                     setIsClothingOpen(false);
                                     setSearchValue('');
                                     disableScrolling();
@@ -194,7 +194,7 @@ export default function Header() {
                         }}
                     />
                     <div className="flex overflow-hidden flex-wrap gap-10 items-start py-10 pr-20 pl-10 bg-white rounded-3xl max-md:px-5">
-                        <div className="flex flex-col whitespace-nowrap">
+                        <div className="flex flex-col whitespace-nowrap min-w-[280px]">
                             <div className="text-sm text-black text-opacity-60">
                                 Kateqoriyalar
                             </div>
@@ -412,9 +412,11 @@ export default function Header() {
                                     600 AZN
                                 </div>
                             </div>
-                            <div className="gap-2.5 self-stretch px-10 py-4 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5">
-                                Sifariş et
-                            </div>
+                            <Link to="/user/basked/confirm">
+                                <div className="gap-2.5 self-stretch px-10 py-4 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5">
+                                    Sifariş et
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

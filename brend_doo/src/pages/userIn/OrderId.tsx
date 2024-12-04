@@ -1,17 +1,22 @@
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 
 export default function OrderId() {
+    const navigate = useNavigate();
     return (
         <div>
             <Header />
             {/* <div className="mt-[180px]" /> */}
             <main className="flex flex-row w-full gap-5 p-5">
                 <UserAside active={1} />
-                <div className="w-full rounded-[20px] bg-[#F8F8F8] p-[40px]">
+                <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <div className="flex flex-col items-start ">
                         <div className="flex flex-col max-w-full whitespace-nowrap w-[162px]">
-                            <div className="flex gap-2 items-center self-start text-sm text-zinc-950">
+                            <div
+                                onClick={() => navigate(-1)}
+                                className="flex gap-2 items-center self-start text-sm text-zinc-950 cursor-pointer"
+                            >
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/4e16fbda98176a2fcfc899b69e0f7e3fea7dc9adeb9c74702a0323a7762de95d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -23,118 +28,81 @@ export default function OrderId() {
                                 Sifarişim
                             </div>
                         </div>
+
                         <div className="flex flex-nowrap gap-2 items-center mt-10 w-full ">
                             <div>
                                 <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
                             </div>
-                            <div className="flex shrink-0 self-stretch my-auto bg-green-500 h-[3px]  rounded-[100px] w-[28%]" />
+                            <div className="flex shrink-0 self-stretch my-auto bg-green-500 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500" />
-                            <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] w-[28%]" />
+                            <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
-                            <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] w-[28%]" />
+                            <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
                         </div>
-                        <div className="flex flex-wrap gap-5 justify-between self-stretch mt-3 w-full max-md:max-w-full">
+                        <div className="flex flex-wrap lg:flex-row flex-col  gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
                             <div className="flex flex-col">
-                                <div className="text-sm text-black">
+                                <div className="text-sm w-fit text-black">
                                     Sifariş verildi
                                 </div>
-                                <div className="mt-1.5 text-xs text-black text-opacity-60">
+                                <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                     05.02.2024
                                 </div>
                             </div>
                             <div className="flex flex-col">
-                                <div className="text-sm text-black">
+                                <div className="text-sm w-fit text-black">
                                     Sifariş hazırlanır
                                 </div>
-                                <div className="mt-1.5 text-xs text-black text-opacity-60">
+                                <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                     05.02.2024
                                 </div>
                             </div>
-                            <div className="self-start text-sm text-green-950">
+                            <div className="self-start text-sm w-fit text-green-950">
                                 Kuryerə verildi
                             </div>
-                            <div className="self-start text-sm whitespace-nowrap text-black text-opacity-60">
+                            <div className="self-start text-sm w-fit whitespace-nowrap text-black text-opacity-60">
                                 Çatdırıldı
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col font-medium mt-[60px]">
-                        <div className="flex flex-wrap gap-5 items-center w-full max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center items-start self-stretch p-3 my-auto rounded-3xl bg-white bg-opacity-40 min-w-[240px] w-[366px] max-md:pr-5 max-md:max-w-full">
-                                <div className="flex gap-3 items-center">
+                    <div className="flex flex-col font-semibold text-[16px] mt-[60px]">
+                        <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 items-center w-full max-md:max-w-full">
+                            {Array.from({ length: 4 }).map(() => (
+                                <div className="flex gap-3 items-center flex-wrap">
                                     <img
                                         loading="lazy"
                                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                         className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
                                     />
                                     <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
+                                        <div className="text-sm text-black text-wrap">
                                             Zara iki tərəfli kolleksiya pencək
                                         </div>
-                                        <div className="mt-4 text-xs text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
+                                        <div className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
                                             Məhsulu dəyərləndir
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center items-start self-stretch p-3 my-auto rounded-3xl bg-white bg-opacity-40 min-w-[240px] w-[366px] max-md:pr-5 max-md:max-w-full">
-                                <div className="flex gap-3 items-center">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="mt-4 text-xs text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                                            Məhsulu dəyərləndir
-                                        </div>
+                            ))}
+                            <div className="flex gap-3 items-center flex-wrap">
+                                <img
+                                    loading="lazy"
+                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
+                                />
+                                <div className="flex flex-col justify-center self-stretch my-auto">
+                                    <div className="text-sm text-black text-wrap">
+                                        Zara iki tərəfli kolleksiya pencək
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap gap-5 items-center mt-5 w-full max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center items-start self-stretch p-3 my-auto rounded-3xl bg-white bg-opacity-40 min-w-[240px] w-[366px] max-md:pr-5 max-md:max-w-full">
-                                <div className="flex gap-3 items-center">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="mt-4 text-xs text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                                            Məhsulu dəyərləndir
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center items-start self-stretch p-3 my-auto rounded-3xl bg-white bg-opacity-40 min-w-[240px] w-[366px] max-md:pr-5 max-md:max-w-full">
-                                <div className="flex gap-3 items-center">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="mt-4 text-xs text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                                            Məhsulu dəyərləndir
-                                        </div>
+                                    <div className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
+                                        Məhsulu dəyərləndir
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="flex overflow-hidden flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5 mt-4">
-                        <div className="flex gap-5 items-center">
+                        <div className="flex gap-5 items-center flex-wrap">
                             <div className="flex gap-5 items-center self-stretch my-auto">
                                 <img
                                     loading="lazy"
@@ -181,7 +149,7 @@ export default function OrderId() {
                         </button>
                     </div>
                     <div className="flex flex-col mt-[30px]">
-                        <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
+                        <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-t-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
                             <div className="self-stretch my-auto">
                                 Çatdırılma məlumatları:
                             </div>
@@ -199,10 +167,10 @@ export default function OrderId() {
                                 </div>
                             </div>
                         </div>
-                        <div className="overflow-hidden px-5 pt-5 pb-11 rounded-3xl mt-1 w-full bg-white max-md:pl-5 max-md:max-w-full">
+                        <div className="overflow-hidden px-5 pt-5 pb-11 rounded-b-3xl mt-1 w-full bg-white max-md:pl-5 max-md:max-w-full">
                             <div className="flex gap-5 max-md:flex-col">
                                 <div className="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
-                                    <div className="flex flex-col w-full max-md:mt-10">
+                                    <div className="flex flex-col w-full max-md:mt-10 h-full justify-between">
                                         <div className="flex flex-col w-full">
                                             <div className="text-sm text-black text-opacity-60">
                                                 Ünvan:
