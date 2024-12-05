@@ -78,7 +78,7 @@ export function Footer() {
                                                         Şirkət haqqında
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col mt-5 text-base text-white text-opacity-80">
+                                                <div className="flex flex-col  text-base text-white text-opacity-80">
                                                     <HashLink
                                                         to="/aboutus#faq"
                                                         className="cursor-pointer"

@@ -73,7 +73,7 @@ export default function UserSettings() {
                                                 ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
                                                 : '/svg/closedaye.svg'
                                         }
-                                        className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
+                                        className="object-contain shrink-0 w-6 aspect-square cursor-pointer lg:block md:block hidden"
                                         onClick={() =>
                                             setShowPassword(!showPassword)
                                         }
@@ -96,7 +96,7 @@ export default function UserSettings() {
                                                 ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
                                                 : '/svg/closedaye.svg'
                                         }
-                                        className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
+                                        className="object-contain shrink-0 w-6 aspect-square cursor-pointer lg:block md:block hidden"
                                         onClick={() =>
                                             setShowPassword2(!showPassword2)
                                         }

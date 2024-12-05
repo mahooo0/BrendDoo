@@ -535,12 +535,14 @@ export default function Header() {
                             }
                         }}
                     >
-                        <div className="w-[40px] h-[40px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
-                            <img src="/svg/basked.svg" />
-                            <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
-                                2
+                        <Link to="/user/basked">
+                            <div className="w-[40px] h-[40px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
+                                <img src="/svg/basked.svg" />
+                                <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
+                                    2
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </button>
                     <div className="relative ">
                         <div
