@@ -30,7 +30,7 @@ export default function StoriesSwipper({
                 <div className="relative flex justify-center items-center w-full h-[100vh]">
                     <Swiper
                         className="!w-full h-full "
-                        spaceBetween={'40px'}
+                        spaceBetween={'80px'}
                         // grabCursor={true}
                         ref={swiperRef}
                         onSlideChange={handleSlideChange}
@@ -40,8 +40,8 @@ export default function StoriesSwipper({
                         loop={false}
                         navigation={false}
                         breakpoints={{
-                            1024: { slidesPerView: 5 },
-                            768: { slidesPerView: 4 },
+                            1440: { slidesPerView: 5 },
+                            768: { slidesPerView: 3 },
                             556: { slidesPerView: 2 },
                             320: { slidesPerView: 1 },
                         }}
@@ -49,14 +49,14 @@ export default function StoriesSwipper({
                         {Array.from({ length: 20 }).map((_: any, i: number) => (
                             <SwiperSlide
                                 key={i}
-                                className={`lg:!h-full h-auto lg:px-0 px-5`}
+                                className={`lg:!h-full !flex items-center  h-auto lg:px-0 !px-5`}
                             >
                                 <div
                                     className={` ${
                                         currentslide === i
-                                            ? 'lg:scale-[1.2]'
+                                            ? 'lg:scale-[1.1]'
                                             : ' lg:scale-[0.9]'
-                                    }   transition-all duration-300 w-[100%]  h-full flex justify-center items-center py-[100px]  overflow-hidden relative`}
+                                    }   transition-all duration-300 w-[100%]  h-fit flex justify-center items-center    relative`}
                                 >
                                     <div
                                         className={`relative ${
@@ -68,7 +68,7 @@ export default function StoriesSwipper({
                                         <img
                                             src="https://placehold.co/600x400"
                                             alt=""
-                                            className="rounded-[20px]  object-cover w-[300px] h-[400px]"
+                                            className="rounded-[20px] overflow-hidden  object-cover min-w-[300px] w-full h-[400px]"
                                         />
                                         {/* {currentslide === i && (
                                             <div className=" absolute bottom-0 z-[9999]  w-full h-[20%] p-[12px}">

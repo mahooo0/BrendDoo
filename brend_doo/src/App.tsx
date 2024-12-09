@@ -49,7 +49,7 @@ const App = () => {
             <Route path="/user/orders" element={<Order />} />
             <Route path="/user/orders/:id" element={<OrderId />} />
             <Route path="/user/basked/confirm" element={<BaskedConfirm />} />
-            <Route path="/user/basked" element={<Basked />} />
+            <Route path="/basked/sifarislerim" element={<Basked />} />
         </Routes>
     );
 };

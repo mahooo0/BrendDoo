@@ -17,7 +17,7 @@ export default function Basked() {
                         Brendlər{' '}
                     </h3>{' '}
                 </section>
-                <section className="flex lg:flex-row flex-col gap-3 h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
+                <section className="flex lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
                     <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 w-full gap-[65px] h-fit max-md:px-5">
                         <div className="flex flex-col max-md:max-w-full">
                             <div className="flex flex-wrap gap-10 items-center justify-between mt-5 max-md:max-w-full">
@@ -110,7 +110,7 @@ export default function Basked() {
                             <div className="mt-5 max-w-full min-h-0 border border-solid border-black border-opacity-10 w-full" />
                         </div>
                     </div>
-                    <div className="w-[2px] h-[500px] bg-black lg:block hidden  opacity-10" />
+                    <div className="w-[2px]  min-h-[400px] h-[100%] bg-black lg:block hidden  opacity-10" />
                     <div className="flex flex-col rounded-3xl min-w-[306px]">
                         <div className="flex overflow-hidden flex-col justify-center p-7 w-full rounded-3xl bg-stone-50">
                             <div className="flex flex-col">
@@ -167,7 +167,7 @@ export default function Basked() {
                         </div>
                     </div>
                 </section>
-                <section className="mt-[100px] px-[40px] bg-[white] py-[80px]">
+                <section className="mt-[100px] px-[40px] bg-[white] pb-[80px]">
                     <div className="flex flex-row flex-wrap justify-between ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr

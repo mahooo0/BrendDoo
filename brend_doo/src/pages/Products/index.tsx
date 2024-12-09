@@ -14,9 +14,9 @@ const DropdownItem = () => {
 
     return (
         <div className="flex flex-col w-full">
-            <div className="flex flex-col w-full  max-w-[280px] text-base">
+            <div className="flex flex-col w-full  text-base">
                 <div
-                    className="flex overflow-hidden gap-5 justify-between px-4 py-3.5 w-full bg-neutral-100 rounded-[100px] cursor-pointer"
+                    className="flex overflow-hidden flex-row gap-5 justify-between px-4 py-3.5 w-full bg-neutral-100 rounded-[100px] cursor-pointer"
                     onClick={toggleDropdown}
                 >
                     <div className="my-auto">Geyim</div>
@@ -30,8 +30,8 @@ const DropdownItem = () => {
             </div>
 
             {isOpen && (
-                <div className="flex flex-col mt-2 w-full  max-w-[280px] text-sm">
-                    <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-blue-600 rounded-[100px]">
+                <div className="flex flex-col mt-2 w-full   text-sm">
+                    <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-[#3873C3] rounded-[100px]">
                         Köynək
                     </div>
                     <div className="overflow-hidden px-4 py-3.5 mt-1 w-full bg-zinc-50 rounded-[100px]">

@@ -39,13 +39,17 @@ export default function ProductCard({
                     />
                 </div>
                 {isnew && (
-                    <div className="bg-[#8E98B8] text-white px-3 py-2  rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text-[12px] font-medium">Yeni</p>{' '}
+                    <div className="bg-[#8E98B8] text-white px-3 py-2 h-fit  rounded-full  absolute top-6 left-6 flex justify-center items-center">
+                        <p className="text-[12px] font-medium leading-[14px]">
+                            Yeni
+                        </p>{' '}
                     </div>
                 )}
                 {issale && (
-                    <div className="bg-[#FF3C79] text-white px-3 py-2  rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text-[12px] font-medium">10% endirim</p>{' '}
+                    <div className="bg-[#FF3C79] text-white px-3 py-2  h-fit rounded-full  absolute top-6 left-6 flex justify-center items-center">
+                        <p className="text-[12px]  font-medium leading-[14px]">
+                            10% endirim
+                        </p>{' '}
                     </div>
                 )}
                 <div
@@ -72,7 +76,7 @@ export default function ProductCard({
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/ccd2f29609bd70219e8403081a0990ef297d5230b91e7fae2658815da1e44173?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                 />
-                                <div className="self-stretch my-auto ">
+                                <div className="self-stretch text-nowrap my-auto ">
                                     Səbətə əlavə et
                                 </div>
                             </div>
@@ -123,14 +127,14 @@ export default function ProductCard({
                         </div>
                     )}
                     {variant === 3 && (
-                        <div className="flex overflow-hidden flex-col justify-center px-14 py-3 text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
+                        <div className="flex overflow-hidden flex-col justify-center px-14 lg:py-3 py-auto items-center text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
                             <div className="flex gap-2 items-center">
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/7aea5798032300cff0cb8633f827efc8d9c19b5e90bd7d2d3214a3fe5775d3b4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                                 />
-                                <div className="self-stretch my-auto">
+                                <div className="self-stretch text-nowrap my-auto">
                                     Səbətə əlavə edildi
                                 </div>
                             </div>

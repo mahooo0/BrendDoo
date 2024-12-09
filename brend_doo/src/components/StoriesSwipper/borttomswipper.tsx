@@ -57,7 +57,7 @@ export default function Borttomswipper({ isopen }: { isopen: boolean }) {
                 </div>
                 <Swiper
                     ref={innerSwiperRef}
-                    slidesPerView={1.1}
+                    slidesPerView={1}
                     cursor-grab
                     spaceBetween={12}
                     onSwiper={(swiper) => {
@@ -66,13 +66,13 @@ export default function Borttomswipper({ isopen }: { isopen: boolean }) {
                             e.stopPropagation()
                         );
                     }}
-                    className="!h-fit !pl-[12px]"
+                    className="!h-fit !px-2"
                     // Set to show three slides at a time
                 >
                     {Array.from({ length: 5 }).map((_, i) => (
                         <SwiperSlide
                             key={i}
-                            className="!w-fit flex items-end pb-[24px]"
+                            className=" !flex !justify-center items-end pb-[24px]"
                         >
                             <div className="flex px-[7px]  gap-2 flex-row justify-around w-full bg-white bg-opacity-80  items-center rounded-[20px]">
                                 <img

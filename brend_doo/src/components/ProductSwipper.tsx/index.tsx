@@ -50,10 +50,10 @@ export default function ProductSwipper({ bg }: Proops) {
                     568: {
                         slidesPerView: 2,
                     },
-                    768: {
+                    1224: {
                         slidesPerView: 3,
                     },
-                    900: {
+                    1300: {
                         slidesPerView: 4,
                     },
                 }}
@@ -63,7 +63,7 @@ export default function ProductSwipper({ bg }: Proops) {
                 className="mySwiper "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <SwiperSlide key={i}>
+                    <SwiperSlide key={i} className="!flex !justify-center">
                         <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
                     </SwiperSlide>
                 ))}

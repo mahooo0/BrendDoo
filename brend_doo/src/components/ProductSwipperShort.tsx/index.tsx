@@ -60,7 +60,7 @@ export default function ProductSwipperShort({ bg }: Proops) {
                 className="mySwiper "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <SwiperSlide key={i}>
+                    <SwiperSlide key={i} className="!flex !justify-center">
                         <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
                     </SwiperSlide>
                 ))}

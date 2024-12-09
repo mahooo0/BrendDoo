@@ -24,12 +24,7 @@ export function Footer() {
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar
                                                 </div>
-                                                <div
-                                                    className="flex flex-col mt-5 w-full text-base text-white text-opacity-80"
-                                                    onClick={() =>
-                                                        navigate('/poducts')
-                                                    }
-                                                >
+                                                <div className="flex flex-col gap-2 mt-5 w-full text-base text-white text-opacity-80">
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
@@ -64,7 +59,7 @@ export function Footer() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col w-[171px]">
+                                            <div className="flex flex-col w-[171px] gap-2">
                                                 <div className="text-lg font-medium text-white">
                                                     Şirkət
                                                 </div>
@@ -92,7 +87,7 @@ export function Footer() {
                                                 <div className="text-lg font-medium text-white">
                                                     Digər keçidlər
                                                 </div>
-                                                <div className="flex flex-col mt-5 max-w-full text-base text-white text-opacity-80 w-[164px]">
+                                                <div className="flex flex-col gap-2 mt-5 max-w-full text-base text-white text-opacity-80 w-[164px]">
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
@@ -171,7 +166,7 @@ export function Footer() {
                         </div>
                         <div className="flex flex-col mt-5">
                             <div className="flex flex-col w-full text-base text-white">
-                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-0 rounded-[100px] max-md:pr-5">
+                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
                                     <div className="flex gap-3 items-center">
                                         <img
                                             loading="lazy"
@@ -183,7 +178,7 @@ export function Footer() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-0 rounded-[100px] max-md:pr-5">
+                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
                                     <div className="flex gap-3 items-center">
                                         <img
                                             loading="lazy"

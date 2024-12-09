@@ -46,7 +46,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <button
-                                className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
+                                className="gap-2.5 leading-[24px] h-fit self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
                                 Yeni məhsullar
@@ -107,7 +107,7 @@ export default function Home() {
                     />{' '}
                 </section>
                 <section className="mt-[100px] px-[40px]">
-                    <div className="flex flex-row flex-wrap justify-between ">
+                    <div className="flex flex-row flex-wrap justify-between gap-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
@@ -121,13 +121,13 @@ export default function Home() {
                     <ProductSwipper bg="grey" />
                 </section>{' '}
                 <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px]">
-                    <div className="flex flex-row flex-wrap justify-between ">
+                    <div className="flex flex-row flex-wrap justify-between  gap-4">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
                         <button
                             onClick={() => navigate('/poducts')}
-                            className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                            className="rounded-[100px] duration-300  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
                         >
                             {' '}
                             Hamısına bax
@@ -136,7 +136,7 @@ export default function Home() {
                     <ProductSwipper bg="white" />
                 </section>
                 <section className="px-[40px] py-[100px]">
-                    <div className="overflow-hidden rounded-3xl bg-slate-400 ">
+                    <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
                         <div className="flex gap-5 max-md:flex-col">
                             <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
                                 <img
@@ -171,7 +171,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="mt-[100px] flex justify-center flex-col">
+                <section className=" flex justify-center flex-col">
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] text-center ">
                         İnstaqram heyakələr{' '}
                     </h2>
@@ -198,7 +198,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <button
-                                className="gap-2.5 self-start px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
+                                className="gap-2.5 self-start px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] leading-[22px] h-fit hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
                                 Məhsullara bax
@@ -332,7 +332,7 @@ export default function Home() {
                         </h2>
                         <div>
                             <button
-                                className="rounded-[100px] duration-300  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                                className="rounded-[100px] duration-300 leading-[20px] h-fit  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
                                 onClick={() => navigate('/poducts')}
                             >
                                 {' '}
@@ -383,7 +383,7 @@ export default function Home() {
                             </div>
                             <button
                                 onClick={() => navigate('/poducts')}
-                                className="gap-2.5 self-start px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
+                                className="gap-2.5 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
                             >
                                 Məhsullara bax
                             </button>
@@ -405,7 +405,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div
-                                className="cursor-pointer gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                                className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
                                 Hamısına bax
@@ -441,12 +441,12 @@ export default function Home() {
                     ))}
                 </section>
                 <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px]">
-                    <div className="flex flex-row flex-wrap justify-between ">
+                    <div className="flex flex-row flex-wrap justify-between gap-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
                         <button
-                            className="rounded-[100px] duration-300  bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                            className="rounded-[100px] duration-300 leading-[20px] h-fit bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
                             onClick={() => navigate('/producs')}
                         >
                             {' '}

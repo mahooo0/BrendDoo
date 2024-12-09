@@ -18,7 +18,7 @@ export default function ImageSwipper() {
         }
     };
     return (
-        <div className="slider-container   lg:w-[60%] w-full  aspect-square rounded-[20px] overflow-hidden relative">
+        <div className="slider-container   lg:w-[60%] w-full  lg:aspect-square  aspect-auto rounded-[20px] overflow-hidden relative">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides
@@ -26,10 +26,10 @@ export default function ImageSwipper() {
                 loop={false} // Loop the slider
                 // Enable pagination dots
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper rounded-[20px] overflow-hidden !h-full "
+                className="mySwiper rounded-[20px] overflow-hidden lg:!h-full !h-[500px]  "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <SwiperSlide key={i}>
+                    <SwiperSlide key={i} className="!h-full">
                         <img
                             src="https://placehold.co/600x400"
                             alt=""

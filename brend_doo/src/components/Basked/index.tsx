@@ -128,17 +128,17 @@ export default function BaskedForum() {
                         <div className="text-sm text-black text-opacity-60">
                             Ödəniş növü
                         </div>
-                        <div className="flex flex-wrap gap-5 items-center mt-5 text-base max-md:max-w-full">
+                        <div className="flex lg:flex-row flex-col gap-5 items-center mt-5 text-base max-md:max-w-full">
                             {/* Checkbox 2 */}
 
-                            <label className="flex items-center gap-3 cursor-pointer">
+                            <label className="flex lg:w-[50%] w-full  items-center gap-3 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     style={{ display: 'none' }}
                                     className="appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600"
                                 />
                                 <div
-                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 bg-white border-slate-300 min-w-[240px] rounded-[100px]"
+                                    className="flex overflow-hidden flex-1 shrink gap-10 justify-around items-center px-5 py-4 w-full border border-solid basis-0 bg-white border-slate-300 min-w-[240px] rounded-[100px]"
                                     onClick={() =>
                                         setcheckbox2((prew) => !prew)
                                     }
@@ -186,14 +186,14 @@ export default function BaskedForum() {
                                 </div>
                             </label>
                             {/* Checkbox 3 */}
-                            <label className="flex items-center gap-3 cursor-pointer">
+                            <label className="flex  lg:w-[50%] w-full items-center gap-3 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     style={{ display: 'none' }}
                                     className="appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-blue-600"
                                 />
                                 <div
-                                    className="flex bg-white overflow-hidden flex-1 shrink gap-10 justify-center items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
+                                    className="flex bg-white overflow-hidden flex-1 shrink gap-10 justify-around items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px]"
                                     onClick={() =>
                                         setcheckbox3((prew) => !prew)
                                     }

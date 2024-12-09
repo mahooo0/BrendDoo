@@ -143,7 +143,7 @@ export default function Contact() {
                                     {/* Submit Button */}
                                     <button
                                         type="submit"
-                                        className="gap-2.5 self-stretch px-10 py-4 mt-7 w-full font-medium text-black whitespace-nowrap bg-white rounded-[100px] max-md:px-5 max-md:max-w-full"
+                                        className="gap-2.5 self-stretch px-10 py-4 mt-7 w-full font-medium text-black whitespace-nowrap bg-white hover:bg-[#3873C3] hover:text-white duration-300 rounded-[100px] max-md:px-5 max-md:max-w-full"
                                     >
                                         Göndər
                                     </button>
