@@ -9,7 +9,7 @@ export default function UserRules() {
             <main className=" lg:mt-[40px] mt-0 px-[40px] mb-[100px]">
                 <div className="">
                     <BreadCump />
-                    <h3 className="text-[40px] font-semibold mt-[28px] mb-[40px]">
+                    <h3 className="text-[40px] font-semibold   max-sm:text-[32px] mt-[28px] mb-[40px]">
                         Qaydalar və şərtlər{' '}
                     </h3>{' '}
                 </div>

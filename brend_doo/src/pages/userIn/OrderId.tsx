@@ -8,7 +8,7 @@ export default function OrderId() {
         <div>
             <Header />
             {/* <div className="mt-[180px]" /> */}
-            <main className="flex flex-row w-full gap-5 p-5">
+            <main className="flex max-sm:flex-col flex-row w-full gap-5 p-5">
                 <UserAside active={1} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <div className="flex flex-col items-start ">

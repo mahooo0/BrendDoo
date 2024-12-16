@@ -78,7 +78,7 @@ function FAQItem({
             aria-expanded={isOpen}
         >
             <div className="flex  gap-10 items-center max-md:max-w-full justify-between">
-                <p className="self-stretch my-auto max-md:max-w-full text-[16px]  text-wrap text-black font-medium ">
+                <p className="self-stretch my-auto max-md:max-w-full max-sm:text-[12px] text-[16px]  text-wrap text-black font-medium ">
                     {question}
                 </p>
                 <button
@@ -122,15 +122,15 @@ function FAQSection({
     return (
         <section
             id="faq"
-            className="flex mx-[40px] rounded-[20px] mb-[100px] lg:flex-row flex-col gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] px-[30px] py-[100px]"
+            className="flex mx-[40px] rounded-[20px] mb-[100px] lg:flex-row flex-col gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] px-[30px] max-sm:py-9 py-[100px]"
         >
             <div className="flex flex-col max-w-[414px]">
                 <div className="flex flex-col w-full">
-                    <h3 className="text-[40px]  font-semibold text-slate-900">
+                    <h3 className="text-[40px] max-sm:text-[32px]  font-semibold text-slate-900">
                         {Title}{' '}
                     </h3>
                     {!isContact && (
-                        <p className="mt-5 text-base text-black text-opacity-80 ">
+                        <p className="mt-5 text-base max-sm:text-[12px] text-black text-opacity-80 ">
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been{' '}
                         </p>
@@ -139,14 +139,14 @@ function FAQSection({
                 {!isContact && (
                     <button
                         onClick={() => navigate('/contact')}
-                        className="gap-2.5 leading-[19px] self-start px-10 py-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
+                        className="gap-2.5 leading-[19px] self-start px-10 py-4 max-sm:mt-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
                     >
                         Bizimlə əlaqə
                     </button>
                 )}
             </div>
             <div className="flex flex-col text-base font-medium text-center text-black min-w-[240px] w-full max-md:max-w-full">
-                <div className="flex flex-row flex-wrap w-full lg:justify-end justify-center gap-3 mb-[30px]">
+                <div className="flex flex-row flex-wrap w-full lg:justify-end justify-around gap-3 mb-[30px]">
                     <NoneTolightBlue isactive={true}>Hamısı</NoneTolightBlue>
                     <NoneTolightBlue>Geri qaytarılma</NoneTolightBlue>
                     <NoneTolightBlue>Ödəniş</NoneTolightBlue>

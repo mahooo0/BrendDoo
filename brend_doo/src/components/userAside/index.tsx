@@ -35,19 +35,19 @@ function UserAside({ active }: { active: number }) {
     // };
 
     return (
-        <section className="flex overflow-hidden flex-col grow px-5 pt-5 h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px]  text-base bg-[#F8F8F8] rounded-[20px]  max-md:pb-24  max-w-[325px] ">
-            <div className="flex flex-col self-center max-w-full font-medium text-black w-[122px]">
+        <section className="flex overflow-hidden max-sm:flex-row flex-col grow max-sm:px-0  max-sm:justify-center z-20 px-5 pt-5 max-sm:py-3 gap-2 max-sm:h-fit  h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px] max-sm:w-full  text-base bg-[#F8F8F8] rounded-[20px]    lg:max-w-[325px] max-w-full ">
+            <div className="flex flex-col self-center justify-center max-w-full font-medium text-black w-[122px] max-sm:w-12 max-sm:h-14 min-w-12 min-h-14 items-center">
                 <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1f1b628a1bdffc4af6dbbde03769db38732ca0c0a134eb6b33fe35ac9df3eb1?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2"
                     alt="İlaha Nazarova's profile picture"
-                    className="object-contain self-center w-20 aspect-square rounded-[100px]"
+                    className="object-contain self-center !w-20 aspect-square rounded-[100px]"
                 />
-                <h1 className="mt-3 text-center text-[16px] font-normal">
+                <h1 className="mt-3 max-sm:hidden text-center text-[16px] font-normal">
                     İlaha Nazarova
                 </h1>
             </div>
-            <hr className="mt-4 w-full border border-solid border-black border-opacity-10" />
+            <hr className="mt-4 w-full max-sm:hidden border border-solid border-black border-opacity-10" />
             <Link to="/user">
                 <div
                     className={`flex w-full overflow-hidden flex-col lg:h-[56px] h-fit text-black justify-center p-1 ${
@@ -217,42 +217,43 @@ function UserAside({ active }: { active: number }) {
                     </div>
                 </div>
             </Link>
-
-            <div
-                className={`flex lg:h-[56px] h-fit w-full overflow-hidden flex-col text-black justify-center p-1 ${
-                    active === 4 ? 'bg-[#B1C7E4]' : 'bg-white'
-                } rounded-3xl mt-2`}
-            >
-                <div className="flex gap-3 items-center">
-                    <div
-                        className={`p-2 rounded-full ${
-                            active === 3 ? 'bg-white' : 'bg-[#F5F5F5]'
-                        }`}
-                    >
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+            <div>
+                <div
+                    className={`flex lg:h-[56px] h-fit w- overflow-hidden flex-col text-black justify-center p-1 ${
+                        active === 4 ? 'bg-[#B1C7E4]' : 'bg-white'
+                    } rounded-3xl mt-2`}
+                >
+                    <div className="flex gap-3 items-center">
+                        <div
+                            className={`p-2 rounded-full ${
+                                active === 3 ? 'bg-white' : 'bg-[#F5F5F5]'
+                            }`}
                         >
-                            <path
-                                d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
-                                stroke="#FD0769"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                            />
-                            <path
-                                d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15"
-                                stroke="#FD0769"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-                    <div className="self-stretch my-auto w-[182px] lg:block  hidden  text-[#FD0769]">
-                        Çıxış{' '}
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
+                                    stroke="#FD0769"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                />
+                                <path
+                                    d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15"
+                                    stroke="#FD0769"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <div className="self-stretch my-auto w-[182px] lg:block  hidden  text-[#FD0769]">
+                            Çıxış{' '}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ export default function Brends() {
                 </div>
 
                 <section className="px-[40px]">
-                    <h3 className="text-[40px] font-semibold mt-[28px] mb-[40px]">
+                    <h3 className="text-[40px] max-sm:text-[32px] font-semibold mt-[28px] mb-[40px]">
                         Brendlər{' '}
                     </h3>{' '}
                     <AlphabeticalList letters={russianAlphabet} />

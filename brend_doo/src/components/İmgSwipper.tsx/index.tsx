@@ -39,7 +39,7 @@ export default function ImageSwipper() {
                 ))}
             </Swiper>
             <section className="absolute bottom-3 z-50 w-full px-2">
-                <div className="flex overflow-hidden  justify-between flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  max-md:px-5">
+                <div className="flex overflow-hidden  justify-between flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white max-sm:bg-opacity-40 bg-opacity-80  max-md:px-5">
                     <div className="flex flex-col">
                         <div className="text-base text-black">
                             Zara jeans don

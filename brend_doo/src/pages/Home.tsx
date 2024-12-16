@@ -111,7 +111,7 @@ export default function Home() {
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
-                        <div className="flex flex-row flex-wrap justify-between gap-3">
+                        <div className="flex flex-row flex-wrap justify-between max-sm:justify-around gap-3">
                             <NoneToBlue isactive={true}>Hamısı</NoneToBlue>
                             <NoneToBlue>Elektronika</NoneToBlue>
                             <NoneToBlue>Geyim</NoneToBlue>
@@ -137,7 +137,7 @@ export default function Home() {
                 </section>
                 <section className="px-[40px] py-[100px]">
                     <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
-                        <div className="flex gap-5 max-md:flex-col">
+                        <div className="flex gap-5 max-md:flex-col-reverse">
                             <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
                                 <img
                                     loading="lazy"
@@ -146,7 +146,7 @@ export default function Home() {
                                 />
                             </div>
                             <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
-                                <div className="flex z-10 flex-col self-stretch my-auto mr-0 w-full text-white max-md:mt-10 max-md:max-w-full">
+                                <div className="flex z-10 flex-col self-stretch my-auto mr-0 w-full text-white max-md:mt-10 max-md:max-w-full px-2">
                                     <div className="text-3xl font-semibold text-center max-md:max-w-full">
                                         Qeydiyyatdan keç və doya-doya alış-veriş
                                         et!
@@ -325,7 +325,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px] flex lg:flex-row flex-col justify-center gap-[154px] ">
+                <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px] flex lg:flex-row flex-col justify-center max-sm:gap-8 gap-[154px] ">
                     <div className="flex flex-col flex-wrap gap-7 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Geyimlər{' '}

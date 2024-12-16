@@ -458,7 +458,7 @@ export default function ProductId() {
                     <h3 className="text-[28px] font-semibold mt-[100px]">
                         Tövsiyyələr
                     </h3>{' '}
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] gap-5">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-3  justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] gap-5">
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />

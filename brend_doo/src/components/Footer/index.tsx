@@ -19,7 +19,7 @@ export function Footer() {
                                         />
                                     </div>
                                     <div className="flex flex-col ml-5 w-[84%] max-md:ml-0 max-md:w-full">
-                                        <div className="flex flex-wrap justify-between gap-10 items-start max-md:mt-10 max-md:max-w-full">
+                                        <div className="flex flex-wrap justify-between gap-10 items-start mt-3 max-md:mt-10 max-md:max-w-full">
                                             <div className="flex flex-col w-[158px]">
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar
@@ -159,7 +159,7 @@ export function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
+                <div className="flex flex-col ml-5 w-[40%] max-md:ml-0 max-md:w-full">
                     <div className="flex overflow-hidden flex-col grow px-10 pt-12 pb-28 w-full bg-zinc-900 max-md:px-5 max-md:pb-24 max-md:mt-2.5 max-md:max-w-full">
                         <div className="self-start text-lg font-medium text-white">
                             Bizimlə əlaqə
@@ -198,7 +198,7 @@ export function Footer() {
                                     fazlası için e-posta adresinizi aşağıya
                                     girin.
                                 </div>
-                                <div className="flex overflow-hidden gap-5 justify-between py-1.5 pr-1.5 pl-4 mt-5 w-full border border-solid bg-white bg-opacity-0 border-white border-opacity-10 rounded-[100px]">
+                                <div className="flex overflow-hidden gap-5 justify-between py-1.5 pr-1.5 pl-4 mt-5 w-full border border-solid bg-white bg-opacity-0 border-white border-opacity-10 rounded-[100px] lg:min-w-[360px]">
                                     <div className="flex items-center gap-2 text-white text-opacity-60">
                                         <img
                                             loading="lazy"

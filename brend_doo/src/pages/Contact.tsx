@@ -19,7 +19,7 @@ export default function Contact() {
                     }}
                 >
                     <BreadCump />
-                    <h3 className="text-[40px] font-semibold mt-[28px] mb-[40px]">
+                    <h3 className="text-[40px] font-semibold  max-sm:text-[32px] mt-[28px] mb-[40px]">
                         Brendlər{' '}
                     </h3>{' '}
                 </section>

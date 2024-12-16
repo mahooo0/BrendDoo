@@ -9,7 +9,7 @@ export default function UserSettings() {
         <div>
             <Header />
             {/* <div className="mt-[180px]" /> */}
-            <main className="flex flex-row w-full gap-5 p-5">
+            <main className="flex max-sm:flex-col flex-row w-full gap-5 p-5">
                 <UserAside active={0} />
                 <div className="flex overflow-hidden flex-col   lg:px-10 px-4 pt-10 pb-96 min-w-[230px] rounded-3xl bg-[#F8F8F8]  max-md:pb-24 w-full">
                     <div className="flex flex-wrap gap-5 justify-between w-full ">

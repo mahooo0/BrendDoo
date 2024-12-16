@@ -8,14 +8,14 @@ export default function Order() {
         <div>
             <Header />
             {/* <div className="mt-[180px]" /> */}
-            <main className="flex flex-row w-full gap-5 p-5">
+            <main className="flex flex-row max-sm:flex-col w-full gap-5 p-5">
                 <UserAside active={1} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <div className="flex flex-row flex-wrap justify-between">
                         <h1 className="text-[28px] font-semibold mb-[40px]">
                             Bəyəndiklərim
                         </h1>
-                        <div className="flex flex-row flex-wrap gap-4 h-fit">
+                        <div className="flex flex-row flex-wrap gap-4 h-fit justify-around">
                             <NoneToBlue>Hamısı</NoneToBlue>
                             <NoneToBlue>Hamısı</NoneToBlue>
                             <NoneToBlue>Hamısı</NoneToBlue>
@@ -34,7 +34,7 @@ export default function Order() {
                                             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                             className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
                                         />
-                                        <div className="flex flex-col self-stretch my-auto w-56">
+                                        <div className="flex flex-col self-stretch my-auto  w-full">
                                             <div className="flex flex-col w-full">
                                                 <div>24 sentyabr 2024</div>
                                                 <div className="mt-2 text-sm font-medium text-black">

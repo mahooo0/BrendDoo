@@ -30,7 +30,7 @@ const DropdownItem = () => {
             </div>
 
             {isOpen && (
-                <div className="flex flex-col mt-2 w-full   text-sm">
+                <div className="flex flex-col mt-2 w-full text-sm">
                     <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-[#3873C3] rounded-[100px]">
                         Köynək
                     </div>
@@ -83,7 +83,7 @@ export default function Products() {
                         </div>
                     </div>
                 </section>{' '}
-                <section className="flex flex-col w-full ">
+                <section className="flex flex-col w-full max-md:px-5    ">
                     <div className="flex lg:flex-row flex-col mt-[60px] lg:px-[40px] px-[10px] gap-4">
                         <section className="flex flex-col  w-full lg:max-w-[330px]">
                             <div className="text-xl font-semibold text-black">
