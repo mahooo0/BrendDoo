@@ -325,10 +325,10 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px] flex lg:flex-row flex-col justify-between">
+                <section className="mt-[100px] px-[40px] bg-[#F5F5F5] py-[80px] flex lg:flex-row flex-col justify-center gap-[154px] ">
                     <div className="flex flex-col flex-wrap gap-7 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
-                            Tiktok hekayələr
+                            Geyimlər{' '}
                         </h2>
                         <div>
                             <button

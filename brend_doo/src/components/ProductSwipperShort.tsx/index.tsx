@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import ProductCard from '../ProductCArd';
@@ -27,6 +27,7 @@ interface Proops {
 }
 export default function ProductSwipperShort({ bg }: Proops) {
     const swiperRef = useRef<any>();
+    const [isLast, setIsLast] = useState(false);
     const handleNext = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.slideNext();
@@ -38,8 +39,9 @@ export default function ProductSwipperShort({ bg }: Proops) {
             swiperRef.current.swiper.slidePrev();
         }
     };
+
     return (
-        <div className="slider-container mt-[40px] relative flex justify-center items-center lg:w-[60%] w-full">
+        <div className="slider-container  relative flex justify-center items-center lg:w-[70%] w-full">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides

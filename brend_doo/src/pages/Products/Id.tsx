@@ -8,7 +8,7 @@ export default function ProductId() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[20px] mt-0">
+            <main className=" lg:mt-[54px] mt-0">
                 <div className="px-[40px]">
                     <BreadCump />
                 </div>
@@ -324,52 +324,7 @@ export default function ProductId() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-wrap gap-4 justify-center items-center self-stretch mt-4 max-md:max-w-full">
-                                <div className="flex gap-0.5 items-start self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                </div>
-                                <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-[424px] max-md:max-w-full">
-                                    <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
-                                        <div className="flex shrink-0 h-1 bg-amber-400 rounded-[100px] w-[124px]" />
-                                    </div>
-                                </div>
-                                <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div
-                                        className="
-                                     text-zinc-900"
-                                    >
-                                        24%
-                                    </div>
-                                    <div className="text-slate-500">
-                                        {' '}
-                                        (6.717)
-                                    </div>
-                                </div>
-                            </div>
+
                             <div className="flex flex-wrap gap-4 justify-center items-center mt-4 max-md:max-w-full">
                                 <div className="flex gap-0.5 items-start self-stretch my-auto">
                                     <img

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
@@ -6,16 +6,36 @@ import 'swiper/swiper-bundle.css';
 
 export default function TikTokSlider({ action }: { action: () => void }) {
     const swiperRef = useRef<any>();
+    const [isLast, setisLast] = useState(false);
+    const [isFirst, setisFirst] = useState(true);
 
     const handlePrev = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.slidePrev();
         }
     };
+    const handleNext = () => {
+        if (swiperRef.current && swiperRef.current.swiper) {
+            swiperRef.current.swiper.slideNext();
+        }
+    };
     return (
         <div className="slider-container mt-[40px] relative flex items-center">
             <Swiper
                 ref={swiperRef}
+                onSlideChange={(swiper: any) => {
+                    if (swiper.isEnd) {
+                        console.log('This is the last slide!');
+                        setisLast(true);
+                    } else {
+                        setisLast(false);
+                    }
+                    if (swiper.activeIndex === 0) {
+                        setisFirst(true);
+                    } else {
+                        setisFirst(false);
+                    }
+                }}
                 spaceBetween={10} // Space between slides
                 slidesPerView={'auto'} // Show one slide at a time
                 loop={false} // Loop the slider
@@ -44,8 +64,30 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                 ))}
             </Swiper>
             <button
+                style={!isFirst ? { display: 'flex' } : { display: 'none' }}
                 onClick={handlePrev}
                 className=" absolute left-[20px]  z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+            >
+                <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M14.5 18L8.5 12L14.5 6"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>{' '}
+            <button
+                style={!isLast ? { display: 'flex' } : { display: 'none' }}
+                onClick={handleNext}
+                className=" absolute  right-[20px] rotate-180  z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
             >
                 <svg
                     width="24"

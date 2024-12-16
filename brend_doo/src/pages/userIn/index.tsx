@@ -106,7 +106,7 @@ export default function UserSettings() {
                         </div>
                     </div>
 
-                    <button className="gap-2.5 self-start px-10 py-4 mt-7 lg:w-fit w-full text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5">
+                    <button className="gap-2.5 self-start px-10 leading-[19px] py-4 mt-7 lg:w-fit w-full text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5">
                         Yadda saxla
                     </button>
                 </div>

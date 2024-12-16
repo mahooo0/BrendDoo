@@ -11,7 +11,7 @@ export default function BaskedConfirm() {
                 <div className="px-[40px] pt-[40px] mb-[28px]">
                     <BreadCump />
                 </div>
-                <section className="px-[28px]">
+                <section className="lg:px-[40px] px-4">
                     <h3 className="text-[40px] font-semibold mt-[28px] mb-[40px]">
                         Brendlər{' '}
                     </h3>{' '}

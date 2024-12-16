@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { LegacyRef } from 'react';
 import ClothingMenu from '../ClothingMenu';
 
 interface CatalogBarProps {
     isCatalogOpen: boolean;
     setIsCatalogOpen: (value: boolean) => void;
+    ref: LegacyRef<HTMLDivElement> | undefined;
 }
 
 export const CatalogBar: React.FC<CatalogBarProps> = ({
+    ref,
     isCatalogOpen,
     setIsCatalogOpen,
 }) => {

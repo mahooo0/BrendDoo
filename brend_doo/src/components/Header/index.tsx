@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CatalogBar } from '../Cattalogbar';
 function disableScrolling() {
@@ -19,6 +19,42 @@ export default function Header() {
     const [SearchValue, setSearchValue] = useState<string>('');
     const [showaside, setShowAside] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const CatalogBtnRef = useRef<HTMLButtonElement | null>(null);
+    const CAtalogDiv = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current?.focus(); // Focus the input element
+            inputRef.current?.click(); // Focus the input element
+        }
+    }, [isSearchOpen === true]);
+    useEffect(() => {
+        const handleOutsideClick = (e: MouseEvent) => {
+            if (
+                CatalogBtnRef.current &&
+                !CatalogBtnRef.current.contains(e.target as Node) &&
+                CAtalogDiv.current &&
+                !CAtalogDiv.current.contains(e.target as Node)
+            ) {
+                setIsClothingOpen(false);
+                setSearchValue('');
+                setIsBaskedOpen(false);
+                if (!isCatalogOpen) {
+                    disableScrolling();
+                } else {
+                    enableScrolling();
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        // Proper cleanup
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [CatalogBtnRef, CAtalogDiv, isCatalogOpen]);
+
     return (
         <div className="  block w-full z-[99999999999] top-0">
             <div className=" lg:flex hidden flex-col relative bg-white">
@@ -90,29 +126,30 @@ export default function Header() {
                     </div>
                 </div>
                 <div className="flex overflow-hidden  flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
-                    <div className="flex flex-col justify-center self-stretch px-7 py-3 my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5">
-                        <button
-                            className="flex gap-3 items-center w-full "
-                            onClick={() => {
-                                setIsClothingOpen((prew) => !prew);
-                                setSearchValue('');
-                                setIsBaskedOpen(false);
-                                if (!isCatalogOpen) {
-                                    disableScrolling();
-                                } else {
-                                    enableScrolling();
-                                }
-                            }}
-                        >
+                    <button
+                        ref={CatalogBtnRef}
+                        className="flex flex-col justify-center self-stretch px-7 py-3 my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
+                        onClick={() => {
+                            setIsClothingOpen((prew) => !prew);
+                            setSearchValue('');
+                            setIsBaskedOpen(false);
+                            if (!isCatalogOpen) {
+                                disableScrolling();
+                            } else {
+                                enableScrolling();
+                            }
+                        }}
+                    >
+                        <div className="flex gap-3 items-center w-full ">
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/35befc4b842efe2488b26ce91bb004beac36ff324b59192df49471be348bd1ac?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                 className="object-contain shrink-0 self-stretch my-auto w-6 rounded-md aspect-square"
                             />
                             <div className="self-stretch my-auto">Kataloq</div>
-                        </button>
-                    </div>
-                    <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[30%] max-w-[514px] w-full justify-between">
+                        </div>
+                    </button>
+                    <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
                         <input
                             type="text"
                             placeholder="Axtar"
@@ -171,6 +208,7 @@ export default function Header() {
                     </div>
                 </div>
                 <CatalogBar
+                    ref={CAtalogDiv}
                     isCatalogOpen={isCatalogOpen && SearchValue === ''}
                     setIsCatalogOpen={(value) => {
                         enableScrolling();
@@ -305,7 +343,7 @@ export default function Header() {
                                 />
                             </div>
                         </div>
-                        <div className="overflow-y-scroll max-h-[60vh] px-[24px]">
+                        <div className="overflow-y-scroll h-[40vh] px-[24px]">
                             {/* onecard */}
                             <div>
                                 <div className="flex gap-8 items-center mt-[4px] max-md:max-w-full mx-[40px]">
@@ -499,7 +537,11 @@ export default function Header() {
                                 : ' right-[6rem]  w-fit '
                         } `}
                     >
-                        <button onClick={() => setIsSearchOpen(true)}>
+                        <button
+                            onClick={() => {
+                                setIsSearchOpen(true);
+                            }}
+                        >
                             <svg
                                 width="40"
                                 height="40"
@@ -541,18 +583,21 @@ export default function Header() {
                             </svg>
                         </button>
                         <input
+                            ref={inputRef}
                             type="text"
+                            placeholder="Search"
                             className={`h-full w-full bg-transparent  outline-none  ${
                                 isSearchOpen ? 'opacity-100' : 'hidden'
                             } `}
                             name=""
-                            id=""
                         />
                         <button
                             className={` flex justify-center items-center ${
                                 isSearchOpen ? 'opacity-100' : 'opacity-0'
                             } `}
-                            onClick={() => setIsSearchOpen(false)}
+                            onClick={() => {
+                                setIsSearchOpen(false);
+                            }}
                         >
                             <svg
                                 width="20"
@@ -605,7 +650,9 @@ export default function Header() {
                     </button>
                     <div className="relative ">
                         <div
-                            onClick={() => setShowAside((prew) => !prew)}
+                            onClick={() => {
+                                setShowAside((prew) => !prew);
+                            }}
                             className={`w-[40px] h-[40px] aspect-square rounded-full bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
                                 isSearchOpen ? 'opacity-0' : 'opacity-100 '
                             } `}

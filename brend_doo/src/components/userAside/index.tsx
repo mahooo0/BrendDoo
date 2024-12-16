@@ -35,7 +35,7 @@ function UserAside({ active }: { active: number }) {
     // };
 
     return (
-        <section className="flex overflow-hidden flex-col grow px-5 pt-5 lg:w-full min-w-[88px] w-[88px]  text-base bg-[#F8F8F8] rounded-[20px]  max-md:pb-24  max-w-[325px] ">
+        <section className="flex overflow-hidden flex-col grow px-5 pt-5 h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px]  text-base bg-[#F8F8F8] rounded-[20px]  max-md:pb-24  max-w-[325px] ">
             <div className="flex flex-col self-center max-w-full font-medium text-black w-[122px]">
                 <img
                     loading="lazy"

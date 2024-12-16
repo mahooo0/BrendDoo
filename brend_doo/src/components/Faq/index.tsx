@@ -65,7 +65,7 @@ function FAQItem({
     return (
         <div
             className={`flex overflow-hidden flex-col justify-center px-6 py-3 w-full border border-solid bg-white  border-white border-opacity-40  max-md:pl-5 max-md:max-w-full cursor-pointer  ${
-                isOpen ? ' rounded-[20px]' : 'rounded-[100px]'
+                isOpen ? ' rounded-[20px]' : 'rounded-[20px]'
             }`}
             onClick={onClick}
             role="button"
@@ -139,7 +139,7 @@ function FAQSection({
                 {!isContact && (
                     <button
                         onClick={() => navigate('/contact')}
-                        className="gap-2.5 self-start px-10 py-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
+                        className="gap-2.5 leading-[19px] self-start px-10 py-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
                     >
                         Bizimlə əlaqə
                     </button>
