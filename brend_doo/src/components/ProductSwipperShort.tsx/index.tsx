@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import ProductCard from '../ProductCArd';
@@ -27,7 +27,6 @@ interface Proops {
 }
 export default function ProductSwipperShort({ bg }: Proops) {
     const swiperRef = useRef<any>();
-    const [isLast, setIsLast] = useState(false);
     const handleNext = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.slideNext();

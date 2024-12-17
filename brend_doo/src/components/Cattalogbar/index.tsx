@@ -8,7 +8,6 @@ interface CatalogBarProps {
 }
 
 export const CatalogBar: React.FC<CatalogBarProps> = ({
-    ref,
     isCatalogOpen,
     setIsCatalogOpen,
 }) => {
