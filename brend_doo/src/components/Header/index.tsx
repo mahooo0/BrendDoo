@@ -22,6 +22,8 @@ export default function Header() {
     const inputRef = useRef<HTMLInputElement>(null);
     const CatalogBtnRef = useRef<HTMLButtonElement | null>(null);
     const CAtalogDiv = useRef<HTMLDivElement | null>(null);
+    const BaskedBtnRef = useRef<HTMLButtonElement | null>(null);
+    const BaskedDiv = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current?.focus(); // Focus the input element
@@ -54,7 +56,29 @@ export default function Header() {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, [CatalogBtnRef, CAtalogDiv, isCatalogOpen]);
+    useEffect(() => {
+        const handleOutsideClick = (e: MouseEvent) => {
+            if (
+                BaskedBtnRef.current &&
+                !BaskedBtnRef.current.contains(e.target as Node) &&
+                BaskedDiv.current &&
+                !BaskedDiv.current.contains(e.target as Node)
+            ) {
+                setIsClothingOpen(false);
+                setSearchValue('');
+                setIsBaskedOpen(false);
 
+                enableScrolling();
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        // Proper cleanup
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [BaskedBtnRef, BaskedDiv, isBaskedOpen]);
     return (
         <div className="  block w-full z-[99999999999] top-0">
             <div className=" lg:flex hidden flex-col relative bg-white">
@@ -187,22 +211,25 @@ export default function Header() {
                         <button
                             className="flex gap-3  items-center"
                             onClick={() => {
-                                setIsBaskedOpen((prev) => !prev);
-                                if (!isBaskedOpen && SearchValue === '') {
-                                    setIsClothingOpen(false);
-                                    setSearchValue('');
+                                setIsClothingOpen(false);
+                                setSearchValue('');
+                                if (!isBaskedOpen) {
                                     disableScrolling();
                                 } else {
                                     enableScrolling();
                                 }
+                                setIsBaskedOpen((prev) => !prev);
                             }}
                         >
-                            <div className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
+                            <button
+                                className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative"
+                                ref={BaskedBtnRef}
+                            >
                                 <img src="/svg/basked.svg" />
                                 <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
                                     2
                                 </div>
-                            </div>
+                            </button>
                             <div className="self-stretch my-auto">112 AZN</div>
                         </button>
                     </div>
@@ -310,6 +337,7 @@ export default function Header() {
                     </div>
                 </div>
                 <div
+                    ref={BaskedDiv}
                     className="bg-black  bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999]"
                     style={
                         !isBaskedOpen

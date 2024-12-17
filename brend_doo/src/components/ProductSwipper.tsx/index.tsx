@@ -45,7 +45,7 @@ export default function ProductSwipper({ bg }: Proops) {
                 spaceBetween={10} // Space between slides
                 breakpoints={{
                     268: {
-                        slidesPerView: 1,
+                        slidesPerView: 'auto',
                     },
                     568: {
                         slidesPerView: 2,
@@ -63,14 +63,17 @@ export default function ProductSwipper({ bg }: Proops) {
                 className="mySwiper "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <SwiperSlide key={i} className="!flex !justify-center">
+                    <SwiperSlide
+                        key={i}
+                        className="!flex !justify-center max-sm:!w-fit"
+                    >
                         <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
                     </SwiperSlide>
                 ))}
             </Swiper>
             <button
                 onClick={handlePrev}
-                className=" absolute left-[-28px] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+                className=" absolute max-sm:hidden left-[-28px] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
             >
                 <svg
                     width="24"
@@ -90,7 +93,7 @@ export default function ProductSwipper({ bg }: Proops) {
             </button>
             <button
                 onClick={handleNext}
-                className=" absolute right-[-18px] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white rotate-180"
+                className=" absolute right-[-18px] max-sm:hidden z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white rotate-180"
             >
                 <svg
                     width="24"

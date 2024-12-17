@@ -41,14 +41,13 @@ export default function InstaqramSlider({ action }: { action: () => void }) {
         <div className="slider-container mt-[40px] relative flex items-center">
             <Swiper
                 ref={swiperRef}
-                onSlideChange={(swiper: any) => {
-                    if (swiper.isEnd) {
-                        console.log('This is the last slide!');
+                onSlideChange={(swiper) => {
+                    if (swiper?.isEnd) {
                         setisLast(true);
                     } else {
                         setisLast(false);
                     }
-                    if (swiper.activeIndex === 0) {
+                    if (swiper?.activeIndex === 0) {
                         setisFirst(true);
                     } else {
                         setisFirst(false);
@@ -59,7 +58,7 @@ export default function InstaqramSlider({ action }: { action: () => void }) {
                 loop={false} // Loop the slider
                 // Enable pagination dots
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper !pl-[40px]"
+                className="mySwiper !pl-[40px] max-sm:!pl-4"
             >
                 {Array.from({ length: 20 }).map((_, i) => (
                     <SwiperSlide className="!w-fit" key={i}>
@@ -77,48 +76,50 @@ export default function InstaqramSlider({ action }: { action: () => void }) {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button
-                style={!isFirst ? { display: 'flex' } : { display: 'none' }}
-                onClick={handlePrev}
-                className=" absolute   left-[20px] top-[35px]  z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
-            >
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+            <div className="block max-sm:hidden">
+                <button
+                    style={!isFirst ? { display: 'flex' } : { display: 'none' }}
+                    onClick={handlePrev}
+                    className=" absolute   left-[20px] top-[35px]  z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
                 >
-                    <path
-                        d="M14.5 18L8.5 12L14.5 6"
-                        stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </button>{' '}
-            <button
-                onClick={handleNext}
-                className=" absolute  right-[20px] rotate-180 top-[35px]  z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
-                style={!isLast ? { display: 'flex' } : { display: 'none' }}
-            >
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M14.5 18L8.5 12L14.5 6"
+                            stroke="black"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>{' '}
+                <button
+                    onClick={handleNext}
+                    className=" absolute right-[20px] rotate-180 top-[35px]  z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+                    style={!isLast ? { display: 'flex' } : { display: 'none' }}
                 >
-                    <path
-                        d="M14.5 18L8.5 12L14.5 6"
-                        stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </button>{' '}
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M14.5 18L8.5 12L14.5 6"
+                            stroke="black"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>{' '}
+            </div>
         </div>
     );
 }

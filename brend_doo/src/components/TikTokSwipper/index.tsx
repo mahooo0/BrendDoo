@@ -2,46 +2,43 @@ import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-// Sample slider items
-
 export default function TikTokSlider({ action }: { action: () => void }) {
-    const swiperRef = useRef<any>();
-    const [isLast, setisLast] = useState(false);
-    const [isFirst, setisFirst] = useState(true);
+    const swiperRef = useRef<any>(null);
+    const [isLast, setIsLast] = useState(false);
+    const [isFirst, setIsFirst] = useState(true);
 
     const handlePrev = () => {
-        if (swiperRef.current && swiperRef.current.swiper) {
+        if (swiperRef.current?.swiper) {
             swiperRef.current.swiper.slidePrev();
         }
     };
+
     const handleNext = () => {
-        if (swiperRef.current && swiperRef.current.swiper) {
+        if (swiperRef.current?.swiper) {
             swiperRef.current.swiper.slideNext();
         }
     };
+
     return (
         <div className="slider-container mt-[40px] relative flex items-center">
             <Swiper
                 ref={swiperRef}
-                onSlideChange={(swiper: any) => {
-                    if (swiper.isEnd) {
-                        console.log('This is the last slide!');
-                        setisLast(true);
+                onSlideChange={(swiper) => {
+                    if (swiper?.isEnd) {
+                        setIsLast(true);
                     } else {
-                        setisLast(false);
+                        setIsLast(false);
                     }
-                    if (swiper.activeIndex === 0) {
-                        setisFirst(true);
+                    if (swiper?.activeIndex === 0) {
+                        setIsFirst(true);
                     } else {
-                        setisFirst(false);
+                        setIsFirst(false);
                     }
                 }}
-                spaceBetween={10} // Space between slides
-                slidesPerView={'auto'} // Show one slide at a time
-                loop={false} // Loop the slider
-                // Enable pagination dots
-                navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper !pl-[40px]"
+                spaceBetween={10}
+                slidesPerView="auto"
+                loop={false}
+                className="mySwiper !pl-[40px] max-sm:!pl-[16px]"
             >
                 {Array.from({ length: 10 }).map((_, i) => (
                     <SwiperSlide className="!w-fit" key={i}>
@@ -53,8 +50,9 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                                 <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714] cursor-pointer">
                                     <img
                                         loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/a0afcea1e2cd01e52a1523d13bf848e31562e81345dff47332bd798c603e23eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2400 2400w"
-                                        className="object-cover absolute inset-0 size-full"
+                                        src="https://via.placeholder.com/200"
+                                        alt="Slide"
+                                        className="object-cover absolute inset-0 w-full h-full"
                                     />
                                     Zara ətək
                                 </div>
@@ -63,10 +61,12 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                     </SwiperSlide>
                 ))}
             </Swiper>
+
+            {/* Previous Button */}
             <button
-                style={!isFirst ? { display: 'flex' } : { display: 'none' }}
+                style={{ display: isFirst ? 'none' : 'flex' }}
                 onClick={handlePrev}
-                className=" absolute left-[20px]  z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+                className="absolute left-[20px] z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
             >
                 <svg
                     width="24"
@@ -78,16 +78,18 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                     <path
                         d="M14.5 18L8.5 12L14.5 6"
                         stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                     />
                 </svg>
-            </button>{' '}
+            </button>
+
+            {/* Next Button */}
             <button
-                style={!isLast ? { display: 'flex' } : { display: 'none' }}
+                style={{ display: isLast ? 'none' : 'flex' }}
                 onClick={handleNext}
-                className=" absolute  right-[20px] rotate-180  z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+                className="absolute right-[20px] rotate-180 z-30 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
             >
                 <svg
                     width="24"
@@ -99,12 +101,12 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                     <path
                         d="M14.5 18L8.5 12L14.5 6"
                         stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                     />
                 </svg>
-            </button>{' '}
+            </button>
         </div>
     );
 }
