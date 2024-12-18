@@ -576,7 +576,7 @@ export default function Header() {
                 </div>
             </div>
             {/* mobil header */}
-            <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full fixed bg-white ">
+            <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full fixed bg-white z-50">
                 <Link to={'/'}>
                     <img
                         loading="lazy"
@@ -841,7 +841,7 @@ export default function Header() {
                 </div>
             </div>
             {showaside && (
-                <div className="hiden max-md:flex absolute top-[70px] left-0 w-full">
+                <div className="hiden max-md:flex fixed top-[70px] left-0 w-full z-[67]">
                     <ClothingMenu
                         ref={CAtalogDiv}
                         setIsCatalogOpen={(value) => {
