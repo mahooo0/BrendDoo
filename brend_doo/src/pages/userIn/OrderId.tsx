@@ -8,7 +8,7 @@ export default function OrderId() {
         <div>
             <Header />
             {/* <div className="mt-[180px]" /> */}
-            <main className="flex max-sm:flex-col flex-row w-full gap-5 p-5">
+            <main className="flex max-sm:flex-col flex-row w-full gap-5 p-4">
                 <UserAside active={1} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-2 py-10">
                     <div className="flex flex-col items-start ">
@@ -29,7 +29,7 @@ export default function OrderId() {
                             </div>
                         </div>
 
-                        <div className="flex flex-nowrap gap-2 items-center mt-10 w-full ">
+                        <div className="flex max-md:hidden flex-nowrap gap-2 items-center mt-10 w-full ">
                             <div>
                                 <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
                             </div>
@@ -40,16 +40,56 @@ export default function OrderId() {
                             <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
                         </div>
-                        <div className="flex flex-wrap lg:flex-row flex-col  gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
-                            <div className="flex flex-col">
-                                <div className="text-sm w-fit text-black">
-                                    Sifariş verildi
-                                </div>
-                                <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
-                                    05.02.2024
+                        <div className="flex flex-wrap flex-row    gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
+                            <div className="flex flex-row gap-3">
+                                <div className=" shrink-0 max-md:flex hidden self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
+
+                                <div className="flex flex-col">
+                                    <div className="text-sm w-fit text-black">
+                                        Sifariş verildi
+                                    </div>
+                                    <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
+                                        05.02.2024
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-row gap-3">
+                                <div className=" shrink-0 max-md:flex hidden self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
+
+                                <div className="flex flex-col">
+                                    <div className="text-sm w-fit text-black">
+                                        Sifariş verildi
+                                    </div>
+                                    <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
+                                        05.02.2024
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-row gap-3">
+                                <div className=" shrink-0 max-md:flex hidden self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
+
+                                <div className="flex flex-col">
+                                    <div className="text-sm w-fit text-black">
+                                        Sifariş verildi
+                                    </div>
+                                    <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
+                                        05.02.2024
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-row gap-3">
+                                <div className=" shrink-0 max-md:flex hidden self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
+
+                                <div className="flex flex-col">
+                                    <div className="text-sm w-fit text-black">
+                                        Sifariş verildi
+                                    </div>
+                                    <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
+                                        05.02.2024
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="flex flex-col">
                                 <div className="text-sm w-fit text-black">
                                     Sifariş hazırlanır
                                 </div>
@@ -62,7 +102,7 @@ export default function OrderId() {
                             </div>
                             <div className="self-start text-sm w-fit whitespace-nowrap text-black text-opacity-60">
                                 Çatdırıldı
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="flex flex-col font-semibold text-[16px] mt-[60px]">

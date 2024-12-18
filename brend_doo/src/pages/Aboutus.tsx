@@ -8,23 +8,23 @@ export default function Aboutus() {
         <div>
             <Header />
             <main className=" mt-0">
-                <div className="px-[40px] pt-[40px] mb-[28px]">
+                <div className="px-[40px] max-sm:px-4 max-sm:pt-6 pt-[40px] mb-[28px]">
                     <BreadCump />
                 </div>
-                <section className="mb-[100px]">
+                <section className="mb-[100px] max-sm:mb-[40px] max-sm:mt-10">
                     <div
-                        className="w-full h-[500px] bg-cover bg-center flex items-center lg:justify-start justify-center "
+                        className="w-full h-[500px] bg-cover bg-center flex items-center lg:justify-start justify-center max-sm:h-[300px]"
                         style={{
                             backgroundImage: `url("https://s3-alpha-sig.figma.com/img/03d2/47b7/389aec573f263f50b99f617dc9179cdc?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GmqOdCOiArs1ztUovwJcY24lXGzVhEh05tq2UpxqMQbZfOf9E7qqspdOY6bXxueefW2fE5BWBrjWVVJZkaneoLi3kT1L~q-63YccFJWilRywTITbdpElsDY2EVdM8l8I8NaYKnC4pEsIyF1AJ-hFToJguVq4QFnHypNzTqNoPxQhoqDc~~-zfbpSeNJHMMUf~hIhSYB~k6QTZcplkQspr9SUyNaHMHcUZBulAM5-VLOb-w3TRhnwJwvk~Ey5l1De-V48K0ooL5o8fgB1e8rJMwjyQq6Geeiwd1sZT4CpJMrc7B3BWEDBN-UGJ1kHhU98ez2zPiMm1RkhF3pG0tjp9g__")`,
                         }}
                     >
-                        <h1 className="text-[40px] lg:ml-[50%] font-bold text-[#081D39] lg:w-[60%] w-[80%]  lg:pr-[100px]">
+                        <h1 className="text-[40px] max-sm:text-[32px] lg:ml-[50%] font-bold text-[#081D39] lg:w-[60%] w-[80%] max-sm:w-[90%]  lg:pr-[100px]">
                             “Brendo MMC” şirkəti olaraq hər zaman güvənli
                             alış-ceriş təklif edirik!{' '}
                         </h1>
                     </div>
 
-                    <div className="mx-[40px] mt-[40px]">
+                    <div className="mx-[40px] mt-[40px] max-sm:mt-5 max-sm:mx-4">
                         <p>
                             Lorem ipsum dolor, sit amet consectetur adipisicing
                             elit. Iure, voluptatibus distinctio qui dicta

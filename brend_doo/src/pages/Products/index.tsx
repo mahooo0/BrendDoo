@@ -83,7 +83,7 @@ export default function Products() {
                         </div>
                     </div>
                 </section>{' '}
-                <section className="flex flex-col w-full max-md:px-5    ">
+                <section className="flex flex-col w-full max-md:px-5   max-sm:px-0 ">
                     <div className="flex lg:flex-row flex-col mt-[60px] lg:px-[40px] px-[10px] gap-4">
                         <section className="flex flex-col  w-full lg:max-w-[330px]">
                             <div className="text-xl font-semibold text-black">
@@ -91,6 +91,9 @@ export default function Products() {
                             </div>
                             <div className="flex overflow-hidden flex-col px-5 py-6 mt-5 w-full rounded-3xl border border-solid border-black border-opacity-10">
                                 <div className="flex flex-col mt-2 text-black whitespace-nowrap gap-4">
+                                    <label className="text-black">
+                                        Kategoriyyalar
+                                    </label>
                                     <DropdownItem />
 
                                     <DropdownItem />
@@ -139,37 +142,41 @@ export default function Products() {
                         </section>
 
                         <section className="flex flex-col rounded-none w-full">
-                            <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full mt-[44px]">
-                                <div className="my-auto text-base font-medium text-black">
-                                    1200 məhsul
+                            <div className="flex flex-col max-sm:flex-col-reverse">
+                                {' '}
+                                <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full mt-[44px]">
+                                    <div className="my-auto text-base font-medium text-black">
+                                        1200 məhsul
+                                    </div>
+                                    <div className="flex gap-4 items-center flex-wrap">
+                                        <div className="self-stretch my-auto text-sm text-black text-opacity-60">
+                                            Sırala
+                                        </div>
+                                        <div className="flex overflow-hidden gap-10 self-stretch px-4 py-3.5 my-auto text-base font-medium text-black bg-neutral-100  rounded-[100px] lg:w-[283px] w-[200px]">
+                                            <select
+                                                name=""
+                                                id=""
+                                                className="w-full bg-[#F5F5F5]"
+                                            >
+                                                <option value="">aaa</option>
+                                                <option value="">aaa</option>
+                                                <option value="">aaa</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex gap-4 items-center flex-wrap">
-                                    <div className="self-stretch my-auto text-sm text-black text-opacity-60">
-                                        Sırala
+                                <div className="flex gap-2.5 justify-center items-center self-start px-7 py-3.5 max-sm:mt-1 mt-5 text-base font-medium text-black whitespace-nowrap border border-solid border-black border-opacity-10 rounded-[100px] max-md:px-5">
+                                    <div className="self-stretch my-auto">
+                                        Köynək
                                     </div>
-                                    <div className="flex overflow-hidden gap-10 self-stretch px-4 py-3.5 my-auto text-base font-medium text-black bg-neutral-100  rounded-[100px] lg:w-[283px] w-[200px]">
-                                        <select
-                                            name=""
-                                            id=""
-                                            className="w-full bg-[#F5F5F5]"
-                                        >
-                                            <option value="">aaa</option>
-                                            <option value="">aaa</option>
-                                            <option value="">aaa</option>
-                                        </select>
-                                    </div>
+                                    <img
+                                        loading="lazy"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/4cb50113a191ac3232ff04e9cd73f88231de4b607b8e1436abe0365b70e6b221?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
+                                    />
                                 </div>
                             </div>
-                            <div className="flex gap-2.5 justify-center items-center self-start px-7 py-3.5 mt-5 text-base font-medium text-black whitespace-nowrap border border-solid border-black border-opacity-10 rounded-[100px] max-md:px-5">
-                                <div className="self-stretch my-auto">
-                                    Köynək
-                                </div>
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/4cb50113a191ac3232ff04e9cd73f88231de4b607b8e1436abe0365b70e6b221?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-                                />
-                            </div>
+
                             <div
                                 className=" w-full justify-items-center self-center clear-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1  gap-5 mt-10
                             "

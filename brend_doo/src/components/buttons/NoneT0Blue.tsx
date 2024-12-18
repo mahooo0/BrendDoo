@@ -30,7 +30,7 @@ export const NoneTolightBlue = ({
 }) => {
     return (
         <button
-            className={`rounded-[100px] duration-300 ${
+            className={`rounded-[100px] duration-300 text-nowrap ${
                 isactive ? 'bg-[#B1C7E4]' : ''
             } hover:text-black bg-none px-[28px] py-[14px] max-sm:w-full w-fit  border text-[16px]  leading-[19px] border-black border-opacity-10`}
         >

@@ -27,7 +27,7 @@ const CategoryHeader: React.FC<CategoryProps> = ({
             <span
                 className={`flex  transform font-medium text-[30px] transition-transform`}
             >
-                {isOpen ? (
+                {!isOpen ? (
                     <svg
                         width="14"
                         height="14"
@@ -63,7 +63,7 @@ interface ClothingListProps {
 
 const ClothingList: React.FC<ClothingListProps> = ({ items }) => (
     <ul
-        className="flex flex-col  py-3 items-center px-5 mt-4 w-full text-base text-black whitespace-nowrap rounded-3xl aspect-square bg-stone-50 max-h-[150px] overflow-y-scroll"
+        className="custom-scrollbar flex flex-col  py-3 items-center max-md:px-0 max-md:rounded-none px-5 mt-4 w-full text-base text-black whitespace-nowrap rounded-3xl aspect-square bg-stone-50 max-h-[150px] overflow-y-scroll"
         style={{
             scrollbarWidth: 'thin', // For Firefox
             scrollbarColor: '#a0aec0 #edf2f7', // thumb color and track color for Firefox
@@ -99,6 +99,7 @@ const ClothingList: React.FC<ClothingListProps> = ({ items }) => (
 
 interface ClothingMenuProps {
     setIsCatalogOpen: (value: boolean) => void;
+    ref: any;
 }
 
 const ClothingMenu: React.FC<ClothingMenuProps> = ({ setIsCatalogOpen }) => {
@@ -162,7 +163,7 @@ const ClothingMenu: React.FC<ClothingMenuProps> = ({ setIsCatalogOpen }) => {
             style={{
                 scrollbarWidth: 'none',
             }}
-            className="catalog-bar  scrollbar-hide max-h-[60vh] overflow-y-scroll flex overflow-hidden flex-col px-7 py-10 bg-white rounded-3xl max-w-[408px] shadow-[0px_0px_12px_rgba(6,27,62,0.12)] z-[1000] "
+            className="catalog-bar  scrollbar-hide max-h-[60vh] overflow-y-scroll flex overflow-hidden flex-col px-7 py-10 bg-white rounded-3xl max-md:max-w-full max-md:w-full max-md:mx-4 max-md:px-4 max-md:py-6 max-md:mt-2 max-md:bg-[#F9F9F9] max-w-[408px] bg-opacity-100 shadow-[0px_0px_12px_rgba(6,27,62,0.12)] !z-[1000] "
         >
             <CategoryHeader
                 title="Geyim"

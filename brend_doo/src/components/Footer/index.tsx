@@ -7,7 +7,7 @@ export function Footer() {
         <div className="overflow-hidden bg-black">
             <div className="flex gap-5 max-md:flex-col">
                 <div className="flex flex-col w-[67%] max-md:ml-0 max-md:w-full">
-                    <div className="flex flex-col self-stretch my-auto max-md:mt-10 max-md:max-w-full">
+                    <div className="flex flex-col self-stretch my-auto max-md:mt-10 max-sm:mt-[10px] max-md:max-w-full">
                         <div className="flex flex-col px-10 w-full max-md:px-5 max-md:max-w-full">
                             <div className="w-full max-md:max-w-full">
                                 <div className="flex gap-5 max-md:flex-col">
@@ -15,11 +15,11 @@ export function Footer() {
                                         <img
                                             loading="lazy"
                                             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 max-w-full aspect-[1.5] w-[120px] max-md:mt-10"
+                                            className="object-contain shrink-0 max-w-full aspect-[1.5] w-[120px] max-sm:mt-5 max-md:mt-10"
                                         />
                                     </div>
                                     <div className="flex flex-col ml-5 w-[84%] max-md:ml-0 max-md:w-full">
-                                        <div className="flex flex-wrap justify-between gap-10 items-start mt-3 max-md:mt-10 max-md:max-w-full">
+                                        <div className="flex flex-row max-sm:flex-col flex-wrap justify-between gap-10 items-start mt-3 max-md:mt-10 max-sm:mt-5 max-md:max-w-full">
                                             <div className="flex flex-col w-[158px]">
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar
@@ -130,7 +130,7 @@ export function Footer() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-4 items-center self-start mt-36 max-md:mt-10">
+                            <div className="flex gap-4 max-sm:hidden items-center self-start mt-36 max-md:mt-10">
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c891e0d2e270a6c2698c5da6121f1272da234ccd0fec708d0d297b73a3e1868?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -153,8 +153,8 @@ export function Footer() {
                                 />
                             </div>
                         </div>
-                        <div className="shrink-0 mt-7 h-px border border-solid border-white border-opacity-10 max-md:max-w-full" />
-                        <div className="self-start mt-7 ml-10 text-sm text-white max-md:ml-2.5">
+                        <div className="shrink-0 mt-7 max-sm:hidden h-px border border-solid border-white border-opacity-10 max-md:max-w-full" />
+                        <div className="self-start max-sm:hidden mt-7 ml-10 text-sm text-white max-md:ml-2.5">
                             ©2024 | Brendoo
                         </div>
                     </div>
@@ -218,6 +218,33 @@ export function Footer() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className=" gap-4  max-sm:flex hidden  items-center self-start max-sm:mt-4 mt-36 max-md:mt-10">
+                    <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c891e0d2e270a6c2698c5da6121f1272da234ccd0fec708d0d297b73a3e1868?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                        className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                    />
+                    <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e06bb4cf3fc4b77ac6b044ac7bdda391aba00d1bcca1a4249df9e7464d23e24e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                        className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                    />
+                    <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c41d5cc5afe0acbdb644fa2679576ddbe04783fb7c40be5776c38c21dceafdc5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                        className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                    />
+                    <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/bf9c6260e063308a546a293046cfcff2f5c69c163e27c20ee30538b452a359ca?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                        className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                    />
+                </div>
+
+                <div className="shrink-0 max-sm:flex hidden max-sm:mt-0  mt-7 h-px border border-solid border-white border-opacity-10 max-md:max-w-full" />
+                <div className="self-start max-sm:mt-3 max-sm:mb-6 max-sm:flex hidden  mt-7 ml-10 text-sm text-white max-md:ml-2.5">
+                    ©2024 | Brendoo
                 </div>
             </div>
         </div>

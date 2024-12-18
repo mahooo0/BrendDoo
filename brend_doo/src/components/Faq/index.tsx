@@ -122,15 +122,15 @@ function FAQSection({
     return (
         <section
             id="faq"
-            className="flex mx-[40px] rounded-[20px] mb-[100px] lg:flex-row flex-col gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] px-[30px] max-sm:py-9 py-[100px]"
+            className="flex mx-[40px] max-sm:mx-4 max-sm:mb-10 rounded-[20px] mb-[100px] lg:flex-row flex-col gap-10 justify-between items-start max-md:max-w-full bg-[#F8F8F8] lg:px-[60px] max-sm:px-0 px-[30px] max-sm:py-9 py-[100px]"
         >
             <div className="flex flex-col max-w-[414px]">
-                <div className="flex flex-col w-full">
+                <div className="flex max-sm:px-4 flex-col w-full">
                     <h3 className="text-[40px] max-sm:text-[32px]  font-semibold text-slate-900">
                         {Title}{' '}
                     </h3>
                     {!isContact && (
-                        <p className="mt-5 text-base max-sm:text-[12px] text-black text-opacity-80 ">
+                        <p className="mt-5 max-sm:mt-2 text-base max-sm:text-[12px] text-black text-opacity-80 ">
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry. Lorem Ipsum has been{' '}
                         </p>
@@ -139,30 +139,35 @@ function FAQSection({
                 {!isContact && (
                     <button
                         onClick={() => navigate('/contact')}
-                        className="gap-2.5 leading-[19px] self-start px-10 py-4 max-sm:mt-4 mt-10 text-base font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
+                        className="gap-2.5 max-sm:ml-4 self-start px-10 py-4 max-sm:mt-4 mt-10 text-base leading-[19px] font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
                     >
                         Bizimlə əlaqə
                     </button>
                 )}
             </div>
             <div className="flex flex-col text-base font-medium text-center text-black min-w-[240px] w-full max-md:max-w-full">
-                <div className="flex flex-row flex-wrap w-full lg:justify-end justify-around gap-3 mb-[30px]">
+                <div
+                    style={{ scrollbarWidth: 'none' }}
+                    className="flex flex-row max-sm:px-4 max-sm:overflow-x-scroll max-sm:flex-nowrap flex-wrap   w-full lg:justify-end justify-around gap-3 mb-[30px]"
+                >
                     <NoneTolightBlue isactive={true}>Hamısı</NoneTolightBlue>
                     <NoneTolightBlue>Geri qaytarılma</NoneTolightBlue>
                     <NoneTolightBlue>Ödəniş</NoneTolightBlue>
                     <NoneTolightBlue>Çatdırılma</NoneTolightBlue>
                 </div>
-                {faqData.map((item, index) => (
-                    <div key={index} className={index > 0 ? 'mt-3' : ''}>
-                        <FAQItem
-                            question={item.question}
-                            imageSrc={item.imageSrc}
-                            description={item.description}
-                            isOpen={openIndex === index}
-                            onClick={() => handleToggle(index)}
-                        />
-                    </div>
-                ))}
+                <div className="flex flex-col max-sm:px-4">
+                    {faqData.map((item, index) => (
+                        <div key={index} className={index > 0 ? 'mt-3' : ''}>
+                            <FAQItem
+                                question={item.question}
+                                imageSrc={item.imageSrc}
+                                description={item.description}
+                                isOpen={openIndex === index}
+                                onClick={() => handleToggle(index)}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
     );

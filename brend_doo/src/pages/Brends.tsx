@@ -42,12 +42,12 @@ export default function Brends() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[40px] mt-0 mb-[100px]">
-                <div className="px-[40px]">
+            <main className=" lg:mt-[40px] mt-0 max-sm:mb-10 mb-[100px]">
+                <div className="px-[40px] max-sm:px-4">
                     <BreadCump />
                 </div>
 
-                <section className="px-[40px]">
+                <section className="px-[40px] max-sm:px-4">
                     <h3 className="text-[40px] max-sm:text-[32px] font-semibold mt-[28px] mb-[40px]">
                         Brendlər{' '}
                     </h3>{' '}

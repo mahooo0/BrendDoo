@@ -66,7 +66,7 @@ export default function ProductCard({
                             onClick={() => {
                                 setvariant(2);
                             }}
-                            className={`flex overflow-hidden flex-col justify-center items-center px-16 py-3.5 text-base font-medium text-white bg-blue-600 max-w-[301px] rounded-[100px] duration-300 ${
+                            className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-16 py-3.5 text-base font-medium text-white bg-blue-600 max-w-[301px] rounded-[100px] duration-300 ${
                                 isMauseOn ? ' opacity-100' : ' opacity-0'
                             }`}
                         >

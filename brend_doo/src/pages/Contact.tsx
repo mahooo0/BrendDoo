@@ -8,9 +8,9 @@ export default function Contact() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[0px] mt-0 ">
+            <main className=" lg:mt-[0px] mt-0 max-sm:mt-3">
                 <section
-                    className="px-[40px] h-[260px] py-[40px]"
+                    className="px-[40px] max-sm:px-4 max-sm:py-5 h-[260px] py-[40px]"
                     style={{
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
@@ -24,7 +24,7 @@ export default function Contact() {
                     </h3>{' '}
                 </section>
 
-                <section className="rounded-3xl px-[40px] my-[20px]">
+                <section className="rounded-3xl px-[40px] max-sm:px-4 my-[20px]">
                     <div className="flex gap-5 lg:flex-row flex-col ">
                         <div className="flex flex-col lg:w-[41%] w-full max-md:ml-0 max-md:w-full">
                             <div className="flex overflow-hidden flex-col grow items-start pt-10 pr-20 pb-52 pl-10 w-full rounded-3xl bg-[#8E98B8] max-md:px-5 max-md:pb-24 max-md:mt-5 max-md:max-w-full">

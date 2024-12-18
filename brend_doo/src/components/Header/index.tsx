@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CatalogBar } from '../Cattalogbar';
+import ClothingMenu from '../ClothingMenu';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -20,9 +20,11 @@ export default function Header() {
     const [showaside, setShowAside] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const CatalogBtnRef = useRef<HTMLButtonElement | null>(null);
+
+    const CatalogBtnRef = useRef<HTMLDivElement | null>(null);
     const CAtalogDiv = useRef<HTMLDivElement | null>(null);
-    const BaskedBtnRef = useRef<HTMLButtonElement | null>(null);
+
+    const BaskedBtnRef = useRef<HTMLDivElement | null>(null);
     const BaskedDiv = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (inputRef.current) {
@@ -30,57 +32,59 @@ export default function Header() {
             inputRef.current?.click(); // Focus the input element
         }
     }, [isSearchOpen === true]);
+
     useEffect(() => {
-        const handleOutsideClick = (e: MouseEvent) => {
+        const handleOutsideClicked = (e: any) => {
             if (
                 CatalogBtnRef.current &&
                 !CatalogBtnRef.current.contains(e.target as Node) &&
                 CAtalogDiv.current &&
                 !CAtalogDiv.current.contains(e.target as Node)
             ) {
+                // console.log('outsideClick');
                 setIsClothingOpen(false);
-                setSearchValue('');
-                setIsBaskedOpen(false);
-                if (!isCatalogOpen) {
-                    disableScrolling();
-                } else {
-                    enableScrolling();
-                }
+
+                enableScrolling();
+            } else {
+                console.log('insideClick');
             }
         };
 
-        document.addEventListener('mousedown', handleOutsideClick);
+        // Add the event listener when the component mounts
+        document.addEventListener('mousedown', handleOutsideClicked);
 
-        // Proper cleanup
+        // Cleanup: Remove the event listener when the component unmounts
         return () => {
-            document.removeEventListener('mousedown', handleOutsideClick);
+            document.removeEventListener('mousedown', handleOutsideClicked);
         };
-    }, [CatalogBtnRef, CAtalogDiv, isCatalogOpen]);
+    }, [CAtalogDiv.current, CatalogBtnRef.current]);
+
     useEffect(() => {
-        const handleOutsideClick = (e: MouseEvent) => {
+        const handleOutsideClicked = (e: any) => {
             if (
                 BaskedBtnRef.current &&
                 !BaskedBtnRef.current.contains(e.target as Node) &&
                 BaskedDiv.current &&
                 !BaskedDiv.current.contains(e.target as Node)
             ) {
-                setIsClothingOpen(false);
-                setSearchValue('');
+                // console.log('outsideClick');
                 setIsBaskedOpen(false);
-
                 enableScrolling();
+            } else {
+                console.log('insideClick');
             }
         };
 
-        document.addEventListener('mousedown', handleOutsideClick);
+        // Add the event listener when the component mounts
+        document.addEventListener('mousedown', handleOutsideClicked);
 
-        // Proper cleanup
+        // Cleanup: Remove the event listener when the component unmounts
         return () => {
-            document.removeEventListener('mousedown', handleOutsideClick);
+            document.removeEventListener('mousedown', handleOutsideClicked);
         };
-    }, [BaskedBtnRef, BaskedDiv, isBaskedOpen]);
+    }, [BaskedDiv.current, BaskedBtnRef.current]);
     return (
-        <div className="  block w-full z-[99999999999] top-0">
+        <div className="  block w-full z-[99999999999] top-0 min-h-[68px]">
             <div className=" lg:flex hidden flex-col relative bg-white">
                 <div className="w-full bg-[#3873C3] h-[40px] text-center text-[14px] font-normal text-white flex items-center justify-center">
                     p5 noyabr-25 noyabr 30% endirim
@@ -150,7 +154,7 @@ export default function Header() {
                     </div>
                 </div>
                 <div className="flex overflow-hidden  flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
-                    <button
+                    <div
                         ref={CatalogBtnRef}
                         className="flex flex-col justify-center self-stretch px-7 py-3 my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
                         onClick={() => {
@@ -172,7 +176,8 @@ export default function Header() {
                             />
                             <div className="self-stretch my-auto">Kataloq</div>
                         </div>
-                    </button>
+                    </div>
+
                     <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
                         <input
                             type="text"
@@ -221,7 +226,7 @@ export default function Header() {
                                 setIsBaskedOpen((prev) => !prev);
                             }}
                         >
-                            <button
+                            <div
                                 className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative"
                                 ref={BaskedBtnRef}
                             >
@@ -229,20 +234,44 @@ export default function Header() {
                                 <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
                                     2
                                 </div>
-                            </button>
+                            </div>
                             <div className="self-stretch my-auto">112 AZN</div>
                         </button>
                     </div>
                 </div>
-                <CatalogBar
-                    ref={CAtalogDiv}
+                <div
+                    className="absolute w-full min-h-[70vh] bg-black  top-[30vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    style={{
+                        display: isCatalogOpen ? 'block' : 'none',
+                    }}
+                >
+                    <div ref={CAtalogDiv} className="w-[408px]">
+                        <ClothingMenu
+                            ref={CAtalogDiv}
+                            setIsCatalogOpen={(value) => {
+                                enableScrolling();
+
+                                setIsClothingOpen(value);
+                            }}
+                        />
+                    </div>
+                    {/* 
+                    <div
+                        className="w-[300px] h-[300px] bg-white bg-opacity-100"
+                        ref={myToggleMenuRef}
+                    >
+                        <h1 className="text-red-500">my toggle menu</h1>
+                    </div> */}
+                </div>
+                {/* <CatalogBar
                     isCatalogOpen={isCatalogOpen && SearchValue === ''}
                     setIsCatalogOpen={(value) => {
                         enableScrolling();
 
                         setIsClothingOpen(value);
                     }}
-                />
+                /> */}
+
                 <div
                     className="absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999] bg-black bg-opacity-60"
                     style={
@@ -547,25 +576,30 @@ export default function Header() {
                 </div>
             </div>
             {/* mobil header */}
-            <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full">
+            <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full fixed bg-white ">
                 <Link to={'/'}>
                     <img
                         loading="lazy"
                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                         className={`object-contain shrink-0 self-stretch aspect-[1.4] duration-300 w-[70px] ${
-                            isSearchOpen ? 'opacity-0   ' : 'opacity-100'
+                            isSearchOpen || showaside
+                                ? 'opacity-0   '
+                                : 'opacity-100'
                         } `}
                     />
                 </Link>{' '}
                 <div className="flex gap-4 items-center">
                     <div
-                        className={`absolute top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[999999999] ${
+                        className={`absolute top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[54] ${
                             isSearchOpen
                                 ? ' left-[16px] h-[40px]  w-[93%] bg-[#F5F5F5] rounded-[100px] '
                                 : ' right-[6rem]  w-fit '
                         } `}
                     >
                         <button
+                            className={`${
+                                showaside ? 'opacity-0' : 'opacity-100'
+                            }`}
                             onClick={() => {
                                 setIsSearchOpen(true);
                             }}
@@ -654,8 +688,10 @@ export default function Header() {
 
                     <button
                         className={`flex gap-3 items-center ${
-                            isSearchOpen ? 'opacity-0' : 'opacity-100'
-                        } `}
+                            isSearchOpen || showaside
+                                ? 'opacity-0'
+                                : 'opacity-100'
+                        }  `}
                         onClick={() => {
                             setIsBaskedOpen((prev) => !prev);
                             if (!isBaskedOpen) {
@@ -681,8 +717,10 @@ export default function Header() {
                             onClick={() => {
                                 setShowAside((prew) => !prew);
                             }}
-                            className={`w-[40px] h-[40px] aspect-square rounded-full bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
-                                isSearchOpen ? 'opacity-0' : 'opacity-100 '
+                            className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
+                                isSearchOpen || showaside
+                                    ? 'opacity-0 '
+                                    : 'opacity-100 '
                             } `}
                         >
                             <svg
@@ -698,8 +736,7 @@ export default function Header() {
                                 />
                             </svg>
                         </div>
-
-                        <div
+                        {/* <div
                             className={`absolute  ${
                                 showaside ? '' : 'hidden'
                             }  right-[0] mt-2 w-48 origin-top-right rounded-md z-50 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
@@ -742,10 +779,79 @@ export default function Header() {
                                     <div>Daxil ol</div>
                                 </Link>
                             </div>
+                        </div> */}
+                    </div>
+                    <div
+                        className="flex flex-row justify-between items-center px-4 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
+                        style={{
+                            opacity: showaside ? '100' : '0',
+                            zIndex: showaside ? '55' : '-55',
+                        }}
+                    >
+                        <div className="flex flex-row gap-5">
+                            <Link to={'/liked'}>
+                                <img
+                                    loading="lazy"
+                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
+                                />
+                            </Link>
+                            <div className="flex gap-6 items-center self-stretch my-auto text-sm">
+                                <div className="flex gap-5 items-center self-stretch my-auto ">
+                                    <Link to={'/user/login'}>
+                                        <div className="flex gap-3 items-center self-stretch my-auto">
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
+                                            />
+                                            <div className="self-stretch my-auto">
+                                                Şəxsi kabinet
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
+                        <button onClick={() => setShowAside(false)}>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M15 5L5 15"
+                                    stroke="black"
+                                    stroke-opacity="0.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></path>
+                                <path
+                                    d="M5 5L15 15"
+                                    stroke="black"
+                                    stroke-opacity="0.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
+            {showaside && (
+                <div className="hiden max-md:flex absolute top-[70px] left-0 w-full">
+                    <ClothingMenu
+                        ref={CAtalogDiv}
+                        setIsCatalogOpen={(value) => {
+                            enableScrolling();
+
+                            setIsClothingOpen(value);
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 }

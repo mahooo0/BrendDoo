@@ -8,11 +8,11 @@ export default function ProductId() {
     return (
         <div className="">
             <Header />
-            <main className=" lg:mt-[54px] mt-0">
-                <div className="px-[40px]">
+            <main className=" lg:mt-[54px] mt-0 max-sm:mt-3">
+                <div className="px-[40px] max-sm:px-4">
                     <BreadCump />
                 </div>
-                <section className="flex lg:flex-row flex-col gap-10 mx-[40px] ">
+                <section className="flex lg:flex-row flex-col gap-10 mx-[40px]  max-sm:mx-4">
                     <div className="relative lg:w-[40%] w-full ">
                         {' '}
                         {/* Parent container with height */}
@@ -24,11 +24,11 @@ export default function ProductId() {
                                     scrollbarColor: '#888 transparent', // For Firefox
                                 }}
                             >
-                                <div className="flex overflow-hidden flex-col w-full  min-h-[670px] rounded-3xl bg-neutral-100 max-md:max-w-full">
+                                <div className="flex overflow-hidden flex-col w-full  min-h-[670px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
                                     <img
                                         loading="lazy"
                                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-cover w-full h-[670px] max-md:max-w-full"
+                                        className="object-cover w-full max-sm:h-[345px] h-[670px] max-md:max-w-full"
                                     />
                                 </div>
                                 <div className=" w-full max-md:max-w-full">
@@ -53,11 +53,11 @@ export default function ProductId() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex overflow-hidden flex-col w-full  min-h-[500px] rounded-3xl bg-neutral-100 max-md:max-w-full">
+                                <div className="flex overflow-hidden flex-col w-full  min-h-[500px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
                                     <img
                                         loading="lazy"
                                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-cover w-full h-[500px] max-md:max-w-full"
+                                        className="object-cover w-full max-sm:h-[345px] h-[500px] max-md:max-w-full"
                                     />
                                 </div>
                             </section>
@@ -164,7 +164,7 @@ export default function ProductId() {
                         </div>
                         <div className="flex flex-wrap gap-5 items-center mt-7 text-base font-medium max-md:max-w-full">
                             <div className="flex flex-wrap gap-3 items-center self-stretch my-auto min-w-[240px] max-md:max-w-full">
-                                <div className="flex overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
+                                <button className="flex max-sm:items-center max-sm:w-full overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
                                     <div className="flex gap-2 items-center">
                                         <img
                                             loading="lazy"
@@ -175,8 +175,8 @@ export default function ProductId() {
                                             Səbətə əlavə et
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-blue-600 border border-solid border-slate-300 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
+                                </button>
+                                <button className="flex overflow-hidden max-sm:items-center max-sm:w-full flex-col justify-center self-stretch px-16 py-3.5 my-auto text-blue-600 border border-solid border-slate-300 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
                                     <div className="flex gap-2 items-center">
                                         <img
                                             loading="lazy"
@@ -187,15 +187,15 @@ export default function ProductId() {
                                             Bir kliklə al
                                         </div>
                                     </div>
-                                </div>
+                                </button>
                             </div>
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/07d431d73088f7a9f3aed7f9493deda18edf1f9e2a2aa01d2a8d1ce05d8757a7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
+                                className="object-contain max-sm:hidden shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
                             />
                         </div>
-                        <div className="flex rounded-3xl bg-stone-50 max-w-[670px] min-h-[824px] px-[40px] py-[48px] mt-[90px] flex-col">
+                        <div className="flex rounded-3xl bg-stone-50 max-w-[670px] min-h-[824px] px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col">
                             <p>
                                 DEscription DEscription DEscription DEscription
                                 DEscription DEscription DEscription DEscription
@@ -242,8 +242,8 @@ export default function ProductId() {
                         </div>
                     </section>
                 </section>
-                <section className="mt-[100px] bg-[#F8F8F8] px-[40px]">
-                    <div className="flex flex-wrap gap-8 justify-start items-center pt-[80px]">
+                <section className="mt-[100px] max-sm:mt-12 bg-[#F8F8F8] px-[40px]">
+                    <div className="flex flex-wrap gap-8 justify-start max-sm:justify-center items-center pt-[80px]">
                         <div className="flex flex-col justify-center items-center self-stretch p-8 my-auto bg-white rounded-3xl min-w-[240px] w-[296px] max-md:px-5">
                             <div className="text-6xl font-semibold leading-none text-center text-zinc-900 max-md:text-4xl">
                                 4.7
@@ -454,7 +454,7 @@ export default function ProductId() {
                         </button>
                     </div>
                 </section>
-                <section className="px-[40px]">
+                <section className="px-[40px] max-sm:px-4">
                     <h3 className="text-[28px] font-semibold mt-[100px]">
                         Tövsiyyələr
                     </h3>{' '}

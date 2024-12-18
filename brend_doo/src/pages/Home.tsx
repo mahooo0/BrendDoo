@@ -120,8 +120,8 @@ export default function Home() {
                     </div>
                     <ProductSwipper bg="grey" />
                 </section>{' '}
-                <section className="mt-[100px] px-[40px] bg-[#F5F5F5] max-sm:px-[16px] max-sm:py-10 py-[80px]">
-                    <div className="flex flex-row flex-wrap justify-between  gap-4">
+                <section className="mt-[100px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
+                    <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
@@ -137,12 +137,12 @@ export default function Home() {
                 </section>
                 <section className="px-[40px] py-[100px] max-sm:px-4 max-sm:py-10">
                     <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
-                        <div className="flex gap-5 max-md:flex-col-reverse max-sm:py-8">
-                            <div className="flex max-sm:hidden flex-col w-[33%] max-md:ml-0 max-md:w-full">
+                        <div className="flex gap-5 max-md:flex-col-reverse max-sm:py-0">
+                            <div className="flex  flex-col w-[33%] max-md:ml-0  max-md:w-full">
                                 <img
                                     loading="lazy"
                                     srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain grow mt-32 mr-0 w-full aspect-[2.29] max-md:mt-10 max-md:max-w-full"
+                                    className="object-contain grow mt-32 max-sm:mt-0 mr-0 w-full aspect-[2.29] max-md:mt-10 max-md:max-w-full"
                                 />
                             </div>
                             <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
@@ -221,7 +221,7 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col mt-12 w-full  max-md:mt-10 max-md:max-w-full">
-                        <div className="flex flex-wrap gap-4 items-center w-full justify-between max-lg:justify-start">
+                        <div className="flex flex-wrap gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
                             <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
                                 <img
                                     loading="lazy"
@@ -473,7 +473,7 @@ export default function Home() {
                                 backgroundRepeat: 'no-repeat',
                             }}
                         >
-                            <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24 max-md:mt-5 max-md:max-w-full">
+                            <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24  max-md:max-w-full">
                                 <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
                                     <div className="flex flex-col">
                                         <div>
@@ -489,8 +489,8 @@ export default function Home() {
                         </div>
                     ))}
                 </section>
-                <section className="mt-[100px] max-sm:mt-10 max-sm:px-4 max-sm:py-10 px-[40px] bg-[#F5F5F5] py-[80px]">
-                    <div className="flex flex-row flex-wrap justify-between gap-4 ">
+                <section className="mt-[100px] max-sm:mt-10 max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
+                    <div className="flex flex-row flex-wrap justify-between gap-4 max-sm:px-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>

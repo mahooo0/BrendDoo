@@ -4,37 +4,14 @@ import ClothingMenu from '../ClothingMenu';
 interface CatalogBarProps {
     isCatalogOpen: boolean;
     setIsCatalogOpen: (value: boolean) => void;
-    ref: LegacyRef<HTMLDivElement> | undefined;
+    ref?: LegacyRef<HTMLDivElement> | undefined;
 }
 
 export const CatalogBar: React.FC<CatalogBarProps> = ({
+    ref,
     isCatalogOpen,
     setIsCatalogOpen,
 }) => {
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(
-    //         (entries) => {
-    //             entries.forEach((entry) => {
-    //                 console.log(
-    //                     entry.isIntersecting ? 'visible' : 'not visible'
-    //                 );
-    //             });
-    //         },
-    //         { threshold: 0 }
-    //     );
-
-    //     const element = document.querySelector('.catalog-bar');
-    //     if (element) {
-    //         observer.observe(element);
-    //     }
-
-    //     return () => {
-    //         if (element) {
-    //             observer.unobserve(element);
-    //         }
-    //     };
-    // }, []);
-
     return (
         <div
             className=" absolute top-[100%] w-full h-[200vh] px-10 py-2 z-[99999999999]"
@@ -46,7 +23,7 @@ export const CatalogBar: React.FC<CatalogBarProps> = ({
                     setIsCatalogOpen(false);
                 }}
             ></div>
-            <ClothingMenu setIsCatalogOpen={setIsCatalogOpen} />
+            <ClothingMenu ref={ref} setIsCatalogOpen={setIsCatalogOpen} />
         </div>
     );
 };

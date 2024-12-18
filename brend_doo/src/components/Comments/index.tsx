@@ -68,7 +68,7 @@ const CommentsSection = () => {
                 <p className="gap-3 self-stretch my-auto text-sm text-black">
                     440 rəy
                 </p>
-                <div className="flex gap-4 items-center self-stretch my-auto min-w-[240px] flex-wrap">
+                <div className="flex gap-4 max-sm:justify-between max-sm:w-full items-center self-stretch my-auto min-w-[240px] flex-wrap">
                     <label
                         htmlFor="sortDropdown"
                         className="self-stretch my-auto text-sm text-black text-opacity-60"
