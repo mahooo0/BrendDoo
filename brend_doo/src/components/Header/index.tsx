@@ -41,10 +41,10 @@ export default function Header() {
                 CAtalogDiv.current &&
                 !CAtalogDiv.current.contains(e.target as Node)
             ) {
-                // console.log('outsideClick');
+                console.log('outsideClick');
                 setIsClothingOpen(false);
 
-                enableScrolling();
+                // enableScrolling();
             } else {
                 console.log('insideClick');
             }
@@ -69,7 +69,7 @@ export default function Header() {
             ) {
                 // console.log('outsideClick');
                 setIsBaskedOpen(false);
-                enableScrolling();
+                // enableScrolling();
             } else {
                 console.log('insideClick');
             }
@@ -83,6 +83,15 @@ export default function Header() {
             document.removeEventListener('mousedown', handleOutsideClicked);
         };
     }, [BaskedDiv.current, BaskedBtnRef.current]);
+    useEffect(() => {
+        if (
+            isCatalogOpen === false &&
+            isBaskedOpen === false &&
+            SearchValue === ''
+        ) {
+            enableScrolling();
+        }
+    }, [isBaskedOpen, isCatalogOpen, SearchValue]);
     return (
         <div className="  block w-full z-[99999999999] top-0 min-h-[68px]">
             <div className=" lg:flex hidden flex-col relative bg-white">
@@ -249,7 +258,7 @@ export default function Header() {
                         <ClothingMenu
                             ref={CAtalogDiv}
                             setIsCatalogOpen={(value) => {
-                                enableScrolling();
+                                // enableScrolling();
 
                                 setIsClothingOpen(value);
                             }}
@@ -841,7 +850,7 @@ export default function Header() {
                 </div>
             </div>
             {showaside && (
-                <div className="hiden max-md:flex fixed top-[70px] left-0 w-full z-[67]">
+                <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white">
                     <ClothingMenu
                         ref={CAtalogDiv}
                         setIsCatalogOpen={(value) => {

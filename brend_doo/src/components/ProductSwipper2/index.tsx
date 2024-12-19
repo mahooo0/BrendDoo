@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import ProductCard from '../ProductCArd';
 
 // Sample slider items
 // const sliderItems = [
@@ -22,10 +21,8 @@ import ProductCard from '../ProductCArd';
 //     },
 //     // Add more slides as needed
 // ];
-interface Proops {
-    bg: 'white' | 'grey';
-}
-export default function ProductSwipper({ bg }: Proops) {
+
+export default function ProductSwipper2() {
     const swiperRef = useRef<any>();
     const [isLast, setIsLast] = useState(false);
     const [isFirst, setIsFirst] = useState(true);
@@ -42,7 +39,7 @@ export default function ProductSwipper({ bg }: Proops) {
         }
     };
     return (
-        <div className="slider-container mt-[40px] relative flex justify-center items-center">
+        <div className="slider-container  relative flex justify-center items-center w-[100vw]">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides
@@ -50,11 +47,11 @@ export default function ProductSwipper({ bg }: Proops) {
                     setIsFirst(swiper.activeIndex === 0);
                     setIsLast(swiper.isEnd);
                 }}
+                // centeredSlides={true}
                 breakpoints={{
                     268: {
                         slidesPerView: 'auto',
-
-                        // centeredSlides: true,
+                        centeredSlides: true,
                     },
                     568: {
                         slidesPerView: 2,
@@ -72,14 +69,35 @@ export default function ProductSwipper({ bg }: Proops) {
                 onReachEnd={() => setIsLast(true)} // Explicitly handle end of slider
                 onReachBeginning={() => setIsFirst(true)}
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper max-sm:!pl-4 "
+                className="mySwiper max-sm:!pl-4 !w-full "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <SwiperSlide
-                        key={i}
-                        className="!flex !justify-center max-sm:!w-fit"
-                    >
-                        <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
+                    <SwiperSlide key={i} className="max-sm:!w-[100%]">
+                        <div
+                            key={i}
+                            className="flex flex-col w-full min-h-[510px]  max-md:ml-0 max-md:w-full rounded-3xl"
+                            style={{
+                                backgroundImage:
+                                    'url("https://placehold.co/600x400")',
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                            }}
+                        >
+                            <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24  max-md:max-w-full">
+                                <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
+                                    <div className="flex flex-col">
+                                        <div>
+                                            İki tərəfli zara kolleksiyasından
+                                            qalın pencək
+                                        </div>
+                                        <div className="mt-3 font-semibold">
+                                            298 AZN
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>

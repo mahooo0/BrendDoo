@@ -58,12 +58,12 @@ export default function ProductSwipperShort({ bg }: Proops) {
                 loop={false} // Loop the slider
                 // Enable pagination dots
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper max-sm:!px-4"
+                className="mySwiper max-sm:!pl-4"
             >
                 {Array.from({ length: 10 }).map((_, i) => (
                     <SwiperSlide
                         key={i}
-                        className="!flex !justify-center max-sm:!block max-sm:!w-fit"
+                        className="!flex !justify-center max-sm:!block max-sm:!w-[80vw]  "
                     >
                         <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
                     </SwiperSlide>

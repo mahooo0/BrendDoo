@@ -9,6 +9,7 @@ import { Footer } from '../components/Footer/index.tsx';
 import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProductSwipper2 from '../components/ProductSwipper2/index.tsx';
 
 export default function Home() {
     const [isStoriesSwipperOpen, setisStoriesSwipperOpen] =
@@ -224,105 +225,19 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col mt-12 w-full  max-md:mt-10 max-md:max-w-full">
-                        <div className="flex flex-wrap gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col  px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
-                            <div className="flex overflow-hidden w-fit flex-col px-8 my-auto  rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>{' '}
+                        <div className="grid flex-wrap max-sm:grid-cols-2 grid-cols-5 gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
+                            {Array.from({ length: 10 }).map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="flex overflow-hidden max-sm:px-auto max-sm:w-full right-5 w-fit flex-col px-8 my-auto rounded-3xl bg-neutral-100 max-md:px-5"
+                                >
+                                    <img
+                                        loading="lazy"
+                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain aspect-[1.2] w-[120px]"
+                                    />
+                                </div>
+                            ))}
                         </div>
                         {/* <div className="flex flex-wrap gap-4 items-center mt-4 w-full max-md:max-w-full">
                             <div className="flex overflow-hidden flex-col  px-8 my-auto w-36 rounded-3xl bg-neutral-100 max-md:px-5">
@@ -377,7 +292,7 @@ export default function Home() {
                         </div> */}
                     </div>
                 </section>
-                <section className="mt-[100px] max-sm:mt-10 max-sm:px-[0px] px-[40px] bg-[#F5F5F5] py-[80px] flex lg:flex-row flex-col justify-between max-sm:gap-8 gap-[154px] ">
+                <section className="mt-[100px] max-sm:mt-10 max-sm:px-[0px] px-[40px] bg-[#F5F5F5] py-[80px] max-sm:py-10 flex lg:flex-row flex-col justify-between max-sm:gap-8 gap-[154px] ">
                     <div className="flex max-sm:px-4 flex-col flex-wrap gap-7 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Geyimlər{' '}
@@ -442,7 +357,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4 max-sm:mt-10 px-[40px] mt-[100px] gap-5 w-fit">
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4 max-sm:mt-10 px-[40px] mt-[100px] gap-5 w-fit">
                     <div className="   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -492,7 +407,33 @@ export default function Home() {
                         </div>
                     ))}
                 </section>
-                <section className="mt-[100px] max-sm:mt-10 max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
+                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0 max-sm:mt-10 px-[40px] mt-[100px] gap-5 w-fit">
+                    <div className=" max-sm:px-4   flex items-center justify-between">
+                        <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
+                            <div className="flex flex-col w-full">
+                                <div className="text-4xl font-semibold text-slate-900">
+                                    Mövsüm təklifləri
+                                </div>
+                                <div className="mt-5 text-base text-black text-opacity-80">
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry. Lorem
+                                    Ipsum has been the industry's standard dummy
+                                    text ever
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ProductSwipper2 />
+                    <div className="flex justify-center">
+                        <button
+                            className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                            onClick={() => navigate('/poducts')}
+                        >
+                            Hamısına bax
+                        </button>
+                    </div>
+                </section>
+                <section className="mt-[100px]  max-sm:mt-10 max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
                     <div className="flex flex-row flex-wrap justify-between gap-4 max-sm:px-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr

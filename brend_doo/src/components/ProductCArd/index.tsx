@@ -143,7 +143,9 @@ export default function ProductCard({
                 </div>
             </div>
             <div className="flex flex-col mt-5 w-full">
-                <div>İki tərəfli zara kolleksiyasından qalın pencək</div>
+                <div className="pr-2">
+                    İki tərəfli zara kolleksiyasından qalın pencək
+                </div>
                 <div className=" flex flex-row gap-2">
                     {issale && (
                         <div className="mt-3 font-semibold text-[14px] line-through opacity-60">
