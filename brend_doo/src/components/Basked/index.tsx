@@ -6,7 +6,7 @@ export default function BaskedForum() {
     const [checkbox3, setcheckbox3] = useState<boolean>(false);
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     return (
-        <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 lg:w-[70%] w-full max-md:px-5">
+        <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 lg:w-[70%] w-full max-md:px-5 max-sm:px-2">
             <div className="flex flex-col max-md:max-w-full">
                 {/* Personal Information Section */}
                 <div className="flex flex-col w-full max-md:max-w-full">

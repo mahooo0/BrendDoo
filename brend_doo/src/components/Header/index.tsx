@@ -156,7 +156,7 @@ export default function Header() {
                 <div className="flex overflow-hidden  flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
                     <div
                         ref={CatalogBtnRef}
-                        className="flex flex-col justify-center self-stretch px-7 py-3 my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
+                        className="flex flex-col justify-center self-stretch px-7 py-3 cursor-pointer my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
                         onClick={() => {
                             setIsClothingOpen((prew) => !prew);
                             setSearchValue('');

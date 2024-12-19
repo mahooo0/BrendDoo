@@ -8,7 +8,7 @@ export default function BaskedConfirm() {
         <div>
             <Header />
             <main className="mt-0">
-                <div className="px-[40px] pt-[40px] mb-[28px]">
+                <div className="px-[40px] max-sm:px-4 pt-[40px] mb-[28px]">
                     <BreadCump />
                 </div>
                 <section className="lg:px-[40px] px-4">
@@ -16,7 +16,7 @@ export default function BaskedConfirm() {
                         Brendlər{' '}
                     </h3>{' '}
                 </section>
-                <section className="flex lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
+                <section className="flex max-sm:px-4 lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
                     <BaskedForum />
                     <div className="w-[2px] h-[500px] bg-black lg:block hidden  opacity-10" />
                     <div className="flex flex-col rounded-3xl min-w-[306px]">

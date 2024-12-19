@@ -40,7 +40,7 @@ export default function StoriesSwipper({
                         loop={false}
                         navigation={false}
                         breakpoints={{
-                            1440: { slidesPerView: 5 },
+                            1240: { slidesPerView: 5, spaceBetween: '200px' },
                             768: { slidesPerView: 3 },
                             556: { slidesPerView: 2 },
                             320: { slidesPerView: 1 },
@@ -54,7 +54,7 @@ export default function StoriesSwipper({
                                 <div
                                     className={` ${
                                         currentslide === i
-                                            ? 'lg:scale-[1.1]'
+                                            ? 'lg:scale-[1.1] max-md:[1.1]'
                                             : ' lg:scale-[0.9]'
                                     }   transition-all duration-300 w-[100%]  h-fit flex justify-center items-center    relative`}
                                 >

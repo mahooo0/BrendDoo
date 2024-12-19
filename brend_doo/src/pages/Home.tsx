@@ -106,12 +106,15 @@ export default function Home() {
                         action={() => setisStoriesSwipperOpen(true)}
                     />{' '}
                 </section>
-                <section className="mt-[100px] px-[40px] max-sm:px-[16px]">
-                    <div className="flex flex-row flex-wrap justify-between gap-4 ">
-                        <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
+                <section className="mt-[100px] px-[40px] max-sm:px-[0] max-sm:mt-10">
+                    <div className="flex flex-row flex-wrap justify-between gap-4  ">
+                        <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
                             Tiktok hekayələr
                         </h2>
-                        <div className="flex flex-row max-sm:w-full max-sm:overflow-x-scroll justify-between max-sm:justify-around gap-3">
+                        <div
+                            style={{ scrollbarWidth: 'none' }}
+                            className="flex flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-4 justify-between max-sm:justify-around gap-3"
+                        >
                             <NoneToBlue isactive={true}>Hamısı</NoneToBlue>
                             <NoneToBlue>Elektronika</NoneToBlue>
                             <NoneToBlue>Geyim</NoneToBlue>

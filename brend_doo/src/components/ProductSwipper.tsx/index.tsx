@@ -53,10 +53,11 @@ export default function ProductSwipper({ bg }: Proops) {
                 breakpoints={{
                     268: {
                         slidesPerView: 'auto',
-                        centeredSlides: true,
+                        // centeredSlides: true,
                     },
                     568: {
                         slidesPerView: 2,
+                        // centeredSlides: true,
                     },
                     1224: {
                         slidesPerView: 3,
