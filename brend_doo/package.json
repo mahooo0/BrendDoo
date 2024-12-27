@@ -10,16 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.62.8",
+    "@tanstack/react-query-devtools": "^5.62.8",
+    "axios": "^1.7.9",
     "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
+    "react-hot-toast": "^2.4.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^7.0.2",
     "react-router-hash-link": "^2.4.3",
     "swiper": "^11.1.14",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@types/node": "^22.10.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-router-hash-link": "^2.4.9",

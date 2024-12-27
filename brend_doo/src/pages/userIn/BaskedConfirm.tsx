@@ -16,10 +16,10 @@ export default function BaskedConfirm() {
                         Brendlər{' '}
                     </h3>{' '}
                 </section>
-                <section className="flex max-sm:px-4 lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
+                <section className="flex max-sm:px-4 lg:flex-row flex-col  h-fit px-[40px] justify-between mb-[100px] max-sm:gap-10 gap-[65px]">
                     <BaskedForum />
                     <div className="w-[2px] h-[500px] bg-black lg:block hidden  opacity-10" />
-                    <div className="flex flex-col rounded-3xl min-w-[306px]">
+                    <div className="flex flex-col max-sm:flex-col-reverse gap-4 rounded-3xl min-w-[306px]">
                         <div className="flex overflow-hidden flex-col justify-center p-7 w-full rounded-3xl bg-stone-50">
                             <div className="flex flex-col">
                                 <div className="text-base font-semibold text-black">

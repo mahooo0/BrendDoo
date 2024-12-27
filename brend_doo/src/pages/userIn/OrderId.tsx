@@ -40,7 +40,7 @@ export default function OrderId() {
                             <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
                         </div>
-                        <div className="flex flex-wrap flex-row    gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
+                        <div className="flex flex-wrap flex-row max-sm:flex-col    gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
                             <div className="flex flex-row gap-3">
                                 <div className=" shrink-0 max-md:flex hidden self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
 
@@ -141,13 +141,13 @@ export default function OrderId() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex overflow-hidden flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5 mt-4">
-                        <div className="flex gap-5 items-center flex-wrap">
+                    <div className="flex overflow-hidden max-sm:justify-center flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5 mt-4">
+                        <div className="flex gap-5 max-sm:flex-row items-center max-sm:gap-2 ">
                             <div className="flex gap-5 items-center self-stretch my-auto">
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/61bb2aca9b7b286baed1108447439f3b7e43632b7436e098db5d7997b28e7858?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto aspect-square w-[60px]"
+                                    className="object-contain max-sm:hidden shrink-0 self-stretch my-auto aspect-square w-[60px]"
                                 />
                                 <div className="flex flex-col self-stretch my-auto">
                                     <div className="text-xs text-black text-opacity-60">
@@ -190,7 +190,7 @@ export default function OrderId() {
                     </div>
                     <div className="flex flex-col mt-[30px]">
                         <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-t-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
-                            <div className="self-stretch my-auto">
+                            <div className="self-stretch my-auto max-sm:hidden">
                                 Çatdırılma məlumatları:
                             </div>
                             <div className="self-stretch my-auto">
@@ -212,6 +212,9 @@ export default function OrderId() {
                                 <div className="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
                                     <div className="flex flex-col w-full max-md:mt-10 h-full justify-between">
                                         <div className="flex flex-col w-full">
+                                            <div className="self-stretch my-auto max-sm:block hidden mb-3">
+                                                Çatdırılma məlumatları:
+                                            </div>
                                             <div className="text-sm text-black text-opacity-60">
                                                 Ünvan:
                                             </div>

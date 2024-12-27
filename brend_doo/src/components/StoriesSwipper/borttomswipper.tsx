@@ -1,7 +1,16 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Product, TranslationsKeys } from '../../setting/Types';
+import { useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request';
 
-export default function Borttomswipper({ isopen }: { isopen: boolean }) {
+export default function Borttomswipper({
+    isopen,
+    products,
+}: {
+    isopen: boolean;
+    products: Product[];
+}) {
     const innerSwiperRef = useRef<any>(); // Separate ref for the inner Swiper
     const handleNext = () => {
         if (innerSwiperRef.current && innerSwiperRef.current.swiper) {
@@ -9,6 +18,12 @@ export default function Borttomswipper({ isopen }: { isopen: boolean }) {
         }
     };
 
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     const handlePrev = () => {
         if (innerSwiperRef.current && innerSwiperRef.current.swiper) {
             innerSwiperRef.current.swiper.slidePrev();
@@ -69,7 +84,32 @@ export default function Borttomswipper({ isopen }: { isopen: boolean }) {
                     className="!h-fit !px-2"
                     // Set to show three slides at a time
                 >
-                    {Array.from({ length: 5 }).map((_, i) => (
+                    {products.map((item: Product, i: number) => (
+                        <SwiperSlide
+                            key={i}
+                            className=" !flex !justify-center items-end pb-[24px]"
+                        >
+                            <div className="flex px-[7px]  gap-2 flex-row justify-around w-full bg-white bg-opacity-80  items-center rounded-[20px]">
+                                <img
+                                    src={item.image}
+                                    alt=""
+                                    className="w-[60px] aspect-square rounded-xl object-cover m-[6px]"
+                                />
+                                <div className="flex flex-col w-[160px]">
+                                    <h6 className="text-[14px] font-[400] line-clamp-1">
+                                        {item.title}
+                                    </h6>
+                                    <p className="text-[14px] font-[400]">
+                                        {item.discounted_price}
+                                    </p>
+                                </div>{' '}
+                                <button className="px-[12px] py-[8px] h-fit rounded-[20px] bg-[#B1C7E4] text-nowrap ">
+                                    {tarnslation?.buyNow}{' '}
+                                </button>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                    {/* {Array.from({ length: 5 }).map((_, i) => (
                         <SwiperSlide
                             key={i}
                             className=" !flex !justify-center items-end pb-[24px]"
@@ -93,7 +133,7 @@ export default function Borttomswipper({ isopen }: { isopen: boolean }) {
                                 </button>
                             </div>
                         </SwiperSlide>
-                    ))}
+                    ))} */}
                 </Swiper>
             </div>
         );

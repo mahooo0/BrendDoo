@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { Tiktok, Tiktoks } from '../../setting/Types';
 
 // Sample slider items
 // const sliderItems = [
@@ -22,7 +23,13 @@ import 'swiper/swiper-bundle.css';
 //     // Add more slides as needed
 // ];
 
-export default function InstaqramSlider({ action }: { action: () => void }) {
+export default function InstaqramSlider({
+    action,
+    instragrams,
+}: {
+    action: (i: number) => void;
+    instragrams: Tiktoks | undefined;
+}) {
     const swiperRef = useRef<any>();
     const [isLast, setisLast] = useState(false);
     const [isFirst, setisFirst] = useState(true);
@@ -60,21 +67,26 @@ export default function InstaqramSlider({ action }: { action: () => void }) {
                 navigation={false} // Enable navigation buttons (optional)
                 className="mySwiper !pl-[40px] max-sm:!pl-4"
             >
-                {Array.from({ length: 20 }).map((_, i) => (
+                {instragrams?.map((story: Tiktok, i: number) => (
                     <SwiperSlide className="!w-fit" key={i}>
                         <div
                             className="flex flex-col self-stretch my-auto w-[120px] cursor-pointer"
-                            onClick={() => action()}
+                            onClick={() => action(i)}
                         >
                             <img
                                 loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/dc0524557a5b5f95d5925443b25e57f13a0523ba738c0ece794608e7e857684d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain self-center max-w-full aspect-square rounded-[100px] w-[120px]"
+                                src={story.image}
+                                className="object-cover self-center max-w-full aspect-square rounded-[100px] w-[120px]"
                             />
-                            <div className="mt-3 text-center">Pencək</div>
+                            <div className="mt-3 text-center">
+                                {story.title}
+                            </div>
                         </div>
                     </SwiperSlide>
                 ))}
+                {/* {Array.from({ length: 20 }).map((_, i) => (
+                    
+                ))} */}
             </Swiper>
             <div className="block max-sm:hidden">
                 <button

@@ -64,21 +64,21 @@ const CommentsSection = () => {
 
     return (
         <section className="flex flex-col w-full max-md:max-w-full mt-10 ">
-            <header className="flex flex-wrap gap-10 justify-between items-center w-full max-md:max-w-full">
+            <header className="flex max-sm:flex-row  gap-10 justify-between items-center w-full max-md:max-w-full">
                 <p className="gap-3 self-stretch my-auto text-sm text-black">
                     440 rəy
                 </p>
-                <div className="flex gap-4 max-sm:justify-between max-sm:w-full items-center self-stretch my-auto min-w-[240px] flex-wrap">
+                <div className="flex gap-2 max-sm:justify-start max-sm:w-fit items-center self-stretch my-auto max-sm:min-w-0 min-w-[240px] flex-wrap">
                     <label
                         htmlFor="sortDropdown"
                         className="self-stretch my-auto text-sm text-black text-opacity-60"
                     >
                         Sırala
                     </label>
-                    <div className="flex overflow-hidden gap-10 self-stretch p-3 my-auto text-base bg-white rounded-[100px] min-w-[240px] text-black text-opacity-90 w-[283px]">
+                    <div className="flex overflow-hidden gap-10 max-sm:min-w-[100px] max-sm:w-[190px] p-3 my-auto text-base bg-white rounded-[100px]  min-w-[240px] text-black text-opacity-90 w-[283px]">
                         <select
                             id="sortDropdown"
-                            className="flex-grow bg-transparent border-none outline-none"
+                            className="flex-grow bg-transparent border-none "
                             value={sortOrder}
                             onChange={handleSortChange}
                         >

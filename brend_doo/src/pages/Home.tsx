@@ -4,22 +4,121 @@ import NoneToBlue from '../components/buttons/NoneT0Blue';
 import ProductSwipper from '../components/ProductSwipper.tsx';
 import InstaqramSlider from '../components/InstaqramSwipper/index.tsx';
 import ImageSwipper from '../components/İmgSwipper.tsx/index.tsx';
-import ProductSwipperShort from '../components/ProductSwipperShort.tsx/index.tsx';
 import { Footer } from '../components/Footer/index.tsx';
 import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ProductSwipper2 from '../components/ProductSwipper2/index.tsx';
+import GETRequest from '../setting/Request.ts';
+import {
+    Advanteges,
+    Brand,
+    Category,
+    HomeCategory,
+    HomeHero,
+    LoginBunner,
+    ProductResponse,
+    SpecialOffer,
+    Tiktoks,
+    TranslationsKeys,
+} from '../setting/Types.ts';
+import Loading from '../components/Loading/index.tsx';
 
 export default function Home() {
+    //states
     const [isStoriesSwipperOpen, setisStoriesSwipperOpen] =
         useState<any>(false);
+    const [isIstagramSwippen, setIsIstagramSwippen] = useState<boolean>(false);
+    const [currentSlide, setCurrentSlide] = useState<number>(0);
+    // const [currentCategoryId, setCurrentCategoryId] = useState<number>(0);
+    //language
+
     const navigate = useNavigate();
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const { search } = useLocation();
+    const searchParams = new URLSearchParams(search);
+    const category_id = Number(searchParams.get('category_id')) || 0;
+    // console.log('salam', category_id);
+
+    // requests
+    const { data: hero, isLoading: heroLoading } = GETRequest<HomeHero>(
+        `/hero`,
+        'HOMEhero',
+        [lang]
+    );
+
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+
+    const { data: advantages, isLoading: advantagesLoading } = GETRequest<
+        Advanteges[]
+    >(`/advantages`, 'HOMEadvantages', [lang]);
+
+    const { data: brends, isLoading: brendsLoading } = GETRequest<Brand[]>(
+        `/brands`,
+        'brands',
+        [lang]
+    );
+
+    const { data: tiktok, isLoading: tiktokLoading } = GETRequest<Tiktoks>(
+        `/tiktoks`,
+        'tiktok',
+        [lang]
+    );
+    const { data: instragrams, isLoading: instragramsLoading } =
+        GETRequest<Tiktoks>(`/instagrams`, 'instagrams', [lang]);
+
+    const { data: products } = GETRequest<ProductResponse>(
+        `/products${category_id === 0 ? '' : `?category_id=${category_id}`}`,
+        'products',
+        [lang, category_id]
+    );
+
+    const { data: productsByCategory, isLoading: productsByCategoryLoading } =
+        GETRequest<HomeCategory[]>(`/home_categories`, 'home_categories', [
+            lang,
+            category_id,
+        ]);
+    const { data: discountedProducts, isLoading: discountedProductsLoading } =
+        GETRequest<ProductResponse>(
+            `/products?is_discount=1`,
+            'productsElektroniks',
+            [lang]
+        );
+    const { data: loginBanners, isLoading: loginBannersLoading } =
+        GETRequest<LoginBunner>(`/loginBanners`, 'loginBanners', [lang]);
+
+    const { data: special, isLoading: specialLoading } =
+        GETRequest<SpecialOffer>(`/special`, 'special', [lang]);
+    const { data: categories, isLoading: categoriesLoading } = GETRequest<
+        Category[]
+    >(`/categories`, 'categories', [lang]);
+    // loading
+    const router = useNavigate();
+    if (
+        heroLoading ||
+        advantagesLoading ||
+        brendsLoading ||
+        tarnslationLoading ||
+        tiktokLoading ||
+        categoriesLoading ||
+        instragramsLoading ||
+        discountedProductsLoading ||
+        specialLoading ||
+        loginBannersLoading ||
+        productsByCategoryLoading
+    ) {
+        return <Loading />;
+    }
+    // console.log('products:', products);
+
     return (
         <div className=" relative">
             <Header />
             <main className=" flex flex-col justify-center">
-                <section className="relative rounded-[20px] overflow-hidden mt-[40px] mx-[40px] max-sm:mx-[16px]">
+                <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     {/* Background Video */}
                     <video
                         autoPlay
@@ -28,7 +127,8 @@ export default function Home() {
                         className="absolute top-0 left-0 w-full h-full object-cover"
                     >
                         <source
-                            src="https://s3-figma-videos-production-sig.figma.com/video/TEAM/1133314765284192593/ddc0c3e57465367651c0aeebc90f221fcb15ec33?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bwHn6efBkCDSrFSBTU1MfDHxFqpQuTrhUKP07W2XiwEyeeGywiuuPrNYlU-dvu4RRpR0jwOGpq-nhGouaj~9l3g3vrhJiillpjTVC8kuxmbge5YaaxlhtjNhCyncdA6UFCVFpZvpy6D~q2yFGCCwTMMgCUo1Ssk3b9x~mC9QiqJ0MeVh3qlhB4do-2BVU8KzkGO9ai-OyUYn3QQ3DqhOxEQdC-9KxiEjPg32aUkEhFHYky9ypP5wo54G-PLRimVc1wjXp60VwqVStmkKYm141kIHi0WaQJRdqZjAPdOL5oVzWfcbNzeAo92R8gbAFhHYBb6cgUQp~gntgEpiObYc3A__"
+                            src={hero?.image}
+                            // src="https://s3-figma-videos-production-sig.figma.com/video/TEAM/1133314765284192593/ddc0c3e57465367651c0aeebc90f221fcb15ec33?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=D2V~13MicATijqUi6LNeFysKE72Hm0Hi7mid26CXUCzNteqVhCkfZ0gYPKACJtpPOg2JkNxPihRAbfv5JRqmRnjRdDJ8AycaOZP64DjqdSou8sn9AzzwwEDLVwXEgPqosLmHXTxMgt0qeIrckxbWKu1OeAUqFwmf-0ZWZQcfNDWgMapRoY9v6U1hfF71CpqHCHIwvrN8KGJ3~4N85qMFNzXiEmEWm5GI1FiVJzKzEKOY6GsVXzzXWcht6z4zaFJQmOMA7JId5ntjPufy0ELLF5lm2zDNzhZlAJxKFqumL31ix2mBoZTcxyiXYwDZ82It0zCcAduqpnXhp4wMCgcDjw__"
                             type="video/mp4"
                         />
                         Your browser does not support the video tag.
@@ -39,121 +139,159 @@ export default function Home() {
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
                                 <div className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl">
-                                    Zara yeni kolleksiya
+                                    {hero ? (
+                                        hero.title
+                                    ) : (
+                                        <div className="h-10 bg-gray-300 rounded animate-pulse w-3/4" />
+                                    )}
                                 </div>
                                 <div className="mt-5 text-lg font-medium max-md:max-w-full">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry.
+                                    {hero ? (
+                                        hero.description
+                                    ) : (
+                                        <div className="h-10 bg-gray-300 rounded animate-pulse w-full" />
+                                    )}
                                 </div>
                             </div>
+
                             <button
                                 className="gap-2.5 leading-[24px] h-fit self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
-                                Yeni məhsullar
+                                {tarnslation?.Yeni_məhsullar}{' '}
                             </button>
                         </div>
                     </div>
                 </section>
-                <section className="flex overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[20px] mx-[40px] max-sm:mx-[16px]">
+                <section className="flex overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     <div className="flex flex-wrap gap-10 items-center max-md:max-w-full justify-between w-full">
-                        <div className="flex gap-3 items-center self-stretch my-auto">
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d60d7d28db449fd70332d1d40f0a2507207eea8da26277a2a822b10966b641fa?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
-                            />
-                            <div className="self-stretch my-auto">
-                                Sürətli çatdırılma
-                            </div>
-                        </div>
-                        <div className="flex gap-3 items-center self-stretch my-auto min-w-[240px]">
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1c3492603f1a47b7b41f35900f3dd3664214e8f59e47831bc127b5c363b68d47?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
-                            />
-                            <div className="self-stretch my-auto">
-                                14 gün ərzində qaytarılma
-                            </div>
-                        </div>
-                        <div className="flex gap-3 items-center self-stretch my-auto">
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0765ac155a1d8d42a861e4bdabe7da708a32d6e42255c5669c3d5c32aecd196e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch my-auto w-9 aspect-square"
-                            />
-                            <div className="self-stretch my-auto">
-                                2 illik zəmanət
-                            </div>
-                        </div>
-                        <div className="flex gap-3 items-center self-stretch my-auto">
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/33586673d02ec7a3ae6a97cf00523800b30072f9d44f08a8bcb9cadc2e250457?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch my-auto w-9 aspect-square"
-                            />
-                            <div className="self-stretch my-auto">
-                                24/7 aktiv dəstək
-                            </div>
-                        </div>
+                        {advantages &&
+                            advantages.map((advantage: Advanteges) => (
+                                <div
+                                    className="flex gap-3 items-center self-stretch my-auto"
+                                    key={advantage.id}
+                                >
+                                    <img
+                                        loading="lazy"
+                                        src={advantage.icon}
+                                        className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
+                                    />
+                                    <div className="self-stretch my-auto">
+                                        {advantage.title}{' '}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </section>
-                <section className="mt-[100px]">
+                <section className="mt-[100px] max-sm:mt-[52px]">
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-[16px]">
-                        Tiktok hekayələr
+                        {tarnslation?.Tiktok}{' '}
                     </h2>
                     <TikTokSlider
-                        action={() => setisStoriesSwipperOpen(true)}
+                        Tiktoks={tiktok}
+                        action={(id) => {
+                            setisStoriesSwipperOpen(true), setCurrentSlide(id);
+                            setIsIstagramSwippen(false);
+                        }}
                     />{' '}
                 </section>
-                <section className="mt-[100px] px-[40px] max-sm:px-[0] max-sm:mt-10">
-                    <div className="flex flex-row flex-wrap justify-between gap-4  ">
+                <section className="mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
+                    <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
-                            Tiktok hekayələr
+                            {tarnslation?.Ən_çox_satılan_məhsullar}{' '}
                         </h2>
                         <div
-                            style={{ scrollbarWidth: 'none' }}
-                            className="flex flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-4 justify-between max-sm:justify-around gap-3"
+                            style={{
+                                overflow: 'scroll',
+                                scrollbarWidth: 'none' /* For Firefox */,
+                                msOverflowStyle:
+                                    'none' /* For Internet Explorer and Edge */,
+                            }}
+                            className="flex  no-scrollbar  flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-6 justify-between max-sm:justify-around gap-3"
                         >
-                            <NoneToBlue isactive={true}>Hamısı</NoneToBlue>
-                            <NoneToBlue>Elektronika</NoneToBlue>
-                            <NoneToBlue>Geyim</NoneToBlue>
-                            <NoneToBlue>Kosmetika</NoneToBlue>
+                            <NoneToBlue
+                                action={() => {
+                                    // setCurrentCategoryId(0);
+                                    router(`?category_id=${0}`);
+                                }}
+                                isactive={category_id === 0}
+                            >
+                                {tarnslation?.All}
+                            </NoneToBlue>
+                            {categories?.map((category: Category) => (
+                                <NoneToBlue
+                                    action={() => {
+                                        // setCurrentCategoryId(index + 1);
+                                        router(`?category_id=${category.id}`);
+                                    }}
+                                    isactive={category_id === category.id}
+                                >
+                                    {category.title}
+                                </NoneToBlue>
+                            ))}
                         </div>
                     </div>
-                    <ProductSwipper bg="grey" />
+
+                    <ProductSwipper bg="grey" data={products?.data} />
                 </section>{' '}
-                <section className="mt-[100px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
+                {/* ----here---- */}
+                {productsByCategory?.map((item: HomeCategory, i: number) => (
+                    <section
+                        className={`mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
+                            i % 2 === 1 ? '#ffffff' : '#F5F5F5'
+                        }] max-sm:py-10 py-[80px]`}
+                    >
+                        <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
+                            <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
+                                {item.title}{' '}
+                            </h2>
+                            <button
+                                onClick={() => navigate('/poducts')}
+                                className="rounded-[100px] duration-300 max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
+                            >
+                                {' '}
+                                {tarnslation?.Hamısına_bax}{' '}
+                            </button>{' '}
+                        </div>
+                        <ProductSwipper
+                            bg={i % 2 === 1 ? 'grey' : 'white'}
+                            data={item.products}
+                        />
+                    </section>
+                ))}
+                {/* ----here---- */}
+                {/* <section className="mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
                     <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
-                            Tiktok hekayələr
+                            {tarnslation?.Eviniz_və_sizin_üçün_elektronika}{' '}
                         </h2>
                         <button
                             onClick={() => navigate('/poducts')}
-                            className="rounded-[100px] duration-300  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
+                            className="rounded-[100px] duration-300 max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
                         >
                             {' '}
-                            Hamısına bax
+                            {tarnslation?.Hamısına_bax}{' '}
                         </button>{' '}
                     </div>
-                    <ProductSwipper bg="white" />
-                </section>
+                    <ProductSwipper
+                        bg="white"
+                        data={productsElektroniks?.data}
+                    />
+                </section> */}
                 <section className="px-[40px] py-[100px] max-sm:px-4 max-sm:py-10">
                     <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
                         <div className="flex gap-5 max-md:flex-col-reverse max-sm:py-0">
                             <div className="flex  flex-col w-[33%] max-md:ml-0  max-md:w-full">
                                 <img
                                     loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/cba23af55123e1e9f439d44ad64f6fe0cb0e9155f193286b156189514d837975?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    src={loginBanners?.image}
                                     className="object-contain grow mt-32 max-sm:mt-0 mr-0 w-full aspect-[2.29] max-md:mt-10 max-md:max-w-full"
                                 />
                             </div>
                             <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
                                 <div className="flex z-10 flex-col self-stretch my-auto mr-0 w-full text-white max-md:mt-10 max-md:max-w-full px-2">
                                     <div className="text-3xl font-semibold text-center max-md:max-w-full">
-                                        Qeydiyyatdan keç və doya-doya alış-veriş
-                                        et!
+                                        {loginBanners?.title}
                                     </div>
                                     <button
                                         className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
@@ -161,14 +299,14 @@ export default function Home() {
                                             navigate('/user/register')
                                         }
                                     >
-                                        Qeydiyyatdan keç{' '}
+                                        {tarnslation?.login}{' '}
                                     </button>
                                 </div>
                             </div>
                             <div className="flex  max-sm:hidden flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
                                 <img
                                     loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/a711db3987acd2d59b3e3e00bdf58f01e57883f723707a2fcee8305e25486dff?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    src={loginBanners?.second_image}
                                     className="object-contain w-full aspect-[1.49] max-md:max-w-full"
                                 />
                             </div>
@@ -177,40 +315,41 @@ export default function Home() {
                 </section>
                 <section className=" flex justify-center flex-col">
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-4 text-center ">
-                        İnstaqram heyakələr{' '}
+                        {tarnslation?.İnstaqram_heyakələr}{' '}
                     </h2>
                     <InstaqramSlider
-                        action={() => setisStoriesSwipperOpen(true)}
+                        instragrams={instragrams}
+                        action={(id) => {
+                            setisStoriesSwipperOpen(true), setCurrentSlide(id);
+                            setIsIstagramSwippen(true);
+                        }}
                     />
                 </section>
-                <section className="mt-[100px] max-sm:mt-10 flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
-                    <ImageSwipper />
+                <section className="mt-[100px]  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
+                    <ImageSwipper data={discountedProducts?.data} />
                     <div className="flex l:w-[60%] w-full overflow-hidden flex-col items-start px-12 pt-12 pb-32 rounded-3xl bg-[#8E98B8]  max-md:px-5 max-md:pb-24">
                         <div className="text-xl font-semibold text-indigo-200">
-                            Xüsusi təklif
+                            {special?.title}{' '}
                         </div>
                         <div className="flex flex-col mt-14 w-full text-white max-w-[629px] max-md:mt-10 max-md:max-w-full">
                             <div className="flex flex-col w-full max-md:max-w-full">
                                 <div className="text-4xl font-semibold max-md:max-w-full">
-                                    Seçilmiş məhsullara 30% qədər endirim!
+                                    {special?.discount}{' '}
                                 </div>
                                 <div className="mt-5 text-lg font-medium max-md:max-w-full">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever
+                                    {special?.description}
                                 </div>
                             </div>
                             <button
                                 className="gap-2.5 self-start px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] leading-[22px] h-fit hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
-                                Məhsullara bax
+                                {tarnslation?.Məhsullara_bax}
                             </button>
                         </div>
                     </div>
                 </section>
-                <section className="flex max-sm:mt-10 max-sm:px-4 flex-col px-[40px] mt-[100px]">
+                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-[100px] max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
                             Brendlər
@@ -225,81 +364,30 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col mt-12 w-full  max-md:mt-10 max-md:max-w-full">
-                        <div className="grid flex-wrap max-sm:grid-cols-2 grid-cols-5 gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
-                            {Array.from({ length: 10 }).map((_, i) => (
+                        <div className="grid flex-wrap max-sm:grid-cols-2 max-lg:grid-cols-5 grid-cols-7 gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
+                            {brends?.map((brand: Brand) => (
                                 <div
-                                    key={i}
-                                    className="flex overflow-hidden max-sm:px-auto max-sm:w-full right-5 w-fit flex-col px-8 my-auto rounded-3xl bg-neutral-100 max-md:px-5"
+                                    key={brand.id}
+                                    className="flex overflow-hidden flex-col px-8 my-auto w-36 rounded-3xl bg-neutral-100 max-md:px-5"
                                 >
                                     <img
                                         loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        src={brand.logo}
                                         className="object-contain aspect-[1.2] w-[120px]"
                                     />
                                 </div>
                             ))}
                         </div>
-                        {/* <div className="flex flex-wrap gap-4 items-center mt-4 w-full max-md:max-w-full">
-                            <div className="flex overflow-hidden flex-col  px-8 my-auto w-36 rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center self-stretch px-5 py-1 my-auto w-36 rounded-3xl bg-neutral-100">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.51] w-[140px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink self-stretch px-5 my-auto w-36 rounded-3xl bg-neutral-100">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.4] w-[140px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink self-stretch px-8 my-auto w-36 rounded-3xl bg-neutral-100 max-md:px-5">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/25b0174b3e81ea7f836919503966593fdcacefc3df73d9aa624f5b3d5b38facc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.2] w-[120px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center self-stretch px-5 py-3.5 my-auto w-36 rounded-3xl bg-neutral-100">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/c93d2b6bdc8b9c32f3bb24eeee4033ed0efaf42c9602e949eafdcec0ef19f022?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.95] w-[140px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink justify-center self-stretch px-5 py-1 my-auto w-36 rounded-3xl bg-neutral-100">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1f5a63ab17b843b013b1a49338a7f0b5eb8b00afb6bfb6d0b118e00567d1797e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.51] w-[140px]"
-                                />
-                            </div>
-                            <div className="flex overflow-hidden flex-col grow shrink self-stretch px-5 my-auto w-36 rounded-3xl bg-neutral-100">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/ad92110f3401f200e9870ab443460079ebe7329a40d88a2a5a056161f98dc582?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain aspect-[1.4] w-[140px]"
-                                />
-                            </div>
-                        </div> */}
                     </div>
                 </section>
-                <section className="mt-[100px] max-sm:mt-10 max-sm:px-[0px] px-[40px] bg-[#F5F5F5] py-[80px] max-sm:py-10 flex lg:flex-row flex-col justify-between max-sm:gap-8 gap-[154px] ">
-                    <div className="flex max-sm:px-4 flex-col flex-wrap gap-7 ">
+                {/* <section className="mt-[100px] max-sm:mt-[52px]  max-sm:px-[0px] px-[40px] bg-[#F5F5F5] py-[80px] max-sm:py-10 flex lg:flex-row flex-col justify-between max-sm:gap-6 gap-[154px] ">
+                    <div className="flex max-sm:px-4 max-sm:flex-row max-sm:justify-between flex-col flex-wrap gap-7 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Geyimlər{' '}
                         </h2>
                         <div>
                             <button
-                                className="rounded-[100px] duration-300 leading-[20px] h-fit  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                                className="rounded-[100px] max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline duration-300 leading-[20px] h-fit  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
                                 onClick={() => navigate('/poducts')}
                             >
                                 {' '}
@@ -308,7 +396,7 @@ export default function Home() {
                         </div>
                     </div>
                     <ProductSwipperShort bg="white" />
-                </section>
+                </section> */}
                 <section className="relative  rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0 left-0 w-full h-full object-cover -z-10"
@@ -325,7 +413,7 @@ export default function Home() {
                     </video>
 
                     <div
-                        className="mt-[100px] max-sm:mt-10 max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
+                        className="mt-[100px] max-sm:mt-[52px] max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
                         style={{
                             background:
                                 'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',
@@ -357,7 +445,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4 max-sm:mt-10 px-[40px] mt-[100px] gap-5 w-fit">
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-[100px] max-sm:mt-[52px] gap-5 w-fit">
                     <div className="   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -407,7 +495,7 @@ export default function Home() {
                         </div>
                     ))}
                 </section>
-                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0 max-sm:mt-10 px-[40px] mt-[100px] gap-5 w-fit">
+                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-[100px] gap-5 w-fit">
                     <div className=" max-sm:px-4   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -433,13 +521,13 @@ export default function Home() {
                         </button>
                     </div>
                 </section>
-                <section className="mt-[100px]  max-sm:mt-10 max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
+                {/* <section className="mt-[100px]  max-sm:mt-[52px] max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
                     <div className="flex flex-row flex-wrap justify-between gap-4 max-sm:px-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
                         </h2>
                         <button
-                            className="rounded-[100px] duration-300 leading-[20px] h-fit bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
+                            className="rounded-[100px] max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:px-[0px] max-sm:border-none max-sm:underline duration-300 leading-[20px] h-fit bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
                             onClick={() => navigate('/producs')}
                         >
                             {' '}
@@ -447,11 +535,13 @@ export default function Home() {
                         </button>{' '}
                     </div>
                     <ProductSwipper bg="white" />
-                </section>
+                </section> */}
             </main>
             <Footer />
             {/* <GrabCursorSwiper /> */}
             <StoriesSwipper
+                Tiktoks={isIstagramSwippen ? instragrams : tiktok}
+                Currentslide={currentSlide}
                 isopen={isStoriesSwipperOpen}
                 onclose={() => setisStoriesSwipperOpen(false)}
             />

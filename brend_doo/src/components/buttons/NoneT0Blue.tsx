@@ -3,14 +3,17 @@ import React, { ReactNode } from 'react';
 interface NoneToBlueProps {
     children: ReactNode;
     isactive?: boolean;
+    action?: () => void;
 }
 
 const NoneToBlue: React.FC<NoneToBlueProps> = ({
     children,
     isactive = false,
+    action,
 }) => {
     return (
         <button
+            onClick={action}
             className={`rounded-[100px] h-fit duration-300 ${
                 isactive ? 'bg-[#3873C3] text-white ' : 'bg-none'
             }  px-[28px] py-[14px] leading-[19.5px]   border border-black border-opacity-10`}

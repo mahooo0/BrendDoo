@@ -67,7 +67,7 @@ export default function Login() {
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center p-[60px]  max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5 ">
+                <div className="flex overflow-hidden relative flex-col justify-center self-center p-[60px]  max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] max-md:px-5  max-sm:py-[28px]">
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
@@ -191,7 +191,7 @@ export default function Login() {
                                 </div>
                             )}
                         </div>
-                        <div className=" lg:mt-[60px] mt-4 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
+                        <div className=" lg:mt-[60px] mt-8 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
                             <span>Hesabın yoxdur? </span>
                             <Link
                                 to="/user/register"

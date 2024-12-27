@@ -148,7 +148,7 @@ function FAQSection({
             <div className="flex flex-col text-base font-medium text-center text-black min-w-[240px] w-full max-md:max-w-full">
                 <div
                     style={{ scrollbarWidth: 'none' }}
-                    className="flex flex-row max-sm:px-4 max-sm:overflow-x-scroll max-sm:flex-nowrap flex-wrap   w-full lg:justify-end justify-around gap-3 mb-[30px]"
+                    className="flex flex-row max-sm:px-4 max-sm:overflow-x-scroll no-scrollbar max-sm:flex-nowrap flex-wrap   w-full lg:justify-end justify-around gap-3 mb-[30px]"
                 >
                     <NoneTolightBlue isactive={true}>Hamısı</NoneTolightBlue>
                     <NoneTolightBlue>Geri qaytarılma</NoneTolightBlue>

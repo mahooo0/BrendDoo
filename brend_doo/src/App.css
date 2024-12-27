@@ -86,3 +86,15 @@
     scrollbar-width: thin; /* Thin scrollbar for Firefox */
     scrollbar-color: #a0aec0 #edf2f7; /* Thumb and track colors for Firefox */
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+/* isn't working */

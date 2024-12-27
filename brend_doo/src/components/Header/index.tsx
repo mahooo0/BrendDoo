@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ClothingMenu from '../ClothingMenu';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import ClothingMenu, { CategoryHeader } from '../ClothingMenu';
+import ROUTES, { getRouteKey } from '../../setting/routes';
+import GETRequest from '../../setting/Request';
+import {
+    Category,
+    Product,
+    ProductResponse,
+    SubCategory,
+} from '../../setting/Types';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -16,10 +24,18 @@ function enableScrolling() {
 export default function Header() {
     const [isCatalogOpen, setIsClothingOpen] = useState<boolean>(false);
     const [isBaskedOpen, setIsBaskedOpen] = useState<boolean>(false);
+    // Search
     const [SearchValue, setSearchValue] = useState<string>('');
+    const [debouncedValue, setDebouncedValue] = useState(SearchValue);
+    const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+    // Search
+
     const [showaside, setShowAside] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+    const [showSubCAtegoryes, setshowSubCAtegoryes] = useState<number>(-1);
+    const [currentSubCategoryId, setCurrentSubCategoryId] = useState<number>(0);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { lang = 'ru', page } = useParams<{ lang: string; page: string }>();
 
     const CatalogBtnRef = useRef<HTMLDivElement | null>(null);
     const CAtalogDiv = useRef<HTMLDivElement | null>(null);
@@ -92,6 +108,58 @@ export default function Header() {
             enableScrolling();
         }
     }, [isBaskedOpen, isCatalogOpen, SearchValue]);
+
+    const Navigae = useNavigate();
+    const HandleSetUrlByLang = (Lang: string) => {
+        if (page) {
+            const newPage = getRouteKey(page);
+            Navigae(
+                newPage
+                    ? `/${Lang}/${
+                          ROUTES[newPage][Lang as keyof typeof ROUTES.home]
+                      }`
+                    : '/'
+            );
+        } else {
+            Navigae(
+                `/${Lang}/${ROUTES.home[Lang as keyof typeof ROUTES.home]}`
+            );
+        }
+    };
+
+    const { data: categories, isLoading: categoriesLoading } = GETRequest<
+        Category[]
+    >(`/categories`, 'categories', [lang]);
+    const { data: FilteredProduct } = GETRequest<ProductResponse>(
+        `/products${
+            debouncedValue
+                ? `?search=${debouncedValue} ${
+                      currentSubCategoryId === 0
+                          ? ''
+                          : `&sub_category_id=${currentSubCategoryId}`
+                  }`
+                : ``
+        }`,
+        'products',
+        [lang, debouncedValue, currentSubCategoryId]
+    );
+    // const { data: categories, isLoading: categoriesLoading } = useQuery({
+    //     queryFn: async () => {
+    //         const res = await axiosInstance.get<any>('/categories', {
+    //             headers: {
+    //                 'Accept-Language': 'en',
+    //             },
+    //         });
+    //         console.log(res);
+    //         return res.data;
+    //     },
+    //     queryKey: ['categories'],
+    //     staleTime: 1000 * 60 * 60,
+    // });
+    // useEffect(() => {
+    //     // Perform any action with the debounced value
+    //     console.log('Debounced Search Value:', debouncedValue);
+    // }, [debouncedValue]);
     return (
         <div className="  block w-full z-[99999999999] top-0 min-h-[68px]">
             <div className=" lg:flex hidden flex-col relative bg-white">
@@ -99,7 +167,12 @@ export default function Header() {
                     p5 noyabr-25 noyabr 30% endirim
                 </div>
                 <div className="flex overflow-hidden flex-wrap gap-5  justify-between items-center px-10 py-2.5 w-full text-black border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
-                    <Link to={'/'}>
+                    <Link
+                        className="w-[200px]"
+                        to={`/${lang}/${
+                            ROUTES.home[lang as keyof typeof ROUTES.home]
+                        }`}
+                    >
                         <img
                             loading="lazy"
                             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -108,7 +181,7 @@ export default function Header() {
                     </Link>
 
                     <div className="flex flex-wrap gap-6 justify-center items-center self-stretch my-auto text-base max-md:max-w-full ">
-                        <Link to={'/poducts'}>
+                        {/* <Link to={``}>
                             <div className="self-stretch my-auto">Geyim</div>
                         </Link>
                         <Link to={'/poducts'}>
@@ -120,14 +193,46 @@ export default function Header() {
                             <div className="self-stretch my-auto">
                                 Kosmetika
                             </div>
-                        </Link>
+                        </Link>*/}
+                        {categories?.map((category: Category) => (
+                            <Link
+                                to={`/${lang}/${
+                                    ROUTES.product[
+                                        lang as keyof typeof ROUTES.product
+                                    ]
+                                }?category=${category.id}`}
+                            >
+                                <div className="self-stretch my-auto">
+                                    {category.title}
+                                </div>
+                            </Link>
+                        ))}
+                        {categoriesLoading && (
+                            <div className="flex gap-6">
+                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                            </div>
+                        )}
                         <Link to={'/brends'}>
                             <div className="self-stretch my-auto">Brendlər</div>
                         </Link>
-                        <Link to={'/poducts'}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.product[
+                                    lang as keyof typeof ROUTES.product
+                                ]
+                            }?discount=true`}
+                        >
                             <div className="self-stretch my-auto">Endirim</div>
                         </Link>
-                        <Link to={'/poducts'}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.product[
+                                    lang as keyof typeof ROUTES.product
+                                ]
+                            }`}
+                        >
                             <div className="self-stretch my-auto">
                                 Bütün məhsullar
                             </div>
@@ -135,7 +240,13 @@ export default function Header() {
                     </div>
                     <div className="flex gap-6 items-center self-stretch my-auto text-sm">
                         <div className="flex gap-5 items-center self-stretch my-auto ">
-                            <Link to={'/user/login'}>
+                            <Link
+                                to={`/${lang}/${
+                                    ROUTES.login[
+                                        lang as keyof typeof ROUTES.login
+                                    ]
+                                }`}
+                            >
                                 <div className="flex gap-3 items-center self-stretch my-auto">
                                     <img
                                         loading="lazy"
@@ -148,17 +259,31 @@ export default function Header() {
                                 </div>
                             </Link>
 
-                            {/* <div className=" flex flex-row gap-2">
-                                <div className="w-[36px] h-[36px] rounded-md bg-[#B1C7E4] text-black flex justify-center items-center">
-                                    AZ
-                                </div>
-                                <div className="w-[36px] h-[36px] rounded-md bg-[#F5F5F5] text-black flex justify-center items-center">
-                                    AZ
+                            <div className=" flex flex-row gap-2 cursor-pointer">
+                                <button
+                                    onClick={() => HandleSetUrlByLang('ru')}
+                                    className={`w-[36px] h-[36px] rounded-md ${
+                                        lang === 'ru'
+                                            ? 'bg-[#B1C7E4]'
+                                            : 'bg-[#F5F5F5]'
+                                    } text-black flex justify-center items-center`}
+                                >
+                                    RU
+                                </button>
+                                <div
+                                    className={`w-[36px] h-[36px] rounded-md ${
+                                        lang === 'en'
+                                            ? 'bg-[#B1C7E4]'
+                                            : 'bg-[#F5F5F5]'
+                                    } text-black flex justify-center items-center`}
+                                    onClick={() => HandleSetUrlByLang('en')}
+                                >
+                                    EN
                                 </div>{' '}
-                                <div className="w-[36px] h-[36px] rounded-md bg-[#F5F5F5] text-black flex justify-center items-center">
+                                {/* <div className="w-[36px] h-[36px] rounded-md bg-[#F5F5F5] text-black flex justify-center items-center">
                                     AZ
-                                </div>
-                            </div> */}
+                                </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,14 +320,28 @@ export default function Header() {
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => {
-                                setSearchValue(e.target.value);
-                                if (e.target.value !== '') {
-                                    disableScrolling();
-                                    setIsClothingOpen(false);
-                                    setIsBaskedOpen(false);
-                                } else {
-                                    enableScrolling();
+                                const value = e.target.value;
+                                setSearchValue(value);
+                                if (debounceTimeout.current) {
+                                    clearTimeout(debounceTimeout.current);
                                 }
+                                debounceTimeout.current = setTimeout(() => {
+                                    setDebouncedValue(value);
+
+                                    if (value !== '') {
+                                        disableScrolling();
+                                        // Add your additional logic here
+                                    } else {
+                                        enableScrolling();
+                                    }
+                                }, 300);
+                                // if (e.target.value !== '') {
+                                //     disableScrolling();
+                                //     setIsClothingOpen(false);
+                                //     setIsBaskedOpen(false);
+                                // } else {
+                                //     enableScrolling();
+                                // }
                             }}
                             className="bg-transparent outline-none flex-1 text-black text-opacity-60 my-auto"
                         />
@@ -249,20 +388,21 @@ export default function Header() {
                     </div>
                 </div>
                 <div
-                    className="absolute w-full min-h-[70vh] bg-black  top-[30vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    className="absolute w-full min-h-[79vh] bg-black  top-[28vh] z-50 bg-opacity-[60%] px-10 py-2"
                     style={{
                         display: isCatalogOpen ? 'block' : 'none',
                     }}
                 >
                     <div ref={CAtalogDiv} className="w-[408px]">
-                        <ClothingMenu
-                            ref={CAtalogDiv}
-                            setIsCatalogOpen={(value) => {
-                                // enableScrolling();
-
-                                setIsClothingOpen(value);
-                            }}
-                        />
+                        {categories && (
+                            <ClothingMenu
+                                data={categories}
+                                ref={CAtalogDiv}
+                                setIsCatalogOpen={(value) => {
+                                    setIsClothingOpen(value);
+                                }}
+                            />
+                        )}
                     </div>
                     {/* 
                     <div
@@ -272,15 +412,7 @@ export default function Header() {
                         <h1 className="text-red-500">my toggle menu</h1>
                     </div> */}
                 </div>
-                {/* <CatalogBar
-                    isCatalogOpen={isCatalogOpen && SearchValue === ''}
-                    setIsCatalogOpen={(value) => {
-                        enableScrolling();
-
-                        setIsClothingOpen(value);
-                    }}
-                /> */}
-
+                {/* search bar */}
                 <div
                     className="absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999] bg-black bg-opacity-60"
                     style={
@@ -302,7 +434,63 @@ export default function Header() {
                                 Kateqoriyalar
                             </div>
                             <div className="flex flex-col mt-7 w-full text-lg font-medium text-black">
-                                <div className="flex gap-10 justify-between items-center w-full">
+                                {categories?.map(
+                                    (category: Category, index: number) => (
+                                        <>
+                                            <CategoryHeader
+                                                title={category.title}
+                                                isOpen={
+                                                    showSubCAtegoryes === index
+                                                }
+                                                onToggle={() => {
+                                                    showSubCAtegoryes === index
+                                                        ? setshowSubCAtegoryes(
+                                                              -1
+                                                          )
+                                                        : setshowSubCAtegoryes(
+                                                              index
+                                                          );
+                                                }}
+                                            />
+                                            {showSubCAtegoryes === index && (
+                                                <ul
+                                                    className="custom-scrollbar flex flex-col  py-3 items-center max-md:px-0 max-md:rounded-none px-5 mt-4 w-full text-base text-black whitespace-nowrap rounded-3xl  bg-stone-50 max-h-[150px] overflow-y-scroll"
+                                                    style={{
+                                                        scrollbarWidth: 'thin', // For Firefox
+                                                        scrollbarColor:
+                                                            '#a0aec0 #edf2f7', // thumb color and track color for Firefox
+                                                    }}
+                                                >
+                                                    {' '}
+                                                    {category?.subCategories?.map(
+                                                        (
+                                                            subcategory: SubCategory,
+                                                            index: number
+                                                        ) => (
+                                                            <li
+                                                                onClick={() =>
+                                                                    setCurrentSubCategoryId(
+                                                                        subcategory.id
+                                                                    )
+                                                                }
+                                                                key={index}
+                                                                className="flex flex-col w-full cursor-pointer"
+                                                            >
+                                                                <span>
+                                                                    {
+                                                                        subcategory.title
+                                                                    }
+                                                                </span>
+                                                                <div className="mt-3 max-w-full border border-solid border-black border-opacity-10 min-h-[1px] w-[312px]" />
+                                                            </li>
+                                                        )
+                                                    )}
+                                                </ul>
+                                            )}
+                                        </>
+                                    )
+                                )}
+                                {/* <div className="flex gap-10 justify-between categorys-center w-full">
                                     <div className="self-stretch my-auto">
                                         Geyim
                                     </div>
@@ -331,16 +519,34 @@ export default function Header() {
                                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/6eaf2ee9ec4a4b6ec490a50798f603a24709a01889ad8676e784277a0c81d6f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                         className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="shrink-0 self-stretch w-px border border-solid border-black border-opacity-10 h-[305px]" />
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-3/5">
                             <div className="text-sm text-black text-opacity-60">
                                 Məhsullar
                             </div>
-                            <div className="flex flex-col mt-5 w-full">
-                                <div className="flex gap-2.5 items-center w-full">
+                            <div className="grid xl:grid-cols-2   grid-cols-1 max-h-[270px] overflow-y-scroll flex-col mt-5 w-full  no-scrollbar gap-4">
+                                {FilteredProduct?.data?.map((item: Product) => (
+                                    <div className="flex gap-2.5 items-center w-full min-w-[120px]">
+                                        <img
+                                            loading="lazy"
+                                            src={item.image}
+                                            className="object-cover shrink-0 self-stretch my-auto rounded-3xl aspect-square w-[120px]"
+                                        />
+                                        <div className="flex flex-col justify-center self-stretch my-auto">
+                                            <div className="text-sm text-black">
+                                                {item.title}
+                                            </div>
+                                            <div className="mt-2.5 text-base font-semibold text-black">
+                                                {item.discounted_price}{' '}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {/* <div className="flex gap-2.5 items-center mt-4 w-full">
                                     <img
                                         loading="lazy"
                                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -354,26 +560,13 @@ export default function Header() {
                                             298 AZN
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex gap-2.5 items-center mt-4 w-full">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="mt-2.5 text-base font-semibold text-black">
-                                            298 AZN
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
                 </div>
+                {/* search bar */}
+
                 <div
                     ref={BaskedDiv}
                     className="bg-black  bg-opacity-60 absolute top-[100%] w-full h-[100vh] px-10 py-2 z-[99999999999]"
@@ -849,9 +1042,10 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            {showaside && (
+            {showaside && categories && (
                 <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white">
                     <ClothingMenu
+                        data={categories}
                         ref={CAtalogDiv}
                         setIsCatalogOpen={(value) => {
                             enableScrolling();

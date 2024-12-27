@@ -51,7 +51,7 @@ export default function ProductSwipper2() {
                 breakpoints={{
                     268: {
                         slidesPerView: 'auto',
-                        centeredSlides: true,
+                        // centeredSlides: true,
                     },
                     568: {
                         slidesPerView: 2,
@@ -75,7 +75,7 @@ export default function ProductSwipper2() {
                     <SwiperSlide key={i} className="max-sm:!w-[100%]">
                         <div
                             key={i}
-                            className="flex flex-col w-full min-h-[510px]  max-md:ml-0 max-md:w-full rounded-3xl"
+                            className="flex flex-col w-full min-h-[510px]  max-md:ml-0 max-md:w-[96%] rounded-3xl"
                             style={{
                                 backgroundImage:
                                     'url("https://placehold.co/600x400")',

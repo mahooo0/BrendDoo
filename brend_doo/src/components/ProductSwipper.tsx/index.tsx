@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import ProductCard from '../ProductCArd';
+import { Product } from '../../setting/Types';
 
 // Sample slider items
 // const sliderItems = [
@@ -24,8 +25,9 @@ import ProductCard from '../ProductCArd';
 // ];
 interface Proops {
     bg: 'white' | 'grey';
+    data?: Product[];
 }
-export default function ProductSwipper({ bg }: Proops) {
+export default function ProductSwipper({ bg, data }: Proops) {
     const swiperRef = useRef<any>();
     const [isLast, setIsLast] = useState(false);
     const [isFirst, setIsFirst] = useState(true);
@@ -42,7 +44,7 @@ export default function ProductSwipper({ bg }: Proops) {
         }
     };
     return (
-        <div className="slider-container mt-[40px] relative flex justify-center items-center">
+        <div className="slider-container mt-[20px] relative flex justify-center items-center">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides
@@ -72,16 +74,30 @@ export default function ProductSwipper({ bg }: Proops) {
                 onReachEnd={() => setIsLast(true)} // Explicitly handle end of slider
                 onReachBeginning={() => setIsFirst(true)}
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper max-sm:!pl-4 "
+                className="mySwiper max-sm:!pl-4  !w-full"
             >
-                {Array.from({ length: 10 }).map((_, i) => (
+                {data?.map((item: Product, i: number) => (
                     <SwiperSlide
                         key={i}
                         className="!flex !justify-center max-sm:!w-fit"
                     >
-                        <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
+                        <ProductCard
+                            data={item}
+                            isnew={i === 3}
+                            bg={bg}
+                            issale={i === 0}
+                        />
                     </SwiperSlide>
                 ))}
+                {!data ||
+                    Array.from({ length: 10 }).map((_, i) => (
+                        <SwiperSlide
+                            key={i}
+                            className="!flex !justify-center max-sm:!w-fit"
+                        >
+                            <ProductCard isnew={false} bg={bg} issale={false} />
+                        </SwiperSlide>
+                    ))}
             </Swiper>
             {!isFirst && (
                 <button

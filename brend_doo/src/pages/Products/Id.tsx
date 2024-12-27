@@ -18,7 +18,7 @@ export default function ProductId() {
                         {/* Parent container with height */}
                         <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-[630px] h-fit  sticky top-[10px]">
                             <section
-                                className=" sroll- flex flex-col  lg:h-[670px] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 custom-scrollbar pb-[0px]"
+                                className=" sroll- flex flex-col  lg:h-[670px] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 max-sm:gap-3 custom-scrollbar pb-[0px]"
                                 style={{
                                     scrollbarWidth: 'thin', // For Firefox
                                     scrollbarColor: '#888 transparent', // For Firefox
@@ -32,9 +32,9 @@ export default function ProductId() {
                                     />
                                 </div>
                                 <div className=" w-full max-md:max-w-full">
-                                    <div className="flex gap-5 max-md:flex-col">
+                                    <div className="flex gap-5 max-sm:gap-3 max-md:flex-col">
                                         <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 max-md:mt-5">
+                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
                                                 <img
                                                     loading="lazy"
                                                     srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -43,7 +43,7 @@ export default function ProductId() {
                                             </div>
                                         </div>
                                         <div className="flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
-                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 max-md:mt-5">
+                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
                                                 <img
                                                     loading="lazy"
                                                     srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -242,8 +242,8 @@ export default function ProductId() {
                         </div>
                     </section>
                 </section>
-                <section className="mt-[100px] max-sm:mt-12 bg-[#F8F8F8] px-[40px]">
-                    <div className="flex flex-wrap gap-8 justify-start max-sm:justify-center items-center pt-[80px]">
+                <section className="mt-[100px] max-sm:mt-12 bg-[#F8F8F8] max-sm:px-4 px-[40px]">
+                    <div className="flex flex-wrap gap-8 justify-start max-sm:justify-center items-center max-sm:pt-[24px] pt-[80px]">
                         <div className="flex flex-col justify-center items-center self-stretch p-8 my-auto bg-white rounded-3xl min-w-[240px] w-[296px] max-md:px-5">
                             <div className="text-6xl font-semibold leading-none text-center text-zinc-900 max-md:text-4xl">
                                 4.7
@@ -280,171 +280,65 @@ export default function ProductId() {
                                 <span className="text-neutral-600"> (4)</span>
                             </div>
                         </div>
-                        <div className="flex flex-col items-start self-stretch my-auto min-w-[240px] max-md:max-w-full">
-                            <div className="flex flex-wrap gap-4 justify-center items-center self-stretch max-md:max-w-full">
-                                <div className="flex gap-0.5 items-start self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                </div>
-                                <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-[424px] max-md:max-w-full">
-                                    <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
-                                        <div className="flex shrink-0 max-w-full h-1 bg-amber-400 rounded-[100px] w-[312px]" />
+                        <div className="flex flex-col gap-4 items-start self-stretch my-auto min-w-[240px] max-md:max-w-full">
+                            {Array.from({ length: 5 }).map(() => (
+                                <div className="flex flex-wrap gap-2 justify-start items-center  self-stretch max-md:max-w-full">
+                                    <div className="flex flex-row justify-between w-full">
+                                        <div className="flex gap-0.5 items-start self-stretch my-auto">
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 aspect-square w-[18px]"
+                                            />
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 aspect-square w-[18px]"
+                                            />
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 aspect-square w-[18px]"
+                                            />
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 aspect-square w-[18px]"
+                                            />
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 aspect-square w-[18px]"
+                                            />
+                                        </div>
+                                        <div className=" max-sm:flex  hidden items-start self-stretch my-auto text-sm">
+                                            <div className="text-center text-zinc-900">
+                                                63%
+                                            </div>
+                                            <div className="text-slate-500">
+                                                {' '}
+                                                (94,532)
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div className="text-center text-zinc-900">
-                                        63%
-                                    </div>
-                                    <div className="text-slate-500">
-                                        {' '}
-                                        (94,532)
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div className="flex flex-wrap gap-4 justify-center items-center mt-4 max-md:max-w-full">
-                                <div className="flex gap-0.5 items-start self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                </div>
-                                <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-[424px] max-md:max-w-full">
-                                    <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
-                                        <div className="flex shrink-0 w-10 h-1 bg-amber-400 rounded-[100px]" />
+                                    <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-full max-md:max-w-full">
+                                        <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
+                                            <div className="flex shrink-0 max-w-full h-1 bg-amber-400 rounded-[100px] w-[312px]" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex max-sm:hidden items-start self-stretch my-auto text-sm">
+                                        <div className="text-center text-zinc-900">
+                                            63%
+                                        </div>
+                                        <div className="text-slate-500">
+                                            {' '}
+                                            (94,532)
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div className="text-center text-zinc-900">
-                                        9%
-                                    </div>
-                                    <div className="text-slate-500"> (714)</div>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap gap-4 justify-center items-center mt-4 max-md:max-w-full">
-                                <div className="flex gap-0.5 items-start self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                </div>
-                                <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-[424px] max-md:max-w-full">
-                                    <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
-                                        <div className="flex shrink-0 w-2 h-1 bg-amber-400 rounded-[100px]" />
-                                    </div>
-                                </div>
-                                <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div className="text-center text-zinc-900">
-                                        1%
-                                    </div>
-                                    <div className="text-slate-500"> (152)</div>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap gap-4 justify-center items-center mt-4 max-md:max-w-full">
-                                <div className="flex gap-0.5 items-start self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c435609dfef51993468968c907b1ac569fab369b3f6a0b471d2aba35de4b6813?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 aspect-square w-[18px]"
-                                    />
-                                </div>
-                                <div className="flex overflow-hidden flex-col self-stretch my-auto min-w-[240px] w-[424px] max-md:max-w-full">
-                                    <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
-                                        <div className="flex shrink-0 w-6 h-1 bg-amber-400 rounded-[100px]" />
-                                    </div>
-                                </div>
-                                <div className="flex items-start self-stretch my-auto text-sm">
-                                    <div className="text-center text-zinc-900">
-                                        7%
-                                    </div>
-                                    <div className="text-slate-500"> (643)</div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                     <CommentsSection />
@@ -455,10 +349,10 @@ export default function ProductId() {
                     </div>
                 </section>
                 <section className="px-[40px] max-sm:px-4">
-                    <h3 className="text-[28px] font-semibold mt-[100px]">
+                    <h3 className="text-[28px] font-semibold max-sm:mt-[48px] mt-[100px]">
                         Tövsiyyələr
                     </h3>{' '}
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3  justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] gap-5">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-3   justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] max-sm:mt-[28px] gap-5">
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />
                         <ProductCard bg="grey" />

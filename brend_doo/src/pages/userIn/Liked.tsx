@@ -1,8 +1,19 @@
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import ProductCard from '../../components/ProductCArd';
+import GETRequest from '../../setting/Request';
+import { Product, ProductResponse } from '../../setting/Types';
+import { useParams } from 'react-router-dom';
 
 export default function UserLiked() {
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const { data: products } = GETRequest<ProductResponse>(
+        `/products`,
+        'products',
+        [lang]
+    );
     return (
         <div>
             <Header />
@@ -13,12 +24,14 @@ export default function UserLiked() {
                     <h1 className="text-[28px] font-semibold mb-[40px]">
                         Bəyəndiklərim
                     </h1>
-                    <div className=" grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 justify-items-center w-full gap-5 ">
+                    <div className=" grid lg:grid-cols-3 md:grid-cols-2   grid-cols-1 justify-items-center w-full gap-5 ">
+                        {products?.data?.map((item: Product) => (
+                            <ProductCard bg="white" data={item} />
+                        ))}
+                        {/* <ProductCard bg="white" />
                         <ProductCard bg="white" />
                         <ProductCard bg="white" />
-                        <ProductCard bg="white" />
-                        <ProductCard bg="white" />
-                        <ProductCard bg="white" />
+                        <ProductCard bg="white" /> */}
                     </div>
                 </div>
             </main>

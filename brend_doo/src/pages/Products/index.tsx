@@ -3,11 +3,22 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import ProductCard from '../../components/ProductCArd';
 import { Pagination } from '../../components/Pagination';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { Category, Product, ProductResponse } from '../../setting/Types';
+import GETRequest from '../../setting/Request';
+import Loading from '../../components/Loading';
+import ROUTES from '../../setting/routes';
 // import Liked from '../Liked';
-const DropdownItem = () => {
+const DropdownItem = ({ data }: { data: Category }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const location = useLocation();
 
+    // Extract `subCategory` from the query string
+    const queryParams = new URLSearchParams(location.search);
+    const subCategory = queryParams.get('subCategory');
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -19,8 +30,9 @@ const DropdownItem = () => {
                     className="flex overflow-hidden flex-row gap-5 justify-between px-4 py-3.5 w-full bg-neutral-100 rounded-[100px] cursor-pointer"
                     onClick={toggleDropdown}
                 >
-                    <div className="my-auto">Geyim</div>
+                    <div className="my-auto">{data.title}</div>
                     <img
+                        style={isOpen ? { transform: 'rotate(180deg)' } : {}}
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/67247d6cece276d38b6843cadeec5ef50381594d81ab035a8f6139f4bac01ffa?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                         className="object-contain shrink-0 w-6 aspect-square"
@@ -30,19 +42,43 @@ const DropdownItem = () => {
             </div>
 
             {isOpen && (
-                <div className="flex flex-col mt-2 w-full text-sm">
-                    <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-[#3873C3] rounded-[100px]">
-                        Köynək
-                    </div>
-                    <div className="overflow-hidden px-4 py-3.5 mt-1 w-full bg-zinc-50 rounded-[100px]">
-                        Şalvar
-                    </div>
-                    <div className="overflow-hidden px-4 py-3.5 mt-1 w-full bg-zinc-50 rounded-[100px]">
-                        Pencək
-                    </div>
-                    <div className="overflow-hidden px-4 py-3.5 mt-1 w-full bg-zinc-50 rounded-[100px]">
-                        Palto
-                    </div>
+                <div className="flex flex-col mt-2 w-full text-sm gap-3">
+                    {data.subCategories.map((SubCategory) => {
+                        console.log(subCategory, SubCategory.id);
+
+                        if (subCategory && +subCategory === SubCategory.id) {
+                            return (
+                                <Link
+                                    to={`/${lang}/${
+                                        ROUTES.product[
+                                            lang as keyof typeof ROUTES.product
+                                        ]
+                                    }?category=${data.id}`}
+                                    key={SubCategory.id}
+                                >
+                                    <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-[#3873C3] rounded-[100px]">
+                                        {SubCategory.title}
+                                    </div>
+                                </Link>
+                            );
+                        }
+                        return (
+                            <Link
+                                to={`/${lang}/${
+                                    ROUTES.product[
+                                        lang as keyof typeof ROUTES.product
+                                    ]
+                                }?category=${data.id}&subCategory=${
+                                    SubCategory.id
+                                }`}
+                                key={SubCategory.id}
+                            >
+                                <div className="overflow-hidden px-4 py-3.5 w-full text-black bg-[#F5F5F5] rounded-[100px]">
+                                    {SubCategory.title}
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             )}
         </div>
@@ -52,6 +88,15 @@ const DropdownItem = () => {
 export default function Products() {
     // const checkref = useRef<any>();
     const [checked, setChecked] = useState(false);
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+    const { data: categories, isLoading: categoriesLoading } = GETRequest<
+        Category[]
+    >(`/categories`, 'categories', [lang]);
+    const { data: products, isLoading: productsLoading } =
+        GETRequest<ProductResponse>(`/products`, 'products', [lang]);
+    if (categoriesLoading || productsLoading) {
+        return <Loading />;
+    }
     return (
         <div className="relative">
             <Header />
@@ -64,7 +109,10 @@ export default function Products() {
                             className="object-cover absolute inset-0 size-full"
                         />
                         <div className="flex relative gap-2 items-center self-start text-base">
-                            <Link to={'/'}>
+                            <Link
+                                to={`/${lang}`}
+                                className="flex gap-2 items-center"
+                            >
                                 <div className="self-stretch my-auto text-white">
                                     Ana səhifə
                                 </div>
@@ -94,9 +142,10 @@ export default function Products() {
                                     <label className="text-black">
                                         Kategoriyyalar
                                     </label>
-                                    <DropdownItem />
+                                    {categories?.map((category: Category) => (
+                                        <DropdownItem data={category} />
+                                    ))}
 
-                                    <DropdownItem />
                                     <div className="flex flex-col mt-4 w-full text-sm whitespace-nowrap">
                                         <label className="text-black">
                                             Qiymət
@@ -181,18 +230,13 @@ export default function Products() {
                                 className=" w-full justify-items-center self-center clear-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1  gap-5 mt-10
                             "
                             >
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
-                                <ProductCard bg="grey" />
+                                {products?.data.map((product: Product) => (
+                                    <ProductCard
+                                        key={product.id}
+                                        bg="grey"
+                                        data={product}
+                                    />
+                                ))}
                             </div>
                             <section>
                                 <Pagination

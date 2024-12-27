@@ -1,21 +1,42 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Product } from '../../setting/Types';
 interface Props {
+    data?: Product;
     isnew?: boolean;
     issale?: boolean;
     bg: 'white' | 'grey';
 }
 export default function ProductCard({
+    data,
     isnew = false,
     issale = false,
     bg,
 }: Props) {
+    console.log('ProductCard111', data);
+
     const [isliked, setisliked] = useState<boolean>(false);
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
     const [variant, setvariant] = useState<number>(1);
     const navigate = useNavigate();
+    if (!data) {
+        return (
+            <>
+                <div className="flex flex-col w-full h-[400px] max-w-sm p-4 bg-gray-100 rounded-3xl animate-pulse">
+                    <div className="w-full h-full bg-gray-300 rounded-3xl"></div>
+                    {/* <div className="mt-4 h-4 bg-gray-300 rounded"></div>
+                <div className="mt-2 h-4 bg-gray-300 rounded w-3/4"></div>
+                <div className="mt-2 flex gap-2">
+                    <div className="h-4 w-16 bg-gray-300 rounded"></div>
+                    <div className="h-4 w-24 bg-gray-300 rounded"></div>
+                </div> */}
+                </div>
+            </>
+        );
+    }
+
     return (
-        <div className="flex cursor-pointer  flex-col pb-5 text-base text-black  w-full ">
+        <div className="flex cursor-pointer max-sm:min-w-[300px]  flex-col pb-5 text-base text-black  w-full min-w-full ">
             <div
                 className={`flex w-full relative bg-${
                     bg === 'white' ? 'white' : '[#F5F5F5]'
@@ -24,7 +45,7 @@ export default function ProductCard({
                 <img
                     onClick={() => navigate(`/poducts/aa`)}
                     className="rounded-3xl hover:scale-110 duration-300 object-cover w-full h-full"
-                    src="https://s3-alpha-sig.figma.com/img/af34/0b4a/d14e809defed0b62ae2ad984556af37d?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=l8PLdqoRPYhRzk4BjTlGS~Xe~ebrE4UHTxZrWg9hldO~VafdHKuJCuZuu60r0Z1ONvhm2Gh6LFMr5PEHaxtwzyn8Ta7W1xwNOKbe196EK7sFknzRBtqfqeamlaaopWb3Ux4r9mvieQySOW6A1yKU3I0jRP2jOyyIcpZvveMR1Mfoy8Uu7sKw2UfqAqEMTtwYdKsuwIGL1orLz2XNJp7Nb4cTRf2h7aeOMtpPNceanyZIz8dzhO1L0WRgjeGfuTck90S390MK-Bc2dXv6beruw8mmlp6TTWP-8wrE5jCk683nlGYM5YPZjMW6X59LG-JQFiM~VyQQi7R7LzedF86hBA__"
+                    src={data?.image}
                     alt=""
                 />
                 <div
@@ -45,10 +66,10 @@ export default function ProductCard({
                         </p>{' '}
                     </div>
                 )}
-                {issale && (
+                {data?.discount && (
                     <div className="bg-[#FF3C79] text-white px-3 py-2  h-fit rounded-full  absolute top-6 left-6 flex justify-center items-center">
                         <p className="text-[12px]  font-medium leading-[14px]">
-                            10% endirim
+                            {data?.discount}% endirim
                         </p>{' '}
                     </div>
                 )}
@@ -143,13 +164,11 @@ export default function ProductCard({
                 </div>
             </div>
             <div className="flex flex-col mt-5 w-full">
-                <div className="pr-2">
-                    İki tərəfli zara kolleksiyasından qalın pencək
-                </div>
+                <div className="pr-2">{data?.title} </div>
                 <div className=" flex flex-row gap-2">
-                    {issale && (
+                    {data?.discount && (
                         <div className="mt-3 font-semibold text-[14px] line-through opacity-60">
-                            298 AZN
+                            {data?.price}
                         </div>
                     )}
 
@@ -158,7 +177,7 @@ export default function ProductCard({
                         style={issale ? { color: '#FC3976' } : {}}
                     >
                         {' '}
-                        298 AZN
+                        {data?.discounted_price}{' '}
                     </div>
                 </div>
             </div>

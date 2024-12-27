@@ -1,8 +1,31 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+import ROUTES from '../../setting/routes';
+import GETRequest from '../../setting/Request';
+import {
+    Category,
+    SocialMediaLink,
+    TranslationsKeys,
+} from '../../setting/Types';
+import { Link } from 'react-router-dom';
 export function Footer() {
     const navigate = useNavigate();
-
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+    const { data: categories } = GETRequest<Category[]>(
+        `/categories`,
+        'categories',
+        [lang]
+    );
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
+    const { data: socials } = GETRequest<SocialMediaLink[]>(
+        `/socials`,
+        'socials',
+        []
+    );
     return (
         <div className="overflow-hidden bg-black">
             <div className="flex gap-5 max-md:flex-col">
@@ -25,15 +48,29 @@ export function Footer() {
                                                     Kateqoriyalar
                                                 </div>
                                                 <div className="flex flex-col gap-2 mt-5 w-full text-base text-white text-opacity-80">
-                                                    <div
-                                                        className="cursor-pointer"
-                                                        onClick={() =>
-                                                            navigate('/poducts')
-                                                        }
-                                                    >
-                                                        Kosmetika
-                                                    </div>
-                                                    <div
+                                                    {categories?.map(
+                                                        (item: Category) => (
+                                                            <div
+                                                                className="cursor-pointer"
+                                                                onClick={() =>
+                                                                    navigate(
+                                                                        `/${lang}/${
+                                                                            ROUTES
+                                                                                .product[
+                                                                                lang as keyof typeof ROUTES.product
+                                                                            ]
+                                                                        }?category=${
+                                                                            item.id
+                                                                        }`
+                                                                    )
+                                                                }
+                                                            >
+                                                                {item.title}
+                                                            </div>
+                                                        )
+                                                    )}
+
+                                                    {/* <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate('/poducts')
@@ -56,73 +93,118 @@ export function Footer() {
                                                         }
                                                     >
                                                         Endirimli məhsullar
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                             <div className="flex flex-col w-[171px] gap-2">
                                                 <div className="text-lg font-medium text-white">
-                                                    Şirkət
+                                                    {tarnslation?.Şirkət}
                                                 </div>
                                                 <div className="flex flex-col mt-5 text-base text-white text-opacity-80">
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
-                                                            navigate('/aboutus')
+                                                            navigate(
+                                                                `/${lang}/${
+                                                                    ROUTES
+                                                                        .about[
+                                                                        lang as keyof typeof ROUTES.about
+                                                                    ]
+                                                                }`
+                                                            )
                                                         }
                                                     >
-                                                        Şirkət haqqında
+                                                        {
+                                                            tarnslation?.Şirkət_haqqında
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col  text-base text-white text-opacity-80">
                                                     <HashLink
-                                                        to="/aboutus#faq"
+                                                        to={`/${lang}/${
+                                                            ROUTES.about[
+                                                                lang as keyof typeof ROUTES.about
+                                                            ]
+                                                        }#faq`}
                                                         className="cursor-pointer"
                                                         smooth
                                                     >
-                                                        Tez-tez verilən suallar{' '}
+                                                        {
+                                                            tarnslation?.Tez_tez_verilən_suallar
+                                                        }{' '}
                                                     </HashLink>
                                                 </div>
                                             </div>
                                             <div className="flex flex-col w-[164px]">
                                                 <div className="text-lg font-medium text-white">
-                                                    Digər keçidlər
+                                                    {
+                                                        tarnslation?.Digər_keçidlər
+                                                    }{' '}
                                                 </div>
                                                 <div className="flex flex-col gap-2 mt-5 max-w-full text-base text-white text-opacity-80 w-[164px]">
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
-                                                            navigate('/contact')
+                                                            navigate(
+                                                                `/${lang}/${
+                                                                    ROUTES
+                                                                        .contact[
+                                                                        lang as keyof typeof ROUTES.contact
+                                                                    ]
+                                                                }`
+                                                            )
                                                         }
                                                     >
-                                                        Əlaqə
+                                                        {tarnslation?.Əlaqə}
                                                     </div>
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate(
-                                                                '/deliveryrules'
+                                                                `/${lang}/${
+                                                                    ROUTES
+                                                                        .deliveryRules[
+                                                                        lang as keyof typeof ROUTES.deliveryRules
+                                                                    ]
+                                                                }`
                                                             )
                                                         }
                                                     >
-                                                        Çatdırılma və ödəniş
-                                                    </div>
-                                                    <div
-                                                        className="cursor-pointer"
-                                                        onClick={() =>
-                                                            navigate('/brends')
-                                                        }
-                                                    >
-                                                        Brendlər
+                                                        {
+                                                            tarnslation?.Çatdırılma_və_ödəniş
+                                                        }{' '}
                                                     </div>
                                                     <div
                                                         className="cursor-pointer"
                                                         onClick={() =>
                                                             navigate(
-                                                                '/userrules'
+                                                                `/${lang}/${
+                                                                    ROUTES
+                                                                        .brends[
+                                                                        lang as keyof typeof ROUTES.brends
+                                                                    ]
+                                                                }`
                                                             )
                                                         }
                                                     >
-                                                        Qaydalar və şərtlər
+                                                        {tarnslation?.Brendlər}
+                                                    </div>
+                                                    <div
+                                                        className="cursor-pointer"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/${lang}/${
+                                                                    ROUTES
+                                                                        .rules[
+                                                                        lang as keyof typeof ROUTES.rules
+                                                                    ]
+                                                                }`
+                                                            )
+                                                        }
+                                                    >
+                                                        {
+                                                            tarnslation?.Qaydalar_və_şərtlər
+                                                        }{' '}
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,12 +213,18 @@ export function Footer() {
                                 </div>
                             </div>
                             <div className="flex gap-4 max-sm:hidden items-center self-start mt-36 max-md:mt-10">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c891e0d2e270a6c2698c5da6121f1272da234ccd0fec708d0d297b73a3e1868?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                />
-                                <img
+                                {socials?.map((item: SocialMediaLink) => (
+                                    <Link to={item.url}>
+                                        <img
+                                            loading="lazy"
+                                            alt={item.title}
+                                            src={item.icon}
+                                            className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                        />
+                                    </Link>
+                                ))}
+
+                                {/* <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/e06bb4cf3fc4b77ac6b044ac7bdda391aba00d1bcca1a4249df9e7464d23e24e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
@@ -150,7 +238,7 @@ export function Footer() {
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/bf9c6260e063308a546a293046cfcff2f5c69c163e27c20ee30538b452a359ca?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="shrink-0 mt-7 max-sm:hidden h-px border border-solid border-white border-opacity-10 max-md:max-w-full" />

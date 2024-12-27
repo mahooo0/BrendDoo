@@ -26,7 +26,7 @@ export default function Order() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col mt-4 gap-6  pr-[20px] [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-transparent">
+                    <div className="flex flex-col mt-4 gap-6  px-[20px] [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-transparent">
                         {Array.from({ length: 10 }).map(() => (
                             <>
                                 {' '}

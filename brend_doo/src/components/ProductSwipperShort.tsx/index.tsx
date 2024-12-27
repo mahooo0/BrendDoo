@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import ProductCard from '../ProductCArd';
 
 // Sample slider items
 // const sliderItems = [
@@ -25,7 +24,7 @@ import ProductCard from '../ProductCArd';
 interface Proops {
     bg: 'white' | 'grey';
 }
-export default function ProductSwipperShort({ bg }: Proops) {
+export default function ProductSwipperShort({}: Proops) {
     const swiperRef = useRef<any>();
     const handleNext = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
@@ -65,7 +64,7 @@ export default function ProductSwipperShort({ bg }: Proops) {
                         key={i}
                         className="!flex !justify-center max-sm:!block max-sm:!w-[80vw]  "
                     >
-                        <ProductCard isnew={i === 3} bg={bg} issale={i === 0} />
+                        {/* <ProductCard isnew={i === 3} bg={bg} issale={i === 0} /> */}
                     </SwiperSlide>
                 ))}
             </Swiper>

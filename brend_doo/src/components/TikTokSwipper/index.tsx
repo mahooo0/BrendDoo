@@ -2,11 +2,19 @@ import { useRef, useState } from 'react';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { Tiktoks } from '../../setting/Types';
 
-export default function TikTokSlider({ action }: { action: () => void }) {
+export default function TikTokSlider({
+    action,
+    Tiktoks,
+}: {
+    action: (id: number) => void;
+    Tiktoks: Tiktoks | undefined;
+}) {
     const swiperRef = useRef<any>(null);
     const [isLast, setIsLast] = useState(false);
     const [isFirst, setIsFirst] = useState(true);
+    console.log('Tiktok', Tiktoks);
 
     const handlePrev = () => {
         if (swiperRef.current && swiperRef.current.slidePrev) {
@@ -21,7 +29,7 @@ export default function TikTokSlider({ action }: { action: () => void }) {
     };
 
     return (
-        <div className="slider-container mt-[40px] relative flex items-center justify-center">
+        <div className="slider-container mt-[24px] relative flex items-center justify-center">
             <Swiper
                 // onSwiper={(swiper) => {
                 //     swiperRef.current = swiper;
@@ -44,7 +52,28 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                 }}
                 className="mySwiper !pl-[40px] max-sm:!pl-[16px]"
             >
-                {Array.from({ length: 20 }).map((_, i) => (
+                {Tiktoks?.map((item, i) => (
+                    <SwiperSlide className="!w-[216px]" key={item.id}>
+                        <div
+                            onClick={() => action(i)}
+                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
+                        >
+                            <div className="flex overflow-hidden flex-col rounded-3xl bg-neutral-100">
+                                <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714] cursor-pointer">
+                                    <img
+                                        loading="lazy"
+                                        src={item.image}
+                                        alt="Slide"
+                                        className="object-cover absolute inset-0 w-full h-full z-0"
+                                    />
+                                    <div className=" absolute top-0 left-0 w-full h-full z-10 bg-black bg-opacity-20"></div>
+                                    <p className="z-20">{item.title} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                ))}
+                {/* {Array.from({ length: 20 }).map((_, i) => (
                     <SwiperSlide className="!w-[216px]" key={i}>
                         <div
                             onClick={action}
@@ -63,14 +92,14 @@ export default function TikTokSlider({ action }: { action: () => void }) {
                             </div>
                         </div>
                     </SwiperSlide>
-                ))}
+                ))} */}
             </Swiper>
             <div className="max-sm:hidden">
                 {!isFirst && (
                     <button
                         onClick={handlePrev}
                         aria-label="Previous slide"
-                        className="prev-button absolute left-[20px] top-[40%] z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
+                        className=" absolute left-[20px] top-[40%] z-50 w-[52px] h-[52px] rounded-full flex justify-center items-center shadow-2xl bg-white"
                     >
                         <svg
                             width="24"

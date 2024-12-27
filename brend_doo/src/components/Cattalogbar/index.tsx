@@ -1,5 +1,4 @@
 import React, { LegacyRef } from 'react';
-import ClothingMenu from '../ClothingMenu';
 
 interface CatalogBarProps {
     isCatalogOpen: boolean;
@@ -8,7 +7,6 @@ interface CatalogBarProps {
 }
 
 export const CatalogBar: React.FC<CatalogBarProps> = ({
-    ref,
     isCatalogOpen,
     setIsCatalogOpen,
 }) => {
@@ -23,7 +21,7 @@ export const CatalogBar: React.FC<CatalogBarProps> = ({
                     setIsCatalogOpen(false);
                 }}
             ></div>
-            <ClothingMenu ref={ref} setIsCatalogOpen={setIsCatalogOpen} />
+            {/* <ClothingMenu ref={ref} setIsCatalogOpen={setIsCatalogOpen} /> */}
         </div>
     );
 };
