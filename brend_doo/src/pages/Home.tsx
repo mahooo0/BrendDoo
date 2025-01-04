@@ -14,6 +14,7 @@ import {
     Advanteges,
     Brand,
     Category,
+    Holideys,
     HomeCategory,
     HomeHero,
     LoginBunner,
@@ -76,11 +77,11 @@ export default function Home() {
         [lang, category_id]
     );
 
-    const { data: productsByCategory, isLoading: productsByCategoryLoading } =
-        GETRequest<HomeCategory[]>(`/home_categories`, 'home_categories', [
-            lang,
-            category_id,
-        ]);
+    const { data: productsByCategory } = GETRequest<HomeCategory[]>(
+        `/home_categories`,
+        'home_categories',
+        [lang, category_id]
+    );
     const { data: discountedProducts, isLoading: discountedProductsLoading } =
         GETRequest<ProductResponse>(
             `/products?is_discount=1`,
@@ -95,10 +96,13 @@ export default function Home() {
     const { data: categories, isLoading: categoriesLoading } = GETRequest<
         Category[]
     >(`/categories`, 'categories', [lang]);
+    const { data: holidayBanners, isLoading: holidayBannersLoading } =
+        GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
     // loading
     const router = useNavigate();
     if (
         heroLoading ||
+        holidayBannersLoading ||
         advantagesLoading ||
         brendsLoading ||
         tarnslationLoading ||
@@ -107,8 +111,7 @@ export default function Home() {
         instragramsLoading ||
         discountedProductsLoading ||
         specialLoading ||
-        loginBannersLoading ||
-        productsByCategoryLoading
+        loginBannersLoading
     ) {
         return <Loading />;
     }
@@ -117,7 +120,7 @@ export default function Home() {
     return (
         <div className=" relative">
             <Header />
-            <main className=" flex flex-col justify-center">
+            <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     {/* Background Video */}
                     <video
@@ -397,23 +400,20 @@ export default function Home() {
                     </div>
                     <ProductSwipperShort bg="white" />
                 </section> */}
-                <section className="relative  rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                <section className="relative mt-[100px]  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
-                        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+                        className="absolute top-0  left-0 w-full h-full object-cover -z-10"
                         autoPlay
                         loop
                         muted
                         playsInline
                     >
-                        <source
-                            src="https://s3-figma-videos-production-sig.figma.com/video/TEAM/1133314765284192593/4adef74a6045f6d7095e79d88caa979400bb66f3?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T5iq1Rtn5ooRp-npfE4DiBU~J02zdfQXwdY3ZbZ07a~ks0AuluL90JuvsBU748CxDW4IxWaFP3GAqWdEUSm6Tr44NLq6S2G5qiCFYyjaqAwn0pvstPopdULRcaHZ2wfWm5YagOawcJTcJp0h8kOn4~Ol2fBK0PIu0fZmNGn8h2ZdFTtWf~phqbeASZeeOLMy9eqHqxMu0yU7zdI3ZQpYbBtyOz1T~CZ~cIf6rP784GiimPYOFR7M8chWsX5iowOpna1mivHLZ4Omon3gQNMD5F9dLWzpDIPOHWQHUd58TJQkTTbAm1ZI0rkmIcey512fge-IjGuAi8fdY6gl8PvDBQ__"
-                            type="video/mp4"
-                        />
+                        <source src={holidayBanners?.video} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
 
                     <div
-                        className="mt-[100px] max-sm:mt-[52px] max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
+                        className=" max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
                         style={{
                             background:
                                 'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',
@@ -423,17 +423,14 @@ export default function Home() {
                             <div className="flex flex-col w-full max-md:max-w-full">
                                 <div className="flex flex-col w-full">
                                     <div className="text-xl font-medium text-white text-opacity-60 max-md:max-w-full">
-                                        BÖ!
+                                        {holidayBanners?.title}{' '}
                                     </div>
                                     <div className="mt-3 text-4xl font-semibold text-white max-md:max-w-full">
-                                        Holloween-də yalnız sən fərqlən!
+                                        {holidayBanners?.value}{' '}
                                     </div>
                                 </div>
                                 <div className="mt-5 text-lg font-medium text-white text-opacity-90 max-md:max-w-full">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever
+                                    {holidayBanners?.description}
                                 </div>
                             </div>
                             <button

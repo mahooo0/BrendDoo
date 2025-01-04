@@ -4,11 +4,18 @@ import ClothingMenu, { CategoryHeader } from '../ClothingMenu';
 import ROUTES, { getRouteKey } from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import {
+    BaskedItem,
     Category,
     Product,
     ProductResponse,
     SubCategory,
+    TranslationsKeys,
 } from '../../setting/Types';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRecoilState } from 'recoil';
+import { RefetchBasked } from '../../setting/StateManagmant';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -26,6 +33,7 @@ export default function Header() {
     const [isBaskedOpen, setIsBaskedOpen] = useState<boolean>(false);
     // Search
     const [SearchValue, setSearchValue] = useState<string>('');
+    const [User, setUser] = useState<any | null>(null);
     const [debouncedValue, setDebouncedValue] = useState(SearchValue);
     const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
     // Search
@@ -35,10 +43,16 @@ export default function Header() {
     const [showSubCAtegoryes, setshowSubCAtegoryes] = useState<number>(-1);
     const [currentSubCategoryId, setCurrentSubCategoryId] = useState<number>(0);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { lang = 'ru', page } = useParams<{ lang: string; page: string }>();
+    const {
+        lang = 'ru',
+        page,
+        slug,
+    } = useParams<{ lang: string; page: string; slug: string }>();
 
     const CatalogBtnRef = useRef<HTMLDivElement | null>(null);
     const CAtalogDiv = useRef<HTMLDivElement | null>(null);
+    const [refetchBaskedState, setRefetchBaskedState] =
+        useRecoilState<boolean>(RefetchBasked);
 
     const BaskedBtnRef = useRef<HTMLDivElement | null>(null);
     const BaskedDiv = useRef<HTMLDivElement | null>(null);
@@ -113,6 +127,25 @@ export default function Header() {
     const HandleSetUrlByLang = (Lang: string) => {
         if (page) {
             const newPage = getRouteKey(page);
+            if (slug) {
+                const strSlug = localStorage.getItem('ProductSlug');
+                if (strSlug) {
+                    const Slug = JSON.parse(strSlug);
+                    const NewSlug = Slug[Lang];
+                    console.log('NewSlug:', NewSlug);
+
+                    Navigae(
+                        newPage
+                            ? `/${Lang}/${
+                                  ROUTES[newPage][
+                                      Lang as keyof typeof ROUTES.home
+                                  ]
+                              }/${NewSlug}`
+                            : '/'
+                    );
+                    return;
+                }
+            }
             Navigae(
                 newPage
                     ? `/${Lang}/${
@@ -126,6 +159,46 @@ export default function Header() {
             );
         }
     };
+    useEffect(() => {
+        setRefetchBaskedState((prev) => !prev);
+
+        const userStr = localStorage.getItem('user-info');
+
+        if (userStr) {
+            const User = JSON.parse(userStr);
+            setUser(User);
+        }
+    }, []);
+    const RemoveFromBasked = async (id: number) => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const User = JSON.parse(userStr);
+            if (User) {
+                await axios.delete(
+                    `https://brendo.avtoicare.az/api/basket_items/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${User.data.token}`,
+                            Accept: 'application/json',
+                        },
+                    }
+                );
+            }
+        }
+    };
+    const queryClient = useQueryClient();
+
+    const RemoveFromBaskedmutation = useMutation({
+        mutationFn: RemoveFromBasked,
+        onSuccess: () => {
+            toast.success('Məhsul səbətdən silindi');
+            queryClient.invalidateQueries({ queryKey: ['basket_items'] });
+        },
+        onError: (error) => {
+            toast.error('Xəta baş verdi');
+            console.error(error);
+        },
+    });
 
     const { data: categories, isLoading: categoriesLoading } = GETRequest<
         Category[]
@@ -143,23 +216,20 @@ export default function Header() {
         'products',
         [lang, debouncedValue, currentSubCategoryId]
     );
-    // const { data: categories, isLoading: categoriesLoading } = useQuery({
-    //     queryFn: async () => {
-    //         const res = await axiosInstance.get<any>('/categories', {
-    //             headers: {
-    //                 'Accept-Language': 'en',
-    //             },
-    //         });
-    //         console.log(res);
-    //         return res.data;
-    //     },
-    //     queryKey: ['categories'],
-    //     staleTime: 1000 * 60 * 60,
-    // });
-    // useEffect(() => {
-    //     // Perform any action with the debounced value
-    //     console.log('Debounced Search Value:', debouncedValue);
-    // }, [debouncedValue]);
+    const { data: translation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
+    const { data: basked } = GETRequest<BaskedItem[]>(
+        `/basket_items`,
+        'basket_items',
+        [lang, refetchBaskedState]
+    );
+    useEffect(() => {
+        console.log('refetchBaskedState:', refetchBaskedState);
+    }, [refetchBaskedState]);
+
     return (
         <div className="  block w-full z-[99999999999] top-0 min-h-[68px]">
             <div className=" lg:flex hidden flex-col relative bg-white">
@@ -181,19 +251,6 @@ export default function Header() {
                     </Link>
 
                     <div className="flex flex-wrap gap-6 justify-center items-center self-stretch my-auto text-base max-md:max-w-full ">
-                        {/* <Link to={``}>
-                            <div className="self-stretch my-auto">Geyim</div>
-                        </Link>
-                        <Link to={'/poducts'}>
-                            <div className="self-stretch my-auto">
-                                Elektronika
-                            </div>
-                        </Link>
-                        <Link to={'/poducts'}>
-                            <div className="self-stretch my-auto">
-                                Kosmetika
-                            </div>
-                        </Link>*/}
                         {categories?.map((category: Category) => (
                             <Link
                                 to={`/${lang}/${
@@ -240,24 +297,51 @@ export default function Header() {
                     </div>
                     <div className="flex gap-6 items-center self-stretch my-auto text-sm">
                         <div className="flex gap-5 items-center self-stretch my-auto ">
-                            <Link
+                            {/* <Link
                                 to={`/${lang}/${
                                     ROUTES.login[
                                         lang as keyof typeof ROUTES.login
                                     ]
                                 }`}
+                            > */}
+                            <div
+                                className="flex gap-3 items-center self-stretch my-auto"
+                                onClick={() => {
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        // const User = JSON.parse(userStr);
+
+                                        // if (User) {
+                                        // }
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.userSettings[
+                                                    lang as keyof typeof ROUTES.userSettings
+                                                ]
+                                            }`
+                                        );
+                                    } else {
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
                             >
-                                <div className="flex gap-3 items-center self-stretch my-auto">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
-                                    />
-                                    <div className="self-stretch my-auto">
-                                        Şəxsi kabinet
-                                    </div>
+                                <img
+                                    loading="lazy"
+                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
+                                />
+                                <div className="self-stretch my-auto">
+                                    Şəxsi kabinet
                                 </div>
-                            </Link>
+                            </div>
+                            {/* </Link> */}
 
                             <div className=" flex flex-row gap-2 cursor-pointer">
                                 <button
@@ -353,7 +437,11 @@ export default function Header() {
                         />
                     </div>
                     <div className="flex gap-6 self-stretch my-auto text-sm text-black">
-                        <Link to={'/liked'}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.liked[lang as keyof typeof ROUTES.liked]
+                            }`}
+                        >
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -364,14 +452,26 @@ export default function Header() {
                         <button
                             className="flex gap-3  items-center"
                             onClick={() => {
-                                setIsClothingOpen(false);
-                                setSearchValue('');
-                                if (!isBaskedOpen) {
-                                    disableScrolling();
+                                if (User) {
+                                    setIsClothingOpen(false);
+                                    setSearchValue('');
+                                    setRefetchBaskedState(!refetchBaskedState);
+
+                                    if (!isBaskedOpen) {
+                                        disableScrolling();
+                                    } else {
+                                        enableScrolling();
+                                    }
+                                    setIsBaskedOpen((prev) => !prev);
                                 } else {
-                                    enableScrolling();
+                                    Navigae(
+                                        `/${lang}/${
+                                            ROUTES.login[
+                                                lang as keyof typeof ROUTES.login
+                                            ]
+                                        }`
+                                    );
                                 }
-                                setIsBaskedOpen((prev) => !prev);
                             }}
                         >
                             <div
@@ -380,10 +480,20 @@ export default function Header() {
                             >
                                 <img src="/svg/basked.svg" />
                                 <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
-                                    2
+                                    {basked?.length}
                                 </div>
                             </div>
-                            <div className="self-stretch my-auto">112 AZN</div>
+                            <div className="self-stretch my-auto">
+                                {basked
+                                    ?.reduce(
+                                        (total, item) =>
+                                            total +
+                                            Number(item.price) * item.quantity,
+                                        0
+                                    )
+                                    .toFixed(2)}{' '}
+                                AZN
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -566,6 +676,7 @@ export default function Header() {
                     </div>
                 </div>
                 {/* search bar */}
+                {/* basked bar */}
 
                 <div
                     ref={BaskedDiv}
@@ -586,11 +697,18 @@ export default function Header() {
                     <div className="flex overflow-hidden max-h-[60vh] flex-col items-center pt-10 bg-white rounded-3xl max-w-[511px] absolute right-4">
                         <div className="flex gap-5 justify-between w-full max-w-[432px] max-md:max-w-full mx-[40px]">
                             <div className="text-lg font-semibold text-center text-slate-800">
-                                Səbətdəki məhsullarım
+                                {translation?.Səbətdəki_məhsullarım}
                             </div>
                             <div className="flex gap-2 items-center py-0.5 text-sm font-medium text-blue-600 whitespace-nowrap border-b border-solid border-b-blue-600">
-                                <Link to="/basked/sifarislerim">
+                                <Link
+                                    to={`/${lang}/${
+                                        ROUTES.order[
+                                            lang as keyof typeof ROUTES.order
+                                        ]
+                                    }`}
+                                >
                                     <div className="self-stretch my-auto">
+                                        {translation?.Səbətim}
                                         Səbətim
                                     </div>
                                 </Link>
@@ -602,162 +720,84 @@ export default function Header() {
                                 />
                             </div>
                         </div>
-                        <div className="overflow-y-scroll h-[40vh] px-[24px]">
-                            {/* onecard */}
-                            <div>
-                                <div className="flex gap-8 items-center mt-[4px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
-                                        <img
-                                            loading="lazy"
-                                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                        />
-                                        <div className="flex flex-col self-stretch my-auto w-[152px]">
-                                            <div className="w-full text-sm font-medium text-black">
-                                                Zara iki tərəfli kolleksiya
-                                                pencək
-                                            </div>
-                                            <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
-                                                <div className="flex gap-3 items-start">
-                                                    <div>Qara rəng</div>
-                                                    <div>L Ölçü</div>
+                        {/* onecard */}
+                        {basked && basked?.length > 0 ? (
+                            <div className="overflow-y-scroll h-[40vh] px-[24px]">
+                                {basked?.map((item: BaskedItem) => (
+                                    <div>
+                                        <div className="flex gap-8 items-center mt-[4px] justify-between max-md:max-w-full mx-[40px]">
+                                            <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
+                                                <img
+                                                    loading="lazy"
+                                                    src={item.product.image}
+                                                    className="object-cover shrink-0 self-stretch my-auto rounded-3xl h-[100px] w-[100px]"
+                                                />
+                                                <div className="flex flex-col self-stretch my-auto w-[152px]">
+                                                    <div className="w-full text-sm font-medium text-black">
+                                                        {item.product.title}
+                                                    </div>
+                                                    <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
+                                                        <div className="flex gap-3 items-start">
+                                                            <div>
+                                                                ---FILTER---
+                                                            </div>
+                                                            <div>
+                                                                {' '}
+                                                                ---FILTER---
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
+                                                <button onClick={() => {}}>
+                                                    <img
+                                                        loading="lazy"
+                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                                    />
+                                                </button>
+                                                <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
+                                                    {item.quantity}
+                                                </div>
+                                                <button onClick={() => {}}>
+                                                    <img
+                                                        loading="lazy"
+                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                                    />
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
-                                        <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
-                                            01
+                                        <div className="flex gap-5 justify-between mt-3 w-full text-base font-semibold text-center text-black max-w-[431px] max-md:max-w-full mx-[40px]">
+                                            <div className="flex gap-10 items-center self-start">
+                                                <div className="gap-1 self-stretch my-auto">
+                                                    {item.price} AZN
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() =>
+                                                    RemoveFromBaskedmutation.mutate(
+                                                        item.id
+                                                    )
+                                                }
+                                            >
+                                                <img
+                                                    loading="lazy"
+                                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8def1bebbad3cbf09bef8d55ed4ec86d21afaa0e256174b36745ad28b51cc5f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                    className="object-contain shrink-0 w-7 aspect-square"
+                                                />
+                                            </button>
                                         </div>
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
+                                        <div className="mx-[40px] shrink-0 mt-4 max-w-full h-px border border-solid border-black border-opacity-10 w-[431px]" />
                                     </div>
-                                </div>
-                                <div className="flex gap-5 justify-between mt-3 w-full text-base font-semibold text-center text-black max-w-[431px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-10 items-center self-start">
-                                        <div className="gap-1 self-stretch my-auto">
-                                            298 AZN
-                                        </div>
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8def1bebbad3cbf09bef8d55ed4ec86d21afaa0e256174b36745ad28b51cc5f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 w-7 aspect-square"
-                                    />
-                                </div>
-                                <div className="mx-[40px] shrink-0 mt-4 max-w-full h-px border border-solid border-black border-opacity-10 w-[431px]" />
+                                ))}
                             </div>
-                            <div>
-                                <div className="flex gap-8 items-center mt-[4px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
-                                        <img
-                                            loading="lazy"
-                                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                        />
-                                        <div className="flex flex-col self-stretch my-auto w-[152px]">
-                                            <div className="w-full text-sm font-medium text-black">
-                                                Zara iki tərəfli kolleksiya
-                                                pencək
-                                            </div>
-                                            <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
-                                                <div className="flex gap-3 items-start">
-                                                    <div>Qara rəng</div>
-                                                    <div>L Ölçü</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
-                                        <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
-                                            01
-                                        </div>
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex gap-5 justify-between mt-3 w-full text-base font-semibold text-center text-black max-w-[431px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-10 items-center self-start">
-                                        <div className="gap-1 self-stretch my-auto">
-                                            298 AZN
-                                        </div>
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8def1bebbad3cbf09bef8d55ed4ec86d21afaa0e256174b36745ad28b51cc5f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 w-7 aspect-square"
-                                    />
-                                </div>
-                                <div className="mx-[40px] shrink-0 mt-4 max-w-full h-px border border-solid border-black border-opacity-10 w-[431px]" />
-                            </div>{' '}
-                            <div>
-                                <div className="flex gap-8 items-center mt-[4px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
-                                        <img
-                                            loading="lazy"
-                                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                        />
-                                        <div className="flex flex-col self-stretch my-auto w-[152px]">
-                                            <div className="w-full text-sm font-medium text-black">
-                                                Zara iki tərəfli kolleksiya
-                                                pencək
-                                            </div>
-                                            <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
-                                                <div className="flex gap-3 items-start">
-                                                    <div>Qara rəng</div>
-                                                    <div>L Ölçü</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
-                                        <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
-                                            01
-                                        </div>
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex gap-5 justify-between mt-3 w-full text-base font-semibold text-center text-black max-w-[431px] max-md:max-w-full mx-[40px]">
-                                    <div className="flex gap-10 items-center self-start">
-                                        <div className="gap-1 self-stretch my-auto">
-                                            298 AZN
-                                        </div>
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8def1bebbad3cbf09bef8d55ed4ec86d21afaa0e256174b36745ad28b51cc5f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 w-7 aspect-square"
-                                    />
-                                </div>
-                                <div className="mx-[40px] shrink-0 mt-4 max-w-full h-px border border-solid border-black border-opacity-10 w-[431px]" />
-                            </div>
-                        </div>
+                        ) : (
+                            <>
+                                <p>basked is empty</p>
+                            </>
+                        )}
 
                         <div className="flex overflow-hidden flex-wrap gap-5 justify-between self-stretch  py-5 mt-10  px-[40px] bg-slate-100  max-md:max-w-full w-full">
                             <div className="flex gap-3 items-center my-auto">
@@ -789,7 +829,7 @@ export default function Header() {
                                 : 'opacity-100'
                         } `}
                     />
-                </Link>{' '}
+                </Link>
                 <div className="flex gap-4 items-center">
                     <div
                         className={`absolute top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[54] ${

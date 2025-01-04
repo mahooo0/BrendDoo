@@ -1,12 +1,19 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Product } from '../../setting/Types';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { BaskedItem, Product, TranslationsKeys } from '../../setting/Types';
+import ROUTES from '../../setting/routes';
+import GETRequest from '../../setting/Request';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 interface Props {
     data?: Product;
     isnew?: boolean;
     issale?: boolean;
     bg: 'white' | 'grey';
 }
+
 export default function ProductCard({
     data,
     isnew = false,
@@ -14,22 +21,204 @@ export default function ProductCard({
     bg,
 }: Props) {
     console.log('ProductCard111', data);
-
+    const queryClient = useQueryClient();
     const [isliked, setisliked] = useState<boolean>(false);
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
+    const [BtnLoadin, setBtnLoadin] = useState<boolean>(false);
     const [variant, setvariant] = useState<number>(1);
     const navigate = useNavigate();
+    // const [refetchBaskedState, setRefetchBaskedState] =
+    //     useRecoilState<boolean>(RefetchBasked);
+    const checkLikedProducts = () => {
+        const likedProducts = localStorage.getItem('liked_Produckts');
+        if (likedProducts && likedProducts.includes(`${data?.id}`)) {
+            setisliked(true);
+        } else {
+            setisliked(false);
+        }
+    };
+
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+
+    const { data: translation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
+    const { data: basked } = GETRequest<BaskedItem[]>(
+        `/basket_items`,
+        'basket_items',
+        [lang]
+    );
+    console.log('basked', basked);
+    const addToBasket = async (data: {
+        product_id: string;
+        quantity: number;
+        price: number;
+        token: string;
+    }) => {
+        const response = await axios.post(
+            'https://brendo.avtoicare.az/api/basket_items',
+            {
+                product_id: data.product_id,
+                quantity: data.quantity,
+                price: data.price,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${data.token}`,
+                },
+            }
+        );
+        return response.data;
+    };
+    const mutation = useMutation({
+        mutationFn: addToBasket,
+        onSuccess: () => {
+            toast.success('Məhsul səbətə əlavə edildi');
+            setBtnLoadin(false);
+            // setRefetchBaskedState((prev) => !prev);
+            queryClient.invalidateQueries({ queryKey: ['basket_items'] });
+        },
+        onError: (error) => {
+            toast.error('Xəta baş verdi');
+            console.error(error);
+        },
+    });
+
+    useEffect(() => {
+        // Initial check on render
+        checkLikedProducts();
+
+        // Listener for storage changes across tabs
+        const handleStorageChange = (e: any) => {
+            if (e.key === 'liked_Produckts') {
+                checkLikedProducts();
+            }
+        };
+
+        // Add storage event listener
+        window.addEventListener('storage', handleStorageChange);
+
+        // Cleanup listener on unmount
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [data?.id]);
+
+    // For same-tab updates
+    useEffect(() => {
+        const originalSetItem = localStorage.setItem;
+
+        // Override localStorage.setItem to detect same-tab changes
+        localStorage.setItem = function (key, value) {
+            const event = new Event('local-storage-changed');
+            originalSetItem.apply(this, [key, value]);
+            if (key === 'liked_Produckts') {
+                window.dispatchEvent(event);
+            }
+        };
+
+        const handleLocalStorageChange = () => {
+            checkLikedProducts();
+        };
+
+        // Listen for the custom event
+        window.addEventListener(
+            'local-storage-changed',
+            handleLocalStorageChange
+        );
+
+        return () => {
+            // Restore original setItem and cleanup
+            localStorage.setItem = originalSetItem;
+            window.removeEventListener(
+                'local-storage-changed',
+                handleLocalStorageChange
+            );
+        };
+    }, [data?.id]);
+    useEffect(() => {
+        let includes = false;
+        if (basked) {
+            for (let i = 0; i < basked?.length; i++) {
+                if (basked[i]?.product?.id === data?.id) {
+                    includes = true;
+                }
+            }
+        }
+        if (includes) {
+            setvariant(3);
+        }
+
+        // if (data && basked?.includes(data)) {
+        //     setvariant(3);
+        //     console.log('incules');
+        // } else {
+        //     console.log('isnot');
+        // }
+        // console.log('data', data);
+    }, [basked, data]);
+    useEffect(() => {
+        let includes = false;
+        if (basked) {
+            for (let i = 0; i < basked?.length; i++) {
+                if (basked[i]?.product?.id === data?.id) {
+                    includes = true;
+                }
+            }
+        }
+        if (data && !includes) {
+            const fetchData = async () => {
+                const userStr = localStorage.getItem('user-info');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+
+                    if (variant === 3) {
+                        setBtnLoadin(true);
+                        mutation.mutate({
+                            product_id: `${data.id}`,
+                            quantity: 1,
+                            price: +data.discounted_price,
+                            token: user.data.token,
+                        });
+                        // await axios
+                        //     .post(
+                        //         'https://brendo.avtoicare.az/api/basket_items',
+                        //         {
+                        //             product_id: data?.id,
+                        //             quantity: 1,
+                        //             price: data?.discounted_price,
+                        //         },
+                        //         {
+                        //             headers: {
+                        //                 'Content-Type': 'application/json',
+                        //                 Authorization: `Bearer ${user.data.token}`,
+                        //             },
+                        //         }
+                        //     )
+                        //     .then((res) => {
+                        //         toast.success('Məhsul səbətə əlavə edildi');
+                        //         setBtnLoadin(false);
+                        //         setRefetchBaskedState((prev) => !prev);
+                        //     })
+                        //     .catch((err) => {
+                        //         toast.error('Xəta baş verdi');
+                        //     });
+                    }
+                }
+            };
+            fetchData();
+        }
+    }, [variant]);
     if (!data) {
         return (
             <>
                 <div className="flex flex-col w-full h-[400px] max-w-sm p-4 bg-gray-100 rounded-3xl animate-pulse">
                     <div className="w-full h-full bg-gray-300 rounded-3xl"></div>
-                    {/* <div className="mt-4 h-4 bg-gray-300 rounded"></div>
-                <div className="mt-2 h-4 bg-gray-300 rounded w-3/4"></div>
-                <div className="mt-2 flex gap-2">
-                    <div className="h-4 w-16 bg-gray-300 rounded"></div>
-                    <div className="h-4 w-24 bg-gray-300 rounded"></div>
-                </div> */}
                 </div>
             </>
         );
@@ -43,14 +232,54 @@ export default function ProductCard({
                 } rounded-3xl p-3  border border-white overflow-hidden border-solid aspect-[0.8]`}
             >
                 <img
-                    onClick={() => navigate(`/poducts/aa`)}
+                    onClick={() => {
+                        localStorage.setItem(
+                            'ProductSlug',
+                            JSON.stringify(data.slug)
+                        );
+                        navigate(
+                            `/${lang}/${
+                                ROUTES.product[
+                                    lang as keyof typeof ROUTES.product
+                                ]
+                            }/${data.slug[lang as keyof typeof data.slug]}`
+                        );
+                    }}
                     className="rounded-3xl hover:scale-110 duration-300 object-cover w-full h-full"
                     src={data?.image}
                     alt=""
                 />
                 <div
                     className="bg-[#FFFFFF99]  rounded-full w-11 h-11 absolute top-6 right-6 flex justify-center items-center"
-                    onClick={() => setisliked((prew: boolean) => !prew)}
+                    onClick={() => {
+                        const liked_Produckts =
+                            localStorage.getItem('liked_Produckts');
+
+                        if (liked_Produckts) {
+                            if (liked_Produckts.includes(`${data.id}`)) {
+                                const likedAreyy = liked_Produckts.split(',');
+
+                                const newLikedArey = likedAreyy.filter((item) =>
+                                    item === `${data.id}` ? 0 : 1
+                                );
+                                localStorage.setItem(
+                                    'liked_Produckts',
+                                    newLikedArey.join(',')
+                                );
+                            } else {
+                                console.log('isnt includes');
+                                localStorage.setItem(
+                                    'liked_Produckts',
+                                    `${liked_Produckts},${data.id}`
+                                );
+                            }
+                        } else {
+                            localStorage.setItem(
+                                'liked_Produckts',
+                                `${data.id}`
+                            );
+                        }
+                    }}
                 >
                     <img
                         src={
@@ -85,7 +314,13 @@ export default function ProductCard({
                     {variant === 1 && (
                         <div
                             onClick={() => {
-                                setvariant(2);
+                                const userStr =
+                                    localStorage.getItem('user-info');
+                                if (userStr) {
+                                    setvariant(2);
+                                } else {
+                                    navigate(`/${lang}/login`);
+                                }
                             }}
                             className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-16 py-3.5 text-base font-medium text-white bg-blue-600 max-w-[301px] rounded-[100px] duration-300 ${
                                 isMauseOn ? ' opacity-100' : ' opacity-0'
@@ -98,7 +333,7 @@ export default function ProductCard({
                                     className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                 />
                                 <div className="self-stretch text-nowrap my-auto ">
-                                    Səbətə əlavə et
+                                    {translation?.add_to_cart}
                                 </div>
                             </div>
                         </div>
@@ -150,14 +385,22 @@ export default function ProductCard({
                     {variant === 3 && (
                         <div className="flex overflow-hidden flex-col justify-center px-14 lg:py-3 py-auto items-center text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
                             <div className="flex gap-2 items-center">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7aea5798032300cff0cb8633f827efc8d9c19b5e90bd7d2d3214a3fe5775d3b4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
-                                />
-                                <div className="self-stretch text-nowrap my-auto">
-                                    Səbətə əlavə edildi
-                                </div>
+                                {BtnLoadin ? (
+                                    <div className=" h-6 w-6">
+                                        <div className="w-6 h-6 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <img
+                                            loading="lazy"
+                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/7aea5798032300cff0cb8633f827efc8d9c19b5e90bd7d2d3214a3fe5775d3b4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                            className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                                        />
+                                        <div className="self-stretch text-nowrap my-auto">
+                                            {translation?.added_to_cart}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}

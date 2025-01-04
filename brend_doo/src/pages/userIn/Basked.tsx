@@ -2,9 +2,50 @@ import { BreadCump } from '../../components/BroadCump';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import ProductSwipper from '../../components/ProductSwipper.tsx';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request.ts';
+import { BaskedItem } from '../../setting/Types.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Basked() {
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+    const { data: basked } = GETRequest<BaskedItem[]>(
+        `/basket_items`,
+        'basket_items',
+        [lang]
+    );
+    const RemoveFromBasked = async (id: number) => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const User = JSON.parse(userStr);
+            if (User) {
+                await axios.delete(
+                    `https://brendo.avtoicare.az/api/basket_items/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${User.data.token}`,
+                            Accept: 'application/json',
+                        },
+                    }
+                );
+            }
+        }
+    };
+    const queryClient = useQueryClient();
+
+    const RemoveFromBaskedmutation = useMutation({
+        mutationFn: RemoveFromBasked,
+        onSuccess: () => {
+            toast.success('Məhsul səbətdən silindi');
+            queryClient.invalidateQueries({ queryKey: ['basket_items'] });
+        },
+        onError: (error) => {
+            toast.error('Xəta baş verdi');
+            console.error(error);
+        },
+    });
     return (
         <div>
             <Header />
@@ -20,50 +61,70 @@ export default function Basked() {
                 <section className="flex lg:flex-row flex-col max-sm:px-4  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
                     <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 w-full gap-[65px] h-fit max-md:px-5">
                         <div className="flex flex-col max-md:max-w-full">
-                            <div className="flex flex-wrap gap-10 items-center justify-between mt-5 max-md:max-w-full">
-                                <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/433bd11231e5650c10a77ce2802324b5d17cb98cb604e8219eb9b2010e366408?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col self-stretch my-auto w-[152px]">
-                                        <div className="gap-1 self-start text-base font-semibold text-center text-black">
-                                            298 AZN
-                                        </div>
-                                        <div className="mt-2.5 w-full text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
-                                            <div className="flex gap-3 items-start">
-                                                <div>Qara rəng</div>
-                                                <div>L Ölçü</div>
+                            {basked?.map((item) => (
+                                <>
+                                    <div className="flex flex-wrap gap-10 items-center justify-between mt-5 max-md:max-w-full">
+                                        <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
+                                            <img
+                                                loading="lazy"
+                                                src={item.product.image}
+                                                className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
+                                            />
+                                            <div className="flex flex-col self-stretch my-auto w-[152px]">
+                                                <div className="gap-1 self-start text-base font-semibold text-center text-black">
+                                                    {
+                                                        item.product
+                                                            .discounted_price
+                                                    }{' '}
+                                                    AZN
+                                                </div>
+                                                <div className="mt-2.5 w-full text-sm text-black">
+                                                    {item.product.title}
+                                                </div>
+                                                <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
+                                                    <div className="flex gap-3 items-start">
+                                                        <div>
+                                                            -----FILter---
+                                                        </div>
+                                                        <div>
+                                                            -----FILter---
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/28d193498fe0181ef85fe4ae9724992dc65cbe3fabda2add56210add53339fe5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                            />
+                                            <div className="overflow-hidden self-stretch px-2.5 my-auto w-8 h-8 flex justify-center items-center rounded-lg bg-slate-400">
+                                                {item.quantity}
+                                            </div>
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0141e195a9e4eacd357b98a238f5374b7d80c129448dd3fe9f98c88a3f2d375e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() =>
+                                                RemoveFromBaskedmutation.mutate(
+                                                    item.id
+                                                )
+                                            }
+                                        >
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/b4fc83e19d3515c691d41a84b841f0d56e9ac8d5ef3c476eac75fb6fdab0b3c5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-7 aspect-square rounded-[100px]"
+                                            />
+                                        </button>
                                     </div>
-                                </div>
-                                <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/28d193498fe0181ef85fe4ae9724992dc65cbe3fabda2add56210add53339fe5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                    />
-                                    <div className="overflow-hidden self-stretch px-2.5 my-auto w-8 h-8 flex justify-center items-center rounded-lg bg-slate-400">
-                                        01
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/0141e195a9e4eacd357b98a238f5374b7d80c129448dd3fe9f98c88a3f2d375e?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                    />
-                                </div>
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/b4fc83e19d3515c691d41a84b841f0d56e9ac8d5ef3c476eac75fb6fdab0b3c5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-7 aspect-square rounded-[100px]"
-                                />
-                            </div>
-                            <div className="mt-5 max-w-full min-h-0 border border-solid border-black border-opacity-10 w-full" />
+                                    <div className="mt-5 max-w-full min-h-0 border border-solid border-black border-opacity-10 w-full" />
+                                </>
+                            ))}
                         </div>
                     </div>
                     <div className="w-[2px]  min-h-[400px] h-[100%] bg-black lg:block hidden  opacity-10" />

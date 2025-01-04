@@ -9,6 +9,11 @@ import DeliveryRules from '../DeliveryRules';
 import Contact from '../Contact';
 import Brends from '../Brends';
 import Login from '../userIn/login';
+import UserSettings from '../userIn';
+import Order from '../userIn/Order';
+import UserLiked from '../userIn/Liked';
+import Notification from '../userIn/Nptifications';
+import Basked from '../userIn/Basked';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -35,6 +40,21 @@ const PageByLang: React.FC = () => {
     }
     if (page === ROUTES.login.en || page === ROUTES.login.ru) {
         return <Login />;
+    }
+    if (page === ROUTES.userSettings.en || page === ROUTES.userSettings.ru) {
+        return <UserSettings />;
+    }
+    if (page === ROUTES.orders.en || page === ROUTES.orders.ru) {
+        return <Order />;
+    }
+    if (page === ROUTES.liked.en || page === ROUTES.liked.ru) {
+        return <UserLiked />;
+    }
+    if (page === ROUTES.notification.en || page === ROUTES.notification.ru) {
+        return <Notification />;
+    }
+    if (page === ROUTES.order.en || page === ROUTES.order.ru) {
+        return <Basked />;
     }
     return (
         <div>

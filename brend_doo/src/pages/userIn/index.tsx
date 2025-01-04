@@ -1,10 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
+import { TranslationsKeys } from '../../setting/Types';
+import { useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request';
 
 export default function UserSettings() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+    // const [userInfo, setUserInfo] = useState<AuthResponse | null>(null);
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const { data: translation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            // setUserInfo(user.data);
+            console.log('user:', user);
+        }
+    }, []);
     return (
         <div>
             <Header />
@@ -14,10 +34,10 @@ export default function UserSettings() {
                 <div className="flex overflow-hidden flex-col   lg:px-10 px-4 pt-10 pb-96 min-w-[230px] rounded-3xl bg-[#F8F8F8]  max-md:pb-24 w-full">
                     <div className="flex flex-wrap gap-5 justify-between w-full ">
                         <div className="text-3xl font-semibold text-black">
-                            Tənzimləmələr
+                            {translation?.settings}
                         </div>
                         <button className="gap-2 self-stretch py-0.5 my-auto text-base font-medium text-blue-600 border-b border-solid border-b-blue-600">
-                            Email adresini dəyiş
+                            {translation?.changeEmail}
                         </button>
                     </div>
 

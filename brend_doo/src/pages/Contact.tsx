@@ -3,8 +3,58 @@ import { Footer } from '../components/Footer';
 import { BreadCump } from '../components/BroadCump';
 
 import FAQSection from '../components/Faq';
+import {
+    ConmtactItem,
+    SocialMediaLink,
+    TranslationsKeys,
+} from '../setting/Types';
+import GETRequest from '../setting/Request';
+import Loading from '../components/Loading';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
 export default function Contact() {
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .required('First name is required')
+            .min(2, 'First name must be at least 2 characters long'),
+        lastName: Yup.string()
+            .required('Last name is required')
+            .min(2, 'Last name must be at least 2 characters long'),
+        phone: Yup.string()
+            .required('Phone number is required')
+            .matches(
+                /^(?:\+994|0)(50|51|55|70|77)\d{7}$/,
+                'Enter a valid phone number (e.g., +994551234567 or 0551234567)'
+            ),
+        email: Yup.string()
+            .required('Email is required')
+            .email('Enter a valid email address'),
+        category: Yup.string().required('Category is required'),
+        note: Yup.string()
+            .required('Note is required')
+            .max(500, 'Note cannot exceed 500 characters'),
+    });
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    const { data: ContactInfo, isLoading: ContactInfoLoading } = GETRequest<
+        ConmtactItem[]
+    >(`/contact_items`, 'contact_items', [lang]);
+    const { data: socials } = GETRequest<SocialMediaLink[]>(
+        `/socials`,
+        'socials',
+        []
+    );
+    if (tarnslationLoading || ContactInfoLoading) {
+        return <Loading />;
+    }
     return (
         <div className="">
             <Header />
@@ -14,13 +64,12 @@ export default function Contact() {
                     style={{
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        backgroundImage:
-                            'url("https://s3-alpha-sig.figma.com/img/4cff/483f/16da630a3596c452b3b3a9e3835ca986?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=F97I~eBSOUHQiQK-Bbf9M3DP2C3SljoFIOKPV21upRyL-qsCF-WBagacQOEnNV9~CivZTtGuTbj6WAFJAxmQOExp5mIsHtnDU-j90u2-LzwHkHFWZrbwL0TjyxgCAho0m40vUes1WYviRtSnFG-IKpJkeB45SyWzJcLARuYdsmRmgwgC2DNCJTGxuKKFcB3gMZ2y9~jZ4vSqSOnyRRjMDt8Eru~PVFI5TlN2JgLwoyJSCZVOZWj6LTOV4s0cjTRs4wD37L5H-XHcWlk4BeTJK-p4MHLQgGdjk2Iopgla9PqbrZ2rJYl1syHzi3zu7s1nr1UyuDB07qGsHLKFUOwaXg__")',
+                        backgroundImage: 'url("/images/contact.jpg")',
                     }}
                 >
                     <BreadCump />
                     <h3 className="text-[40px] font-semibold  max-sm:text-[32px] mt-[28px] mb-[40px]">
-                        Brendlər{' '}
+                        {tarnslation?.Bizimlə_əlaqə}{' '}
                     </h3>{' '}
                 </section>
 
@@ -30,22 +79,25 @@ export default function Contact() {
                             <div className="flex overflow-hidden flex-col grow items-start pt-10 pr-20 pb-52 pl-10 w-full rounded-3xl bg-[#8E98B8] max-md:px-5 max-md:pb-24 max-md:mt-5 max-md:max-w-full">
                                 <div className="flex flex-col max-w-full text-white w-[391px]">
                                     <div className="text-xl font-semibold">
-                                        Əlaqə məlumatları
+                                        {tarnslation?.Əlaqə_məlumatları}
                                     </div>
                                     <div className="flex flex-col mt-7 w-full text-base">
-                                        <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-10 rounded-[100px] max-md:pr-5">
-                                            <div className="flex gap-3 items-center">
-                                                <img
-                                                    loading="lazy"
-                                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/facb858f7d894790699d171daa5eb36e5cfa90cafc04e2e25d7dfd843f6648ee?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                    className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
-                                                />
-                                                <div className="self-stretch my-auto">
-                                                    +994 00 000 00 00
+                                        {ContactInfo?.map((item) => (
+                                            <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-10 rounded-[100px] max-md:pr-5">
+                                                <div className="flex gap-3 items-center">
+                                                    <img
+                                                        loading="lazy"
+                                                        src={item.icon}
+                                                        className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
+                                                    />
+                                                    <div className="self-stretch my-auto">
+                                                        {item.value}{' '}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-10 rounded-[100px] max-md:pr-5">
+                                        ))}
+
+                                        {/* <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-10 rounded-[100px] max-md:pr-5">
                                             <div className="flex gap-3 items-center">
                                                 <img
                                                     loading="lazy"
@@ -56,99 +108,179 @@ export default function Contact() {
                                                     nümunə@gmail.com
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className="flex flex-col mt-10 w-52 max-w-full">
                                     <div className="text-sm text-white">
-                                        Sosial media
+                                        {tarnslation?.Sosial_media}{' '}
                                     </div>
                                     <div className="flex gap-4 items-center mt-3 w-full">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c1f32e14fec9d7856cf5e488fc78f88d1b031bd1280b88eab49cd37d20282052?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                        />
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/be034b60299a29464dd7abf75b17fc96d544a0c5645bcc0b3e123fba5134730b?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                        />
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c22bc9e15ee531892016710a4ed65867122c5e8342e871eeda9d5fed3daf27b1?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                        />
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/1c7894e046fd1cae6f9e2209441640c07d1d469d98920ec8d092908c4275b9bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
-                                        />
+                                        {socials?.map(
+                                            (item: SocialMediaLink) => (
+                                                <Link to={item.url}>
+                                                    <img
+                                                        loading="lazy"
+                                                        alt={item.title}
+                                                        src={item.icon}
+                                                        className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-10 aspect-square rounded-[100px]"
+                                                    />
+                                                </Link>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="flex flex-col  lg:w-[59%] w-full max-md:ml-0 max-md:w-full">
-                            <form className="flex overflow-hidden flex-col grow px-10 py-11 w-full rounded-3xl bg-[#8E98B8] max-md:px-5 max-md:mt-5 max-md:max-w-full">
-                                <div className="self-center text-xl font-semibold text-center text-white">
-                                    Formu doldur, biz əlaqə saxlayaq!
-                                </div>
-                                <div className="flex flex-col mt-8 w-full text-base max-md:max-w-full">
-                                    <div className="flex flex-col w-full text-white max-md:max-w-full">
+                            <Formik
+                                initialValues={{
+                                    firstName: '',
+                                    lastName: '',
+                                    phone: '',
+                                    email: '',
+                                    category: '',
+                                    note: '',
+                                }}
+                                validationSchema={validationSchema}
+                                onSubmit={async (values, { setSubmitting }) => {
+                                    try {
+                                        const res = await axios.post(
+                                            'https://brendo.avtoicare.az/api/contact',
+                                            {
+                                                name: values.firstName,
+                                                surname: values.lastName,
+                                                phone: values.phone,
+                                                message: values.note,
+                                                category: values.category,
+                                                email: values.email,
+                                            }
+                                        );
+                                        if (
+                                            res.status === 200 ||
+                                            res.status === 201
+                                        ) {
+                                            toast.success(
+                                                'Message successfully sent'
+                                            );
+                                        }
+                                    } catch (error) {
+                                        console.error(error);
+                                        toast.error('Something went wrong');
+                                    } finally {
+                                        setSubmitting(false);
+                                    }
+                                }}
+                            >
+                                {({ isSubmitting }) => (
+                                    <Form className="flex flex-col px-10 py-11 w-full rounded-3xl bg-[#8E98B8]">
+                                        <h2 className="self-center text-xl font-semibold text-center text-white">
+                                            Fill the Form
+                                        </h2>
+
                                         {/* Name and Surname */}
-                                        <div className="flex flex-wrap gap-3 items-center w-full whitespace-nowrap max-md:max-w-full">
-                                            <input
-                                                type="text"
-                                                placeholder="Ad"
-                                                className="overflow-hidden grow shrink self-stretch px-5 py-5 my-auto border border-solid bg-white bg-opacity-10 border-white border-opacity-0 min-w-[240px] rounded-[100px] w-[277px] placeholder-white"
-                                            />
-                                            <input
-                                                type="text"
-                                                placeholder="Soyad"
-                                                className="flex flex-col grow shrink self-stretch my-auto min-w-[240px] w-[277px] overflow-hidden px-5 py-5 border border-solid bg-white bg-opacity-10 border-white border-opacity-0 rounded-[100px] placeholder-white"
-                                            />
+                                        <div className="flex lg:flex-row flex-col gap-3 mt-8 w-full">
+                                            <div className="w-full">
+                                                <Field
+                                                    type="text"
+                                                    name="firstName"
+                                                    placeholder="First Name"
+                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                />
+                                                <ErrorMessage
+                                                    name="firstName"
+                                                    component="div"
+                                                    className="text-red-500 text-sm mt-1"
+                                                />
+                                            </div>
+                                            <div className="w-full">
+                                                <Field
+                                                    type="text"
+                                                    name="lastName"
+                                                    placeholder="Last Name"
+                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                />
+                                                <ErrorMessage
+                                                    name="lastName"
+                                                    component="div"
+                                                    className="text-red-500 text-sm mt-1"
+                                                />
+                                            </div>
                                         </div>
+
                                         {/* Phone and Email */}
-                                        <div className="flex flex-wrap gap-3 items-center mt-3 w-full max-md:max-w-full">
-                                            <input
-                                                type="tel"
-                                                placeholder="+994 00 000 00 00"
-                                                className="overflow-hidden grow shrink self-stretch px-5 py-5 my-auto border border-solid bg-white bg-opacity-10 border-white border-opacity-0 min-w-[240px] rounded-[100px] w-[277px] placeholder-white"
+                                        <div className="flex lg:flex-row flex-col gap-3 mt-3 w-full">
+                                            <div className="w-full">
+                                                <Field
+                                                    type="tel"
+                                                    name="phone"
+                                                    placeholder="+994 00 000 00 00"
+                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                />
+                                                <ErrorMessage
+                                                    name="phone"
+                                                    component="div"
+                                                    className="text-red-500 text-sm mt-1"
+                                                />
+                                            </div>
+                                            <div className="w-full">
+                                                <Field
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="Email"
+                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                />
+                                                <ErrorMessage
+                                                    name="email"
+                                                    component="div"
+                                                    className="text-red-500 text-sm mt-1"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Category */}
+                                        <div className="mt-3 w-full">
+                                            <Field
+                                                type="text"
+                                                name="category"
+                                                placeholder="Category"
+                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                             />
-                                            <input
-                                                type="email"
-                                                placeholder="Email"
-                                                className="flex flex-col grow shrink self-stretch my-auto whitespace-nowrap min-w-[240px] w-[277px] overflow-hidden px-5 py-5 border border-solid bg-white bg-opacity-10 border-white border-opacity-0 rounded-[100px] placeholder-white"
+                                            <ErrorMessage
+                                                name="category"
+                                                component="div"
+                                                className="text-red-500 text-sm mt-1"
                                             />
                                         </div>
-                                    </div>
-                                    {/* Category Selection */}
-                                    <div className="flex flex-col mt-3 w-full max-md:max-w-full">
-                                        <div className="flex overflow-hidden flex-wrap gap-5 justify-between px-5 py-4 max-w-full border border-solid bg-white bg-opacity-10 border-white border-opacity-0 rounded-[100px] w-full">
-                                            <select className="bg-transparent text-white focus:outline-none w-full">
-                                                <option value="">
-                                                    Kateqoriya seç
-                                                </option>
-                                                {/* Add more options as needed */}
-                                            </select>
+
+                                        {/* Note */}
+                                        <div className="mt-3 w-full">
+                                            <Field
+                                                as="textarea"
+                                                name="note"
+                                                placeholder="Note"
+                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[20px] placeholder-white min-h-[110px]"
+                                            />
+                                            <ErrorMessage
+                                                name="note"
+                                                component="div"
+                                                className="text-red-500 text-sm mt-1"
+                                            />
                                         </div>
-                                    </div>
-                                    {/* Note Field */}
-                                    <div className="flex flex-col mt-3 w-full whitespace-nowrap rounded-3xl min-h-[111px] max-md:max-w-full">
-                                        <textarea
-                                            placeholder="Qeyd"
-                                            className="overflow-hidden px-5 pt-5 pb-20 max-w-full rounded-3xl border border-solid bg-white bg-opacity-10 border-white border-opacity-0 w-full resize-none placeholder-white"
-                                        ></textarea>
-                                    </div>
-                                    {/* Submit Button */}
-                                    <button
-                                        type="submit"
-                                        className="gap-2.5 self-stretch px-10 py-4 mt-7 w-full font-medium text-black whitespace-nowrap bg-white hover:bg-[#3873C3] hover:text-white duration-300 rounded-[100px] max-md:px-5 max-md:max-w-full"
-                                    >
-                                        Göndər
-                                    </button>
-                                </div>
-                            </form>
+
+                                        {/* Submit Button */}
+                                        <div className="mt-3 w-full">
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="w-full px-5 py-5 bg-white text-black rounded-[100px] disabled:opacity-50"
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
                 </section>

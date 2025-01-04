@@ -1,39 +1,28 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { AuthResponse, TranslationsKeys } from '../../setting/Types';
+import GETRequest from '../../setting/Request';
+import ROUTES from '../../setting/routes';
 
 function UserAside({ active }: { active: number }) {
-    // const menuItems = [
-    //     {
-    //         icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/62105f4dd100c43868d88a294261801888dc691b2834a74ff01a0b36d76e0d8e?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-    //         text: 'Tənzimləmələr',
-    //     },
-    //     {
-    //         icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9eb7d5c398a10506cc489eaf4756ac25f7b0769f75137d46182508a2a8759c7c?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-    //         text: 'Sifarişlərim',
-    //     },
-    //     {
-    //         icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/15d6e564cf1e866c69e33a3bfe32ce14b7b8eac3d002c167c67b53f9e749a9ab?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-    //         text: 'Bəyəndiklərim',
-    //     },
-    //     {
-    //         icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/7061b30f6f65f4d4982cbc393e956d18cbaffcfdaed9a9476c0c3110fefebdf4?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-    //         text: 'Çıxış',
-    //         textColor: 'text-rose-600',
-    //     },
-    // ];
-    // const Router = (index: number) => {
-    //     switch (index) {
-    //         case 0:
-    //             // router.push('/user');
-    //             break;
-    //         case 1:
-    //             // router.push('/user/orders');
-    //             break;
-    //         case 2:
-    //             // router.push('/user/liked');
-    //             break;
-    //     }
-    // };
-
+    const [userInfo, setUserInfo] = useState<AuthResponse | null>(null);
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const navigate = useNavigate();
+    const { data: translation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            setUserInfo(user.data);
+            console.log('user:', user);
+        }
+    }, []);
     return (
         <section className="flex overflow-hidden max-sm:flex-row flex-col grow max-sm:px-0  max-sm:justify-center z-[66] max-sm:shadow-md px-5 pt-5 max-sm:py-3 gap-2 max-sm:h-fit  h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px] max-sm:w-full  text-base bg-[#F8F8F8] rounded-[20px]    lg:max-w-[325px] max-w-full ">
             <div className="flex flex-col self-center justify-center max-w-full font-medium text-black w-[122px] max-sm:w-12 max-sm:h-14 min-w-12 min-h-14 items-center">
@@ -44,11 +33,17 @@ function UserAside({ active }: { active: number }) {
                     className="object-contain self-center !w-20 aspect-square rounded-[100px]"
                 />
                 <h1 className="mt-3 max-sm:hidden text-center text-[16px] font-normal">
-                    İlaha Nazarova
+                    {userInfo?.customer.name}{' '}
                 </h1>
             </div>
             <hr className="mt-4 w-full max-sm:hidden border border-solid border-black border-opacity-10" />
-            <Link to="/user">
+            <Link
+                to={`/${lang}/${
+                    ROUTES.userSettings[
+                        lang as keyof typeof ROUTES.userSettings
+                    ]
+                }`}
+            >
                 <div
                     className={`flex w-full overflow-hidden flex-col lg:h-[56px] h-fit text-black justify-center p-1 ${
                         active === 0 ? 'bg-[#B1C7E4]' : 'bg-white'
@@ -82,12 +77,16 @@ function UserAside({ active }: { active: number }) {
                             </svg>
                         </div>
                         <div className="self-stretch my-auto w-[182px] lg:block  hidden">
-                            Tənzimləmələr
+                            {translation?.Tənzimləmələr}
                         </div>
                     </div>
                 </div>
             </Link>
-            <Link to="/user/orders">
+            <Link
+                to={`/${lang}/${
+                    ROUTES.orders[lang as keyof typeof ROUTES.orders]
+                }`}
+            >
                 <div
                     className={`flex w-full overflow-hidden flex-col lg:h-[56px] h-fit text-black justify-center p-1 ${
                         active === 1 ? 'bg-[#B1C7E4]' : 'bg-white'
@@ -136,12 +135,17 @@ function UserAside({ active }: { active: number }) {
                             </svg>
                         </div>
                         <div className="self-stretch my-auto w-[182px] lg:block  hidden">
-                            Sifarişlərim
+                            {' '}
+                            {translation?.Sifarişlərim}
                         </div>
                     </div>
                 </div>
             </Link>
-            <Link to="/user/liked">
+            <Link
+                to={`/${lang}/${
+                    ROUTES.liked[lang as keyof typeof ROUTES.liked]
+                }`}
+            >
                 <div
                     className={`flex w-full overflow-hidden lg:h-[56px] h-fit flex-col text-black justify-center p-1 ${
                         active === 2 ? 'bg-[#B1C7E4]' : 'bg-white'
@@ -167,12 +171,18 @@ function UserAside({ active }: { active: number }) {
                             </svg>
                         </div>
                         <div className="self-stretch my-auto w-[182px] lg:block  hidden">
-                            Bəyəndiklərim{' '}
+                            {translation?.Bəyəndiklərim}{' '}
                         </div>
                     </div>
                 </div>
             </Link>
-            <Link to="/user/notifications">
+            <Link
+                to={`/${lang}/${
+                    ROUTES.notification[
+                        lang as keyof typeof ROUTES.notification
+                    ]
+                }`}
+            >
                 <div
                     className={`flex w-full lg:h-[56px] h-fit overflow-hidden flex-col text-black justify-center p-1 ${
                         active === 3 ? 'bg-[#B1C7E4]' : 'bg-white'
@@ -212,12 +222,22 @@ function UserAside({ active }: { active: number }) {
                             </svg>
                         </div>
                         <div className="self-stretch my-auto w-[182px] lg:block  hidden">
-                            Bildirşlər{' '}
+                            {translation?.Bildirşlər}{' '}
                         </div>
                     </div>
                 </div>
             </Link>
-            <div>
+            <div
+                className="cursor-pointer"
+                onClick={() => {
+                    localStorage.removeItem('user-info');
+                    navigate(
+                        `/${lang}/${
+                            ROUTES.home[lang as keyof typeof ROUTES.home]
+                        }`
+                    );
+                }}
+            >
                 <div
                     className={`flex lg:h-[56px] h-fit w- overflow-hidden flex-col text-black justify-center p-1 ${
                         active === 4 ? 'bg-[#B1C7E4]' : 'bg-white'
@@ -252,7 +272,7 @@ function UserAside({ active }: { active: number }) {
                             </svg>
                         </div>
                         <div className="self-stretch my-auto w-[182px] lg:block  hidden  text-[#FD0769]">
-                            Çıxış{' '}
+                            {translation?.Çıxış}{' '}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import ROUTES from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import {
     Category,
+    ConmtactItem,
     SocialMediaLink,
     TranslationsKeys,
 } from '../../setting/Types';
@@ -26,6 +27,11 @@ export function Footer() {
         'socials',
         []
     );
+    const { data: ContactInfo } = GETRequest<ConmtactItem[]>(
+        `/contact_items`,
+        'contact_items',
+        [lang]
+    );
     return (
         <div className="overflow-hidden bg-black">
             <div className="flex gap-5 max-md:flex-col">
@@ -34,7 +40,7 @@ export function Footer() {
                         <div className="flex flex-col px-10 w-full max-md:px-5 max-md:max-w-full">
                             <div className="w-full max-md:max-w-full">
                                 <div className="flex gap-5 max-md:flex-col">
-                                    <div className="flex flex-col w-[16%] max-md:ml-0 max-md:w-full">
+                                    <div className="flex flex-col w-[16%] lg:mt-12 mt-3 max-md:ml-0 max-md:w-full">
                                         <img
                                             loading="lazy"
                                             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0857f2353cd7255e656a0a2479a123345dfdf271a45bcabb88ee880b53c2bbf3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -42,7 +48,7 @@ export function Footer() {
                                         />
                                     </div>
                                     <div className="flex flex-col ml-5 w-[84%] max-md:ml-0 max-md:w-full">
-                                        <div className="flex flex-row max-sm:flex-col flex-wrap justify-between gap-10 items-start mt-3 max-md:mt-10 max-sm:mt-5 max-md:max-w-full">
+                                        <div className="flex flex-row max-sm:flex-col flex-wrap justify-between gap-10 items-start mt-[48px] max-md:mt-10 max-sm:mt-5 max-md:max-w-full">
                                             <div className="flex flex-col w-[158px]">
                                                 <div className="text-lg font-medium text-white">
                                                     Kateqoriyalar
@@ -254,19 +260,22 @@ export function Footer() {
                         </div>
                         <div className="flex flex-col mt-5">
                             <div className="flex flex-col w-full text-base text-white">
-                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
-                                    <div className="flex gap-3 items-center">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9b80faf5a911ecbd986e3afa290d2a343709dc374d1aba60b7850073897a017?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
-                                        />
-                                        <div className="self-stretch my-auto">
-                                            +994 00 000 00 00
+                                {ContactInfo?.map((item) => (
+                                    <div className="flex overflow-hidden flex-col justify-center items-start p-2 w-full bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
+                                        <div className="flex gap-3 items-center">
+                                            <img
+                                                loading="lazy"
+                                                src={item.icon}
+                                                className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
+                                            />
+                                            <div className="self-stretch my-auto">
+                                                {item.value}{' '}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
+                                ))}
+
+                                {/* <div className="flex overflow-hidden flex-col justify-center items-start p-2 mt-3 w-full whitespace-nowrap bg-white bg-opacity-[4%] rounded-[100px] max-md:pr-5">
                                     <div className="flex gap-3 items-center">
                                         <img
                                             loading="lazy"
@@ -277,7 +286,7 @@ export function Footer() {
                                             nümunə@gmail.com
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="mt-7 w-full border border-solid border-white border-opacity-10 min-h-[1px]" />
                             <div className="flex flex-col mt-7 w-full text-sm">

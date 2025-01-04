@@ -89,7 +89,7 @@ export default function ProductSwipper({ bg, data }: Proops) {
                         />
                     </SwiperSlide>
                 ))}
-                {!data ||
+                {!data &&
                     Array.from({ length: 10 }).map((_, i) => (
                         <SwiperSlide
                             key={i}

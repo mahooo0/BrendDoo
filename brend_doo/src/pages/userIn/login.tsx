@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -32,20 +34,18 @@ export default function Login() {
     }) => {
         setLoading(true);
         setFormStatus(null); // Reset status message
-
-        try {
-            // Simulate an API call
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Replace with actual API logic
-            console.log('Form values:', values);
-            setFormStatus({ message: 'Login successful!', success: true });
-        } catch (error) {
-            setFormStatus({
-                message: 'Login failed. Please try again.',
-                success: false,
+        await axios
+            .post('https://brendo.avtoicare.az/api/login', { ...values })
+            .then((response) => {
+                localStorage.setItem('user-info', JSON.stringify(response));
+                toast.success('log in sucsesfully');
+                //add token to local
+                navigate('/user');
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error('Error while logging in');
             });
-        } finally {
-            setLoading(false);
-        }
     };
 
     return (
@@ -164,7 +164,6 @@ export default function Login() {
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            onClick={() => navigate('/user')}
                                             className={`gap-2.5 self-stretch px-10 py-4 mt-7 w-full text-base font-medium text-black border border-solid ${
                                                 loading
                                                     ? 'bg-gray-400'

@@ -3,8 +3,55 @@ import { Footer } from '../../components/Footer';
 import { BreadCump } from '../../components/BroadCump';
 import CommentsSection from '../../components/Comments';
 import ProductCard from '../../components/ProductCArd';
+import { useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request';
+import {
+    ProductDetail,
+    ProductResponse,
+    TranslationsKeys,
+} from '../../setting/Types';
+import Loading from '../../components/Loading';
+import { useEffect, useState } from 'react';
 
 export default function ProductId() {
+    const { lang = 'ru', slug } = useParams<{
+        lang: string;
+        slug: string;
+    }>();
+    const { data: Productslingle, isLoading: ProductslingleLoading } =
+        GETRequest<ProductDetail>(`/productSingle/${slug}`, 'productSingle', [
+            lang,
+            slug,
+        ]);
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    const { data: SimularProducts, isLoading: SimularProductsLoading } =
+        GETRequest<ProductResponse>(
+            `/products?category_id=${Productslingle?.category.id}&sub_category_id=${Productslingle?.sub_category.id}`,
+            'products',
+            [lang, Productslingle]
+        );
+    console.log('SimularProducts', SimularProducts);
+    console.log('slug', slug);
+    const [currentColor, setCurrentColor] = useState<string>('');
+    const [currentOption, setCurrentOption] = useState<string>('');
+    useEffect(() => {
+        const CurrentColorNAme = Productslingle?.options.find(
+            (item) => item.color_code
+        )?.title;
+        const CurrentOptionNAme = Productslingle?.options.find(
+            (item) => !item.color_code
+        )?.title;
+        if (CurrentColorNAme) {
+            setCurrentColor(CurrentColorNAme);
+        }
+        if (CurrentOptionNAme) {
+            setCurrentOption(CurrentOptionNAme);
+        }
+    }, [Productslingle]);
+    if (ProductslingleLoading || tarnslationLoading || SimularProductsLoading) {
+        return <Loading />;
+    }
     return (
         <div className="">
             <Header />
@@ -16,9 +63,9 @@ export default function ProductId() {
                     <div className="relative lg:w-[40%] w-full ">
                         {' '}
                         {/* Parent container with height */}
-                        <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-[630px] h-fit  sticky top-[10px]">
+                        <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-auto h-fit  sticky top-[10px]">
                             <section
-                                className=" sroll- flex flex-col  lg:h-[670px] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 max-sm:gap-3 custom-scrollbar pb-[0px]"
+                                className=" sroll- flex flex-col  lg:h-[90vh] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 max-sm:gap-3 custom-scrollbar pb-[0px]"
                                 style={{
                                     scrollbarWidth: 'thin', // For Firefox
                                     scrollbarColor: '#888 transparent', // For Firefox
@@ -27,113 +74,207 @@ export default function ProductId() {
                                 <div className="flex overflow-hidden flex-col w-full  min-h-[670px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
                                     <img
                                         loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        src={Productslingle?.sliders[0].image}
                                         className="object-cover w-full max-sm:h-[345px] h-[670px] max-md:max-w-full"
                                     />
                                 </div>
                                 <div className=" w-full max-md:max-w-full">
                                     <div className="flex gap-5 max-sm:gap-3 max-md:flex-col">
-                                        <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
-                                                <img
-                                                    loading="lazy"
-                                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/56dd007ce206549c5b0ddd92beffdaecf3efa1974c0ae01d1c97972dd7f010e7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                    className="object-cover w-full aspect-[1.07]"
-                                                />
+                                        {Productslingle?.sliders[1] && (
+                                            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+                                                <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
+                                                    <img
+                                                        loading="lazy"
+                                                        src={
+                                                            Productslingle
+                                                                ?.sliders[1]
+                                                                .image
+                                                        }
+                                                        className="object-cover w-full aspect-[1.07]"
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
-                                            <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
-                                                <img
-                                                    loading="lazy"
-                                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/378bf7fa734145dee3eea2d0e82e99895779717d5157788f21da76e084de8d6f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                    className="object-cover w-full aspect-[1.07]"
-                                                />
+                                        )}
+                                        {Productslingle?.sliders[2] && (
+                                            <div className="flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
+                                                <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
+                                                    <img
+                                                        loading="lazy"
+                                                        src={
+                                                            Productslingle
+                                                                ?.sliders[2]
+                                                                .image
+                                                        }
+                                                        className="object-cover w-full aspect-[1.07]"
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="flex overflow-hidden flex-col w-full  min-h-[500px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/27eba077ea5579d9051a49dd4e9b1acaa532a02094b0188022345ba9f92680b5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-cover w-full max-sm:h-[345px] h-[500px] max-md:max-w-full"
-                                    />
-                                </div>
+                                {Productslingle?.sliders[2] && (
+                                    <div className="flex overflow-hidden flex-col w-full  min-h-[500px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
+                                        <img
+                                            loading="lazy"
+                                            src={
+                                                Productslingle?.sliders[2].image
+                                            }
+                                            className="object-cover w-full max-sm:h-[345px] h-[500px] max-md:max-w-full"
+                                        />
+                                    </div>
+                                )}
                             </section>
                         </section>
                     </div>
                     <section className="flex flex-col max-w-[650px] mt-[24px]">
                         <div className="flex flex-col w-full max-md:max-w-full">
                             <div className="flex flex-col w-full text-black text-opacity-80 max-md:max-w-full">
-                                <div className="gap-2.5 self-start px-3 py-2 text-xs font-medium text-white bg-[#FF3C79] rounded-[100px]">
-                                    10% endirim
-                                </div>
+                                {Productslingle?.discount && (
+                                    <div className="gap-2.5 self-start px-3 py-2 text-xs font-medium text-white bg-[#FF3C79] rounded-[100px]">
+                                        {Productslingle?.discount}%{' '}
+                                        {tarnslation?.discount}
+                                    </div>
+                                )}
+
                                 <div className="mt-4 w-full text-3xl font-semibold text-black max-md:max-w-full">
-                                    İki tərəfli zara kolleksiya pencək
+                                    {Productslingle?.title}{' '}
                                 </div>
                                 <div className="mt-4 w-full text-base max-md:max-w-full">
                                     Uzun kollu, yaka detaylı ceket. Önde yama
                                     cepli. Aynı renkte suni yünlü iç astarlı.
                                     Önden düğmeli.
+                                    <br />
+                                    ------- bura ne yazim 0------------
                                 </div>
                                 <div className="mt-4 w-full text-sm max-md:max-w-full">
                                     Məhsulun kodu:12345678
+                                    <br />
+                                    ------- bura ne yazim 0------------
                                 </div>
                             </div>
                             <div className="flex gap-3 items-center self-start mt-5">
                                 <div className="self-stretch my-auto text-base text-black text-opacity-60">
-                                    <span className="line-through">
-                                        298 AZN
-                                    </span>
+                                    {Productslingle?.discount && (
+                                        <span className="line-through">
+                                            {Productslingle.price}{' '}
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="self-stretch my-auto text-2xl font-semibold text-rose-500">
-                                    298 AZN
+                                    {Productslingle?.discounted_price}{' '}
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col mt-7 max-w-full w-[254px]">
-                            <div className="text-sm text-black text-opacity-60">
-                                Rəng: Qara
+                        {/* {Productslingle?.options.map(
+                            (option: {
+                                id: number;
+                                is_default: number;
+                                title: string;
+                                color_code: string | null;
+                            }) => {
+                                if (option.color_code) {
+                                    return (
+                                        <div
+                                            key={option.id}
+                                            className="flex gap-2.5 items-center self-stretch pb-1 my-auto w-8 border-b border-black"
+                                        >
+                                            <div
+                                                className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]"
+                                                style={{
+                                                    backgroundColor:
+                                                        option.color_code,
+                                                }}
+                                            />
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }
+                        )} */}
+                        {currentColor && (
+                            <div className="flex flex-col mt-7 max-w-full w-[254px]">
+                                <div className="text-sm text-black text-opacity-60">
+                                    {tarnslation?.color}: {currentColor}
+                                </div>
+                                <div className="flex gap-2 items-center self-start mt-3">
+                                    {Productslingle?.options.map(
+                                        (option: {
+                                            id: number;
+                                            is_default: number;
+                                            title: string;
+                                            color_code: string | null;
+                                        }) => {
+                                            if (option.color_code) {
+                                                return (
+                                                    <div
+                                                        onClick={() =>
+                                                            setCurrentColor(
+                                                                option.title
+                                                            )
+                                                        }
+                                                        key={option.id}
+                                                        className={`flex gap-2.5 cursor-pointer items-center self-stretch pb-1 my-auto w-8 ${
+                                                            currentColor ===
+                                                            option.title
+                                                                ? 'border-b border-black'
+                                                                : ''
+                                                        } `}
+                                                    >
+                                                        <div
+                                                            className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]"
+                                                            style={{
+                                                                backgroundColor:
+                                                                    option.color_code,
+                                                            }}
+                                                        />
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        }
+                                    )}
+                                </div>
                             </div>
-                            <div className="flex gap-2 items-center self-start mt-3">
-                                <div className="flex gap-2.5 items-center self-stretch pb-1 my-auto w-8 border-b border-black">
-                                    <div className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]" />
-                                </div>
-                                <div className="flex gap-2.5 items-center self-stretch pb-1 my-auto w-8">
-                                    <div className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-500 min-h-[32px]" />
-                                </div>
-                                <div className="flex gap-2.5 items-center self-stretch pb-1 my-auto w-8">
-                                    <div className="flex self-stretch my-auto w-8 h-8 bg-blue-500 rounded min-h-[32px]" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
-                            <div className="text-sm text-black text-opacity-60">
-                                Ölçü
-                            </div>
-                            <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    XS
-                                </div>
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    S
-                                </div>
+                        )}
 
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    M
+                        {currentOption && (
+                            <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
+                                <div className="text-sm text-black text-opacity-60">
+                                    {tarnslation?.size}
                                 </div>
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    L
-                                </div>
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    XL
-                                </div>
-                                <div className="px-3 min-w-[40px]  py-3.5 text-center aspect-square rounded border border-solid border-neutral-400">
-                                    2X
+                                <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
+                                    {Productslingle?.options.map(
+                                        (option: {
+                                            id: number;
+                                            is_default: number;
+                                            title: string;
+                                            color_code: string | null;
+                                        }) => {
+                                            if (option.color_code === null) {
+                                                return (
+                                                    <div
+                                                        onClick={() =>
+                                                            setCurrentOption(
+                                                                option.title
+                                                            )
+                                                        }
+                                                        className={`px-3 min-w-[40px] ${
+                                                            currentOption ===
+                                                            option.title
+                                                                ? 'bg-black text-white'
+                                                                : 'bg-white'
+                                                        }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
+                                                    >
+                                                        {option.title}
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        }
+                                    )}
                                 </div>
                             </div>
-                        </div>
+                        )}
                         <div className="flex flex-wrap gap-5 items-center mt-7 w-full max-md:max-w-full">
                             <div className="flex gap-2 justify-center items-center self-stretch px-4 py-2.5 my-auto w-40 text-sm text-green-600 bg-emerald-50 rounded-[100px]">
                                 <img
@@ -153,10 +294,11 @@ export default function ProductId() {
                                         className="object-contain shrink-0 self-stretch my-auto aspect-[5] w-[120px]"
                                     />
                                     <div className="self-stretch my-auto">
-                                        5.0
+                                        5.0{'  '}
                                         <span className="text-sm leading-4 ">
-                                            {' '}
-                                            (4 rəy)
+                                            {'       '}(
+                                            {Productslingle?.comments.length}){' '}
+                                            {tarnslation?.rey}
                                         </span>
                                     </div>
                                 </div>
@@ -195,51 +337,12 @@ export default function ProductId() {
                                 className="object-contain max-sm:hidden shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
                             />
                         </div>
-                        <div className="flex rounded-3xl bg-stone-50 max-w-[670px] min-h-[824px] px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col">
-                            <p>
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                            </p>{' '}
-                            <p>
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                            </p>{' '}
-                            <p>
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                            </p>{' '}
-                            <p>
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                                DEscription DEscription DEscription DEscription
-                            </p>
-                        </div>
+                        <div
+                            className="flex rounded-3xl bg-stone-50 max-w-[670px] min-h-[824px] px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col"
+                            dangerouslySetInnerHTML={{
+                                __html: '<p>Burara description eleve ele </p>',
+                            }}
+                        />
                     </section>
                 </section>
                 <section className="mt-[100px] max-sm:mt-12 bg-[#F8F8F8] max-sm:px-4 px-[40px]">
@@ -341,30 +444,33 @@ export default function ProductId() {
                             ))}
                         </div>
                     </div>
-                    <CommentsSection />
-                    <div className=" w-full flex justify-center pb-[80px]">
-                        <button className="px-[28px] py-[14px] border border-black rounded-[100px] border-opacity-15">
-                            Daha çox
-                        </button>
-                    </div>
+                    {Productslingle && tarnslation && (
+                        <CommentsSection
+                            data={Productslingle}
+                            translate={tarnslation}
+                        />
+                    )}
                 </section>
                 <section className="px-[40px] max-sm:px-4">
                     <h3 className="text-[28px] font-semibold max-sm:mt-[48px] mt-[100px]">
                         Tövsiyyələr
                     </h3>{' '}
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3   justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] max-sm:mt-[28px] gap-5">
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                        <ProductCard bg="grey" />
-                    </div>
+                    {SimularProducts && SimularProducts?.data.length > 0 && (
+                        <div className="grid lg:grid-cols-4 md:grid-cols-3   justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] max-sm:mt-[28px] gap-5">
+                            {SimularProducts?.data.map((Product, i) => {
+                                if (i <= 12) {
+                                    if (Product.id !== Productslingle?.id) {
+                                        return (
+                                            <ProductCard
+                                                bg="grey"
+                                                data={Product}
+                                            />
+                                        );
+                                    }
+                                }
+                            })}
+                        </div>
+                    )}
                 </section>
             </main>
             <Footer />

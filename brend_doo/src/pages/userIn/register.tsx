@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [variant, setvariant] = useState<1 | 2>(1);
 
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
@@ -20,11 +23,42 @@ const Register = () => {
             .email('Email düzgün deyil')
             .required('Email daxil edin'),
         password: Yup.string()
-            .min(6, 'Şifrə ən az 6 simvoldan ibarət olmalıdır')
+            .min(8, 'Şifrə ən az 8 simvoldan ibarət olmalıdır')
             .required('Şifrə daxil edin'),
+        acceptTerms: Yup.boolean()
+            .oneOf([true], 'İstifadəçi qaydaları ilə razı olmalısınız')
+            .required('İstifadəçi qaydaları ilə razı olmalısınız'),
     });
     const navigate = useNavigate();
-
+    async function handleRegister(values: {
+        name: string;
+        phone: string;
+        email: string;
+        password: string;
+    }) {
+        await axios
+            .post('https://brendo.avtoicare.az/api/register', values)
+            .then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    localStorage.setItem('register-token', response.data.token);
+                    // toast.success('registred sucsesfulley');
+                    setvariant(2);
+                }
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 422) {
+                    toast.error(`user is alredy exsist `);
+                }
+            });
+        // if (response.status === 201) {
+        //     // toast.success('registred sucsesfulley');
+        //     setvariant(2);
+        // }
+        // if (response.status === 402) {
+        //     toast.success('registred eror 402');
+        //     setvariant(2);
+        // }
+    }
     return (
         <div className="flex overflow-hidden flex-col bg-white">
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px] max-sm:px-4">
@@ -44,157 +78,240 @@ const Register = () => {
                     />
                 </div>
 
-                <div className="flex overflow-hidden relative flex-col justify-center self-center lg:px-16  lg:py-6 p-[10px] mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] ">
-                    <div className="flex flex-col max-md:max-w-full">
-                        <div className="flex flex-col items-center self-center text-center">
-                            <div className="text-3xl font-bold text-white">
-                                Qeydiyyatdan Keçin
+                {variant === 1 && (
+                    <div className="flex  overflow-hidden relative flex-col justify-center self-center lg:px-16  lg:py-6 p-[10px] mb-0 max-w-full rounded-3xl bg-white bg-opacity-20 w-[560px] ">
+                        <div className="flex flex-col max-md:max-w-full">
+                            <div className="flex flex-col items-center self-center text-center">
+                                <div className="text-3xl font-bold text-white">
+                                    Qeydiyyatdan Keçin
+                                </div>
+                                <div className="mt-3 text-base text-white text-opacity-80">
+                                    Hesab yaratmaq üçün məlumatlarınızı daxil
+                                    edin.
+                                </div>
                             </div>
-                            <div className="mt-3 text-base text-white text-opacity-80">
-                                Hesab yaratmaq üçün məlumatlarınızı daxil edin.
-                            </div>
-                        </div>
 
-                        {/* Formik Form */}
-                        <Formik
-                            initialValues={{
-                                name: '',
-                                phone: '',
-                                email: '',
-                                password: '',
-                            }}
-                            validationSchema={validationSchema}
-                            onSubmit={(values) => {
-                                console.log(values);
-                            }}
-                        >
-                            {({}) => (
-                                <Form className="flex flex-col items-center mt-4 w-full max-md:max-w-full">
-                                    <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
-                                        />
-                                        <div className="self-stretch my-auto">
-                                            Google ilə davam et
-                                        </div>
-                                    </div>
-                                    <div className="flex lg:gap-10 gap-5 items-center mt-4 text-xs text-center text-white w-full mb-4">
-                                        <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
-                                        <div className="self-stretch my-auto text-nowrap">
-                                            Və ya
-                                        </div>
-                                        <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
-                                    </div>
-                                    <div className="flex flex-col w-full max-md:max-w-full">
-                                        <Field
-                                            name="name"
-                                            className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
-                                            placeholder="Ad - Soyad"
-                                        />
-                                        <ErrorMessage
-                                            name="name"
-                                            component="div"
-                                            className="text-red-500 text-xs mt-1"
-                                        />
-
-                                        <div className="flex  overflow-hidden px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
-                                            <span className="text-black text-opacity-60 flex justify-center items-center">
-                                                +994
-                                            </span>
-                                            <Field
-                                                name="phone"
-                                                className="outline-none bg-transparent ml-1 w-full h-[56px]"
-                                                placeholder="XX XXX XX XX"
-                                            />
-                                        </div>
-                                        <ErrorMessage
-                                            name="phone"
-                                            component="div"
-                                            className="text-red-500 text-xs mt-1"
-                                        />
-
-                                        <Field
-                                            name="email"
-                                            className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
-                                            placeholder="Email"
-                                        />
-                                        <ErrorMessage
-                                            name="email"
-                                            component="div"
-                                            className="text-red-500 text-xs mt-1"
-                                        />
-
-                                        <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
-                                            <Field
-                                                type={
-                                                    showPassword
-                                                        ? 'text'
-                                                        : 'password'
-                                                }
-                                                name="password"
-                                                placeholder="Şifrə"
-                                                className="outline-none bg-transparent w-full h-[56px]"
-                                            />
+                            {/* Formik Form */}
+                            <Formik
+                                initialValues={{
+                                    name: '',
+                                    phone: '',
+                                    email: '',
+                                    password: '',
+                                }}
+                                validationSchema={validationSchema}
+                                onSubmit={async (values) => {
+                                    console.log(values);
+                                    handleRegister({
+                                        name: values.name,
+                                        password: values.password,
+                                        email: values.email,
+                                        phone: values.phone,
+                                    });
+                                }}
+                            >
+                                {({}) => (
+                                    <Form className="flex flex-col items-center mt-4 w-full max-md:max-w-full">
+                                        <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
                                             <img
                                                 loading="lazy"
-                                                onClick={
-                                                    togglePasswordVisibility
-                                                }
-                                                src={
-                                                    showPassword
-                                                        ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
-                                                        : '/svg/closedaye.svg'
-                                                }
-                                                className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
-                                                alt="Toggle Password Visibility"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
                                             />
+                                            <div className="self-stretch my-auto">
+                                                Google ilə davam et
+                                            </div>
                                         </div>
-                                        <ErrorMessage
-                                            name="password"
-                                            component="div"
-                                            className="text-red-500 text-xs mt-1"
-                                        />
-                                        <div className="flex items-center mt-4">
+                                        <div className="flex lg:gap-10 gap-5 items-center mt-4 text-xs text-center text-white w-full mb-4">
+                                            <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
+                                            <div className="self-stretch my-auto text-nowrap">
+                                                Və ya
+                                            </div>
+                                            <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
+                                        </div>
+                                        <div className="flex flex-col w-full max-md:max-w-full">
                                             <Field
-                                                type="checkbox"
-                                                name="acceptTerms"
-                                                className="mr-2 w-[14px] h-[14px]"
+                                                name="name"
+                                                className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
+                                                placeholder="Ad - Soyad"
                                             />
-                                            <label className="text-sm font-semibold text-white ">
-                                                İstifadəçi qaydaları ilə razıyam
-                                            </label>
-                                        </div>
-                                        <ErrorMessage
-                                            name="acceptTerms"
-                                            component="div"
-                                            className="text-red-500 text-xs mt-1"
-                                        />
+                                            <ErrorMessage
+                                                name="name"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
 
-                                        <div className="gap-2.5 self-stretch px-10 py-4 lg:mt-7 mt-4 w-full text-base font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px] max-md:px-5 max-md:max-w-full">
-                                            <button
-                                                type="submit"
-                                                className="w-full cursor-pointer"
-                                            >
-                                                Qeydiyyatdan Keç
-                                            </button>
+                                            <div className="flex  overflow-hidden px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
+                                                <span className="text-black text-opacity-60 flex justify-center items-center">
+                                                    +994
+                                                </span>
+                                                <Field
+                                                    name="phone"
+                                                    className="outline-none bg-transparent ml-1 w-full h-[56px]"
+                                                    placeholder="XX XXX XX XX"
+                                                />
+                                            </div>
+                                            <ErrorMessage
+                                                name="phone"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
+
+                                            <Field
+                                                name="email"
+                                                className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
+                                                placeholder="Email"
+                                            />
+                                            <ErrorMessage
+                                                name="email"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
+
+                                            <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
+                                                <Field
+                                                    type={
+                                                        showPassword
+                                                            ? 'text'
+                                                            : 'password'
+                                                    }
+                                                    name="password"
+                                                    placeholder="Şifrə"
+                                                    className="outline-none bg-transparent w-full h-[56px]"
+                                                />
+                                                <img
+                                                    loading="lazy"
+                                                    onClick={
+                                                        togglePasswordVisibility
+                                                    }
+                                                    src={
+                                                        showPassword
+                                                            ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
+                                                            : '/svg/closedaye.svg'
+                                                    }
+                                                    className="object-contain shrink-0 w-6 aspect-square cursor-pointer"
+                                                    alt="Toggle Password Visibility"
+                                                />
+                                            </div>
+                                            <ErrorMessage
+                                                name="password"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
+                                            <div className="flex items-center mt-4">
+                                                <Field
+                                                    type="checkbox"
+                                                    name="acceptTerms"
+                                                    className="mr-2 w-[14px] h-[14px]"
+                                                />
+                                                <label className="text-sm font-semibold text-white ">
+                                                    İstifadəçi qaydaları ilə
+                                                    razıyam
+                                                </label>
+                                            </div>
+                                            <ErrorMessage
+                                                name="acceptTerms"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
+
+                                            <div className="gap-2.5 self-stretch px-10 py-4 lg:mt-7 mt-4 w-full text-base font-medium text-black border border-solid bg-slate-300 border-slate-300 rounded-[100px] max-md:px-5 max-md:max-w-full">
+                                                <button
+                                                    type="submit"
+                                                    className="w-full cursor-pointer"
+                                                >
+                                                    Qeydiyyatdan Keç
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </div>
+
+                        <div
+                            className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full"
+                            onClick={() => {
+                                navigate('/user/login');
+                            }}
+                        >
+                            <span>Hesabınız var?</span> Daxil olun
+                        </div>
+                    </div>
+                )}
+                {variant === 2 && (
+                    <div className="bg-white z-50 rounded-[20px] bg-opacity-25  px-[50px] py-[60px] flex flex-col justify-center items-center">
+                        <h5 className="text-[32px] mb-3 text-white font-semibold leading-10">
+                            Elektron adresini yoxla!
+                        </h5>
+                        <p className="text-[16px] text-white mb-[40px] max-w-[460px] font-normal text-center">
+                            Sizə ilahanazarova77@gmail.com ünvanına altı rəqəmli
+                            təsdiq kodu göndərdik. E-poçt ünvanınızı təsdiqləmək
+                            üçün onu aşağıya daxil edin.
+                        </p>
+                        <Formik
+                            initialValues={{ code: '' }}
+                            validationSchema={Yup.object({
+                                code: Yup.string()
+                                    .length(6, 'Kod 6 rəqəmli olmalıdır')
+                                    .required('Kod daxil edin'),
+                            })}
+                            onSubmit={async (values) => {
+                                const token =
+                                    localStorage.getItem('register-token');
+                                console.log('values', values);
+                                await axios
+                                    .post(
+                                        'https://brendo.avtoicare.az/api/verifyEmail',
+                                        {
+                                            verification_code: +values.code,
+                                            verification_token: token,
+                                        }
+                                    )
+                                    .then(() => {
+                                        localStorage.setItem;
+                                        toast.success(
+                                            'register sucsesfylly ,now log in '
+                                        );
+                                        navigate('/user/login');
+                                    })
+                                    .catch((error) => {
+                                        console.log('error', error);
+                                        toast.error('error');
+                                    });
+                                // Handle code verification
+                            }}
+                        >
+                            {({ handleSubmit }) => (
+                                <Form
+                                    onSubmit={handleSubmit}
+                                    className="w-full"
+                                >
+                                    <Field
+                                        placeholder="6 rəqəmli kod"
+                                        className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
+                                        type="text"
+                                        name="code"
+                                    />
+                                    <ErrorMessage
+                                        name="code"
+                                        component="div"
+                                        className="text-red-500 text-xs mt-1"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="gap-2.5 self-stretch px-10 py-4 lg:mt-7 mt-4 w-full text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5 max-md:max-w-full"
+                                    >
+                                        Təsdiq et
+                                    </button>
                                 </Form>
                             )}
                         </Formik>
+                        <button className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full">
+                            Kodu yenidən göndər
+                        </button>
                     </div>
-
-                    <div
-                        className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full"
-                        onClick={() => {
-                            navigate('/user/login');
-                        }}
-                    >
-                        <span>Hesabınız var?</span> Daxil olun
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );

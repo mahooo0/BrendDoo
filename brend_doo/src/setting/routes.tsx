@@ -36,6 +36,27 @@ const ROUTES: { [key: string]: Route } = {
         en: 'deliveryRules',
         ru: 'правила_доставки',
     },
+    userSettings: {
+        en: 'userSettings',
+        ru: 'nastroykapolzovatelya',
+    },
+    orders: {
+        en: 'orders',
+        ru: 'zakazi',
+    },
+    liked: {
+        en: 'liked',
+        ru: 'ponravivsheyesyaTovari',
+    },
+    notification: {
+        en: 'notification',
+        ru: 'uvedomleniya',
+    },
+    order: {
+        en: 'order',
+        ru: 'zakaz',
+    },
+
     // services: {
     //     en: 'services',
     //     ru: 'услуги'

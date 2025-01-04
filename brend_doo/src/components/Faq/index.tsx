@@ -1,54 +1,8 @@
 import { useState } from 'react';
 import { NoneTolightBlue } from '../buttons/NoneT0Blue';
-import { useNavigate } from 'react-router-dom';
-
-const faqData = [
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/7ed81901e60d7031974952b0cd1a20d6408f2d4059577fba6ce7e38b327ee0f1?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description:
-            'Description 1: This is the first image description, providing more context about the image.Description 1: This is the first image description, providing more context about the image.Description 1: This is the first image description, providing more context about the image.Description 1: This is the first image description, providing more context about the image.',
-    },
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/d443c6132dd0e7e25f54f2b8d304395208a230e41bb4a73ec30a5dc182d63d02?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description: 'Description 2: This is the second image description.',
-    },
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/f11ed6aac2664b90afda317c8d46a2ce7b2905c6f7dba11aefd98595c809022b?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description:
-            'Description 3: Detailed information about the third image.',
-    },
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/865eb216cff3a319a5a1e4a4b55c932c74d0577536a40c7b16332b343ca2b8eb?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description: 'Description 4: Description for the fourth image.',
-    },
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/1adab8232d97b76e7522db05b27be74d422ebea743672a1fb02f3a6fdec8b798?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description: 'Description 5: This is the fifth image description.',
-    },
-    {
-        question:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry?',
-        imageSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/f3018e0d82ce8532fdc458e04c471e9a28ad6663730796c2f665f38d7be4059a?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2',
-        description:
-            'Description 6: Additional information for the sixth image.',
-    },
-];
+import { useNavigate, useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request';
+import { FaqCategory, FaqItem, TranslationsKeys } from '../../setting/Types';
 
 function FAQItem({
     question,
@@ -114,11 +68,36 @@ function FAQSection({
     isContact?: boolean;
 }) {
     const [openIndex, setOpenIndex] = useState(null);
+    const [CurrentFaqCategory, setCurrentFaqCategory] = useState<number>(-1);
 
     const handleToggle = (index: any) => {
         setOpenIndex(openIndex === index ? null : index);
     };
+    const { lang = 'ru' } = useParams<{
+        lang: string;
+    }>();
+    const { data: faqCategory } = GETRequest<FaqCategory[]>(
+        `/faqCategory`,
+        'faqCategory',
+        [lang]
+    );
+    const { data: faqs } = GETRequest<FaqItem[]>(
+        `/faqs${
+            CurrentFaqCategory === -1
+                ? ``
+                : `?faq_category_id=${CurrentFaqCategory}`
+        }`,
+        'faqs',
+        [lang, CurrentFaqCategory]
+    );
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     const navigate = useNavigate();
+    console.log('faqCategory:', faqCategory);
+
     return (
         <section
             id="faq"
@@ -150,13 +129,40 @@ function FAQSection({
                     style={{ scrollbarWidth: 'none' }}
                     className="flex flex-row max-sm:px-4 max-sm:overflow-x-scroll no-scrollbar max-sm:flex-nowrap flex-wrap   w-full lg:justify-end justify-around gap-3 mb-[30px]"
                 >
-                    <NoneTolightBlue isactive={true}>Hamısı</NoneTolightBlue>
-                    <NoneTolightBlue>Geri qaytarılma</NoneTolightBlue>
-                    <NoneTolightBlue>Ödəniş</NoneTolightBlue>
-                    <NoneTolightBlue>Çatdırılma</NoneTolightBlue>
+                    <NoneTolightBlue
+                        isactive={CurrentFaqCategory === -1}
+                        action={() => {
+                            setCurrentFaqCategory(-1);
+                        }}
+                    >
+                        {tarnslation?.All}{' '}
+                    </NoneTolightBlue>
+                    {faqCategory?.map((faq: FaqCategory) => (
+                        <NoneTolightBlue
+                            isactive={CurrentFaqCategory === faq.id}
+                            action={() => {
+                                setCurrentFaqCategory(faq.id);
+                            }}
+                        >
+                            {faq.title}{' '}
+                        </NoneTolightBlue>
+                    ))}
                 </div>
                 <div className="flex flex-col max-sm:px-4">
-                    {faqData.map((item, index) => (
+                    {faqs?.map((item, i) => (
+                        <div key={item.id} className={i > 0 ? 'mt-3' : ''}>
+                            <FAQItem
+                                question={item.title}
+                                imageSrc={
+                                    'https://cdn.builder.io/api/v1/image/assets/TEMP/7ed81901e60d7031974952b0cd1a20d6408f2d4059577fba6ce7e38b327ee0f1?placeholderIfAbsent=true&apiKey=c6f3c7bb740649e5a32c147b3037a1c2'
+                                }
+                                description={item.description}
+                                isOpen={openIndex === item.id}
+                                onClick={() => handleToggle(item.id)}
+                            />
+                        </div>
+                    ))}
+                    {/* {faqData.map((item, index) => (
                         <div key={index} className={index > 0 ? 'mt-3' : ''}>
                             <FAQItem
                                 question={item.question}
@@ -166,7 +172,7 @@ function FAQSection({
                                 onClick={() => handleToggle(index)}
                             />
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </section>

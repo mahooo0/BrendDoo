@@ -66,24 +66,36 @@ export const Pagination: React.FC<PaginationProps> = ({
                     />
                 </button>
                 <div className="flex gap-2 items-end self-stretch my-auto">
-                    <PaginationItem
-                        number={1}
-                        isActive={currentPage === 1}
-                        onClick={() => onPageChange(1)}
-                    />
-
-                    <>
-                        {' '}
+                    {Array.from({ length: 10 }, (_, index) => {
+                        const pageNumber = index + 1;
+                        if (
+                            pageNumber < currentPage + 2 &&
+                            index >= currentPage - 2 &&
+                            pageNumber < totalPages &&
+                            !(pageNumber === totalPages)
+                        ) {
+                            return (
+                                <PaginationItem
+                                    key={pageNumber}
+                                    number={pageNumber}
+                                    isActive={currentPage === pageNumber}
+                                    onClick={() => onPageChange(pageNumber)}
+                                />
+                            );
+                        }
+                    })}
+                    {currentPage < totalPages - 2 && (
                         <div className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15  justify-center  items-center ">
                             {' '}
                             ...
                         </div>
-                        <PaginationItem
-                            number={totalPages}
-                            isActive={currentPage === totalPages}
-                            onClick={() => onPageChange(totalPages)}
-                        />
-                    </>
+                    )}
+                    <PaginationItem
+                        key={totalPages}
+                        number={totalPages}
+                        isActive={currentPage === totalPages}
+                        onClick={() => onPageChange(totalPages)}
+                    />
                 </div>
                 <button
                     className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15  justify-center  items-center "
