@@ -276,16 +276,18 @@ export default function ProductId() {
                             </div>
                         )}
                         <div className="flex flex-wrap gap-5 items-center mt-7 w-full max-md:max-w-full">
-                            <div className="flex gap-2 justify-center items-center self-stretch px-4 py-2.5 my-auto w-40 text-sm text-green-600 bg-emerald-50 rounded-[100px]">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/3b62d68e0d6115b8dd376935f9a020305d201f125a5ae0023584b7f5eddf7971?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-                                />
-                                <div className="self-stretch my-auto">
-                                    Stokda var
+                            {Productslingle?.is_stock && (
+                                <div className="flex gap-2 justify-center items-center self-stretch px-4 py-2.5 my-auto w-40 text-sm text-green-600 bg-emerald-50 rounded-[100px]">
+                                    <img
+                                        loading="lazy"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3b62d68e0d6115b8dd376935f9a020305d201f125a5ae0023584b7f5eddf7971?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
+                                    />
+                                    <div className="self-stretch my-auto">
+                                        {tarnslation?.Stokda_var}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                             <div className="flex gap-4 items-center self-stretch my-auto text-base font-semibold min-w-[240px] text-slate-800 w-[276px]">
                                 <div className="flex gap-2 items-center self-stretch my-auto">
                                     <img
@@ -314,7 +316,7 @@ export default function ProductId() {
                                             className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                         />
                                         <div className="self-stretch my-auto">
-                                            Səbətə əlavə et
+                                            {tarnslation?.add_to_cart}
                                         </div>
                                     </div>
                                 </button>
@@ -326,7 +328,7 @@ export default function ProductId() {
                                             className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                         />
                                         <div className="self-stretch my-auto">
-                                            Bir kliklə al
+                                            {tarnslation?.Bir_kliklə_al}
                                         </div>
                                     </div>
                                 </button>
@@ -453,7 +455,7 @@ export default function ProductId() {
                 </section>
                 <section className="px-[40px] max-sm:px-4">
                     <h3 className="text-[28px] font-semibold max-sm:mt-[48px] mt-[100px]">
-                        Tövsiyyələr
+                        {tarnslation?.Tövsiyyələr}
                     </h3>{' '}
                     {SimularProducts && SimularProducts?.data.length > 0 && (
                         <div className="grid lg:grid-cols-4 md:grid-cols-3   justify-items-center sm:grid-cols-2 grid-cols-1 mb-[100px] mt-[40px] max-sm:mt-[28px] gap-5">

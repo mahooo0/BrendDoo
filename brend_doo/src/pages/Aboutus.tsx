@@ -4,19 +4,21 @@ import FAQSection from '../components/Faq';
 import { BreadCump } from '../components/BroadCump';
 import GETRequest from '../setting/Request';
 import { useParams } from 'react-router-dom';
-import { About } from '../setting/Types';
+import { About, TranslationsKeys } from '../setting/Types';
 import Loading from '../components/Loading';
 
 export default function Aboutus() {
     const { lang = 'ru' } = useParams<{
         lang: string;
     }>();
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     const { data: About, isLoading: AboutLoading } = GETRequest<About>(
         `/about`,
         'about',
         [lang]
     );
-    if (AboutLoading) {
+    if (AboutLoading || tarnslationLoading) {
         return <Loading />;
     }
     return (
@@ -47,7 +49,7 @@ export default function Aboutus() {
                         }
                     ></div>
                 </section>
-                <FAQSection Title="Tez-tez verilən suallar" />
+                <FAQSection Title={tarnslation?.Tez_tez_verilən_suallar} />
             </main>
             <Footer />
         </div>

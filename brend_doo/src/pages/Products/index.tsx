@@ -9,6 +9,7 @@ import {
     Filter,
     Product,
     ProductResponse,
+    TranslationsKeys,
 } from '../../setting/Types';
 import GETRequest from '../../setting/Request';
 import Loading from '../../components/Loading';
@@ -364,9 +365,14 @@ export default function Products() {
     // const checkref = useRef<any>();
     const [checked, setChecked] = useState(false);
     const [Page, setPage] = useState<number>(1);
+    const [Sort, setSort] = useState<string>('A-Z');
+    const [minPrice, setminPrice] = useState<number>(0);
+    const [maxPrice, setmaxPrice] = useState<number>(0);
     const [options, setoptions] = useState<number[]>([]);
     const location = useLocation();
-
+    useEffect(() => {
+        console.log('Sort', Sort);
+    }, [Sort]);
     // Extract `subCategory` from the query string
     const queryParams = new URLSearchParams(location.search);
     const subCategory = queryParams.get('subCategory');
@@ -384,17 +390,33 @@ export default function Products() {
                 category ? `&category_id=${category}` : ''
             }${
                 subCategory ? `&sub_category_id=${subCategory}` : ''
-            }&is_discount=${checked ? 1 : 0}`,
+            }&is_discount=${checked ? 1 : 0}${
+                Sort != '' ? `&sort=${Sort}` : ``
+            }${minPrice > 0 ? `&min_price=${minPrice}` : ``}${
+                maxPrice > 0 ? `&max_price=${maxPrice}` : ``
+            }`,
             'products',
-            [lang, Page, category, subCategory, checked, options],
+            [
+                lang,
+                Page,
+                category,
+                subCategory,
+                checked,
+                options,
+                Sort,
+                minPrice,
+                maxPrice,
+            ],
             { 'option_ids[]': options }
         );
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     const { data: filters, isLoading: filtersLoading } = GETRequest<Filter[]>(
         `/filters`,
         'filters',
         [lang]
     );
-    if (categoriesLoading || filtersLoading) {
+    if (categoriesLoading || filtersLoading || tarnslationLoading) {
         return <Loading />;
     }
     return (
@@ -414,7 +436,7 @@ export default function Products() {
                                 className="flex gap-2 items-center"
                             >
                                 <div className="self-stretch my-auto text-white">
-                                    Ana səhifə
+                                    {tarnslation?.Ana_səhifə}
                                 </div>
                             </Link>
                             <img
@@ -423,11 +445,11 @@ export default function Products() {
                                 className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                             />
                             <div className="self-stretch my-auto text-white text-opacity-80">
-                                Məhsullar
+                                {tarnslation?.Məhsullar}
                             </div>
                         </div>
                         <div className="relative self-center mt-20 mb-0 text-4xl font-semibold text-white max-md:mt-10 max-md:mb-2.5 max-md:max-w-full">
-                            Axtardığınız bütün məhsullar
+                            \Все продукты, которые вы ищете
                         </div>
                     </div>
                 </section>{' '}
@@ -435,12 +457,12 @@ export default function Products() {
                     <div className="flex lg:flex-row flex-col mt-[60px] lg:px-[40px] px-[10px] gap-4">
                         <section className="flex flex-col  w-full lg:max-w-[330px]">
                             <div className="text-xl font-semibold text-black">
-                                Filter
+                                {tarnslation?.Filter}
                             </div>
                             <div className="flex overflow-hidden flex-col px-5 py-6 mt-5 w-full rounded-3xl border border-solid border-black border-opacity-10">
                                 <div className="flex flex-col mt-2 text-black whitespace-nowrap gap-4">
                                     <label className="text-black">
-                                        Kategoriyyalar
+                                        {tarnslation?.Kateqoriyalar}
                                     </label>
                                     {categories?.map((category: Category) => (
                                         <DropdownItem data={category} />
@@ -468,15 +490,33 @@ export default function Products() {
 
                                     <div className="flex flex-col mt-4 w-full text-sm whitespace-nowrap">
                                         <label className="text-black">
-                                            Qiymət
+                                            {tarnslation?.Qiymət}
                                         </label>
                                         <div className="flex overflow-hidden gap-2 p-1.5 mt-2 w-full bg-neutral-100 rounded-[100px] text-black text-opacity-60">
                                             <input
+                                                onChange={(e) =>
+                                                    setminPrice(+e.target.value)
+                                                }
+                                                value={
+                                                    minPrice === 0
+                                                        ? 'min'
+                                                        : minPrice
+                                                }
                                                 type="number"
                                                 placeholder="Min"
                                                 className="overflow-hidden p-3 bg-white rounded-[100px] outline-none w-full"
                                             />
                                             <input
+                                                onChange={(e) => {
+                                                    setmaxPrice(
+                                                        +e.target.value
+                                                    );
+                                                }}
+                                                value={
+                                                    maxPrice === 0
+                                                        ? 'min'
+                                                        : maxPrice
+                                                }
                                                 type="number"
                                                 placeholder="Max"
                                                 className="overflow-hidden p-3 bg-white rounded-[100px] outline-none w-full"
@@ -503,7 +543,7 @@ export default function Products() {
                                         )}
                                         {/* <div className="flex shrink-0 self-stretch my-auto w-6 h-6 border border-solid border-black border-opacity-40 rounded-[100px]" /> */}
                                         <div className="self-stretch my-auto">
-                                            Endirimli məhsullar
+                                            {tarnslation?.Endirimli_məhsullar}
                                         </div>
                                     </div>
                                 </div>
@@ -517,21 +557,39 @@ export default function Products() {
                                     <div className="my-auto text-base font-medium text-black">
                                         {products &&
                                             products?.meta?.last_page * 15}{' '}
-                                        məhsul
+                                        {tarnslation?.məhsul}
                                     </div>
                                     <div className="flex gap-4 items-center flex-wrap">
                                         <div className="self-stretch my-auto text-sm text-black text-opacity-60">
-                                            Sırala
+                                            {tarnslation?.Sırala}
                                         </div>
                                         <div className="flex overflow-hidden gap-10 self-stretch px-4 py-3.5 my-auto text-base font-medium text-black bg-neutral-100  rounded-[100px] lg:w-[283px] w-[200px]">
                                             <select
+                                                onChange={(e) =>
+                                                    setSort(e.target.value)
+                                                }
                                                 name=""
                                                 id=""
-                                                className="w-full bg-[#F5F5F5]"
+                                                className="w-full focus:outline-none bg-[#F5F5F5]"
                                             >
-                                                <option value="">aaa</option>
-                                                <option value="">aaa</option>
-                                                <option value="">aaa</option>
+                                                <option value="A-Z">A-Z</option>
+                                                <option value="Z-A">Z-A</option>
+                                                <option value="expensive-cheap">
+                                                    {
+                                                        tarnslation?.Expensive_Cheap
+                                                    }
+                                                </option>
+                                                <option value="cheap-expensive">
+                                                    {
+                                                        tarnslation?.Cheap_Expensive
+                                                    }
+                                                </option>
+                                                <option value="old-new">
+                                                    {tarnslation?.Old_New}
+                                                </option>
+                                                <option value="new-old">
+                                                    {tarnslation?.New_Old}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>

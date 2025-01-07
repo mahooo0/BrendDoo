@@ -186,10 +186,51 @@ export default function Header() {
             }
         }
     };
+    const UpdateBasked = async (
+        id: number,
+        price: string,
+        quantity: number
+    ) => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const User = JSON.parse(userStr);
+            if (User) {
+                await axios.put(
+                    `https://brendo.avtoicare.az/api/basket_items/${id}`,
+                    { price, quantity },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${User.data.token}`,
+                            Accept: 'application/json',
+                        },
+                    }
+                );
+            }
+        }
+    };
     const queryClient = useQueryClient();
 
     const RemoveFromBaskedmutation = useMutation({
         mutationFn: RemoveFromBasked,
+        onSuccess: () => {
+            toast.success('Məhsul səbətdən silindi');
+            queryClient.invalidateQueries({ queryKey: ['basket_items'] });
+        },
+        onError: (error) => {
+            toast.error('Xəta baş verdi');
+            console.error(error);
+        },
+    });
+    const UpdateBaskedmutation = useMutation({
+        mutationFn: ({
+            id,
+            price,
+            quantity,
+        }: {
+            id: number;
+            price: string;
+            quantity: number;
+        }) => UpdateBasked(id, price, quantity),
         onSuccess: () => {
             toast.success('Məhsul səbətdən silindi');
             queryClient.invalidateQueries({ queryKey: ['basket_items'] });
@@ -271,8 +312,16 @@ export default function Header() {
                                 <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
                             </div>
                         )}
-                        <Link to={'/brends'}>
-                            <div className="self-stretch my-auto">Brendlər</div>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.brends[
+                                    lang as keyof typeof ROUTES.brends
+                                ]
+                            }`}
+                        >
+                            <div className="self-stretch my-auto">
+                                {translation?.Brendlər}
+                            </div>
                         </Link>
                         <Link
                             to={`/${lang}/${
@@ -281,7 +330,10 @@ export default function Header() {
                                 ]
                             }?discount=true`}
                         >
-                            <div className="self-stretch my-auto">Endirim</div>
+                            <div className="self-stretch my-auto">
+                                {' '}
+                                {translation?.Endirim}
+                            </div>
                         </Link>
                         <Link
                             to={`/${lang}/${
@@ -291,7 +343,7 @@ export default function Header() {
                             }`}
                         >
                             <div className="self-stretch my-auto">
-                                Bütün məhsullar
+                                {translation?.Bütün_məhsullar}
                             </div>
                         </Link>
                     </div>
@@ -338,7 +390,7 @@ export default function Header() {
                                     className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
                                 />
                                 <div className="self-stretch my-auto">
-                                    Şəxsi kabinet
+                                    {translation?.Şəxsi_kabinet}
                                 </div>
                             </div>
                             {/* </Link> */}
@@ -392,7 +444,10 @@ export default function Header() {
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/35befc4b842efe2488b26ce91bb004beac36ff324b59192df49471be348bd1ac?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                 className="object-contain shrink-0 self-stretch my-auto w-6 rounded-md aspect-square"
                             />
-                            <div className="self-stretch my-auto">Kataloq</div>
+                            <div className="self-stretch my-auto">
+                                {' '}
+                                {translation?.Kataloq}
+                            </div>
                         </div>
                     </div>
 
@@ -483,22 +538,25 @@ export default function Header() {
                                     {basked?.length}
                                 </div>
                             </div>
-                            <div className="self-stretch my-auto">
-                                {basked
-                                    ?.reduce(
-                                        (total, item) =>
-                                            total +
-                                            Number(item.price) * item.quantity,
-                                        0
-                                    )
-                                    .toFixed(2)}{' '}
-                                AZN
-                            </div>
+                            {User && (
+                                <div className="self-stretch my-auto">
+                                    {basked
+                                        ?.reduce(
+                                            (total, item) =>
+                                                total +
+                                                Number(item.price) *
+                                                    item.quantity,
+                                            0
+                                        )
+                                        .toFixed(2)}{' '}
+                                    AZN
+                                </div>
+                            )}
                         </button>
                     </div>
                 </div>
                 <div
-                    className="absolute w-full min-h-[79vh] bg-black  top-[28vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    className="absolute w-full min-h-[90vh] bg-black  top-[25vh] z-50 bg-opacity-[60%] px-10 py-2"
                     style={{
                         display: isCatalogOpen ? 'block' : 'none',
                     }}
@@ -506,6 +564,7 @@ export default function Header() {
                     <div ref={CAtalogDiv} className="w-[408px]">
                         {categories && (
                             <ClothingMenu
+                                translation={translation}
                                 data={categories}
                                 ref={CAtalogDiv}
                                 setIsCatalogOpen={(value) => {
@@ -541,7 +600,7 @@ export default function Header() {
                     <div className="flex overflow-hidden flex-wrap gap-10 items-start py-10 pr-20 pl-10 bg-white rounded-3xl max-md:px-5">
                         <div className="flex flex-col whitespace-nowrap min-w-[280px]">
                             <div className="text-sm text-black text-opacity-60">
-                                Kateqoriyalar
+                                {translation?.Kateqoriyalar}
                             </div>
                             <div className="flex flex-col mt-7 w-full text-lg font-medium text-black">
                                 {categories?.map(
@@ -600,42 +659,12 @@ export default function Header() {
                                         </>
                                     )
                                 )}
-                                {/* <div className="flex gap-10 justify-between categorys-center w-full">
-                                    <div className="self-stretch my-auto">
-                                        Geyim
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/6eaf2ee9ec4a4b6ec490a50798f603a24709a01889ad8676e784277a0c81d6f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
-                                    />
-                                </div>
-                                <div className="flex gap-10 justify-between items-center mt-4 w-full">
-                                    <div className="self-stretch my-auto">
-                                        Elektronika
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/6eaf2ee9ec4a4b6ec490a50798f603a24709a01889ad8676e784277a0c81d6f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
-                                    />
-                                </div>
-                                <div className="flex gap-10 justify-between items-center mt-4 w-full">
-                                    <div className="self-stretch my-auto">
-                                        Kosmetika
-                                    </div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/6eaf2ee9ec4a4b6ec490a50798f603a24709a01889ad8676e784277a0c81d6f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
-                                    />
-                                </div> */}
                             </div>
                         </div>
                         <div className="shrink-0 self-stretch w-px border border-solid border-black border-opacity-10 h-[305px]" />
                         <div className="flex flex-col w-3/5">
                             <div className="text-sm text-black text-opacity-60">
-                                Məhsullar
+                                {translation?.Məhsullar}
                             </div>
                             <div className="grid xl:grid-cols-2   grid-cols-1 max-h-[270px] overflow-y-scroll flex-col mt-5 w-full  no-scrollbar gap-4">
                                 {FilteredProduct?.data?.map((item: Product) => (
@@ -655,22 +684,6 @@ export default function Header() {
                                         </div>
                                     </div>
                                 ))}
-
-                                {/* <div className="flex gap-2.5 items-center mt-4 w-full">
-                                    <img
-                                        loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                    />
-                                    <div className="flex flex-col justify-center self-stretch my-auto">
-                                        <div className="text-sm text-black">
-                                            Zara iki tərəfli kolleksiya pencək
-                                        </div>
-                                        <div className="mt-2.5 text-base font-semibold text-black">
-                                            298 AZN
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -709,7 +722,6 @@ export default function Header() {
                                 >
                                     <div className="self-stretch my-auto">
                                         {translation?.Səbətim}
-                                        Səbətim
                                     </div>
                                 </Link>
 
@@ -750,7 +762,22 @@ export default function Header() {
                                                 </div>
                                             </div>
                                             <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                                <button onClick={() => {}}>
+                                                <button
+                                                    disabled={
+                                                        item.quantity === 1
+                                                    }
+                                                    onClick={async () => {
+                                                        UpdateBaskedmutation.mutate(
+                                                            {
+                                                                id: item.id,
+                                                                price: item.price,
+                                                                quantity:
+                                                                    item.quantity -
+                                                                    1,
+                                                            }
+                                                        );
+                                                    }}
+                                                >
                                                     <img
                                                         loading="lazy"
                                                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -760,7 +787,19 @@ export default function Header() {
                                                 <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
                                                     {item.quantity}
                                                 </div>
-                                                <button onClick={() => {}}>
+                                                <button
+                                                    onClick={async () => {
+                                                        UpdateBaskedmutation.mutate(
+                                                            {
+                                                                id: item.id,
+                                                                price: item.price,
+                                                                quantity:
+                                                                    item.quantity +
+                                                                    1,
+                                                            }
+                                                        );
+                                                    }}
+                                                >
                                                     <img
                                                         loading="lazy"
                                                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -802,15 +841,24 @@ export default function Header() {
                         <div className="flex overflow-hidden flex-wrap gap-5 justify-between self-stretch  py-5 mt-10  px-[40px] bg-slate-100  max-md:max-w-full w-full">
                             <div className="flex gap-3 items-center my-auto">
                                 <div className="self-stretch my-auto text-sm text-black text-opacity-60">
-                                    Cəmi məbləğ:
+                                    {translation?.Cəmi_məbləğ}
                                 </div>
                                 <div className="self-stretch my-auto text-lg font-semibold text-center text-blue-600">
-                                    600 AZN
+                                    {basked
+                                        ?.reduce(
+                                            (total, item) =>
+                                                total +
+                                                Number(item.price) *
+                                                    item.quantity,
+                                            0
+                                        )
+                                        .toFixed(2)}{' '}
+                                    AZN
                                 </div>
                             </div>
                             <Link to="/user/basked/confirm">
                                 <div className="gap-2.5 self-stretch px-10 py-4 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5">
-                                    Sifariş et
+                                    {translation?.Sifariş_et}
                                 </div>
                             </Link>
                         </div>
@@ -1048,7 +1096,7 @@ export default function Header() {
                                                 className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
                                             />
                                             <div className="self-stretch my-auto">
-                                                Şəxsi kabinet
+                                                {translation?.Şəxsi_kabinet}
                                             </div>
                                         </div>
                                     </Link>
@@ -1085,6 +1133,7 @@ export default function Header() {
             {showaside && categories && (
                 <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white">
                     <ClothingMenu
+                        translation={translation}
                         data={categories}
                         ref={CAtalogDiv}
                         setIsCatalogOpen={(value) => {

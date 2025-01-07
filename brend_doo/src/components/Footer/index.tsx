@@ -9,8 +9,13 @@ import {
     TranslationsKeys,
 } from '../../setting/Types';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 export function Footer() {
     const navigate = useNavigate();
+    const [inputvalue, setinputvalue] = useState<string>('');
+    const [validatemessage, setvalidatemessage] = useState<string>('');
     const { lang = 'ru' } = useParams<{ lang: string }>();
     const { data: categories } = GETRequest<Category[]>(
         `/categories`,
@@ -51,7 +56,7 @@ export function Footer() {
                                         <div className="flex flex-row max-sm:flex-col flex-wrap justify-between gap-10 items-start mt-[48px] max-md:mt-10 max-sm:mt-5 max-md:max-w-full">
                                             <div className="flex flex-col w-[158px]">
                                                 <div className="text-lg font-medium text-white">
-                                                    Kateqoriyalar
+                                                    {tarnslation?.Kateqoriyalar}
                                                 </div>
                                                 <div className="flex flex-col gap-2 mt-5 w-full text-base text-white text-opacity-80">
                                                     {categories?.map(
@@ -256,7 +261,7 @@ export function Footer() {
                 <div className="flex flex-col ml-5 w-[40%] max-md:ml-0 max-md:w-full">
                     <div className="flex overflow-hidden flex-col grow px-10 pt-12 pb-28 w-full bg-zinc-900 max-md:px-5 max-md:pb-24 max-md:mt-2.5 max-md:max-w-full">
                         <div className="self-start text-lg font-medium text-white">
-                            Bizimlə əlaqə
+                            {tarnslation?.Bizimlə_əlaqə}
                         </div>
                         <div className="flex flex-col mt-5">
                             <div className="flex flex-col w-full text-base text-white">
@@ -291,9 +296,7 @@ export function Footer() {
                             <div className="mt-7 w-full border border-solid border-white border-opacity-10 min-h-[1px]" />
                             <div className="flex flex-col mt-7 w-full text-sm">
                                 <div className="leading-5 text-white">
-                                    Ən son teklifler, yeni ürünler ve daha
-                                    fazlası için e-posta adresinizi aşağıya
-                                    girin.
+                                    {tarnslation?.Ən_son_teklifler}
                                 </div>
                                 <div className="flex overflow-hidden gap-5 justify-between py-1.5 pr-1.5 pl-4 mt-5 w-full border border-solid bg-white bg-opacity-0 border-white border-opacity-10 rounded-[100px] lg:min-w-[360px]">
                                     <div className="flex items-center gap-2 text-white text-opacity-60">
@@ -303,15 +306,54 @@ export function Footer() {
                                             className="object-contain w-5 aspect-square"
                                         />
                                         <input
+                                            onChange={(e) =>
+                                                setinputvalue(e.target.value)
+                                            }
+                                            value={inputvalue}
                                             type="email"
                                             placeholder="Email"
                                             className="bg-transparent outline-none text-white placeholder-white placeholder-opacity-60"
+                                            required
                                         />
                                     </div>
-                                    <button className="px-6 py-3.5 font-medium text-white bg-blue-600 rounded-[100px] max-md:px-5">
-                                        Abunə ol
+                                    <button
+                                        onClick={async () => {
+                                            const emailRegex =
+                                                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                            if (!emailRegex.test(inputvalue)) {
+                                                setvalidatemessage(
+                                                    'incorrect email type'
+                                                );
+                                            } else {
+                                                setvalidatemessage('');
+                                                axios
+                                                    .post(
+                                                        'https://brendo.avtoicare.az/api/subscribe',
+                                                        {
+                                                            email: inputvalue,
+                                                        }
+                                                    )
+                                                    .then(() =>
+                                                        toast.success(
+                                                            'message sucsesfully sended'
+                                                        )
+                                                    )
+                                                    .catch((error) => {
+                                                        console.log(error);
+                                                        toast.error(
+                                                            'something went wrong'
+                                                        );
+                                                    });
+                                            }
+                                        }}
+                                        className="px-6 py-3.5 font-medium text-white bg-blue-600 rounded-[100px] max-md:px-5"
+                                    >
+                                        {tarnslation?.Abunə_ol}
                                     </button>
                                 </div>
+                                <p className="text-red-600">
+                                    {validatemessage}
+                                </p>
                             </div>
                         </div>
                     </div>

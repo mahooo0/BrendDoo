@@ -11,9 +11,9 @@ import Brends from '../Brends';
 import Login from '../userIn/login';
 import UserSettings from '../userIn';
 import Order from '../userIn/Order';
-import UserLiked from '../userIn/Liked';
 import Notification from '../userIn/Nptifications';
 import Basked from '../userIn/Basked';
+import Liked from '../Liked';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -48,7 +48,7 @@ const PageByLang: React.FC = () => {
         return <Order />;
     }
     if (page === ROUTES.liked.en || page === ROUTES.liked.ru) {
-        return <UserLiked />;
+        return <Liked />;
     }
     if (page === ROUTES.notification.en || page === ROUTES.notification.ru) {
         return <Notification />;
@@ -56,6 +56,7 @@ const PageByLang: React.FC = () => {
     if (page === ROUTES.order.en || page === ROUTES.order.ru) {
         return <Basked />;
     }
+
     return (
         <div>
             <h1>Language: {lang}</h1>

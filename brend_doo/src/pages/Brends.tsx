@@ -2,8 +2,23 @@ import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 import { BreadCump } from '../components/BroadCump';
 import AlphabeticalList from '../components/AlphabeticalList';
+import { useParams } from 'react-router-dom';
+import GETRequest from '../setting/Request';
+import { Brand, TranslationsKeys } from '../setting/Types';
+import Loading from '../components/Loading';
 
 export default function Brends() {
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+    const { data: Brends, isLoading: BrendsLoading } = GETRequest<Brand[]>(
+        `/categories`,
+        'categories',
+        [lang]
+    );
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    if (BrendsLoading || tarnslationLoading) {
+        return <Loading />;
+    }
     const russianAlphabet = [
         'А',
         'Б',
@@ -39,6 +54,34 @@ export default function Brends() {
         'Ю',
         'Я',
     ];
+    const englishAlphabet = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ];
     return (
         <div className="">
             <Header />
@@ -49,9 +92,14 @@ export default function Brends() {
 
                 <section className="px-[40px] max-sm:px-4">
                     <h3 className="text-[40px] max-sm:text-[32px] font-semibold mt-[28px] mb-[40px]">
-                        Brendlər{' '}
+                        {tarnslation?.Brendlər}{' '}
                     </h3>{' '}
-                    <AlphabeticalList letters={russianAlphabet} />
+                    <AlphabeticalList
+                        Brends={Brends}
+                        letters={
+                            lang === 'ru' ? russianAlphabet : englishAlphabet
+                        }
+                    />
                 </section>
             </main>
             <Footer />

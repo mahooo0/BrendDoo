@@ -64,7 +64,7 @@ function FAQSection({
     Title,
     isContact,
 }: {
-    Title: string;
+    Title?: string;
     isContact?: boolean;
 }) {
     const [openIndex, setOpenIndex] = useState(null);
@@ -81,6 +81,7 @@ function FAQSection({
         'faqCategory',
         [lang]
     );
+
     const { data: faqs } = GETRequest<FaqItem[]>(
         `/faqs${
             CurrentFaqCategory === -1
@@ -110,8 +111,7 @@ function FAQSection({
                     </h3>
                     {!isContact && (
                         <p className="mt-5 max-sm:mt-2 text-base max-sm:text-[12px] text-black text-opacity-80 ">
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been{' '}
+                            {tarnslation?.faqDec}
                         </p>
                     )}
                 </div>
@@ -120,7 +120,7 @@ function FAQSection({
                         onClick={() => navigate('/contact')}
                         className="gap-2.5 max-sm:ml-4 self-start px-10 py-4 max-sm:mt-4 mt-10 text-base leading-[19px] font-medium text-white bg-[#3873C3] border border-[#3873C3] border-solid rounded-[100px]"
                     >
-                        Bizimlə əlaqə
+                        {tarnslation?.Bizimlə_əlaqə}
                     </button>
                 )}
             </div>

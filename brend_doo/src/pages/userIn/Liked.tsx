@@ -1,19 +1,51 @@
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import ProductCard from '../../components/ProductCArd';
-import GETRequest from '../../setting/Request';
-import { Product, ProductResponse } from '../../setting/Types';
+import { Product } from '../../setting/Types';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import Loading from '../../components/Loading';
 
 export default function UserLiked() {
     const { lang = 'ru' } = useParams<{
         lang: string;
     }>();
-    const { data: products } = GETRequest<ProductResponse>(
-        `/products`,
-        'products',
-        [lang]
-    );
+    const { data: LikedProducts, isLoading: LikedProductsLOading } = useQuery<
+        Product[]
+    >({
+        queryKey: ['LikedProducts'],
+        queryFn: async () => {
+            try {
+                const Liked_Products_string =
+                    localStorage.getItem('liked_Produckts');
+                const data = await axios
+                    .post(
+                        'https://brendo.avtoicare.az/api/getProducts',
+                        {
+                            product_ids: Liked_Products_string?.split(','),
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept-Language': lang,
+
+                                Authorization: `Bearer YOUR_ACCESS_TOKEN`,
+                            },
+                        }
+                    )
+                    .then((res) => res.data);
+                return data;
+            } catch (error) {
+                // toast.error('Error occurred');
+                console.log(error, ``);
+                throw error;
+            }
+        },
+    });
+    if (LikedProductsLOading) {
+        return <Loading />;
+    }
     return (
         <div>
             <Header />
@@ -25,13 +57,9 @@ export default function UserLiked() {
                         Bəyəndiklərim
                     </h1>
                     <div className=" grid lg:grid-cols-3 md:grid-cols-2   grid-cols-1 justify-items-center w-full gap-5 ">
-                        {products?.data?.map((item: Product) => (
+                        {LikedProducts?.map((item: Product) => (
                             <ProductCard bg="white" data={item} />
                         ))}
-                        {/* <ProductCard bg="white" />
-                        <ProductCard bg="white" />
-                        <ProductCard bg="white" />
-                        <ProductCard bg="white" /> */}
                     </div>
                 </div>
             </main>

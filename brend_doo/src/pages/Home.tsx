@@ -115,7 +115,6 @@ export default function Home() {
     ) {
         return <Loading />;
     }
-    // console.log('products:', products);
 
     return (
         <div className=" relative">
@@ -355,14 +354,14 @@ export default function Home() {
                 <section className="flex  max-sm:px-4 flex-col px-[40px] mt-[100px] max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
-                            Brendlər
+                            {tarnslation?.Brendlər}{' '}
                         </div>
                         <div className="self-stretch my-auto text-base font-medium text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
                             <span
                                 className="text-[#3873C3] underline cursor-pointer"
                                 onClick={() => navigate('/brends')}
                             >
-                                Hamısına bax
+                                {tarnslation?.Məhsullara_bax}
                             </span>
                         </div>
                     </div>
@@ -383,23 +382,6 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                {/* <section className="mt-[100px] max-sm:mt-[52px]  max-sm:px-[0px] px-[40px] bg-[#F5F5F5] py-[80px] max-sm:py-10 flex lg:flex-row flex-col justify-between max-sm:gap-6 gap-[154px] ">
-                    <div className="flex max-sm:px-4 max-sm:flex-row max-sm:justify-between flex-col flex-wrap gap-7 ">
-                        <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
-                            Geyimlər{' '}
-                        </h2>
-                        <div>
-                            <button
-                                className="rounded-[100px] max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline duration-300 leading-[20px] h-fit  bg-[#3873C3] text-white px-[28px] py-[14px] border border-black border-opacity-10"
-                                onClick={() => navigate('/poducts')}
-                            >
-                                {' '}
-                                Hamısına bax
-                            </button>{' '}
-                        </div>
-                    </div>
-                    <ProductSwipperShort bg="white" />
-                </section> */}
                 <section className="relative mt-[100px]  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0  left-0 w-full h-full object-cover -z-10"
@@ -437,7 +419,7 @@ export default function Home() {
                                 onClick={() => navigate('/poducts')}
                                 className="gap-2.5 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
                             >
-                                Məhsullara bax
+                                {tarnslation?.Məhsullara_bax}
                             </button>
                         </div>
                     </div>
@@ -460,7 +442,7 @@ export default function Home() {
                                 className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
                                 onClick={() => navigate('/poducts')}
                             >
-                                Hamısına bax
+                                {tarnslation?.Məhsullara_bax}
                             </div>
                         </div>
                     </div>
@@ -514,7 +496,7 @@ export default function Home() {
                             className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
                             onClick={() => navigate('/poducts')}
                         >
-                            Hamısına bax
+                            {tarnslation?.Məhsullara_bax}
                         </button>
                     </div>
                 </section>

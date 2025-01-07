@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Category, SubCategory } from '../../setting/Types';
+import { Category, SubCategory, Translation } from '../../setting/Types';
 import { Link, useParams } from 'react-router-dom';
 import ROUTES from '../../setting/routes';
 
@@ -95,15 +95,20 @@ interface ClothingMenuProps {
     setIsCatalogOpen: (value: boolean) => void;
     ref: any;
     data: Category[];
+    translation: Translation | undefined;
 }
 
-const ClothingMenu: React.FC<ClothingMenuProps> = ({ data }) => {
-    const [isClothingOpen, setIsClothingOpen] = useState<number>(0);
+const ClothingMenu: React.FC<ClothingMenuProps> = ({ data, translation }) => {
+    const [isClothingOpen, setIsClothingOpen] = useState<number>(-1);
     const { lang = 'ru' } = useParams<{ lang: string }>();
     console.log(data);
 
     const toggleClothingCategory = (i: number) => {
-        setIsClothingOpen(i);
+        if (isClothingOpen === i) {
+            setIsClothingOpen(-1);
+        } else {
+            setIsClothingOpen(i);
+        }
     };
 
     return (
@@ -131,7 +136,7 @@ const ClothingMenu: React.FC<ClothingMenuProps> = ({ data }) => {
                 }?discount=true`}
             >
                 <h2 className="self-start mt-6 text-lg font-medium text-rose-500">
-                    Endirimli məhsullar
+                    {translation?.Endirimli_məhsullar}
                 </h2>
             </Link>
             <Link
@@ -140,7 +145,7 @@ const ClothingMenu: React.FC<ClothingMenuProps> = ({ data }) => {
                 }`}
             >
                 <h2 className="self-start mt-6 text-lg font-medium text-black">
-                    Brendlər
+                    {translation?.Brendlər}
                 </h2>
             </Link>
         </section>

@@ -175,7 +175,7 @@ export default function Contact() {
                                 {({ isSubmitting }) => (
                                     <Form className="flex flex-col px-10 py-11 w-full rounded-3xl bg-[#8E98B8]">
                                         <h2 className="self-center text-xl font-semibold text-center text-white">
-                                            Fill the Form
+                                            {tarnslation?.Fill_the_Form}
                                         </h2>
 
                                         {/* Name and Surname */}
@@ -184,7 +184,9 @@ export default function Contact() {
                                                 <Field
                                                     type="text"
                                                     name="firstName"
-                                                    placeholder="First Name"
+                                                    placeholder={
+                                                        tarnslation?.First_Name
+                                                    }
                                                     className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                                 />
                                                 <ErrorMessage
@@ -197,7 +199,9 @@ export default function Contact() {
                                                 <Field
                                                     type="text"
                                                     name="lastName"
-                                                    placeholder="Last Name"
+                                                    placeholder={
+                                                        tarnslation?.Last_Name
+                                                    }
                                                     className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                                 />
                                                 <ErrorMessage
@@ -243,7 +247,9 @@ export default function Contact() {
                                             <Field
                                                 type="text"
                                                 name="category"
-                                                placeholder="Category"
+                                                placeholder={
+                                                    tarnslation?.Category
+                                                }
                                                 className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                             />
                                             <ErrorMessage
@@ -258,7 +264,7 @@ export default function Contact() {
                                             <Field
                                                 as="textarea"
                                                 name="note"
-                                                placeholder="Note"
+                                                placeholder={tarnslation?.Note}
                                                 className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[20px] placeholder-white min-h-[110px]"
                                             />
                                             <ErrorMessage
@@ -275,7 +281,7 @@ export default function Contact() {
                                                 disabled={isSubmitting}
                                                 className="w-full px-5 py-5 bg-white text-black rounded-[100px] disabled:opacity-50"
                                             >
-                                                Submit
+                                                {tarnslation?.Submit}
                                             </button>
                                         </div>
                                     </Form>
@@ -284,7 +290,10 @@ export default function Contact() {
                         </div>
                     </div>
                 </section>
-                <FAQSection Title="Tez-tez verilən suallar" isContact={true} />
+                <FAQSection
+                    Title={tarnslation?.Tez_tez_verilən_suallar}
+                    isContact={true}
+                />
             </main>
             <Footer />
         </div>

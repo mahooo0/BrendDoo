@@ -138,6 +138,7 @@ export type FaqItem = {
     description: string;
 };
 export type ProductDetail = {
+    is_stock: boolean;
     id: number;
     sub_category_id: number;
     category_id: number;
