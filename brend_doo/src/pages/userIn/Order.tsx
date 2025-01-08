@@ -3,7 +3,7 @@ import UserAside from '../../components/userAside';
 import NoneToBlue from '../../components/buttons/NoneT0Blue';
 import { Link } from 'react-router-dom';
 
-export default function Order() {
+export default function ORder() {
     return (
         <div>
             <Header />

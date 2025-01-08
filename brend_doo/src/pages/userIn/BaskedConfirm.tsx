@@ -1,15 +1,54 @@
-import { BreadCump } from '../../components/BroadCump';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import BaskedForum from '../../components/Basked';
+import { Link, useParams } from 'react-router-dom';
+import { TranslationsKeys } from '../../setting/Types';
+import GETRequest from '../../setting/Request';
+import ROUTES from '../../setting/routes';
 
 export default function BaskedConfirm() {
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     return (
         <div>
             <Header />
             <main className="mt-0">
                 <div className="px-[40px] max-sm:px-4 pt-[40px] mb-[28px]">
-                    <BreadCump />
+                    <div className="flex items-center gap-2">
+                        <Link to={`${lang}`}>
+                            <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
+                                {tarnslation?.home}{' '}
+                            </h6>
+                        </Link>
+                        <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/64bb3b3dae771cd265db1accd95aa96f30bd9da3da88a57867743da53bebc0eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                        />
+
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.order[lang as keyof typeof ROUTES.order]
+                            }`}
+                        >
+                            <h6 className="text-nowrap self-stretch my-auto hover:text-blue-600">
+                                {tarnslation?.basked}{' '}
+                            </h6>
+                        </Link>
+                        <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/64bb3b3dae771cd265db1accd95aa96f30bd9da3da88a57867743da53bebc0eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                        />
+                        <h6 className="text-nowrap self-stretch my-auto">
+                            {tarnslation?.basked}{' '}
+                        </h6>
+                    </div>{' '}
                 </div>
                 <section className="lg:px-[40px] px-4">
                     <h3 className="text-[40px] font-semibold  max-sm:text-[32px] mt-[28px] mb-[40px]">

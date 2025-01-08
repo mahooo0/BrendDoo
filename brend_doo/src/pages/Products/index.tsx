@@ -432,7 +432,11 @@ export default function Products() {
                         />
                         <div className="flex relative gap-2 items-center self-start text-base">
                             <Link
-                                to={`/${lang}`}
+                                to={`/${lang}/${
+                                    ROUTES.home[
+                                        lang as keyof typeof ROUTES.home
+                                    ]
+                                }`}
                                 className="flex gap-2 items-center"
                             >
                                 <div className="self-stretch my-auto text-white">

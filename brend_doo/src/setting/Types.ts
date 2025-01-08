@@ -39,6 +39,7 @@ export type ProductResponse = {
 
 export type Product = {
     id: number;
+    is_new: boolean;
     title: string;
     price: string;
     discount: string | null;

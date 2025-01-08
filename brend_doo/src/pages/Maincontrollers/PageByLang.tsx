@@ -10,10 +10,12 @@ import Contact from '../Contact';
 import Brends from '../Brends';
 import Login from '../userIn/login';
 import UserSettings from '../userIn';
-import Order from '../userIn/Order';
 import Notification from '../userIn/Nptifications';
 import Basked from '../userIn/Basked';
 import Liked from '../Liked';
+import UserLiked from '../userIn/Liked';
+import BaskedConfirm from '../userIn/BaskedConfirm';
+import ORder from '../userIn/Order';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -45,7 +47,7 @@ const PageByLang: React.FC = () => {
         return <UserSettings />;
     }
     if (page === ROUTES.orders.en || page === ROUTES.orders.ru) {
-        return <Order />;
+        return <ORder />;
     }
     if (page === ROUTES.liked.en || page === ROUTES.liked.ru) {
         return <Liked />;
@@ -56,7 +58,12 @@ const PageByLang: React.FC = () => {
     if (page === ROUTES.order.en || page === ROUTES.order.ru) {
         return <Basked />;
     }
-
+    if (page === ROUTES.likedUser.en || page === ROUTES.likedUser.ru) {
+        return <UserLiked />;
+    }
+    if (page === ROUTES.ordersConfirm.en || page === ROUTES.ordersConfirm.ru) {
+        return <BaskedConfirm />;
+    }
     return (
         <div>
             <h1>Language: {lang}</h1>

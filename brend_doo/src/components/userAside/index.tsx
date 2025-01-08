@@ -143,7 +143,7 @@ function UserAside({ active }: { active: number }) {
             </Link>
             <Link
                 to={`/${lang}/${
-                    ROUTES.liked[lang as keyof typeof ROUTES.liked]
+                    ROUTES.likedUser[lang as keyof typeof ROUTES.likedUser]
                 }`}
             >
                 <div

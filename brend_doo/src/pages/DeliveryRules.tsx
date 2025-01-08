@@ -1,10 +1,10 @@
 import Header from '../components/Header';
 import { Footer } from '../components/Footer';
-import { BreadCump } from '../components/BroadCump';
 import Loading from '../components/Loading';
 import GETRequest from '../setting/Request';
 import { useParams } from 'react-router-dom';
-import { RulesType } from '../setting/Types';
+import { RulesType, TranslationsKeys } from '../setting/Types';
+import { Link } from 'react-router-dom';
 
 export default function DeliveryRules() {
     const { lang } = useParams<{ lang: string }>();
@@ -13,13 +13,46 @@ export default function DeliveryRules() {
         'delivery',
         [lang]
     );
-    if (ruleLoading) return <Loading />;
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    if (ruleLoading || tarnslationLoading) return <Loading />;
     return (
         <div className="">
             <Header />
             <main className=" lg:mt-[40px]  px-[40px] max-sm:px-4 mb-[100px]  mt-6">
                 <div className="">
-                    <BreadCump />
+                    <div className="flex items-center gap-2">
+                        <Link to={`${lang}`}>
+                            <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
+                                {tarnslation?.home}{' '}
+                            </h6>
+                        </Link>
+                        {/* <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/64bb3b3dae771cd265db1accd95aa96f30bd9da3da88a57867743da53bebc0eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                        />
+
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.product[
+                                    lang as keyof typeof ROUTES.product
+                                ]
+                            }`}
+                        >
+                            <h6 className="text-nowrap self-stretch my-auto hover:text-blue-600">
+                                {tarnslation?.Məhsullar}{' '}
+                            </h6>
+                        </Link> */}
+                        <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/64bb3b3dae771cd265db1accd95aa96f30bd9da3da88a57867743da53bebc0eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                        />
+                        <h6 className="text-nowrap self-stretch my-auto">
+                            {rule?.title}{' '}
+                        </h6>
+                    </div>{' '}
                     <h3 className="text-[40px] font-semibold   max-sm:text-[32px] mt-[28px] mb-[40px]">
                         {rule?.title}{' '}
                     </h3>{' '}

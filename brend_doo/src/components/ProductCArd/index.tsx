@@ -14,12 +14,7 @@ interface Props {
     bg: 'white' | 'grey';
 }
 
-export default function ProductCard({
-    data,
-    isnew = false,
-    issale = false,
-    bg,
-}: Props) {
+export default function ProductCard({ data, issale = false, bg }: Props) {
     console.log('ProductCard111', data);
     const queryClient = useQueryClient();
     const [isliked, setisliked] = useState<boolean>(false);
@@ -288,7 +283,7 @@ export default function ProductCard({
                         alt=""
                     />
                 </div>
-                {isnew && (
+                {data.is_new && (
                     <div className="bg-[#8E98B8] text-white px-3 py-2 h-fit  rounded-full  absolute top-6 left-6 flex justify-center items-center">
                         <p className="text-[12px] font-medium leading-[14px]">
                             Yeni

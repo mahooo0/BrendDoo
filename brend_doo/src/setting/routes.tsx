@@ -44,9 +44,17 @@ const ROUTES: { [key: string]: Route } = {
         en: 'orders',
         ru: 'zakazi',
     },
+    ordersConfirm: {
+        en: 'ordersConfirm',
+        ru: 'podtverjdeniyaZakaza',
+    },
     liked: {
         en: 'liked',
         ru: 'ponravivsheyesyaTovari',
+    },
+    likedUser: {
+        en: 'userliked',
+        ru: 'userponravivsheyesyaTovari',
     },
     notification: {
         en: 'notification',

@@ -4,8 +4,8 @@ import ProductCard from '../../components/ProductCArd';
 import { Product } from '../../setting/Types';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useQuery } from 'react-query';
 import Loading from '../../components/Loading';
+import { useQuery } from '@tanstack/react-query';
 
 export default function UserLiked() {
     const { lang = 'ru' } = useParams<{

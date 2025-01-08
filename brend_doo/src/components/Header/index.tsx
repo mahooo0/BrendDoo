@@ -262,7 +262,7 @@ export default function Header() {
         'translates',
         [lang]
     );
-    const { data: basked } = GETRequest<BaskedItem[]>(
+    const { data: basked, isLoading: baskedLoading } = GETRequest<BaskedItem[]>(
         `/basket_items`,
         'basket_items',
         [lang, refetchBaskedState]
@@ -504,8 +504,9 @@ export default function Header() {
                             />
                         </Link>
 
-                        <button
-                            className="flex gap-3  items-center"
+                        <div
+                            ref={BaskedBtnRef}
+                            className="flex gap-3 cursor-pointer  items-center"
                             onClick={() => {
                                 if (User) {
                                     setIsClothingOpen(false);
@@ -529,10 +530,7 @@ export default function Header() {
                                 }
                             }}
                         >
-                            <div
-                                className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative"
-                                ref={BaskedBtnRef}
-                            >
+                            <div className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
                                 <img src="/svg/basked.svg" />
                                 <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
                                     {basked?.length}
@@ -552,7 +550,7 @@ export default function Header() {
                                     AZN
                                 </div>
                             )}
-                        </button>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -733,6 +731,7 @@ export default function Header() {
                             </div>
                         </div>
                         {/* onecard */}
+
                         {basked && basked?.length > 0 ? (
                             <div className="overflow-y-scroll h-[40vh] px-[24px]">
                                 {basked?.map((item: BaskedItem) => (
@@ -834,7 +833,13 @@ export default function Header() {
                             </div>
                         ) : (
                             <>
-                                <p>basked is empty</p>
+                                <div className="flex flex-col items-center justify-center h-full">
+                                    <div className="text-lg font-semibold text-gray-500">
+                                        {!baskedLoading
+                                            ? 'Your basket is empty.'
+                                            : 'Loading...'}
+                                    </div>
+                                </div>
                             </>
                         )}
 
@@ -1026,66 +1031,75 @@ export default function Header() {
                                 />
                             </svg>
                         </div>
-                        {/* <div
-                            className={`absolute  ${
-                                showaside ? '' : 'hidden'
-                            }  right-[0] mt-2 w-48 origin-top-right rounded-md z-50 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="user-menu-button"
-                        >
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts" className="w-full">
-                                    <div>Geyim</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts">
-                                    <div>Elektronika</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts">
-                                    <div>Kosmetika</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/brends">
-                                    <div>Brendlər</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts">
-                                    <div>Endirim</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/poducts">
-                                    <div>Bütün məhsullar</div>
-                                </Link>
-                            </div>
-                            <div className="block px-4 py-2 text-sm text-gray-700">
-                                <Link to="/user/login">
-                                    <div>Daxil ol</div>
-                                </Link>
-                            </div>
-                        </div> */}
                     </div>
                     <div
-                        className="flex flex-row justify-between items-center px-4 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
+                        className="flex flex-row justify-between items-center px-4 border-b mb-2 border-black border-opacity-50 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
                         style={{
                             opacity: showaside ? '100' : '0',
                             zIndex: showaside ? '55' : '-55',
                         }}
                     >
-                        <div className="flex flex-row gap-5">
-                            <Link to={'/liked'}>
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
+                        <Link
+                            className="w-[200px]"
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.home]
+                            }`}
+                        >
+                            <img
+                                loading="lazy"
+                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                            />
+                        </Link>
+
+                        <button onClick={() => setShowAside(false)}>
+                            <svg
+                                width="40"
+                                height="40"
+                                viewBox="0 0 40 40"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect
+                                    width="40"
+                                    height="40"
+                                    rx="20"
+                                    fill="#3873C3"
                                 />
-                            </Link>
+                                <path
+                                    d="M26 14L14 26"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M14 14L26 26"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {showaside && categories && (
+                <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white flex flex-col">
+                    <div className=" flex flex-row  justify-around">
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.liked[lang as keyof typeof ROUTES.liked]
+                            }`}
+                        >
+                            <img
+                                loading="lazy"
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
+                            />
+                        </Link>
+                        <div>
                             <div className="flex gap-6 items-center self-stretch my-auto text-sm">
                                 <div className="flex gap-5 items-center self-stretch my-auto ">
                                     <Link to={'/user/login'}>
@@ -1103,35 +1117,27 @@ export default function Header() {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={() => setShowAside(false)}>
-                            <svg
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
+                        <div className=" flex flex-row ">
+                            <div
+                                onClick={() => HandleSetUrlByLang('en')}
+                                style={
+                                    lang === 'en' ? { color: '#3873C3' } : {}
+                                }
+                                className="w-[43px] h-[40px] rounded-s-3xl flex justify-center items-center bg-[#F5F5F5] border-r border-black border-opacity-10"
                             >
-                                <path
-                                    d="M15 5L5 15"
-                                    stroke="black"
-                                    stroke-opacity="0.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                ></path>
-                                <path
-                                    d="M5 5L15 15"
-                                    stroke="black"
-                                    stroke-opacity="0.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                ></path>
-                            </svg>
-                        </button>
+                                EN
+                            </div>
+                            <div
+                                onClick={() => HandleSetUrlByLang('ru')}
+                                style={
+                                    lang === 'ru' ? { color: '#3873C3' } : {}
+                                }
+                                className="w-[43px] h-[40px] rounded-e-3xl flex  justify-center items-center bg-[#F5F5F5]"
+                            >
+                                RU
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            {showaside && categories && (
-                <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white">
                     <ClothingMenu
                         translation={translation}
                         data={categories}
