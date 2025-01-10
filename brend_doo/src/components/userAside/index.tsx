@@ -24,7 +24,7 @@ function UserAside({ active }: { active: number }) {
         }
     }, []);
     return (
-        <section className="flex overflow-hidden max-sm:flex-row flex-col grow max-sm:px-0  max-sm:justify-center z-[66] max-sm:shadow-md px-5 pt-5 max-sm:py-3 gap-2 max-sm:h-fit  h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px] max-sm:w-full  text-base bg-[#F8F8F8] rounded-[20px]    lg:max-w-[325px] max-w-full ">
+        <section className="flex overflow-hidden max-sm:flex-row flex-col grow max-sm:px-0  max-sm:justify-center z-[49] max-sm:shadow-md px-5 pt-5 max-sm:py-3 gap-2 max-sm:h-fit  h-[100vh] sticky top-2 pb-3 lg:w-full min-w-[88px] w-[88px] max-sm:w-full  text-base bg-[#F8F8F8] rounded-[20px]    lg:max-w-[325px] max-w-full ">
             <div className="flex flex-col self-center justify-center max-w-full font-medium text-black w-[122px] max-sm:w-12 max-sm:h-14 min-w-12 min-h-14 items-center">
                 <img
                     loading="lazy"

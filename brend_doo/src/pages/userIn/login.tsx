@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import GETRequest from '../../setting/Request';
+import { TranslationsKeys } from '../../setting/Types';
+import ROUTES from '../../setting/routes';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -47,7 +50,13 @@ export default function Login() {
                 toast.error('Error while logging in');
             });
     };
+    const { lang = 'ru' } = useParams<{ lang: string }>();
 
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     return (
         <div className="flex overflow-hidden flex-col bg-white">
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px] max-sm:px-4">
@@ -71,10 +80,10 @@ export default function Login() {
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
-                                Xoş gəldiniz!
+                                {tarnslation?.Xoş_gəldiniz}
                             </div>
                             <div className="mt-3 text-base text-white text-opacity-80">
-                                Hesabınıza daxil olun və ya qeydiyyatdan keçin.
+                                {tarnslation?.logindesc}
                             </div>
                         </div>
                         <div className="flex flex-col items-center lg:mt-10 mt-4 w-full max-md:max-w-full">
@@ -85,13 +94,13 @@ export default function Login() {
                                     className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
                                 />
                                 <div className="self-stretch my-auto">
-                                    Google ilə davam et
+                                    {tarnslation?.Google}
                                 </div>
                             </div>
                             <div className="flex lg:gap-10 gap-5 items-center mt-7 text-xs text-center text-white w-full">
                                 <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                 <div className="self-stretch my-auto text-nowrap">
-                                    Və ya
+                                    {tarnslation?.or}
                                 </div>
                                 <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                             </div>
@@ -126,7 +135,9 @@ export default function Login() {
                                                                 : 'password'
                                                         }
                                                         name="password"
-                                                        placeholder="Şifrə"
+                                                        placeholder={
+                                                            tarnslation?.password
+                                                        }
                                                         className="w-full bg-transparent outline-none"
                                                     />
                                                     <img
@@ -157,7 +168,9 @@ export default function Login() {
                                                     }
                                                     className="mt-3 text-sm text-right text-white max-md:max-w-full cursor-pointer hover:underline"
                                                 >
-                                                    Şifrəmi unutdum
+                                                    {
+                                                        tarnslation?.forgotpassword
+                                                    }{' '}
                                                 </div>
                                             </div>
                                         </div>
@@ -171,8 +184,8 @@ export default function Login() {
                                             } border-slate-300 rounded-full max-md:px-5 max-md:max-w-full`}
                                         >
                                             {loading
-                                                ? 'Yüklenir...'
-                                                : 'Daxil ol'}
+                                                ? tarnslation?.yuklenir
+                                                : tarnslation?.login}
                                         </button>
                                     </Form>
                                 )}
@@ -191,12 +204,16 @@ export default function Login() {
                             )}
                         </div>
                         <div className=" lg:mt-[60px] mt-8 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
-                            <span>Hesabın yoxdur? </span>
+                            <span>{tarnslation?.Hesabın_yoxdur}? </span>
                             <Link
-                                to="/user/register"
+                                to={`/${lang}/${
+                                    ROUTES.register[
+                                        lang as keyof typeof ROUTES.register
+                                    ]
+                                }`}
                                 className="hover:underline"
                             >
-                                Qeydiyyatdan keç
+                                {tarnslation?.register}
                             </Link>
                         </div>
                     </div>

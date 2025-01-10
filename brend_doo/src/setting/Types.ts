@@ -138,12 +138,23 @@ export type FaqItem = {
     title: string;
     description: string;
 };
-export type ProductDetail = {
-    is_stock: boolean;
+
+export interface ProductDetail {
     id: number;
     sub_category_id: number;
     category_id: number;
     title: string;
+    short_title: string;
+    is_new: boolean;
+    is_stock: boolean;
+    is_season: boolean;
+    code: string;
+    meta_title: string;
+    meta_description: string;
+    meta_keywords: string;
+    img_alt: string;
+    img_title: string;
+    description: string;
     slug: {
         en: string;
         ru: string;
@@ -151,6 +162,8 @@ export type ProductDetail = {
     price: string;
     discount: string | null;
     discounted_price: string;
+    comments_count: number | null;
+    avg_star: number;
     unit: string;
     category: {
         id: number;
@@ -173,7 +186,11 @@ export type ProductDetail = {
         id: number;
         title: string;
     };
-    brand: string | null;
+    brand: {
+        id: number;
+        title: string;
+        logo: string;
+    };
     image: string;
     sliders: {
         id: number;
@@ -183,20 +200,29 @@ export type ProductDetail = {
         id: number;
         comment: string;
         star: number;
+        date: string;
         customer: {
             id: number;
             name: string;
             email: string;
             phone: string;
+            address: {
+                id: number;
+                address: string;
+                additional_info: string;
+            };
         };
     }[];
-    options: {
-        id: number;
-        is_default: number;
-        title: string;
-        color_code: string | null;
+    filters: {
+        filter_name: string;
+        options: {
+            name: string;
+            is_default: string;
+            color_code: string | null;
+        }[];
     }[];
-};
+}
+
 export type ConmtactItem = {
     id: number;
     title: string;
@@ -213,9 +239,88 @@ export type AuthResponse = {
     };
 };
 
-export type BaskedItem = {
+type BasketItem = {
     id: number;
     quantity: number;
     price: string;
-    product: Product;
+    product: {
+        id: number;
+        sub_category_id: number;
+        category_id: number;
+        title: string;
+        short_title: string;
+        is_new: boolean;
+        is_stock: boolean;
+        is_season: boolean;
+        code: string;
+        description: string;
+        slug: {
+            en: string;
+            ru: string;
+        };
+        price: string;
+        discount: number | null;
+        discounted_price: string;
+        comments_count: number | null;
+        avg_star: number;
+        unit: string | null;
+        category: {
+            id: number;
+            title: string;
+            subCategories: {
+                id: number;
+                title: string;
+            }[];
+            filters: {
+                id: number;
+                title: string;
+                options: {
+                    id: number;
+                    title: string;
+                    color_code: string | null;
+                }[];
+            }[];
+        };
+        sub_category: {
+            id: number;
+            title: string;
+        };
+        brand: {
+            id: number;
+            title: string;
+            logo: string;
+        };
+        image: string;
+        sliders: {
+            id: number;
+            image: string;
+        }[];
+        comments: {
+            id: number;
+            comment: string | null;
+            star: number;
+            date: string;
+            customer: {
+                id: number;
+                name: string;
+                email: string;
+                phone: string;
+            };
+        }[];
+        options: {
+            id: number;
+            is_default: number;
+            title: string;
+            color_code: string | null;
+        }[];
+        rating_summary: string[];
+    };
+};
+
+export type Basket = {
+    basket_items: BasketItem[];
+    total_price: number;
+    discount: number;
+    delivered_price: number;
+    final_price: number;
 };

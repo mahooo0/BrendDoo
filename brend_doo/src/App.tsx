@@ -27,15 +27,16 @@ import { Toaster } from 'react-hot-toast';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import InnerPageByLang from './pages/Maincontrollers/InnerPagebyLang';
 import { RecoilRoot } from 'recoil';
+import { useEffect } from 'react';
 
 const App = () => {
     // const location = useLocation(); // Hook to get the current route
     const queryClient = new QueryClient();
 
-    // useEffect(() => {
-    //     // Scroll to the top of the page whenever the route changes
-    //     window.scrollTo(0, 0);
-    // }, [location]);
+    useEffect(() => {
+        // Scroll to the top of the page whenever the route changes
+        window.scrollTo(0, 0);
+    }, [location]);
 
     return (
         //PODUCTS

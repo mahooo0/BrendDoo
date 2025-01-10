@@ -2,7 +2,7 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import CommentsSection from '../../components/Comments';
 import ProductCard from '../../components/ProductCArd';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request';
 import {
     ProductDetail,
@@ -10,9 +10,11 @@ import {
     TranslationsKeys,
 } from '../../setting/Types';
 import Loading from '../../components/Loading';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../setting/routes';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function ProductId() {
     const { lang = 'ru', slug } = useParams<{
@@ -36,20 +38,55 @@ export default function ProductId() {
     console.log('slug', slug);
     const [currentColor, setCurrentColor] = useState<string>('');
     const [currentOption, setCurrentOption] = useState<string>('');
-    useEffect(() => {
-        const CurrentColorNAme = Productslingle?.options.find(
-            (item) => item.color_code
-        )?.title;
-        const CurrentOptionNAme = Productslingle?.options.find(
-            (item) => !item.color_code
-        )?.title;
-        if (CurrentColorNAme) {
-            setCurrentColor(CurrentColorNAme);
-        }
-        if (CurrentOptionNAme) {
-            setCurrentOption(CurrentOptionNAme);
-        }
-    }, [Productslingle]);
+    // useEffect(() => {
+    //     const CurrentColorNAme = Productslingle?.options.find(
+    //         (item) => item.color_code
+    //     )?.title;
+    //     const CurrentOptionNAme = Productslingle?.options.find(
+    //         (item) => !item.color_code
+    //     )?.title;
+    //     if (CurrentColorNAme) {
+    //         setCurrentColor(CurrentColorNAme);
+    //     }
+    //     if (CurrentOptionNAme) {
+    //         setCurrentOption(CurrentOptionNAme);
+    //     }
+    // }, [Productslingle]);
+    const addToBasket = async (data: {
+        product_id: number;
+        quantity: number;
+        price: number;
+        token: string;
+        // options:any
+    }) => {
+        const response = await axios.post(
+            'https://brendo.avtoicare.az/api/basket_items',
+            {
+                product_id: data.product_id,
+                quantity: data.quantity,
+                price: data.price,
+                options: [
+                    // {
+                    //     filter_id: 1,
+                    //     option_id: 2,
+                    // },
+                    // {
+                    //     filter_id: 2,
+                    //     option_id: 5,
+                    // },
+                ],
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${data.token}`,
+                },
+            }
+        );
+        return response.data;
+    };
+    const navigate = useNavigate();
+
     if (ProductslingleLoading || tarnslationLoading || SimularProductsLoading) {
         return <Loading />;
     }
@@ -172,16 +209,12 @@ export default function ProductId() {
                                     {Productslingle?.title}{' '}
                                 </div>
                                 <div className="mt-4 w-full text-base max-md:max-w-full">
-                                    Uzun kollu, yaka detaylı ceket. Önde yama
-                                    cepli. Aynı renkte suni yünlü iç astarlı.
-                                    Önden düğmeli.
-                                    <br />
-                                    ------- bura ne yazim 0------------
+                                    {Productslingle?.short_title}{' '}
                                 </div>
                                 <div className="mt-4 w-full text-sm max-md:max-w-full">
                                     Məhsulun kodu:12345678
                                     <br />
-                                    ------- bura ne yazim 0------------
+                                    {/* ------- bura ne yazim 0------------ */}
                                 </div>
                             </div>
                             <div className="flex gap-3 items-center self-start mt-5">
@@ -223,7 +256,7 @@ export default function ProductId() {
                                 return null;
                             }
                         )} */}
-                        {currentColor && (
+                        {/* {currentColor && (
                             <div className="flex flex-col mt-7 max-w-full w-[254px]">
                                 <div className="text-sm text-black text-opacity-60">
                                     {tarnslation?.color}: {currentColor}
@@ -306,7 +339,139 @@ export default function ProductId() {
                                     )}
                                 </div>
                             </div>
-                        )}
+                        )} */}
+                        {Productslingle?.filters.map((filter) => {
+                            if (
+                                filter.filter_name === 'Size' ||
+                                filter.filter_name === 'Размер'
+                            ) {
+                                return (
+                                    <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
+                                        <div className="text-sm text-black text-opacity-60">
+                                            {filter.filter_name}
+                                        </div>
+                                        <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
+                                            {filter.options.map((option) => (
+                                                <div
+                                                    onClick={() =>
+                                                        setCurrentOption(
+                                                            option.name
+                                                        )
+                                                    }
+                                                    className={`px-3 min-w-[40px] ${
+                                                        currentOption ===
+                                                        option.name
+                                                            ? 'bg-black text-white'
+                                                            : 'bg-white'
+                                                    }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
+                                                >
+                                                    {option.name}
+                                                </div>
+                                            ))}{' '}
+                                            {/* {Productslingle?.options.map(
+                                            (option: {
+                                                id: number;
+                                                is_default: number;
+                                                title: string;
+                                                color_code: string | null;
+                                            }) => {
+                                                if (option.color_code === null) {
+                                                    return (
+                                                        <div
+                                                            onClick={() =>
+                                                                setCurrentOption(
+                                                                    option.title
+                                                                )
+                                                            }
+                                                            className={`px-3 min-w-[40px] ${
+                                                                currentOption ===
+                                                                option.title
+                                                                    ? 'bg-black text-white'
+                                                                    : 'bg-white'
+                                                            }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
+                                                        >
+                                                            {option.title}
+                                                        </div>
+                                                    );
+                                                }
+                                                return null;
+                                            }
+                                        )} */}
+                                        </div>
+                                    </div>
+                                ); //  filter.options.map((option)=>(
+
+                                // ))
+                            }
+                            if (
+                                filter.filter_name === 'Color' ||
+                                filter.filter_name === 'Размер'
+                            ) {
+                                return (
+                                    <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
+                                        <div className="text-sm text-black text-opacity-60">
+                                            {filter.filter_name}
+                                        </div>
+                                        <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
+                                            {filter.options.map((option) => (
+                                                <div
+                                                    onClick={() =>
+                                                        setCurrentColor(
+                                                            option.name
+                                                        )
+                                                    }
+                                                    key={option.is_default}
+                                                    className={`flex gap-2.5 cursor-pointer items-center self-stretch pb-1 my-auto w-8 ${
+                                                        currentColor ===
+                                                        option.name
+                                                            ? 'border-b border-black'
+                                                            : ''
+                                                    } `}
+                                                >
+                                                    <div
+                                                        className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]"
+                                                        style={{
+                                                            backgroundColor:
+                                                                option?.color_code ||
+                                                                'gray',
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))}{' '}
+                                            {/* {Productslingle?.options.map(
+                                            (option: {
+                                                id: number;
+                                                is_default: number;
+                                                title: string;
+                                                color_code: string | null;
+                                            }) => {
+                                                if (option.color_code === null) {
+                                                    return (
+                                                        <div
+                                                            onClick={() =>
+                                                                setCurrentOption(
+                                                                    option.title
+                                                                )
+                                                            }
+                                                            className={`px-3 min-w-[40px] ${
+                                                                currentOption ===
+                                                                option.title
+                                                                    ? 'bg-black text-white'
+                                                                    : 'bg-white'
+                                                            }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
+                                                        >
+                                                            {option.title}
+                                                        </div>
+                                                    );
+                                                }
+                                                return null;
+                                            }
+                                        )} */}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        })}
                         <div className="flex flex-wrap gap-5 items-center mt-7 w-full max-md:max-w-full">
                             {Productslingle?.is_stock && (
                                 <div className="flex gap-2 justify-center items-center self-stretch px-4 py-2.5 my-auto w-40 text-sm text-green-600 bg-emerald-50 rounded-[100px]">
@@ -340,26 +505,130 @@ export default function ProductId() {
                         </div>
                         <div className="flex flex-wrap gap-5 items-center mt-7 text-base font-medium max-md:max-w-full">
                             <div className="flex flex-wrap gap-3 items-center self-stretch my-auto min-w-[240px] max-md:max-w-full">
-                                <button className="flex max-sm:items-center max-sm:w-full overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
+                                <button
+                                    onClick={async () => {
+                                        const userStr =
+                                            localStorage.getItem('user-info');
+                                        if (userStr) {
+                                            const user = JSON.parse(userStr);
+                                            console.log(user);
+
+                                            if (Productslingle) {
+                                                await addToBasket({
+                                                    product_id:
+                                                        Productslingle.id,
+                                                    price: +Productslingle.price,
+                                                    quantity: 1,
+                                                    token: user.data.token,
+                                                    // options: [
+                                                    //     {
+                                                    //         filter_id: 1,
+                                                    //         option_id: 2,
+                                                    //     },
+                                                    //     {
+                                                    //         filter_id: 2,
+                                                    //         option_id: 5,
+                                                    //     },
+                                                    // ],
+                                                })
+                                                    .then(() => {
+                                                        toast.success(
+                                                            'Product sucsesfully aded to basked'
+                                                        );
+                                                    })
+                                                    .catch((error) => {
+                                                        console.log(error);
+                                                        toast.error(
+                                                            'something went wrong'
+                                                        );
+                                                    });
+                                            }
+                                        } else {
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.login[
+                                                        lang as keyof typeof ROUTES.login
+                                                    ]
+                                                }`
+                                            );
+                                        }
+                                    }}
+                                    className="flex max-sm:items-center max-sm:w-full overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5"
+                                >
                                     <div className="flex gap-2 items-center">
                                         <img
                                             loading="lazy"
                                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/12162e338001dffe48b2f7720205d57a300942ee6d909f5e9d356e6bce11941f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                             className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                         />
-                                        <div className="self-stretch my-auto">
+                                        <div className="self-stretch my-auto text-nowrap">
                                             {tarnslation?.add_to_cart}
                                         </div>
                                     </div>
                                 </button>
-                                <button className="flex overflow-hidden max-sm:items-center max-sm:w-full flex-col justify-center self-stretch px-16 py-3.5 my-auto text-blue-600 border border-solid border-slate-300 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5">
+                                <button
+                                    className="flex overflow-hidden max-sm:items-center max-sm:w-full flex-col justify-center self-stretch px-16 py-3.5 my-auto text-blue-600 border border-solid border-slate-300 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5"
+                                    onClick={async () => {
+                                        const userStr =
+                                            localStorage.getItem('user-info');
+                                        if (userStr) {
+                                            // const user = JSON.parse(userStr);
+                                            // console.log(user);
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.ordersConfirm[
+                                                        lang as keyof typeof ROUTES.ordersConfirm
+                                                    ]
+                                                }`
+                                            );
+                                            // if (Productslingle) {
+                                            //     await addToBasket({
+                                            //         product_id:
+                                            //             Productslingle.id,
+                                            //         price: +Productslingle.price,
+                                            //         quantity: 1,
+                                            //         token: user.data.token,
+                                            //         // options: [
+                                            //         //     {
+                                            //         //         filter_id: 1,
+                                            //         //         option_id: 2,
+                                            //         //     },
+                                            //         //     {
+                                            //         //         filter_id: 2,
+                                            //         //         option_id: 5,
+                                            //         //     },
+                                            //         // ],
+                                            //     })
+                                            //         .then(() => {
+                                            //             toast.success(
+                                            //                 'Product sucsesfully aded to basked'
+                                            //             );
+                                            //         })
+                                            //         .catch((error) => {
+                                            //             console.log(error);
+                                            //             toast.error(
+                                            //                 'something went wrong'
+                                            //             );
+                                            //         });
+                                            // }
+                                        } else {
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.login[
+                                                        lang as keyof typeof ROUTES.login
+                                                    ]
+                                                }`
+                                            );
+                                        }
+                                    }}
+                                >
                                     <div className="flex gap-2 items-center">
                                         <img
                                             loading="lazy"
                                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/75cf4b1351dde0d9ed370b338053886c40c25d9c6e4c0c5a450da1fb19e13e3b?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                             className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                         />
-                                        <div className="self-stretch my-auto">
+                                        <div className="self-stretch my-auto text-nowrap">
                                             {tarnslation?.Bir_kliklə_al}
                                         </div>
                                     </div>

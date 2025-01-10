@@ -4,7 +4,7 @@ import ClothingMenu, { CategoryHeader } from '../ClothingMenu';
 import ROUTES, { getRouteKey } from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import {
-    BaskedItem,
+    Basket,
     Category,
     Product,
     ProductResponse,
@@ -48,6 +48,7 @@ export default function Header() {
         page,
         slug,
     } = useParams<{ lang: string; page: string; slug: string }>();
+    const navigate = useNavigate();
 
     const CatalogBtnRef = useRef<HTMLDivElement | null>(null);
     const CAtalogDiv = useRef<HTMLDivElement | null>(null);
@@ -262,7 +263,7 @@ export default function Header() {
         'translates',
         [lang]
     );
-    const { data: basked, isLoading: baskedLoading } = GETRequest<BaskedItem[]>(
+    const { data: basked, isLoading: baskedLoading } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
         [lang, refetchBaskedState]
@@ -533,20 +534,12 @@ export default function Header() {
                             <div className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
                                 <img src="/svg/basked.svg" />
                                 <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
-                                    {basked?.length}
+                                    {basked?.basket_items?.length}
                                 </div>
                             </div>
                             {User && (
                                 <div className="self-stretch my-auto">
-                                    {basked
-                                        ?.reduce(
-                                            (total, item) =>
-                                                total +
-                                                Number(item.price) *
-                                                    item.quantity,
-                                            0
-                                        )
-                                        .toFixed(2)}{' '}
+                                    {basked?.final_price}
                                     AZN
                                 </div>
                             )}
@@ -666,7 +659,22 @@ export default function Header() {
                             </div>
                             <div className="grid xl:grid-cols-2   grid-cols-1 max-h-[270px] overflow-y-scroll flex-col mt-5 w-full  no-scrollbar gap-4">
                                 {FilteredProduct?.data?.map((item: Product) => (
-                                    <div className="flex gap-2.5 items-center w-full min-w-[120px]">
+                                    <div
+                                        className="flex gap-2.5 items-center w-full min-w-[120px] cursor-pointer"
+                                        onClick={() =>
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.product[
+                                                        lang as keyof typeof ROUTES.product
+                                                    ]
+                                                }/${
+                                                    item.slug[
+                                                        lang as keyof typeof item.slug
+                                                    ]
+                                                }`
+                                            )
+                                        }
+                                    >
                                         <img
                                             loading="lazy"
                                             src={item.image}
@@ -732,9 +740,9 @@ export default function Header() {
                         </div>
                         {/* onecard */}
 
-                        {basked && basked?.length > 0 ? (
+                        {basked && basked?.basket_items.length > 0 ? (
                             <div className="overflow-y-scroll h-[40vh] px-[24px]">
-                                {basked?.map((item: BaskedItem) => (
+                                {basked.basket_items?.map((item) => (
                                     <div>
                                         <div className="flex gap-8 items-center mt-[4px] justify-between max-md:max-w-full mx-[40px]">
                                             <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
@@ -849,15 +857,7 @@ export default function Header() {
                                     {translation?.Cəmi_məbləğ}
                                 </div>
                                 <div className="self-stretch my-auto text-lg font-semibold text-center text-blue-600">
-                                    {basked
-                                        ?.reduce(
-                                            (total, item) =>
-                                                total +
-                                                Number(item.price) *
-                                                    item.quantity,
-                                            0
-                                        )
-                                        .toFixed(2)}{' '}
+                                    {basked?.final_price}
                                     AZN
                                 </div>
                             </div>

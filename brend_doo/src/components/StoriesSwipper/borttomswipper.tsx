@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Product, TranslationsKeys } from '../../setting/Types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request';
+import ROUTES from '../../setting/routes';
 
 export default function Borttomswipper({
     isopen,
@@ -29,6 +30,8 @@ export default function Borttomswipper({
             innerSwiperRef.current.swiper.slidePrev();
         }
     };
+    const navigate = useNavigate();
+
     if (isopen) {
         return (
             <div className=" absolute  bottom-0 z-[9999]  w-full h-[30%] p-[12px}">
@@ -103,7 +106,22 @@ export default function Borttomswipper({
                                         {item.discounted_price}
                                     </p>
                                 </div>{' '}
-                                <button className="px-[12px] py-[8px] h-fit rounded-[20px] bg-[#B1C7E4] text-nowrap ">
+                                <button
+                                    className="px-[12px] py-[8px] h-fit rounded-[20px] bg-[#B1C7E4] text-nowrap "
+                                    onClick={() =>
+                                        navigate(
+                                            `/${lang}/${
+                                                ROUTES.product[
+                                                    lang as keyof typeof ROUTES.product
+                                                ]
+                                            }/${
+                                                item.slug[
+                                                    lang as keyof typeof item.slug
+                                                ]
+                                            }`
+                                        )
+                                    }
+                                >
                                     {tarnslation?.buyNow}{' '}
                                 </button>
                             </div>

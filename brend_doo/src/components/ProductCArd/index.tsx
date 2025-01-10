@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BaskedItem, Product, TranslationsKeys } from '../../setting/Types';
+import { Basket, Product, TranslationsKeys } from '../../setting/Types';
 import ROUTES from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import axios from 'axios';
@@ -42,17 +42,18 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         'translates',
         [lang]
     );
-    const { data: basked } = GETRequest<BaskedItem[]>(
+    const { data: basked } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
         [lang]
     );
     console.log('basked', basked);
     const addToBasket = async (data: {
-        product_id: string;
+        product_id: number;
         quantity: number;
         price: number;
         token: string;
+        // options:any
     }) => {
         const response = await axios.post(
             'https://brendo.avtoicare.az/api/basket_items',
@@ -60,6 +61,16 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                 product_id: data.product_id,
                 quantity: data.quantity,
                 price: data.price,
+                options: [
+                    // {
+                    //     filter_id: 1,
+                    //     option_id: 2,
+                    // },
+                    // {
+                    //     filter_id: 2,
+                    //     option_id: 5,
+                    // },
+                ],
             },
             {
                 headers: {
@@ -139,8 +150,8 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     useEffect(() => {
         let includes = false;
         if (basked) {
-            for (let i = 0; i < basked?.length; i++) {
-                if (basked[i]?.product?.id === data?.id) {
+            for (let i = 0; i < basked.basket_items?.length; i++) {
+                if (basked.basket_items[i]?.product?.id === data?.id) {
                     includes = true;
                 }
             }
@@ -160,8 +171,8 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     useEffect(() => {
         let includes = false;
         if (basked) {
-            for (let i = 0; i < basked?.length; i++) {
-                if (basked[i]?.product?.id === data?.id) {
+            for (let i = 0; i < basked.basket_items?.length; i++) {
+                if (basked.basket_items[i]?.product?.id === data?.id) {
                     includes = true;
                 }
             }
@@ -175,7 +186,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                     if (variant === 3) {
                         setBtnLoadin(true);
                         mutation.mutate({
-                            product_id: `${data.id}`,
+                            product_id: data.id,
                             quantity: 1,
                             price: +data.discounted_price,
                             token: user.data.token,

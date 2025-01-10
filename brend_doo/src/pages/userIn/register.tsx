@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import GETRequest from '../../setting/Request';
+import { TranslationsKeys } from '../../setting/Types';
+import ROUTES from '../../setting/routes';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [currentemail, setemail] = useState<string>('');
     const [variant, setvariant] = useState<1 | 2>(1);
 
     const togglePasswordVisibility = () => {
@@ -17,13 +21,13 @@ const Register = () => {
     const validationSchema = Yup.object({
         name: Yup.string().required('Ad daxil edin'),
         phone: Yup.string()
-            .matches(/^\d{10}$/, 'Telefon nömrəsi düzgün deyil')
+            .matches(/^\d{9,10}$/, 'Telefon nömrəsi düzgün deyil')
             .required('Telefon nömrəsi daxil edin'),
         email: Yup.string()
             .email('Email düzgün deyil')
             .required('Email daxil edin'),
         password: Yup.string()
-            .min(8, 'Şifrə ən az 8 simvoldan ibarət olmalıdır')
+            .min(8, 'Şifrə ən az 9 simvoldan ibarət olmalıdır')
             .required('Şifrə daxil edin'),
         acceptTerms: Yup.boolean()
             .oneOf([true], 'İstifadəçi qaydaları ilə razı olmalısınız')
@@ -36,6 +40,7 @@ const Register = () => {
         email: string;
         password: string;
     }) {
+        setemail(values.email);
         await axios
             .post('https://brendo.avtoicare.az/api/register', values)
             .then((response) => {
@@ -59,6 +64,13 @@ const Register = () => {
         //     setvariant(2);
         // }
     }
+    const { lang = 'ru' } = useParams<{ lang: string }>();
+
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     return (
         <div className="flex overflow-hidden flex-col bg-white">
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px] max-sm:px-4">
@@ -83,11 +95,10 @@ const Register = () => {
                         <div className="flex flex-col max-md:max-w-full">
                             <div className="flex flex-col items-center self-center text-center">
                                 <div className="text-3xl font-bold text-white">
-                                    Qeydiyyatdan Keçin
+                                    {tarnslation?.register}
                                 </div>
                                 <div className="mt-3 text-base text-white text-opacity-80">
-                                    Hesab yaratmaq üçün məlumatlarınızı daxil
-                                    edin.
+                                    {tarnslation?.registerdesc}
                                 </div>
                             </div>
 
@@ -125,7 +136,7 @@ const Register = () => {
                                         <div className="flex lg:gap-10 gap-5 items-center mt-4 text-xs text-center text-white w-full mb-4">
                                             <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                             <div className="self-stretch my-auto text-nowrap">
-                                                Və ya
+                                                {tarnslation?.or}
                                             </div>
                                             <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
                                         </div>
@@ -133,7 +144,7 @@ const Register = () => {
                                             <Field
                                                 name="name"
                                                 className="overflow-hidden px-5 py-5 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60"
-                                                placeholder="Ad - Soyad"
+                                                placeholder={tarnslation?.name}
                                             />
                                             <ErrorMessage
                                                 name="name"
@@ -176,7 +187,9 @@ const Register = () => {
                                                             : 'password'
                                                     }
                                                     name="password"
-                                                    placeholder="Şifrə"
+                                                    placeholder={
+                                                        tarnslation?.password
+                                                    }
                                                     className="outline-none bg-transparent w-full h-[56px]"
                                                 />
                                                 <img
@@ -205,8 +218,7 @@ const Register = () => {
                                                     className="mr-2 w-[14px] h-[14px]"
                                                 />
                                                 <label className="text-sm font-semibold text-white ">
-                                                    İstifadəçi qaydaları ilə
-                                                    razıyam
+                                                    {tarnslation?.razıyam}
                                                 </label>
                                             </div>
                                             <ErrorMessage
@@ -220,7 +232,7 @@ const Register = () => {
                                                     type="submit"
                                                     className="w-full cursor-pointer"
                                                 >
-                                                    Qeydiyyatdan Keç
+                                                    {tarnslation?.login}
                                                 </button>
                                             </div>
                                         </div>
@@ -232,22 +244,27 @@ const Register = () => {
                         <div
                             className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full"
                             onClick={() => {
-                                navigate('/user/login');
+                                navigate(
+                                    `/${lang}/${
+                                        ROUTES.login[
+                                            lang as keyof typeof ROUTES.login
+                                        ]
+                                    }`
+                                );
                             }}
                         >
-                            <span>Hesabınız var?</span> Daxil olun
+                            <span>{tarnslation?.Hesabınız_var}?</span>{' '}
+                            {tarnslation?.login}
                         </div>
                     </div>
                 )}
                 {variant === 2 && (
                     <div className="bg-white z-50 rounded-[20px] bg-opacity-25  px-[50px] py-[60px] flex flex-col justify-center items-center">
                         <h5 className="text-[32px] mb-3 text-white font-semibold leading-10">
-                            Elektron adresini yoxla!
+                            {tarnslation?.Elektron}
                         </h5>
                         <p className="text-[16px] text-white mb-[40px] max-w-[460px] font-normal text-center">
-                            Sizə ilahanazarova77@gmail.com ünvanına altı rəqəmli
-                            təsdiq kodu göndərdik. E-poçt ünvanınızı təsdiqləmək
-                            üçün onu aşağıya daxil edin.
+                            {currentemail} {tarnslation?.ünvanına}
                         </p>
                         <Formik
                             initialValues={{ code: '' }}
@@ -302,13 +319,13 @@ const Register = () => {
                                         type="submit"
                                         className="gap-2.5 self-stretch px-10 py-4 lg:mt-7 mt-4 w-full text-base font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px] max-md:px-5 max-md:max-w-full"
                                     >
-                                        Təsdiq et
+                                        {tarnslation?.Təsdiq_et}
                                     </button>
                                 </Form>
                             )}
                         </Formik>
                         <button className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full">
-                            Kodu yenidən göndər
+                            {tarnslation?.Kodu_yenidən_göndər}
                         </button>
                     </div>
                 )}

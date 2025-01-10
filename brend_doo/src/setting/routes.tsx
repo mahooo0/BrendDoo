@@ -64,6 +64,10 @@ const ROUTES: { [key: string]: Route } = {
         en: 'order',
         ru: 'zakaz',
     },
+    register: {
+        en: 'register',
+        ru: 'zareqistrirovatsya',
+    },
 
     // services: {
     //     en: 'services',

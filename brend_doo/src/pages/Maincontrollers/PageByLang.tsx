@@ -16,6 +16,7 @@ import Liked from '../Liked';
 import UserLiked from '../userIn/Liked';
 import BaskedConfirm from '../userIn/BaskedConfirm';
 import ORder from '../userIn/Order';
+import Register from '../userIn/register';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -63,6 +64,9 @@ const PageByLang: React.FC = () => {
     }
     if (page === ROUTES.ordersConfirm.en || page === ROUTES.ordersConfirm.ru) {
         return <BaskedConfirm />;
+    }
+    if (page === ROUTES.register.en || page === ROUTES.register.ru) {
+        return <Register />;
     }
     return (
         <div>

@@ -23,7 +23,8 @@ import {
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
-import Loading from '../components/Loading/index.tsx';
+// import Loading from '../components/Loading/index.tsx';
+import ROUTES from '../setting/routes.tsx';
 
 export default function Home() {
     //states
@@ -77,6 +78,11 @@ export default function Home() {
         [lang, category_id]
     );
 
+    const { data: sesionProducts, isLoading: sesionLoading } =
+        GETRequest<ProductResponse>(`/products?is_season=1`, 'products', [
+            lang,
+            category_id,
+        ]);
     const { data: productsByCategory } = GETRequest<HomeCategory[]>(
         `/home_categories`,
         'home_categories',
@@ -99,22 +105,38 @@ export default function Home() {
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
     // loading
-    const router = useNavigate();
-    if (
+    console.log(
         heroLoading ||
-        holidayBannersLoading ||
-        advantagesLoading ||
-        brendsLoading ||
-        tarnslationLoading ||
-        tiktokLoading ||
-        categoriesLoading ||
-        instragramsLoading ||
-        discountedProductsLoading ||
-        specialLoading ||
-        loginBannersLoading
-    ) {
-        return <Loading />;
-    }
+            holidayBannersLoading ||
+            advantagesLoading ||
+            brendsLoading ||
+            tarnslationLoading ||
+            tiktokLoading ||
+            categoriesLoading ||
+            instragramsLoading ||
+            discountedProductsLoading ||
+            specialLoading ||
+            loginBannersLoading ||
+            sesionLoading
+    );
+
+    const router = useNavigate();
+    // if (
+    //     heroLoading ||
+    //     holidayBannersLoading ||
+    //     advantagesLoading ||
+    //     brendsLoading ||
+    //     tarnslationLoading ||
+    //     tiktokLoading ||
+    //     categoriesLoading ||
+    //     instragramsLoading ||
+    //     discountedProductsLoading ||
+    //     specialLoading ||
+    //     loginBannersLoading ||
+    //     sesionLoading
+    // ) {
+    //     return <Loading />;
+    // }
 
     return (
         <div className=" relative">
@@ -140,13 +162,13 @@ export default function Home() {
                     <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 relative z-10">
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
-                                <div className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl">
+                                <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl">
                                     {hero ? (
                                         hero.title
                                     ) : (
                                         <div className="h-10 bg-gray-300 rounded animate-pulse w-3/4" />
                                     )}
-                                </div>
+                                </h1>
                                 <div className="mt-5 text-lg font-medium max-md:max-w-full">
                                     {hero ? (
                                         hero.description
@@ -158,14 +180,22 @@ export default function Home() {
 
                             <button
                                 className="gap-2.5 leading-[24px] h-fit self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
-                                onClick={() => navigate('/poducts')}
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }`
+                                    )
+                                }
                             >
                                 {tarnslation?.Yeni_məhsullar}{' '}
                             </button>
                         </div>
                     </div>
                 </section>
-                <section className="flex overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
+                <section className="flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     <div className="flex flex-wrap gap-10 items-center max-md:max-w-full justify-between w-full">
                         {advantages &&
                             advantages.map((advantage: Advanteges) => (
@@ -200,7 +230,7 @@ export default function Home() {
                 <section className="mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
                     <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
-                            {tarnslation?.Ən_çox_satılan_məhsullar}{' '}
+                            {tarnslation?.Ən_çox_satılan_məhsullar}
                         </h2>
                         <div
                             style={{
@@ -248,7 +278,15 @@ export default function Home() {
                                 {item.title}{' '}
                             </h2>
                             <button
-                                onClick={() => navigate('/poducts')}
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }`
+                                    )
+                                }
                                 className="rounded-[100px] duration-300 max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
                             >
                                 {' '}
@@ -416,7 +454,15 @@ export default function Home() {
                                 </div>
                             </div>
                             <button
-                                onClick={() => navigate('/poducts')}
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }`
+                                    )
+                                }
                                 className="gap-2.5 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
                             >
                                 {tarnslation?.Məhsullara_bax}
@@ -440,19 +486,39 @@ export default function Home() {
                             </div>
                             <div
                                 className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
-                                onClick={() => navigate('/poducts')}
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }`
+                                    )
+                                }
                             >
                                 {tarnslation?.Məhsullara_bax}
                             </div>
                         </div>
                     </div>
-                    {Array.from({ length: 5 }).map((_, i) => (
+                    {sesionProducts?.data.map((Product) => (
                         <div
-                            key={i}
-                            className="flex flex-col w-full min-h-[510px] max-md:ml-0 max-md:w-full rounded-3xl"
+                            onClick={() => {
+                                router(
+                                    `/${lang}/${
+                                        ROUTES.product[
+                                            lang as keyof typeof ROUTES.product
+                                        ]
+                                    }/${
+                                        Product.slug[
+                                            lang as keyof typeof Product.slug
+                                        ]
+                                    }`
+                                );
+                            }}
+                            key={Product.id}
+                            className="flex cursor-pointer flex-col w-full min-h-[510px] max-md:ml-0 max-md:w-full rounded-3xl"
                             style={{
-                                backgroundImage:
-                                    'url("https://placehold.co/600x400")',
+                                backgroundImage: `url("${Product.image}")`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
@@ -461,12 +527,9 @@ export default function Home() {
                             <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24  max-md:max-w-full">
                                 <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
                                     <div className="flex flex-col">
-                                        <div>
-                                            İki tərəfli zara kolleksiyasından
-                                            qalın pencək
-                                        </div>
+                                        <div>{Product.title}</div>
                                         <div className="mt-3 font-semibold">
-                                            298 AZN
+                                            {Product.discounted_price} AZN
                                         </div>
                                     </div>
                                 </div>

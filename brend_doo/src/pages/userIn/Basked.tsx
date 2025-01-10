@@ -1,9 +1,8 @@
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
-import ProductSwipper from '../../components/ProductSwipper.tsx';
 import { Link, useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request.ts';
-import { BaskedItem, TranslationsKeys } from '../../setting/Types.ts';
+import { Basket, TranslationsKeys } from '../../setting/Types.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -11,7 +10,7 @@ import ROUTES from '../../setting/routes.tsx';
 
 export default function Basked() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
-    const { data: basked } = GETRequest<BaskedItem[]>(
+    const { data: basked } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
         [lang]
@@ -138,7 +137,7 @@ export default function Basked() {
                 <section className="flex lg:flex-row flex-col max-sm:px-4  h-fit px-[40px] justify-between mb-[100px] gap-[65px]">
                     <div className="flex overflow-hidden flex-col justify-center p-10 rounded-3xl bg-stone-50 w-full gap-[65px] h-fit max-md:px-5">
                         <div className="flex flex-col max-md:max-w-full">
-                            {basked?.map((item) => (
+                            {basked?.basket_items.map((item) => (
                                 <>
                                     <div className="flex flex-wrap gap-10 items-center justify-between mt-5 max-md:max-w-full">
                                         <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
@@ -246,7 +245,8 @@ export default function Basked() {
                                                     {tarnslation?.Məbləğ}:
                                                 </div>
                                                 <div className="self-stretch my-auto text-right text-black">
-                                                    250 AZN
+                                                    {basked?.total_price}
+                                                    AZN
                                                 </div>
                                             </div>
                                             <div className="flex gap-10 justify-between items-center mt-4 w-full">
@@ -254,7 +254,8 @@ export default function Basked() {
                                                     {tarnslation?.Çatdırılma}:
                                                 </div>
                                                 <div className="self-stretch my-auto text-right text-black">
-                                                    5 AZN
+                                                    {basked?.delivered_price}
+                                                    AZN
                                                 </div>
                                             </div>
                                             <div className="flex gap-10 justify-between items-center mt-4 w-full text-rose-500">
@@ -262,7 +263,8 @@ export default function Basked() {
                                                     {tarnslation?.Endirim}:
                                                 </div>
                                                 <div className="self-stretch my-auto text-right">
-                                                    5 AZN
+                                                    {basked?.discount}
+                                                    AZN
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +274,8 @@ export default function Basked() {
                                                 {tarnslation?.Cəmi_məbləğ}:
                                             </div>
                                             <div className="self-stretch my-auto text-base font-semibold text-blue-600">
-                                                260 AZN
+                                                {basked?.final_price}
+                                                AZN
                                             </div>
                                         </div>
                                     </div>
@@ -294,14 +297,14 @@ export default function Basked() {
                         </div>
                     </div>
                 </section>
-                <section className="mt-[100px] px-[40px] max-sm:px-0 bg-[white] pb-[80px]">
+                {/* <section className="mt-[100px] px-[40px] max-sm:px-0 bg-[white] pb-[80px]">
                     <div className="flex flex-row flex-wrap justify-between  max-sm:px-4">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             {tarnslation?.Tövsiyyələr}
                         </h2>
                     </div>
                     <ProductSwipper bg="white" />
-                </section>
+                </section> */}
             </main>
             <Footer />
         </div>
