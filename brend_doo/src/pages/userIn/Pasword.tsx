@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import GETRequest from '../../setting/Request';
+import { TranslationsKeys } from '../../setting/Types';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import ROUTES from '../../setting/routes';
 
 export default function Password() {
     const [loading, setLoading] = useState(false);
@@ -12,41 +17,50 @@ export default function Password() {
 
     const initialValues = {
         email: '',
-        password: '',
+        // password: '',
     };
 
     const validationSchema = Yup.object({
         email: Yup.string()
             .email('Invalid email address')
             .required('Email is required'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
+        // password: Yup.string()
+        //     .min(6, 'Password must be at least 6 characters')
+        //     .required('Password is required'),
     });
+    const navigate = useNavigate();
+    const { lang } = useParams<{ lang: string }>() || { lang: 'ru' };
 
-    const handleSubmit = async (values: {
-        email: string;
-        password: string;
-    }) => {
+    const handleSubmit = async (values: { email: string }) => {
         setLoading(true);
         setFormStatus(null); // Reset status message
-
-        try {
-            // Simulate an API call
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Replace with actual API logic
-            console.log('Form values:', values);
-            setFormStatus({ message: 'Login successful!', success: true });
-        } catch (error) {
-            setFormStatus({
-                message: 'Login failed. Please try again.',
-                success: false,
+        await axios
+            .post('https://brendo.avtoicare.az/api/password-reset/request', {
+                email: values.email,
+            })
+            .then(() => {
+                toast.success('code sucsesfully send to your email');
+                setFormStatus(null);
+                setLoading(false);
+                localStorage.setItem('EmailForReset', values.email);
+                navigate(
+                    `/${lang}/${
+                        ROUTES.resetPaswordSucses[
+                            lang as keyof typeof ROUTES.resetPaswordSucses
+                        ]
+                    }`
+                );
+            })
+            .catch(() => {
+                toast.error('some thing get wrong ');
             });
-        } finally {
-            setLoading(false);
-        }
     };
-    const navigate = useNavigate();
 
+    const { data: tarnslation } = GETRequest<TranslationsKeys>(
+        `/translates`,
+        'translates',
+        [lang]
+    );
     return (
         <div className="flex overflow-hidden flex-col bg-white">
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px]">
@@ -70,10 +84,10 @@ export default function Password() {
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
-                                Xoş gəldiniz!
+                                {tarnslation?.Şifrənin_bərpası!}
                             </div>
                             <div className="mt-3 text-base text-white text-opacity-80">
-                                Hesabınıza daxil olun və ya qeydiyyatdan keçin.
+                                {tarnslation?.Şifrəni_bərpa_etmək!}
                             </div>
                         </div>
                         <div className="flex flex-col items-center mt-10 w-full max-md:max-w-full">
@@ -133,7 +147,7 @@ export default function Password() {
                                         >
                                             {loading
                                                 ? 'Yüklenir...'
-                                                : 'Daxil ol'}
+                                                : tarnslation?.send}
                                         </button>
                                     </Form>
                                 )}

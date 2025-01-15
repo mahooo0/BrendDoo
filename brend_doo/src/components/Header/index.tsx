@@ -16,6 +16,8 @@ import toast from 'react-hot-toast';
 import { useRecoilState } from 'recoil';
 import { RefetchBasked } from '../../setting/StateManagmant';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Story from './story';
+import CategoryNavigation from '../CategoryPop';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -268,6 +270,8 @@ export default function Header() {
         'basket_items',
         [lang, refetchBaskedState]
     );
+    console.log('basked:', basked);
+
     useEffect(() => {
         console.log('refetchBaskedState:', refetchBaskedState);
     }, [refetchBaskedState]);
@@ -288,77 +292,169 @@ export default function Header() {
                         <img
                             loading="lazy"
                             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                            className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                            className="object-contain shrink-0 self-stretch aspect-[1.4] w-[140px]"
                         />
                     </Link>
 
-                    <div className="flex flex-wrap gap-6 justify-center items-center self-stretch my-auto text-base max-md:max-w-full ">
-                        {categories?.map((category: Category) => (
+                    <div className="flex flex-col gap-3 justify-center items-center  my-auto text-base max-md:max-w-full ">
+                        <div className="flex flex-row justify-around gap-3">
+                            {categories?.map((category: Category) => (
+                                <Link
+                                    to={`/${lang}/${
+                                        ROUTES.product[
+                                            lang as keyof typeof ROUTES.product
+                                        ]
+                                    }?category=${category.id}`}
+                                >
+                                    <div className="self-stretch my-auto">
+                                        {category.title}
+                                    </div>
+                                </Link>
+                            ))}
+                            {categoriesLoading && (
+                                <div className="flex gap-6">
+                                    <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                                    <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                                    <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
+                                </div>
+                            )}
+                            <Link
+                                to={`/${lang}/${
+                                    ROUTES.brends[
+                                        lang as keyof typeof ROUTES.brends
+                                    ]
+                                }`}
+                            >
+                                <div className="self-stretch my-auto">
+                                    {translation?.Brendlər}
+                                </div>
+                            </Link>
                             <Link
                                 to={`/${lang}/${
                                     ROUTES.product[
                                         lang as keyof typeof ROUTES.product
                                     ]
-                                }?category=${category.id}`}
+                                }?discount=true`}
                             >
                                 <div className="self-stretch my-auto">
-                                    {category.title}
+                                    {' '}
+                                    {translation?.Endirim}
                                 </div>
                             </Link>
-                        ))}
-                        {categoriesLoading && (
-                            <div className="flex gap-6">
-                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
-                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
-                                <div className="self-stretch my-auto w-24 h-6 bg-gray-200 animate-pulse"></div>
-                            </div>
-                        )}
-                        <Link
-                            to={`/${lang}/${
-                                ROUTES.brends[
-                                    lang as keyof typeof ROUTES.brends
-                                ]
-                            }`}
-                        >
-                            <div className="self-stretch my-auto">
-                                {translation?.Brendlər}
-                            </div>
-                        </Link>
-                        <Link
-                            to={`/${lang}/${
-                                ROUTES.product[
-                                    lang as keyof typeof ROUTES.product
-                                ]
-                            }?discount=true`}
-                        >
-                            <div className="self-stretch my-auto">
-                                {' '}
-                                {translation?.Endirim}
-                            </div>
-                        </Link>
-                        <Link
-                            to={`/${lang}/${
-                                ROUTES.product[
-                                    lang as keyof typeof ROUTES.product
-                                ]
-                            }`}
-                        >
-                            <div className="self-stretch my-auto">
-                                {translation?.Bütün_məhsullar}
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="flex gap-6 items-center self-stretch my-auto text-sm">
-                        <div className="flex gap-5 items-center self-stretch my-auto ">
-                            {/* <Link
+                            <Link
                                 to={`/${lang}/${
-                                    ROUTES.login[
-                                        lang as keyof typeof ROUTES.login
+                                    ROUTES.product[
+                                        lang as keyof typeof ROUTES.product
                                     ]
                                 }`}
-                            > */}
+                            >
+                                <div className="self-stretch my-auto">
+                                    {translation?.Bütün_məhsullar}
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch mx-auto h-[50px] py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
+                            <input
+                                type="text"
+                                placeholder="Axtar"
+                                value={SearchValue}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    const value = e.target.value;
+                                    setSearchValue(value);
+                                    if (debounceTimeout.current) {
+                                        clearTimeout(debounceTimeout.current);
+                                    }
+                                    debounceTimeout.current = setTimeout(() => {
+                                        setDebouncedValue(value);
+
+                                        if (value !== '') {
+                                            disableScrolling();
+                                            // Add your additional logic here
+                                        } else {
+                                            enableScrolling();
+                                        }
+                                    }, 300);
+                                    // if (e.target.value !== '') {
+                                    //     disableScrolling();
+                                    //     setIsClothingOpen(false);
+                                    //     setIsBaskedOpen(false);
+                                    // } else {
+                                    //     enableScrolling();
+                                    // }
+                                }}
+                                className="bg-transparent outline-none flex-1 text-black text-opacity-60 my-auto"
+                            />
+
+                            <img
+                                loading="lazy"
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/f662e6db87fdef7a0f47b78d88abe073291cb9bd2390dd8047857b7fd35816f4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                className="object-contain shrink-0 w-11 aspect-square"
+                            />
+                        </div>{' '}
+                    </div>
+                    <div className="flex gap-6 items-center self-stretch my-auto text-sm">
+                        <div className="flex gap-2 items-center self-stretch my-auto ">
+                            <div className="flex gap-2 self-stretch my-auto text-sm text-black">
+                                <Link
+                                    to={`/${lang}/${
+                                        ROUTES.liked[
+                                            lang as keyof typeof ROUTES.liked
+                                        ]
+                                    }`}
+                                >
+                                    <img
+                                        loading="lazy"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
+                                    />
+                                </Link>
+
+                                <div
+                                    ref={BaskedBtnRef}
+                                    className="flex gap-3 cursor-pointer  items-center"
+                                    onClick={() => {
+                                        if (User) {
+                                            setIsClothingOpen(false);
+                                            setSearchValue('');
+                                            setRefetchBaskedState(
+                                                !refetchBaskedState
+                                            );
+
+                                            if (!isBaskedOpen) {
+                                                disableScrolling();
+                                            } else {
+                                                enableScrolling();
+                                            }
+                                            setIsBaskedOpen((prev) => !prev);
+                                        } else {
+                                            Navigae(
+                                                `/${lang}/${
+                                                    ROUTES.login[
+                                                        lang as keyof typeof ROUTES.login
+                                                    ]
+                                                }`
+                                            );
+                                        }
+                                    }}
+                                >
+                                    <div className="w-[48px] h-[48px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
+                                        <img src="/svg/basked.svg" />
+                                        <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
+                                            {basked?.basket_items?.length}
+                                        </div>
+                                    </div>
+                                    {/* {User && (
+                                        <div className="self-stretch my-auto">
+                                            {basked?.final_price}
+                                            AZN
+                                        </div>
+                                    )} */}
+                                </div>
+                            </div>
                             <div
-                                className="flex gap-3 items-center self-stretch my-auto"
+                                className="flex gap-3 items-center self-stretch my-auto cursor-pointer"
                                 onClick={() => {
                                     const userStr =
                                         localStorage.getItem('user-info');
@@ -390,9 +486,6 @@ export default function Header() {
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
                                 />
-                                <div className="self-stretch my-auto">
-                                    {translation?.Şəxsi_kabinet}
-                                </div>
                             </div>
                             {/* </Link> */}
 
@@ -424,10 +517,10 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
-                <div className="flex overflow-hidden  flex-wrap gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
+                <div className="flex overflow-hidden  flex-row gap-5 justify-between items-center px-10 py-4 w-full text-base bg-white border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
                     <div
                         ref={CatalogBtnRef}
-                        className="flex flex-col justify-center self-stretch px-7 py-3 cursor-pointer my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
+                        className="flex flex-col min-w-[150px] justify-center self-stretch px-7 py-3 cursor-pointer my-auto font-medium text-white whitespace-nowrap bg-blue-600 min-h-[48px] rounded-[100px] max-md:px-5"
                         onClick={() => {
                             setIsClothingOpen((prew) => !prew);
                             setSearchValue('');
@@ -451,8 +544,9 @@ export default function Header() {
                             </div>
                         </div>
                     </div>
-
-                    <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
+                    <Story />
+                    {/* make it story */}
+                    {/* <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
                         <input
                             type="text"
                             placeholder="Axtar"
@@ -491,8 +585,8 @@ export default function Header() {
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/f662e6db87fdef7a0f47b78d88abe073291cb9bd2390dd8047857b7fd35816f4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                             className="object-contain shrink-0 w-11 aspect-square"
                         />
-                    </div>
-                    <div className="flex gap-6 self-stretch my-auto text-sm text-black">
+                    </div> */}
+                    {/* <div className="flex gap-6 self-stretch my-auto text-sm text-black">
                         <Link
                             to={`/${lang}/${
                                 ROUTES.liked[lang as keyof typeof ROUTES.liked]
@@ -544,24 +638,25 @@ export default function Header() {
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div
-                    className="absolute w-full min-h-[90vh] bg-black  top-[25vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    className="absolute w-full min-h-[90vh] bg-black  top-[31vh] z-50 bg-opacity-[60%] px-10 py-2"
                     style={{
                         display: isCatalogOpen ? 'block' : 'none',
                     }}
                 >
-                    <div ref={CAtalogDiv} className="w-[408px]">
+                    <div ref={CAtalogDiv} className="w-full">
                         {categories && (
-                            <ClothingMenu
-                                translation={translation}
-                                data={categories}
-                                ref={CAtalogDiv}
-                                setIsCatalogOpen={(value) => {
-                                    setIsClothingOpen(value);
-                                }}
-                            />
+                            // <ClothingMenu
+                            //     translation={translation}
+                            //     data={categories}
+                            //     ref={CAtalogDiv}
+                            //     setIsCatalogOpen={(value) => {
+                            //         setIsClothingOpen(value);
+                            //     }}
+                            // />
+                            <CategoryNavigation />
                         )}
                     </div>
                     {/* 
@@ -757,13 +852,16 @@ export default function Header() {
                                                     </div>
                                                     <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
                                                         <div className="flex gap-3 items-start">
-                                                            <div>
-                                                                ---FILTER---
-                                                            </div>
-                                                            <div>
-                                                                {' '}
-                                                                ---FILTER---
-                                                            </div>
+                                                            {item.options.map(
+                                                                (item) => (
+                                                                    <div>
+                                                                        {' '}
+                                                                        {
+                                                                            item.option
+                                                                        }{' '}
+                                                                    </div>
+                                                                )
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -883,207 +981,203 @@ export default function Header() {
                         } `}
                     />
                 </Link>
-                <div className="flex gap-4 items-center">
+                {/* <div className="flex gap-4 items-center"> */}
+                <div
+                    className={` top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[54] ${
+                        isSearchOpen
+                            ? ' left-[16px] h-[40px]  w-[93%] bg-[#F5F5F5] rounded-[100px] '
+                            : ' right-[6rem]  w-fit '
+                    } `}
+                >
+                    <button
+                        className={`${showaside ? 'opacity-0' : 'opacity-100'}`}
+                        onClick={() => {
+                            setIsSearchOpen(true);
+                        }}
+                    >
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <rect
+                                width="40"
+                                height="40"
+                                rx="20"
+                                fill="#F5F5F5"
+                            />
+                            <g clip-path="url(#clip0_921_3507)">
+                                <circle
+                                    cx="19.1667"
+                                    cy="19.1665"
+                                    r="7.5"
+                                    stroke="black"
+                                    stroke-width="1.5"
+                                />
+                                <path
+                                    d="M28.1767 27.4791C28.1244 27.558 28.03 27.6525 27.8411 27.8413C27.6523 28.0302 27.5579 28.1246 27.479 28.1768C27.0168 28.4829 26.3916 28.3251 26.1299 27.8365C26.0853 27.7531 26.0469 27.6252 25.9703 27.3693C25.8865 27.0898 25.8446 26.95 25.8365 26.8517C25.7889 26.2725 26.2723 25.789 26.8515 25.8367C26.9498 25.8448 27.0896 25.8867 27.3691 25.9704C27.625 26.0471 27.7529 26.0854 27.8363 26.1301C28.325 26.3918 28.4827 27.017 28.1767 27.4791Z"
+                                    stroke="black"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_921_3507">
+                                    <rect
+                                        width="20"
+                                        height="20"
+                                        fill="white"
+                                        transform="translate(10 10)"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        placeholder="Search"
+                        className={`h-full w-full bg-transparent  outline-none  ${
+                            isSearchOpen ? 'opacity-100' : 'hidden'
+                        } `}
+                        name=""
+                    />
+                    <button
+                        className={` flex justify-center items-center ${
+                            isSearchOpen ? 'opacity-100' : 'opacity-0'
+                        } `}
+                        onClick={() => {
+                            setIsSearchOpen(false);
+                        }}
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M15 5L5 15"
+                                stroke="black"
+                                stroke-opacity="0.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M5 5L15 15"
+                                stroke="black"
+                                stroke-opacity="0.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <button
+                    className={`flex gap-3 items-center ${
+                        isSearchOpen || showaside ? 'opacity-0' : 'opacity-100'
+                    }  `}
+                    onClick={() => {
+                        setIsBaskedOpen((prev) => !prev);
+                        if (!isBaskedOpen) {
+                            setIsClothingOpen(false);
+                            setSearchValue('');
+                            disableScrolling();
+                        } else {
+                            enableScrolling();
+                        }
+                    }}
+                >
+                    <Link to="/basked/sifarislerim">
+                        <div className="w-[40px] h-[40px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
+                            <img src="/svg/basked.svg" />
+                            <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
+                                2
+                            </div>
+                        </div>
+                    </Link>
+                </button>
+                <div className="relative ">
                     <div
-                        className={`absolute top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[54] ${
-                            isSearchOpen
-                                ? ' left-[16px] h-[40px]  w-[93%] bg-[#F5F5F5] rounded-[100px] '
-                                : ' right-[6rem]  w-fit '
+                        onClick={() => {
+                            setShowAside((prew) => !prew);
+                        }}
+                        className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
+                            isSearchOpen || showaside
+                                ? 'opacity-0 '
+                                : 'opacity-100 '
                         } `}
                     >
-                        <button
-                            className={`${
-                                showaside ? 'opacity-0' : 'opacity-100'
-                            }`}
-                            onClick={() => {
-                                setIsSearchOpen(true);
-                            }}
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                         >
-                            <svg
-                                width="40"
-                                height="40"
-                                viewBox="0 0 40 40"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect
-                                    width="40"
-                                    height="40"
-                                    rx="20"
-                                    fill="#F5F5F5"
-                                />
-                                <g clip-path="url(#clip0_921_3507)">
-                                    <circle
-                                        cx="19.1667"
-                                        cy="19.1665"
-                                        r="7.5"
-                                        stroke="black"
-                                        stroke-width="1.5"
-                                    />
-                                    <path
-                                        d="M28.1767 27.4791C28.1244 27.558 28.03 27.6525 27.8411 27.8413C27.6523 28.0302 27.5579 28.1246 27.479 28.1768C27.0168 28.4829 26.3916 28.3251 26.1299 27.8365C26.0853 27.7531 26.0469 27.6252 25.9703 27.3693C25.8865 27.0898 25.8446 26.95 25.8365 26.8517C25.7889 26.2725 26.2723 25.789 26.8515 25.8367C26.9498 25.8448 27.0896 25.8867 27.3691 25.9704C27.625 26.0471 27.7529 26.0854 27.8363 26.1301C28.325 26.3918 28.4827 27.017 28.1767 27.4791Z"
-                                        stroke="black"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                    />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_921_3507">
-                                        <rect
-                                            width="20"
-                                            height="20"
-                                            fill="white"
-                                            transform="translate(10 10)"
-                                        />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </button>
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            placeholder="Search"
-                            className={`h-full w-full bg-transparent  outline-none  ${
-                                isSearchOpen ? 'opacity-100' : 'hidden'
-                            } `}
-                            name=""
-                        />
-                        <button
-                            className={` flex justify-center items-center ${
-                                isSearchOpen ? 'opacity-100' : 'opacity-0'
-                            } `}
-                            onClick={() => {
-                                setIsSearchOpen(false);
-                            }}
-                        >
-                            <svg
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M15 5L5 15"
-                                    stroke="black"
-                                    stroke-opacity="0.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M5 5L15 15"
-                                    stroke="black"
-                                    stroke-opacity="0.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <button
-                        className={`flex gap-3 items-center ${
-                            isSearchOpen || showaside
-                                ? 'opacity-0'
-                                : 'opacity-100'
-                        }  `}
-                        onClick={() => {
-                            setIsBaskedOpen((prev) => !prev);
-                            if (!isBaskedOpen) {
-                                setIsClothingOpen(false);
-                                setSearchValue('');
-                                disableScrolling();
-                            } else {
-                                enableScrolling();
-                            }
-                        }}
-                    >
-                        <Link to="/basked/sifarislerim">
-                            <div className="w-[40px] h-[40px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
-                                <img src="/svg/basked.svg" />
-                                <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
-                                    2
-                                </div>
-                            </div>
-                        </Link>
-                    </button>
-                    <div className="relative ">
-                        <div
-                            onClick={() => {
-                                setShowAside((prew) => !prew);
-                            }}
-                            className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
-                                isSearchOpen || showaside
-                                    ? 'opacity-0 '
-                                    : 'opacity-100 '
-                            } `}
-                        >
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M4 17.27V16.27H20V17.27H4ZM4 12.5V11.5H20V12.5H4ZM4 7.72998V6.72998H20V7.72998H4Z"
-                                    fill={'white'}
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                    <div
-                        className="flex flex-row justify-between items-center px-4 border-b mb-2 border-black border-opacity-50 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
-                        style={{
-                            opacity: showaside ? '100' : '0',
-                            zIndex: showaside ? '55' : '-55',
-                        }}
-                    >
-                        <Link
-                            className="w-[200px]"
-                            to={`/${lang}/${
-                                ROUTES.home[lang as keyof typeof ROUTES.home]
-                            }`}
-                        >
-                            <img
-                                loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                            <path
+                                d="M4 17.27V16.27H20V17.27H4ZM4 12.5V11.5H20V12.5H4ZM4 7.72998V6.72998H20V7.72998H4Z"
+                                fill={'white'}
                             />
-                        </Link>
-
-                        <button onClick={() => setShowAside(false)}>
-                            <svg
-                                width="40"
-                                height="40"
-                                viewBox="0 0 40 40"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect
-                                    width="40"
-                                    height="40"
-                                    rx="20"
-                                    fill="#3873C3"
-                                />
-                                <path
-                                    d="M26 14L14 26"
-                                    stroke="white"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M14 14L26 26"
-                                    stroke="white"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-                        </button>
+                        </svg>
                     </div>
                 </div>
+                <div
+                    className="flex flex-row justify-between items-center px-4 border-b mb-2 border-black border-opacity-50 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
+                    style={{
+                        opacity: showaside ? '100' : '0',
+                        zIndex: showaside ? '55' : '-55',
+                    }}
+                >
+                    <Link
+                        className="w-[200px]"
+                        to={`/${lang}/${
+                            ROUTES.home[lang as keyof typeof ROUTES.home]
+                        }`}
+                    >
+                        <img
+                            loading="lazy"
+                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                        />
+                    </Link>
+
+                    <button onClick={() => setShowAside(false)}>
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <rect
+                                width="40"
+                                height="40"
+                                rx="20"
+                                fill="#3873C3"
+                            />
+                            <path
+                                d="M26 14L14 26"
+                                stroke="white"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 14L26 26"
+                                stroke="white"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                {/* </div> */}
             </div>
             {showaside && categories && (
                 <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white flex flex-col">

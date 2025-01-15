@@ -17,6 +17,8 @@ import UserLiked from '../userIn/Liked';
 import BaskedConfirm from '../userIn/BaskedConfirm';
 import ORder from '../userIn/Order';
 import Register from '../userIn/register';
+import Password from '../userIn/Pasword';
+import SucsesPassword from '../userIn/sucsesPasword';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -68,6 +70,16 @@ const PageByLang: React.FC = () => {
     if (page === ROUTES.register.en || page === ROUTES.register.ru) {
         return <Register />;
     }
+    if (page === ROUTES.resetPasword.en || page === ROUTES.resetPasword.ru) {
+        return <Password />;
+    }
+    if (
+        page === ROUTES.resetPaswordSucses.en ||
+        page === ROUTES.resetPaswordSucses.ru
+    ) {
+        return <SucsesPassword />;
+    }
+
     return (
         <div>
             <h1>Language: {lang}</h1>

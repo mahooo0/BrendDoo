@@ -1,9 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
+import GETRequest from '../../setting/Request';
+import { Order } from '../../setting/Types';
+import Loading from '../../components/Loading';
 
 export default function OrderId() {
     const navigate = useNavigate();
+    const { lang, slug } = useParams<{
+        lang: string;
+        page: string;
+        slug: string;
+    }>();
+    const { data: Order, isLoading: OrderLoading } = GETRequest<Order>(
+        `/getOrderItem/${slug}`,
+        'getOrderItem',
+        [lang]
+    );
+    console.log('Order', Order);
+
+    if (OrderLoading) {
+        <Loading />;
+    }
     return (
         <div>
             <Header />

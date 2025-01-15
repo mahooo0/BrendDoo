@@ -1,58 +1,69 @@
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import GETRequest from '../../setting/Request';
 import { TranslationsKeys } from '../../setting/Types';
 import ROUTES from '../../setting/routes';
 
-export default function Login() {
+export default function ResetPasswordConfrim() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+    // const [showPassword, setShowPassword] = useState(false);
     const [formStatus, setFormStatus] = useState<{
         message: string;
         success: boolean;
     } | null>(null);
 
     const initialValues = {
-        email: '',
         password: '',
+        password2: '',
     };
 
     const validationSchema = Yup.object({
-        email: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
         password: Yup.string()
             .min(6, 'Password must be at least 6 characters')
             .required('Password is required'),
+        password2: Yup.string()
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
     });
-
+    const { lang, slug } = useParams<{
+        lang: string;
+        page: string;
+        slug: string;
+    }>();
     const handleSubmit = async (values: {
-        email: string;
         password: string;
+        password2: string;
     }) => {
         setLoading(true);
         setFormStatus(null); // Reset status message
+        const Email = localStorage.getItem('EmailForReset');
         await axios
-            .post('https://brendo.avtoicare.az/api/login', { ...values })
+            .post('https://brendo.avtoicare.az/api/password-reset/reset', {
+                email: Email,
+                reset_token: slug,
+                new_password: values.password,
+                new_password_confirmation: values.password2,
+            })
             .then((response) => {
                 localStorage.setItem('user-info', JSON.stringify(response));
-                toast.success('log in sucsesfully');
+                toast.success('Password sucsesfully reset ');
                 //add token to local
-                navigate('/user');
+                navigate(
+                    `/${lang}/${
+                        ROUTES.login[lang as keyof typeof ROUTES.login]
+                    }`
+                );
             })
             .catch((error) => {
                 console.log(error);
-                // toast.error('Error while logging in');
-                setLoading(false);
-                toast.error(error.response.data.message);
+                toast.error('Error while logging in');
             });
     };
-    const { lang = 'ru' } = useParams<{ lang: string }>();
 
     const { data: tarnslation } = GETRequest<TranslationsKeys>(
         `/translates`,
@@ -82,31 +93,10 @@ export default function Login() {
                     <div className="flex flex-col max-md:max-w-full">
                         <div className="flex flex-col items-center self-center text-center">
                             <div className="text-3xl font-bold text-white">
-                                {tarnslation?.Xoş_gəldiniz}
-                            </div>
-                            <div className="mt-3 text-base text-white text-opacity-80">
-                                {tarnslation?.logindesc}
+                                Password recovery
                             </div>
                         </div>
                         <div className="flex flex-col items-center lg:mt-10 mt-4 w-full max-md:max-w-full">
-                            <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
-                                />
-                                <div className="self-stretch my-auto">
-                                    {tarnslation?.Google}
-                                </div>
-                            </div>
-                            <div className="flex lg:gap-10 gap-5 items-center mt-7 text-xs text-center text-white w-full">
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
-                                <div className="self-stretch my-auto text-nowrap">
-                                    {tarnslation?.or}
-                                </div>
-                                <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />
-                            </div>
-
                             <Formik
                                 initialValues={initialValues}
                                 validationSchema={validationSchema}
@@ -117,32 +107,28 @@ export default function Login() {
                                         <div className="flex flex-col w-full max-md:max-w-full">
                                             <div className="overflow-hidden px-5  flex justify-center items-center w-full h-[56px] text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                 <Field
-                                                    type="email"
-                                                    name="email"
-                                                    placeholder="Email"
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder="password"
                                                     className="w-full bg-transparent outline-none"
                                                 />
                                             </div>
                                             <ErrorMessage
-                                                name="email"
+                                                name="password"
                                                 component="div"
                                                 className="text-red-500 text-sm mt-1"
                                             />
                                             <div className="flex flex-col mt-3 w-full max-md:max-w-full">
                                                 <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                     <Field
-                                                        type={
-                                                            showPassword
-                                                                ? 'text'
-                                                                : 'password'
-                                                        }
-                                                        name="password"
+                                                        type={'password2'}
+                                                        name="password2"
                                                         placeholder={
-                                                            tarnslation?.password
+                                                            'password confrim'
                                                         }
                                                         className="w-full bg-transparent outline-none"
                                                     />
-                                                    <img
+                                                    {/* <img
                                                         loading="lazy"
                                                         src={
                                                             !showPassword
@@ -155,30 +141,13 @@ export default function Login() {
                                                                 !showPassword
                                                             )
                                                         }
-                                                    />
+                                                    /> */}
                                                 </div>
                                                 <ErrorMessage
-                                                    name="password"
+                                                    name="password2"
                                                     component="div"
                                                     className="text-red-500 text-sm mt-1"
                                                 />
-                                                <div
-                                                    onClick={() =>
-                                                        navigate(
-                                                            `/${lang}/${
-                                                                ROUTES
-                                                                    .resetPasword[
-                                                                    lang as keyof typeof ROUTES.resetPasword
-                                                                ]
-                                                            }`
-                                                        )
-                                                    }
-                                                    className="mt-3 text-sm text-right text-white max-md:max-w-full cursor-pointer hover:underline"
-                                                >
-                                                    {
-                                                        tarnslation?.forgotpassword
-                                                    }{' '}
-                                                </div>
                                             </div>
                                         </div>
                                         <button
@@ -210,7 +179,7 @@ export default function Login() {
                                 </div>
                             )}
                         </div>
-                        <div className=" lg:mt-[60px] mt-8 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
+                        {/* <div className=" lg:mt-[60px] mt-8 text-base font-semibold text-center text-white text-opacity-80  max-md:max-w-full">
                             <span>{tarnslation?.Hesabın_yoxdur}? </span>
                             <Link
                                 to={`/${lang}/${
@@ -222,7 +191,7 @@ export default function Login() {
                             >
                                 {tarnslation?.register}
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

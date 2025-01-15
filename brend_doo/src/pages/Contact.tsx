@@ -27,8 +27,8 @@ export default function Contact() {
         phone: Yup.string()
             .required('Phone number is required')
             .matches(
-                /^(?:\+994|0)(50|51|55|70|77)\d{7}$/,
-                'Enter a valid phone number (e.g., +994551234567 or 0551234567)'
+                /^[0-9]{10}$/,
+                'Phone number must be 10 digits long and start with 9 (e.g., 911123456)'
             ),
         email: Yup.string()
             .required('Email is required')
@@ -38,6 +38,7 @@ export default function Contact() {
             .required('Note is required')
             .max(500, 'Note cannot exceed 500 characters'),
     });
+
     const { lang = 'ru' } = useParams<{
         lang: string;
     }>();
@@ -214,7 +215,7 @@ export default function Contact() {
                                                     placeholder={
                                                         tarnslation?.First_Name
                                                     }
-                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white text-white"
                                                 />
                                                 <ErrorMessage
                                                     name="firstName"
@@ -229,7 +230,7 @@ export default function Contact() {
                                                     placeholder={
                                                         tarnslation?.Last_Name
                                                     }
-                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                    className="w-full px-5 py-5 text-white bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                                 />
                                                 <ErrorMessage
                                                     name="lastName"
@@ -242,12 +243,15 @@ export default function Contact() {
                                         {/* Phone and Email */}
                                         <div className="flex lg:flex-row flex-col gap-3 mt-3 w-full">
                                             <div className="w-full">
-                                                <Field
-                                                    type="tel"
-                                                    name="phone"
-                                                    placeholder="+994 00 000 00 00"
-                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
-                                                />
+                                                <div className="w-full text-white px-5  bg-white bg-opacity-10 rounded-[100px] placeholder-white flex flex-row justify-center items-center gap-2">
+                                                    +7
+                                                    <Field
+                                                        className="w-full h-full py-5  bg-white bg-opacity-0  focus:outline-none"
+                                                        type="number"
+                                                        name="phone"
+                                                        placeholder="+7 00 000 00 00"
+                                                    />
+                                                </div>
                                                 <ErrorMessage
                                                     name="phone"
                                                     component="div"
@@ -259,7 +263,7 @@ export default function Contact() {
                                                     type="email"
                                                     name="email"
                                                     placeholder="Email"
-                                                    className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                    className="w-full text-white px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
                                                 />
                                                 <ErrorMessage
                                                     name="email"
@@ -277,7 +281,7 @@ export default function Contact() {
                                                 placeholder={
                                                     tarnslation?.Category
                                                 }
-                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white"
+                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[100px] placeholder-white text-white"
                                             />
                                             <ErrorMessage
                                                 name="category"
@@ -292,7 +296,7 @@ export default function Contact() {
                                                 as="textarea"
                                                 name="note"
                                                 placeholder={tarnslation?.Note}
-                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[20px] placeholder-white min-h-[110px]"
+                                                className="w-full px-5 py-5 bg-white bg-opacity-10 rounded-[20px] placeholder-white min-h-[110px] text-white"
                                             />
                                             <ErrorMessage
                                                 name="note"

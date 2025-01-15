@@ -8,12 +8,29 @@ const CommentsSection = ({
     data: ProductDetail;
     translate: TranslationsKeys;
 }) => {
+    const [comments, setComments] = useState(data.comments);
     const [sortOrder, setSortOrder] = useState('newest');
     const [ShovingCommentsCount, setShovingCommentsCount] = useState<number>(5);
 
     const handleSortChange = (event: any) => {
-        setSortOrder(event.target.value);
+        const order = event.target.value;
+        setSortOrder(order);
+
+        const sortedComments = [...comments].sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+
+            if (order === 'newest') {
+                return dateB.getTime() - dateA.getTime();
+            } else {
+                return dateA.getTime() - dateB.getTime();
+            }
+        });
+        setComments(sortedComments);
     };
+    // useEffect(() => {
+    //     setComments(data?.comments);
+    // }, [data]);
 
     return (
         <>
@@ -27,7 +44,7 @@ const CommentsSection = ({
                             htmlFor="sortDropdown"
                             className="self-stretch my-auto text-sm text-black text-opacity-60"
                         >
-                            Sırala
+                            {translate?.sort}
                         </label>
                         <div className="flex overflow-hidden gap-10 max-sm:min-w-[100px] max-sm:w-[190px] p-3 my-auto text-base bg-white rounded-[100px]  min-w-[240px] text-black text-opacity-90 w-[283px]">
                             <select
@@ -36,14 +53,18 @@ const CommentsSection = ({
                                 value={sortOrder}
                                 onChange={handleSortChange}
                             >
-                                <option value="newest">Yenidən köhnəyə</option>
-                                <option value="oldest">Köhnədən yeniyə</option>
+                                <option value="newest">
+                                    {translate?.Yenidən_köhnəyə}
+                                </option>
+                                <option value="oldest">
+                                    {translate?.Köhnədən_yeniyə}
+                                </option>
                             </select>
                         </div>
                     </div>
                 </header>
                 <main className="flex flex-col mt-7 w-full max-md:max-w-full pb-[20px]">
-                    {data.comments.map((review, i) => {
+                    {comments?.map((review, i) => {
                         if (i <= ShovingCommentsCount) {
                             return (
                                 <article
@@ -85,14 +106,16 @@ const CommentsSection = ({
                                             className="object-contain max-w-full aspect-[5] w-[120px]"
                                         /> */}
                                                 <p className="self-start mt-1">
-                                                    {review.customer.name}
+                                                    {review.customer?.customer
+                                                        ? review.customer
+                                                              .customer
+                                                        : ''}
                                                 </p>
                                             </div>
                                         </header>
                                         <div className="flex flex-col mt-5 w-full max-md:max-w-full">
                                             <time className="text-sm text-black text-opacity-60 max-md:max-w-full">
-                                                {/* {review.date} */} bura date
-                                                lazimdi
+                                                {review.date}
                                             </time>
                                             <p className="mt-2 text-base text-black text-opacity-80 max-md:max-w-full">
                                                 {review.comment}

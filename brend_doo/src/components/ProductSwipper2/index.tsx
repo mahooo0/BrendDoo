@@ -39,7 +39,7 @@ export default function ProductSwipper2() {
         }
     };
     return (
-        <div className="slider-container  relative flex justify-center items-center w-[100vw]">
+        <div className="slider-container  relative flex justify-center items-center ">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10} // Space between slides
@@ -69,7 +69,7 @@ export default function ProductSwipper2() {
                 onReachEnd={() => setIsLast(true)} // Explicitly handle end of slider
                 onReachBeginning={() => setIsFirst(true)}
                 navigation={false} // Enable navigation buttons (optional)
-                className="mySwiper max-sm:!pl-4 !w-full "
+                className="mySwiper max-sm:!pl-4 !w-full max-w-[100vw] "
             >
                 {Array.from({ length: 10 }).map((_, i) => (
                     <SwiperSlide key={i} className="max-sm:!w-[100%]">

@@ -21,8 +21,11 @@ const Register = () => {
     const validationSchema = Yup.object({
         name: Yup.string().required('Ad daxil edin'),
         phone: Yup.string()
-            .matches(/^\d{9,10}$/, 'Telefon nömrəsi düzgün deyil')
-            .required('Telefon nömrəsi daxil edin'),
+            .required('Phone number is required')
+            .matches(
+                /^[0-9]{10}$/,
+                'Phone number must be 10 digits long and start with 9 (e.g., 911123456)'
+            ),
         email: Yup.string()
             .email('Email düzgün deyil')
             .required('Email daxil edin'),
@@ -42,7 +45,12 @@ const Register = () => {
     }) {
         setemail(values.email);
         await axios
-            .post('https://brendo.avtoicare.az/api/register', values)
+            .post('https://brendo.avtoicare.az/api/register', {
+                name: values.name,
+                phone: `${values.phone}`,
+                email: values.email,
+                password: values.password,
+            })
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
                     localStorage.setItem('register-token', response.data.token);
@@ -51,9 +59,18 @@ const Register = () => {
                 }
             })
             .catch((error) => {
-                if (error.response && error.response.status === 422) {
-                    toast.error(`user is alredy exsist `);
+                console.log('er', error);
+                // error.response.data.error.map((item: string) => {
+                //     toast.error('aa');
+                // });
+                if (error.response.data.error) {
+                    error.response.data.error.map((item: string) => {
+                        toast.error(item);
+                    });
                 }
+                // if (error.response.data.errors?.password) {
+                //     toast.error(error.response.data.errors?.password[0]);
+                // }
             });
         // if (response.status === 201) {
         //     // toast.success('registred sucsesfulley');
@@ -154,12 +171,13 @@ const Register = () => {
 
                                             <div className="flex  overflow-hidden px-5  w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3">
                                                 <span className="text-black text-opacity-60 flex justify-center items-center">
-                                                    +994
+                                                    +7
                                                 </span>
                                                 <Field
                                                     name="phone"
+                                                    type="number"
                                                     className="outline-none bg-transparent ml-1 w-full h-[56px]"
-                                                    placeholder="XX XXX XX XX"
+                                                    placeholder="XXXXXXX"
                                                 />
                                             </div>
                                             <ErrorMessage
@@ -293,8 +311,18 @@ const Register = () => {
                                         navigate('/user/login');
                                     })
                                     .catch((error) => {
-                                        console.log('error', error);
-                                        toast.error('error');
+                                        console.log('er', error);
+                                        toast.error(
+                                            error.response.data.message
+                                        );
+
+                                        // if (error.response.data.error) {
+                                        //     error.response.data.error.map(
+                                        //         (item: string) => {
+                                        //             toast.error(item);
+                                        //         }
+                                        //     );
+                                        // }
                                     });
                                 // Handle code verification
                             }}

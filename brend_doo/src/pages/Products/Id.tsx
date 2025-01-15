@@ -10,12 +10,22 @@ import {
     TranslationsKeys,
 } from '../../setting/Types';
 import Loading from '../../components/Loading';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../setting/routes';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+function extractData(input: string) {
+    const match = input.match(/(\d+)% \((\d+)\)/);
+    if (match) {
+        const [, procent, users] = match;
+        return {
+            procent: parseInt(procent, 10),
+            users: parseInt(users, 10),
+        };
+    }
+    return null; // Return null if the input format is invalid
+}
 export default function ProductId() {
     const { lang = 'ru', slug } = useParams<{
         lang: string;
@@ -34,30 +44,37 @@ export default function ProductId() {
             'products',
             [lang, Productslingle]
         );
-    console.log('SimularProducts', SimularProducts);
-    console.log('slug', slug);
+
     const [currentColor, setCurrentColor] = useState<string>('');
     const [currentOption, setCurrentOption] = useState<string>('');
-    // useEffect(() => {
-    //     const CurrentColorNAme = Productslingle?.options.find(
-    //         (item) => item.color_code
-    //     )?.title;
-    //     const CurrentOptionNAme = Productslingle?.options.find(
-    //         (item) => !item.color_code
-    //     )?.title;
-    //     if (CurrentColorNAme) {
-    //         setCurrentColor(CurrentColorNAme);
-    //     }
-    //     if (CurrentOptionNAme) {
-    //         setCurrentOption(CurrentOptionNAme);
-    //     }
-    // }, [Productslingle]);
+    useEffect(() => {
+        const CurrentColorNAme = Productslingle?.filters
+            .find(
+                (item) =>
+                    item.filter_name === 'Color' || item.filter_name === 'Цвет'
+            )
+            ?.options.find((item) => item.is_default)?.name;
+        console.log('CurrentColorNAme:', Productslingle);
+
+        const CurrentOptionNAme = Productslingle?.filters
+            .find(
+                (item) =>
+                    item.filter_name === 'Size' || item.filter_name === 'Размер'
+            )
+            ?.options.find((item) => item.is_default)?.name;
+        if (CurrentColorNAme) {
+            setCurrentColor(CurrentColorNAme);
+        }
+        if (CurrentOptionNAme) {
+            setCurrentOption(CurrentOptionNAme);
+        }
+    }, [Productslingle]);
     const addToBasket = async (data: {
         product_id: number;
         quantity: number;
         price: number;
         token: string;
-        // options:any
+        options: { filter_id: number; option_id: number | undefined }[];
     }) => {
         const response = await axios.post(
             'https://brendo.avtoicare.az/api/basket_items',
@@ -65,16 +82,7 @@ export default function ProductId() {
                 product_id: data.product_id,
                 quantity: data.quantity,
                 price: data.price,
-                options: [
-                    // {
-                    //     filter_id: 1,
-                    //     option_id: 2,
-                    // },
-                    // {
-                    //     filter_id: 2,
-                    //     option_id: 5,
-                    // },
-                ],
+                options: data.options,
             },
             {
                 headers: {
@@ -212,7 +220,8 @@ export default function ProductId() {
                                     {Productslingle?.short_title}{' '}
                                 </div>
                                 <div className="mt-4 w-full text-sm max-md:max-w-full">
-                                    Məhsulun kodu:12345678
+                                    {tarnslation?.Məhsulun_kodu}:
+                                    {Productslingle?.code}
                                     <br />
                                     {/* ------- bura ne yazim 0------------ */}
                                 </div>
@@ -230,116 +239,7 @@ export default function ProductId() {
                                 </div>
                             </div>
                         </div>
-                        {/* {Productslingle?.options.map(
-                            (option: {
-                                id: number;
-                                is_default: number;
-                                title: string;
-                                color_code: string | null;
-                            }) => {
-                                if (option.color_code) {
-                                    return (
-                                        <div
-                                            key={option.id}
-                                            className="flex gap-2.5 items-center self-stretch pb-1 my-auto w-8 border-b border-black"
-                                        >
-                                            <div
-                                                className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]"
-                                                style={{
-                                                    backgroundColor:
-                                                        option.color_code,
-                                                }}
-                                            />
-                                        </div>
-                                    );
-                                }
-                                return null;
-                            }
-                        )} */}
-                        {/* {currentColor && (
-                            <div className="flex flex-col mt-7 max-w-full w-[254px]">
-                                <div className="text-sm text-black text-opacity-60">
-                                    {tarnslation?.color}: {currentColor}
-                                </div>
-                                <div className="flex gap-2 items-center self-start mt-3">
-                                    {Productslingle?.options.map(
-                                        (option: {
-                                            id: number;
-                                            is_default: number;
-                                            title: string;
-                                            color_code: string | null;
-                                        }) => {
-                                            if (option.color_code) {
-                                                return (
-                                                    <div
-                                                        onClick={() =>
-                                                            setCurrentColor(
-                                                                option.title
-                                                            )
-                                                        }
-                                                        key={option.id}
-                                                        className={`flex gap-2.5 cursor-pointer items-center self-stretch pb-1 my-auto w-8 ${
-                                                            currentColor ===
-                                                            option.title
-                                                                ? 'border-b border-black'
-                                                                : ''
-                                                        } `}
-                                                    >
-                                                        <div
-                                                            className="flex self-stretch my-auto w-8 h-8 rounded bg-slate-800 min-h-[32px]"
-                                                            style={{
-                                                                backgroundColor:
-                                                                    option.color_code,
-                                                            }}
-                                                        />
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        }
-                                    )}
-                                </div>
-                            </div>
-                        )}
 
-                        {currentOption && (
-                            <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
-                                <div className="text-sm text-black text-opacity-60">
-                                    {tarnslation?.size}
-                                </div>
-                                <div className="flex gap-2 mt-3 w-full text-xs  text-black rounded">
-                                    {Productslingle?.options.map(
-                                        (option: {
-                                            id: number;
-                                            is_default: number;
-                                            title: string;
-                                            color_code: string | null;
-                                        }) => {
-                                            if (option.color_code === null) {
-                                                return (
-                                                    <div
-                                                        onClick={() =>
-                                                            setCurrentOption(
-                                                                option.title
-                                                            )
-                                                        }
-                                                        className={`px-3 min-w-[40px] ${
-                                                            currentOption ===
-                                                            option.title
-                                                                ? 'bg-black text-white'
-                                                                : 'bg-white'
-                                                        }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
-                                                    >
-                                                        {option.title}
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        }
-                                    )}
-                                </div>
-                            </div>
-                        )} */}
                         {Productslingle?.filters.map((filter) => {
                             if (
                                 filter.filter_name === 'Size' ||
@@ -399,13 +299,11 @@ export default function ProductId() {
                                         )} */}
                                         </div>
                                     </div>
-                                ); //  filter.options.map((option)=>(
-
-                                // ))
+                                );
                             }
                             if (
                                 filter.filter_name === 'Color' ||
-                                filter.filter_name === 'Размер'
+                                filter.filter_name === 'Цвет'
                             ) {
                                 return (
                                     <div className="flex flex-col mt-7 max-w-full whitespace-nowrap w-[280px]">
@@ -487,13 +385,33 @@ export default function ProductId() {
                             )}
                             <div className="flex gap-4 items-center self-stretch my-auto text-base font-semibold min-w-[240px] text-slate-800 w-[276px]">
                                 <div className="flex gap-2 items-center self-stretch my-auto">
-                                    <img
+                                    <div className="flex flex-row gap-1">
+                                        {Array.from({
+                                            length:
+                                                Productslingle?.avg_star || 0,
+                                        }).map(() => (
+                                            <svg
+                                                width="20"
+                                                height="19"
+                                                viewBox="0 0 20 19"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M9.04894 0.927052C9.3483 0.00574112 10.6517 0.00573993 10.9511 0.927051L12.4697 5.60081C12.6035 6.01284 12.9875 6.2918 13.4207 6.2918H18.335C19.3037 6.2918 19.7065 7.53141 18.9228 8.10081L14.947 10.9894C14.5966 11.244 14.4499 11.6954 14.5838 12.1074L16.1024 16.7812C16.4017 17.7025 15.3472 18.4686 14.5635 17.8992L10.5878 15.0106C10.2373 14.756 9.7627 14.756 9.41221 15.0106L5.43648 17.8992C4.65276 18.4686 3.59828 17.7025 3.89763 16.7812L5.41623 12.1074C5.55011 11.6954 5.40345 11.244 5.05296 10.9894L1.07722 8.10081C0.293507 7.53141 0.696283 6.2918 1.66501 6.2918H6.57929C7.01252 6.2918 7.39647 6.01284 7.53035 5.60081L9.04894 0.927052Z"
+                                                    fill="#FABD21"
+                                                />
+                                            </svg>
+                                        ))}
+                                    </div>
+                                    {/* <img
                                         loading="lazy"
                                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/c8cb6d7f93b0332f135d17e49a58e6371bc747e917151fb4be5c60f2e035e3f1?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                         className="object-contain shrink-0 self-stretch my-auto aspect-[5] w-[120px]"
-                                    />
+                                    /> */}
                                     <div className="self-stretch my-auto">
-                                        5.0{'  '}
+                                        {Productslingle?.avg_star}
+                                        {'  '}
                                         <span className="text-sm leading-4 ">
                                             {'       '}(
                                             {Productslingle?.comments.length}){' '}
@@ -520,16 +438,64 @@ export default function ProductId() {
                                                     price: +Productslingle.price,
                                                     quantity: 1,
                                                     token: user.data.token,
-                                                    // options: [
-                                                    //     {
-                                                    //         filter_id: 1,
-                                                    //         option_id: 2,
-                                                    //     },
-                                                    //     {
-                                                    //         filter_id: 2,
-                                                    //         option_id: 5,
-                                                    //     },
-                                                    // ],
+                                                    //ignore type
+                                                    options:
+                                                        Productslingle.filters
+                                                            .map((item) => {
+                                                                if (
+                                                                    item.filter_name ===
+                                                                        'Color' ||
+                                                                    item.filter_name ===
+                                                                        'Цвет'
+                                                                ) {
+                                                                    return {
+                                                                        filter_id:
+                                                                            item.filter_id,
+                                                                        option_id:
+                                                                            item.options.find(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.name ===
+                                                                                    currentColor
+                                                                            )
+                                                                                ?.option_id,
+                                                                    };
+                                                                }
+                                                                if (
+                                                                    item.filter_name ===
+                                                                        'Size' ||
+                                                                    item.filter_name ===
+                                                                        'Размер'
+                                                                ) {
+                                                                    return {
+                                                                        filter_id:
+                                                                            item.filter_id,
+                                                                        option_id:
+                                                                            item.options.find(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.name ===
+                                                                                    currentOption
+                                                                            )
+                                                                                ?.option_id,
+                                                                    };
+                                                                }
+                                                                return undefined;
+                                                            })
+                                                            .filter(
+                                                                (
+                                                                    item
+                                                                ): item is {
+                                                                    filter_id: number;
+                                                                    option_id:
+                                                                        | number
+                                                                        | undefined;
+                                                                } =>
+                                                                    item !==
+                                                                    undefined
+                                                            ),
                                                 })
                                                     .then(() => {
                                                         toast.success(
@@ -649,45 +615,91 @@ export default function ProductId() {
                     </section>
                 </section>
                 <section className="mt-[100px] max-sm:mt-12 bg-[#F8F8F8] max-sm:px-4 px-[40px]">
-                    <div className="flex flex-wrap gap-8 justify-start max-sm:justify-center items-center max-sm:pt-[24px] pt-[80px]">
+                    <div className="flex flex-wrap gap-8 justify-start max-md:justify-center items-center max-sm:pt-[24px] pt-[80px]">
                         <div className="flex flex-col justify-center items-center self-stretch p-8 my-auto bg-white rounded-3xl min-w-[240px] w-[296px] max-md:px-5">
                             <div className="text-6xl font-semibold leading-none text-center text-zinc-900 max-md:text-4xl">
-                                4.7
+                                {Productslingle?.avg_star}{' '}
                             </div>
                             <div className="flex gap-0.5 items-start mt-3">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dca374733cb9d1aba7db23d829c0e6bad1c18b8be000a06d9f7eafe138eabb2?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-6 aspect-square"
-                                />
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dca374733cb9d1aba7db23d829c0e6bad1c18b8be000a06d9f7eafe138eabb2?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-6 aspect-square"
-                                />
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dca374733cb9d1aba7db23d829c0e6bad1c18b8be000a06d9f7eafe138eabb2?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-6 aspect-square"
-                                />
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dca374733cb9d1aba7db23d829c0e6bad1c18b8be000a06d9f7eafe138eabb2?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-6 aspect-square"
-                                />
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/591791d9bf0466acd38c03315eeb78ca082e8d782cd227b4348cd394161b7ec6?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 w-6 aspect-square"
-                                />
+                                {Array.from({
+                                    length: Productslingle?.avg_star || 0,
+                                }).map(() => (
+                                    <img
+                                        loading="lazy"
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dca374733cb9d1aba7db23d829c0e6bad1c18b8be000a06d9f7eafe138eabb2?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 w-6 aspect-square"
+                                    />
+                                ))}
                             </div>
                             <div className="mt-3 text-sm text-center text-neutral-600">
-                                İstifadəçi dəyərləndirməsi{' '}
-                                <span className="text-neutral-600"> (4)</span>
+                                {tarnslation?.İstifadəçi_dəyərləndirməsi}
+                                <span className="text-neutral-600">
+                                    {' '}
+                                    ({Productslingle?.avg_star})
+                                </span>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-4 items-start self-stretch my-auto min-w-[240px] max-md:max-w-full">
-                            {Array.from({ length: 5 }).map(() => (
+                        <div className="flex flex-col gap-4 items-start self-stretch my-auto min-w-[240px] w-[40%] max-md:w-full">
+                            {Productslingle?.rating_summary
+                                .map((item) => extractData(item))
+                                .filter((item) => item !== null)
+                                .map((item, index) => (
+                                    <div className="flex max-sm:flex-col flex-row gap-4 justify-between items-center  self-stretch w-full">
+                                        <div className="flex flex-row justify-between w-full">
+                                            <div className="flex gap-0.5 items-start self-stretch my-auto">
+                                                {/* {Array({
+                                                    length: 5,
+                                                }).map(() => (
+                                                    <img
+                                                        loading="lazy"
+                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                        className="object-contain shrink-0 aspect-square w-[18px]"
+                                                    />
+                                                ))} */}
+                                                {Array.from({
+                                                    length: 5 - index,
+                                                }).map(() => (
+                                                    <img
+                                                        loading="lazy"
+                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/05c694f83396f923195f2ce2eefa5960a5367c7d052eb1bbeca00c5ed8157138?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                        className="object-contain shrink-0 aspect-square w-[18px]"
+                                                    />
+                                                ))}
+                                            </div>
+                                            <div className=" max-sm:flex  hidden items-start self-stretch my-auto text-sm">
+                                                <div className="text-center text-zinc-900">
+                                                    {item.procent}%
+                                                </div>
+                                                <div className="text-slate-500">
+                                                    {' '}
+                                                    {item.users}{' '}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex overflow-hidden flex-col self-stretch my-auto max-md:min-w-[240px] min-w-[300px]  w-full">
+                                            <div className="flex flex-col items-start bg-gray-200 rounded-[100px] max-md:pr-5 max-md:max-w-full">
+                                                <div
+                                                    className="flex shrink-0 max-w-full h-1 bg-amber-400 rounded-[100px] "
+                                                    style={{
+                                                        width: `${item.procent}%`,
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex max-sm:hidden items-start self-stretch my-auto text-sm min-w-[42px]">
+                                            <div className="text-center text-zinc-900">
+                                                {item.procent}%
+                                            </div>
+                                            <div className="text-slate-500">
+                                                {' '}
+                                                {item.users}{' '}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            {/* {Array.from({ length: 5 }).map(() => (
                                 <div className="flex flex-wrap gap-2 justify-start items-center  self-stretch max-md:max-w-full">
                                     <div className="flex flex-row justify-between w-full">
                                         <div className="flex gap-0.5 items-start self-stretch my-auto">
@@ -744,7 +756,7 @@ export default function ProductId() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                     {Productslingle && tarnslation && (

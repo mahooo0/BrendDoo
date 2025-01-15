@@ -47,6 +47,16 @@ export type Product = {
     unit: string | null;
     category: Category;
     sub_category: SubCategory;
+    filters: {
+        filter_id: number;
+        filter_name: string;
+        options: {
+            option_id: number;
+            name: string;
+            is_default: string;
+            color_code: string | null;
+        }[];
+    }[];
     brand: Brand;
     image: string;
     sliders: Slider[];
@@ -83,7 +93,11 @@ export type Translation = {
 };
 
 export type TranslationsKeys = Record<keyof Translation, string>;
-
+export type Store = {
+    id: number;
+    title: string;
+    address: string;
+};
 export type Tiktok = {
     id: number;
     title: string;
@@ -103,6 +117,16 @@ export type HomeCategory = {
     id: number;
     title: string;
     products: Product[];
+};
+export type User = {
+    customer: {
+        id: number;
+        name: string;
+        email: string;
+        phone: string;
+        address: string | null;
+    };
+    token: string;
 };
 export type LoginBunner = {
     title: string;
@@ -203,7 +227,7 @@ export interface ProductDetail {
         date: string;
         customer: {
             id: number;
-            name: string;
+            customer: string | null;
             email: string;
             phone: string;
             address: {
@@ -214,13 +238,16 @@ export interface ProductDetail {
         };
     }[];
     filters: {
+        filter_id: number;
         filter_name: string;
         options: {
+            option_id: number;
             name: string;
             is_default: string;
             color_code: string | null;
         }[];
     }[];
+    rating_summary: string[];
 }
 
 export type ConmtactItem = {
@@ -243,6 +270,10 @@ type BasketItem = {
     id: number;
     quantity: number;
     price: string;
+    options: {
+        filter: string;
+        option: string;
+    }[];
     product: {
         id: number;
         sub_category_id: number;
@@ -323,4 +354,18 @@ export type Basket = {
     discount: number;
     delivered_price: number;
     final_price: number;
+};
+export type Order = {
+    id: number;
+    order_number: string;
+    status: string;
+    is_deliver: 0 | 1;
+    shop: string;
+    payment_type: string;
+    total_price: string;
+    discount: string;
+    delivered_price: string;
+    final_price: string;
+    order_date: string;
+    order_items: BasketItem[];
 };

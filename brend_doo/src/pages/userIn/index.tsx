@@ -95,10 +95,12 @@ export default function UserSettings() {
                                 })
                                 .catch((error) => {
                                     console.log(error);
-                                    if (error.response.data.errors?.password) {
-                                        toast.error(
-                                            error.response.data.errors
-                                                ?.password[0]
+
+                                    if (error.response.data.error) {
+                                        error.response.data.error.map(
+                                            (item: string) => {
+                                                toast.error(item);
+                                            }
                                         );
                                     }
                                 });
@@ -112,14 +114,9 @@ export default function UserSettings() {
                             >
                                 <div className="flex flex-wrap gap-3 items-center w-full ">
                                     <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            placeholder={translation?.name}
-                                            value={values.name}
-                                            onChange={handleChange}
-                                            className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] "
-                                        />
+                                        <div className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
+                                            {userInfo?.customer.name}
+                                        </div>
                                     </div>
                                     <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                         <div className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
@@ -131,10 +128,10 @@ export default function UserSettings() {
                                 <div className="flex flex-wrap gap-3 items-center mt-3 w-full ">
                                     <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                         <div className="overflow-hidden flex px-4 flex-row items-center w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
-                                            +994
+                                            +7
                                             <input
                                                 className="w-full focus:outline-none py-4 h-full"
-                                                type="tel"
+                                                type="number"
                                                 name="phone"
                                                 placeholder=" 00 000 00 00"
                                                 value={values.phone}

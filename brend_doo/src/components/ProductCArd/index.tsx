@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function ProductCard({ data, issale = false, bg }: Props) {
-    console.log('ProductCard111', data);
+    console.log('ProductCard', data);
     const queryClient = useQueryClient();
     const [isliked, setisliked] = useState<boolean>(false);
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
@@ -48,7 +48,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         [lang]
     );
     console.log('basked', basked);
-    const addToBasket = async (data: {
+    const addToBasket = async (Data: {
         product_id: number;
         quantity: number;
         price: number;
@@ -58,24 +58,34 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         const response = await axios.post(
             'https://brendo.avtoicare.az/api/basket_items',
             {
-                product_id: data.product_id,
-                quantity: data.quantity,
-                price: data.price,
-                options: [
-                    // {
-                    //     filter_id: 1,
-                    //     option_id: 2,
-                    // },
-                    // {
-                    //     filter_id: 2,
-                    //     option_id: 5,
-                    // },
-                ],
+                product_id: Data.product_id,
+                quantity: Data.quantity,
+                price: Data.price,
+                options:
+                    data?.filters && data?.filters.length > 0
+                        ? data?.filters.map((filter) => {
+                              const defoultOption = filter.options.find(
+                                  (item) => +item.is_default === 1
+                              );
+                              return {
+                                  filter_id: filter.filter_id,
+                                  option_id: defoultOption?.option_id,
+                                  // {
+                                  //     filter_id: 1,
+                                  //     option_id: 2,
+                                  // },
+                                  // {
+                                  //     filter_id: 2,
+                                  //     option_id: 5,
+                                  // },
+                              };
+                          })
+                        : [],
             },
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${data.token}`,
+                    Authorization: `Bearer ${Data.token}`,
                 },
             }
         );
@@ -304,7 +314,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                 {data?.discount && (
                     <div className="bg-[#FF3C79] text-white px-3 py-2  h-fit rounded-full  absolute top-6 left-6 flex justify-center items-center">
                         <p className="text-[12px]  font-medium leading-[14px]">
-                            {data?.discount}% endirim
+                            {data?.discount}% {translation?.endirim}
                         </p>{' '}
                     </div>
                 )}
@@ -323,9 +333,25 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                                 const userStr =
                                     localStorage.getItem('user-info');
                                 if (userStr) {
-                                    setvariant(2);
+                                    if (
+                                        data.filters.find(
+                                            (item) =>
+                                                item.filter_name === 'Size' ||
+                                                item.filter_name === 'Размер'
+                                        )
+                                    ) {
+                                        setvariant(2);
+                                    } else {
+                                        setvariant(3);
+                                    }
                                 } else {
-                                    navigate(`/${lang}/login`);
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.login[
+                                                lang as keyof typeof ROUTES.login
+                                            ]
+                                        }`
+                                    );
                                 }
                             }}
                             className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-16 py-3.5 text-base font-medium text-white bg-blue-600 max-w-[301px] rounded-[100px] duration-300 ${

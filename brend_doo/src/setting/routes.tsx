@@ -44,6 +44,10 @@ const ROUTES: { [key: string]: Route } = {
         en: 'orders',
         ru: 'zakazi',
     },
+    orderdetail: {
+        en: 'orderdetail',
+        ru: 'zakazvnutrennaya',
+    },
     ordersConfirm: {
         en: 'ordersConfirm',
         ru: 'podtverjdeniyaZakaza',
@@ -68,6 +72,15 @@ const ROUTES: { [key: string]: Route } = {
         en: 'register',
         ru: 'zareqistrirovatsya',
     },
+    resetPasword: {
+        en: 'resetPasword',
+        ru: 'pomenyatParol',
+    },
+    resetPaswordSucses: {
+        en: 'resetPaswordSucses',
+        ru: 'uspesnayaZamenaParolya',
+    },
+    password_reset_confrim: { en: 'password-reset', ru: 'password-reset' },
 
     // services: {
     //     en: 'services',

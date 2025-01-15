@@ -11,7 +11,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ProductSwipper2 from '../components/ProductSwipper2/index.tsx';
 import GETRequest from '../setting/Request.ts';
 import {
-    Advanteges,
+    // Advanteges,
     Brand,
     Category,
     Holideys,
@@ -23,7 +23,7 @@ import {
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
-// import Loading from '../components/Loading/index.tsx';
+import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
         useState<any>(false);
     const [isIstagramSwippen, setIsIstagramSwippen] = useState<boolean>(false);
     const [currentSlide, setCurrentSlide] = useState<number>(0);
-    // const [currentCategoryId, setCurrentCategoryId] = useState<number>(0);
+    // const [currentCategory, setCurrentCategory] = useState<number>(0);
     //language
 
     const navigate = useNavigate();
@@ -54,9 +54,9 @@ export default function Home() {
     const { data: tarnslation, isLoading: tarnslationLoading } =
         GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
 
-    const { data: advantages, isLoading: advantagesLoading } = GETRequest<
-        Advanteges[]
-    >(`/advantages`, 'HOMEadvantages', [lang]);
+    // const { data: advantages, isLoading: advantagesLoading } = GETRequest<
+    //     Advanteges[]
+    // >(`/advantages`, 'HOMEadvantages', [lang]);
 
     const { data: brends, isLoading: brendsLoading } = GETRequest<Brand[]>(
         `/brands`,
@@ -81,7 +81,6 @@ export default function Home() {
     const { data: sesionProducts, isLoading: sesionLoading } =
         GETRequest<ProductResponse>(`/products?is_season=1`, 'products', [
             lang,
-            category_id,
         ]);
     const { data: productsByCategory } = GETRequest<HomeCategory[]>(
         `/home_categories`,
@@ -105,38 +104,38 @@ export default function Home() {
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
     // loading
-    console.log(
-        heroLoading ||
-            holidayBannersLoading ||
-            advantagesLoading ||
-            brendsLoading ||
-            tarnslationLoading ||
-            tiktokLoading ||
-            categoriesLoading ||
-            instragramsLoading ||
-            discountedProductsLoading ||
-            specialLoading ||
-            loginBannersLoading ||
-            sesionLoading
-    );
+    // console.log(
+    //     heroLoading ||
+    //         holidayBannersLoading ||
+    //         advantagesLoading ||
+    //         brendsLoading ||
+    //         tarnslationLoading ||
+    //         tiktokLoading ||
+    //         categoriesLoading ||
+    //         instragramsLoading ||
+    //         discountedProductsLoading ||
+    //         specialLoading ||
+    //         loginBannersLoading ||
+    //         sesionLoading
+    // );
 
     const router = useNavigate();
-    // if (
-    //     heroLoading ||
-    //     holidayBannersLoading ||
-    //     advantagesLoading ||
-    //     brendsLoading ||
-    //     tarnslationLoading ||
-    //     tiktokLoading ||
-    //     categoriesLoading ||
-    //     instragramsLoading ||
-    //     discountedProductsLoading ||
-    //     specialLoading ||
-    //     loginBannersLoading ||
-    //     sesionLoading
-    // ) {
-    //     return <Loading />;
-    // }
+    if (
+        heroLoading ||
+        holidayBannersLoading ||
+        // advantagesLoading ||
+        brendsLoading ||
+        tarnslationLoading ||
+        tiktokLoading ||
+        categoriesLoading ||
+        instragramsLoading ||
+        discountedProductsLoading ||
+        specialLoading ||
+        loginBannersLoading ||
+        sesionLoading
+    ) {
+        return <Loading />;
+    }
 
     return (
         <div className=" relative">
@@ -159,7 +158,7 @@ export default function Home() {
                     </video>
 
                     {/* Content */}
-                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 relative z-10">
+                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:py-16 relative z-10">
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
                                 <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl">
@@ -169,7 +168,7 @@ export default function Home() {
                                         <div className="h-10 bg-gray-300 rounded animate-pulse w-3/4" />
                                     )}
                                 </h1>
-                                <div className="mt-5 text-lg font-medium max-md:max-w-full">
+                                <div className="mt-5 text-lg font-medium max-md:max-w-full max-sm:hidden">
                                     {hero ? (
                                         hero.description
                                     ) : (
@@ -195,7 +194,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
+                {/* <section className="flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     <div className="flex flex-wrap gap-10 items-center max-md:max-w-full justify-between w-full">
                         {advantages &&
                             advantages.map((advantage: Advanteges) => (
@@ -214,8 +213,8 @@ export default function Home() {
                                 </div>
                             ))}
                     </div>
-                </section>
-                <section className="mt-[100px] max-sm:mt-[52px]">
+                </section> */}
+                <section className="mt-[70px] max-sm:mt-[52px]">
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-[16px]">
                         {tarnslation?.Tiktok}{' '}
                     </h2>
@@ -227,7 +226,7 @@ export default function Home() {
                         }}
                     />{' '}
                 </section>
-                <section className="mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
+                <section className="mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
                     <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
                             {tarnslation?.Ən_çox_satılan_məhsullar}
@@ -239,11 +238,11 @@ export default function Home() {
                                 msOverflowStyle:
                                     'none' /* For Internet Explorer and Edge */,
                             }}
-                            className="flex  no-scrollbar  flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-6 justify-between max-sm:justify-around gap-3"
+                            className="flex  no-scrollbar  flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-6 justify-between max-sm:justify-around gap-3 "
                         >
                             <NoneToBlue
                                 action={() => {
-                                    // setCurrentCategoryId(0);
+                                    // setCurrentCategory(0);
                                     router(`?category_id=${0}`);
                                 }}
                                 isactive={category_id === 0}
@@ -253,7 +252,7 @@ export default function Home() {
                             {categories?.map((category: Category) => (
                                 <NoneToBlue
                                     action={() => {
-                                        // setCurrentCategoryId(index + 1);
+                                        // setCurrentCategory(category.id);
                                         router(`?category_id=${category.id}`);
                                     }}
                                     isactive={category_id === category.id}
@@ -269,7 +268,7 @@ export default function Home() {
                 {/* ----here---- */}
                 {productsByCategory?.map((item: HomeCategory, i: number) => (
                     <section
-                        className={`mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
+                        className={`mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
                             i % 2 === 1 ? '#ffffff' : '#F5F5F5'
                         }] max-sm:py-10 py-[80px]`}
                     >
@@ -300,7 +299,7 @@ export default function Home() {
                     </section>
                 ))}
                 {/* ----here---- */}
-                {/* <section className="mt-[100px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
+                {/* <section className="mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
                     <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             {tarnslation?.Eviniz_və_sizin_üçün_elektronika}{' '}
@@ -336,10 +335,16 @@ export default function Home() {
                                     <button
                                         className="gap-2.5 self-center px-10 py-4 mt-10 text-xl font-medium text-white border border-white hover:bg-[#FFFFFF] hover:text-black duration-300 border-solid rounded-[100px] max-md:px-5"
                                         onClick={() =>
-                                            navigate('/user/register')
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.product[
+                                                        lang as keyof typeof ROUTES.product
+                                                    ]
+                                                }`
+                                            )
                                         }
                                     >
-                                        {tarnslation?.login}{' '}
+                                        {tarnslation?.Məhsullara_bax}{' '}
                                     </button>
                                 </div>
                             </div>
@@ -365,7 +370,7 @@ export default function Home() {
                         }}
                     />
                 </section>
-                <section className="mt-[100px]  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
+                <section className="mt-[70px]  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
                     <ImageSwipper data={discountedProducts?.data} />
                     <div className="flex l:w-[60%] w-full overflow-hidden flex-col items-start px-12 pt-12 pb-32 rounded-3xl bg-[#8E98B8]  max-md:px-5 max-md:pb-24">
                         <div className="text-xl font-semibold text-indigo-200">
@@ -389,7 +394,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-[100px] max-sm:mt-[52px]">
+                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-[70px] max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
                             {tarnslation?.Brendlər}{' '}
@@ -420,7 +425,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="relative mt-[100px]  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                <section className="relative mt-[70px]  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0  left-0 w-full h-full object-cover -z-10"
                         autoPlay
@@ -470,7 +475,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-[100px] max-sm:mt-[52px] gap-5 w-fit">
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-[70px] max-sm:mt-[52px] gap-5 w-fit">
                     <div className="   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -537,7 +542,7 @@ export default function Home() {
                         </div>
                     ))}
                 </section>
-                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-[100px] gap-5 w-fit">
+                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-[70px] gap-5 w-fit">
                     <div className=" max-sm:px-4   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -563,7 +568,7 @@ export default function Home() {
                         </button>
                     </div>
                 </section>
-                {/* <section className="mt-[100px]  max-sm:mt-[52px] max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
+                {/* <section className="mt-[70px]  max-sm:mt-[52px] max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
                     <div className="flex flex-row flex-wrap justify-between gap-4 max-sm:px-4 ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
                             Tiktok hekayələr
