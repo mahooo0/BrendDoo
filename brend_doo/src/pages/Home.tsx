@@ -19,14 +19,12 @@ import {
     HomeHero,
     LoginBunner,
     ProductResponse,
-    Seo,
     SpecialOffer,
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
 import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
-import { Helmet } from 'react-helmet-async';
 
 export default function Home() {
     //states
@@ -105,12 +103,11 @@ export default function Home() {
     >(`/categories`, 'categories', [lang]);
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
-    const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
-        `/holidayBanners`,
-        'holidayBanners',
-        [lang]
-    );
-    const SEO = Metas?.find((item) => item.type === 'home_page');
+    // const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo>(
+    //     `/holidayBanners`,
+    //     'holidayBanners',
+    //     [lang]
+    // );
     // loading
     // console.log(
     //     heroLoading ||
@@ -129,7 +126,6 @@ export default function Home() {
 
     const router = useNavigate();
     if (
-        MetasLoading ||
         heroLoading ||
         holidayBannersLoading ||
         // advantagesLoading ||
@@ -148,21 +144,6 @@ export default function Home() {
 
     return (
         <div className=" relative">
-            <Helmet>
-                <title>{SEO?.meta_title || 'My Page Title'}</title>
-                <meta
-                    name="description"
-                    content={
-                        SEO?.meta_description || 'This is the page description'
-                    }
-                />
-                <meta
-                    name="keywords"
-                    content={
-                        SEO?.meta_keywords || 'keyword1, keyword2, keyword3'
-                    }
-                />
-            </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
