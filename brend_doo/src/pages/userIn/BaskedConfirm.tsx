@@ -1,7 +1,7 @@
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import BaskedForum from '../../components/Basked';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Basket, TranslationsKeys, User } from '../../setting/Types';
 import GETRequest from '../../setting/Request';
 import ROUTES from '../../setting/routes';
@@ -22,6 +22,8 @@ export default function BaskedConfirm() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [Body, setBody] = useState<AdditionalInfo | null>(null);
+    const navigate = useNavigate();
+
     const { data: tarnslation, isLoading: tarnslationLoading } =
         GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     const { data: basked, isLoading: baskedLoading } = GETRequest<Basket>(
@@ -176,9 +178,17 @@ export default function BaskedConfirm() {
                                                     }
                                                 )
                                                 .then(() => {
+                                                    navigate(
+                                                        `/${lang}/${
+                                                            ROUTES.BaskedSucses[
+                                                                lang as keyof typeof ROUTES.BaskedSucses
+                                                            ]
+                                                        }`
+                                                    );
                                                     toast.success(
                                                         'basked sucsesfully aded'
                                                     );
+
                                                     queryClient.invalidateQueries(
                                                         {
                                                             queryKey: [

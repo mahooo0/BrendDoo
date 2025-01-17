@@ -19,12 +19,14 @@ import {
     HomeHero,
     LoginBunner,
     ProductResponse,
+    Seo,
     SpecialOffer,
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
 import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
+import { Helmet } from 'react-helmet-async';
 
 export default function Home() {
     //states
@@ -103,6 +105,12 @@ export default function Home() {
     >(`/categories`, 'categories', [lang]);
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
+    const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
+        `/holidayBanners`,
+        'holidayBanners',
+        [lang]
+    );
+    const SEO = Metas?.find((item) => item.type === 'home_page');
     // loading
     // console.log(
     //     heroLoading ||
@@ -121,6 +129,7 @@ export default function Home() {
 
     const router = useNavigate();
     if (
+        MetasLoading ||
         heroLoading ||
         holidayBannersLoading ||
         // advantagesLoading ||
@@ -139,6 +148,21 @@ export default function Home() {
 
     return (
         <div className=" relative">
+            <Helmet>
+                <title>{SEO?.meta_title || 'My Page Title'}</title>
+                <meta
+                    name="description"
+                    content={
+                        SEO?.meta_description || 'This is the page description'
+                    }
+                />
+                <meta
+                    name="keywords"
+                    content={
+                        SEO?.meta_keywords || 'keyword1, keyword2, keyword3'
+                    }
+                />
+            </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
@@ -214,7 +238,7 @@ export default function Home() {
                             ))}
                     </div>
                 </section> */}
-                <section className="mt-[70px] max-sm:mt-[52px]">
+                <section className="mt-5  max-sm:mt-[52px]">
                     <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-[16px]">
                         {tarnslation?.Tiktok}{' '}
                     </h2>
@@ -226,7 +250,7 @@ export default function Home() {
                         }}
                     />{' '}
                 </section>
-                <section className="mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
+                <section className="mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
                     <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
                             {tarnslation?.Ən_çox_satılan_məhsullar}
@@ -268,9 +292,9 @@ export default function Home() {
                 {/* ----here---- */}
                 {productsByCategory?.map((item: HomeCategory, i: number) => (
                     <section
-                        className={`mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
+                        className={`mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
                             i % 2 === 1 ? '#ffffff' : '#F5F5F5'
-                        }] max-sm:py-10 py-[80px]`}
+                        }] max-sm:py-10 py-5`}
                     >
                         <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
                             <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
@@ -317,7 +341,7 @@ export default function Home() {
                         data={productsElektroniks?.data}
                     />
                 </section> */}
-                <section className="px-[40px] py-[100px] max-sm:px-4 max-sm:py-10">
+                <section className="px-[40px] py-5 max-sm:px-4 max-sm:py-10">
                     <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
                         <div className="flex gap-5 max-md:flex-col-reverse max-sm:py-0">
                             <div className="flex  flex-col w-[33%] max-md:ml-0  max-md:w-full">
@@ -370,7 +394,7 @@ export default function Home() {
                         }}
                     />
                 </section>
-                <section className="mt-[70px]  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
+                <section className="mt-5  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
                     <ImageSwipper data={discountedProducts?.data} />
                     <div className="flex l:w-[60%] w-full overflow-hidden flex-col items-start px-12 pt-12 pb-32 rounded-3xl bg-[#8E98B8]  max-md:px-5 max-md:pb-24">
                         <div className="text-xl font-semibold text-indigo-200">
@@ -394,7 +418,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-[70px] max-sm:mt-[52px]">
+                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-5 max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
                             {tarnslation?.Brendlər}{' '}
@@ -425,7 +449,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="relative mt-[70px]  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0  left-0 w-full h-full object-cover -z-10"
                         autoPlay
@@ -475,7 +499,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-[70px] max-sm:mt-[52px] gap-5 w-fit">
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-fit">
                     <div className="   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -542,7 +566,7 @@ export default function Home() {
                         </div>
                     ))}
                 </section>
-                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-[70px] gap-5 w-fit">
+                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-5 gap-5 w-fit">
                     <div className=" max-sm:px-4   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -568,21 +592,6 @@ export default function Home() {
                         </button>
                     </div>
                 </section>
-                {/* <section className="mt-[70px]  max-sm:mt-[52px] max-sm:px-0  max-sm:py-10 px-[40px]  bg-[#F5F5F5] py-[80px]">
-                    <div className="flex flex-row flex-wrap justify-between gap-4 max-sm:px-4 ">
-                        <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
-                            Tiktok hekayələr
-                        </h2>
-                        <button
-                            className="rounded-[100px] max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:px-[0px] max-sm:border-none max-sm:underline duration-300 leading-[20px] h-fit bg-[#3873C3] cursor-pointer text-white px-[28px] py-[14px] border border-black border-opacity-10"
-                            onClick={() => navigate('/producs')}
-                        >
-                            {' '}
-                            Hamısına bax
-                        </button>{' '}
-                    </div>
-                    <ProductSwipper bg="white" />
-                </section> */}
             </main>
             <Footer />
             {/* <GrabCursorSwiper /> */}

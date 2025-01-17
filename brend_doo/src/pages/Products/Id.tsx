@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import ROUTES from '../../setting/routes';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
 function extractData(input: string) {
     const match = input.match(/(\d+)% \((\d+)\)/);
     if (match) {
@@ -100,6 +101,23 @@ export default function ProductId() {
     }
     return (
         <div className="">
+            <Helmet>
+                <title>{Productslingle?.meta_title || 'My Page Title'}</title>
+                <meta
+                    name="description"
+                    content={
+                        Productslingle?.meta_description ||
+                        'This is the page description'
+                    }
+                />
+                <meta
+                    name="keywords"
+                    content={
+                        Productslingle?.meta_keywords ||
+                        'keyword1, keyword2, keyword3'
+                    }
+                />
+            </Helmet>
             <Header />
             <main className=" lg:mt-[54px] mt-0 max-sm:mt-3">
                 <div className="px-[40px] max-sm:px-4">

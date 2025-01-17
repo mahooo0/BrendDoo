@@ -453,6 +453,7 @@ export default function Products() {
                             </div>
                         </div>
                         <div className="relative self-center mt-20 mb-0 text-4xl font-semibold text-white max-md:mt-10 max-md:mb-2.5 max-md:max-w-full">
+                            {tarnslation?.Məhsullar_hero}
                             \Все продукты, которые вы ищете
                         </div>
                     </div>

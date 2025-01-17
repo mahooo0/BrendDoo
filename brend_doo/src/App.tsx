@@ -28,6 +28,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import InnerPageByLang from './pages/Maincontrollers/InnerPagebyLang';
 import { RecoilRoot } from 'recoil';
 import { useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 
 const App = () => {
     // const location = useLocation(); // Hook to get the current route
@@ -41,44 +42,55 @@ const App = () => {
     return (
         //PODUCTS
         //ROUTE LANGS
-        <RecoilRoot>
-            <QueryClientProvider client={queryClient}>
-                <ReactQueryDevtools initialIsOpen={false} />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/:lang/:page" element={<PageByLang />} />
-                    <Route
-                        path="/:lang/:page/:slug"
-                        element={<InnerPageByLang />}
-                    />
-                    <Route path="/poducts" element={<Products />} />
-                    <Route path="/products/:id" element={<ProductId />} />
-                    <Route path="/aboutus" element={<Aboutus />} />
-                    <Route path="/liked" element={<Liked />} />
-                    <Route path="/brends" element={<Brends />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/userrules" element={<UserRules />} />
-                    <Route path="/deliveryrules" element={<DeliveryRules />} />
-                    <Route path="/user/login" element={<Login />} />
-                    <Route path="/user/register" element={<Register />} />
-                    <Route path="/user/newPassword" element={<Password />} />
-                    <Route path="/user" element={<UserSettings />} />
-                    <Route path="/user/liked" element={<UserLiked />} />
-                    <Route
-                        path="/user/notifications"
-                        element={<Notification />}
-                    />
-                    <Route path="/user/orders" element={<Order />} />
-                    <Route path="/user/orders/:id" element={<OrderId />} />
-                    <Route
-                        path="/user/basked/confirm"
-                        element={<BaskedConfirm />}
-                    />
-                    <Route path="/basked/sifarislerim" element={<Basked />} />
-                </Routes>{' '}
-                <Toaster />
-            </QueryClientProvider>{' '}
-        </RecoilRoot>
+        <HelmetProvider>
+            <RecoilRoot>
+                <QueryClientProvider client={queryClient}>
+                    <ReactQueryDevtools initialIsOpen={false} />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/:lang/:page" element={<PageByLang />} />
+                        <Route
+                            path="/:lang/:page/:slug"
+                            element={<InnerPageByLang />}
+                        />
+                        <Route path="/poducts" element={<Products />} />
+                        <Route path="/products/:id" element={<ProductId />} />
+                        <Route path="/aboutus" element={<Aboutus />} />
+                        <Route path="/liked" element={<Liked />} />
+                        <Route path="/brends" element={<Brends />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/userrules" element={<UserRules />} />
+                        <Route
+                            path="/deliveryrules"
+                            element={<DeliveryRules />}
+                        />
+                        <Route path="/user/login" element={<Login />} />
+                        <Route path="/user/register" element={<Register />} />
+                        <Route
+                            path="/user/newPassword"
+                            element={<Password />}
+                        />
+                        <Route path="/user" element={<UserSettings />} />
+                        <Route path="/user/liked" element={<UserLiked />} />
+                        <Route
+                            path="/user/notifications"
+                            element={<Notification />}
+                        />
+                        <Route path="/user/orders" element={<Order />} />
+                        <Route path="/user/orders/:id" element={<OrderId />} />
+                        <Route
+                            path="/user/basked/confirm"
+                            element={<BaskedConfirm />}
+                        />
+                        <Route
+                            path="/basked/sifarislerim"
+                            element={<Basked />}
+                        />
+                    </Routes>{' '}
+                    <Toaster />
+                </QueryClientProvider>{' '}
+            </RecoilRoot>
+        </HelmetProvider>
     );
 };
 

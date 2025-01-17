@@ -19,6 +19,7 @@ import ORder from '../userIn/Order';
 import Register from '../userIn/register';
 import Password from '../userIn/Pasword';
 import SucsesPassword from '../userIn/sucsesPasword';
+import Sucses from '../Sucses';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
@@ -78,6 +79,9 @@ const PageByLang: React.FC = () => {
         page === ROUTES.resetPaswordSucses.ru
     ) {
         return <SucsesPassword />;
+    }
+    if (page === ROUTES.BaskedSucses.en || page === ROUTES.BaskedSucses.ru) {
+        return <Sucses />;
     }
 
     return (

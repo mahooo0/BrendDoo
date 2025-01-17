@@ -80,6 +80,10 @@ const ROUTES: { [key: string]: Route } = {
         en: 'resetPaswordSucses',
         ru: 'uspesnayaZamenaParolya',
     },
+    BaskedSucses: {
+        en: 'BaskedSucses',
+        ru: 'uspesnayapokupka',
+    },
     password_reset_confrim: { en: 'password-reset', ru: 'password-reset' },
 
     // services: {

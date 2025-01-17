@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Basket, Product, TranslationsKeys } from '../../setting/Types';
+import {
+    Basket,
+    Favorite,
+    Product,
+    TranslationsKeys,
+} from '../../setting/Types';
 import ROUTES from '../../setting/routes';
-import GETRequest from '../../setting/Request';
+import GETRequest, { axiosInstance } from '../../setting/Request';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -25,8 +30,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     // const [refetchBaskedState, setRefetchBaskedState] =
     //     useRecoilState<boolean>(RefetchBasked);
     const checkLikedProducts = () => {
-        const likedProducts = localStorage.getItem('liked_Produckts');
-        if (likedProducts && likedProducts.includes(`${data?.id}`)) {
+        if (favorites?.some((item) => item.product.id === data?.id)) {
             setisliked(true);
         } else {
             setisliked(false);
@@ -42,6 +46,12 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         'translates',
         [lang]
     );
+    const { data: favorites } = GETRequest<Favorite[]>(
+        `/favorites`,
+        'favorites',
+        [lang]
+    );
+
     const { data: basked } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
@@ -110,20 +120,20 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         checkLikedProducts();
 
         // Listener for storage changes across tabs
-        const handleStorageChange = (e: any) => {
-            if (e.key === 'liked_Produckts') {
-                checkLikedProducts();
-            }
-        };
+        // const handleStorageChange = (e: any) => {
+        //     if (e.key === 'liked_Produckts') {
+        //         checkLikedProducts();
+        //     }
+        // };
 
-        // Add storage event listener
-        window.addEventListener('storage', handleStorageChange);
+        // // Add storage event listener
+        // window.addEventListener('storage', handleStorageChange);
 
-        // Cleanup listener on unmount
-        return () => {
-            window.removeEventListener('storage', handleStorageChange);
-        };
-    }, [data?.id]);
+        // // Cleanup listener on unmount
+        // return () => {
+        //     window.removeEventListener('storage', handleStorageChange);
+        // };
+    }, [favorites]);
 
     // For same-tab updates
     useEffect(() => {
@@ -267,32 +277,46 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                 />
                 <div
                     className="bg-[#FFFFFF99]  rounded-full w-11 h-11 absolute top-6 right-6 flex justify-center items-center"
-                    onClick={() => {
-                        const liked_Produckts =
-                            localStorage.getItem('liked_Produckts');
-
-                        if (liked_Produckts) {
-                            if (liked_Produckts.includes(`${data.id}`)) {
-                                const likedAreyy = liked_Produckts.split(',');
-
-                                const newLikedArey = likedAreyy.filter((item) =>
-                                    item === `${data.id}` ? 0 : 1
-                                );
-                                localStorage.setItem(
-                                    'liked_Produckts',
-                                    newLikedArey.join(',')
-                                );
-                            } else {
-                                console.log('isnt includes');
-                                localStorage.setItem(
-                                    'liked_Produckts',
-                                    `${liked_Produckts},${data.id}`
-                                );
+                    onClick={async () => {
+                        const userStr = localStorage.getItem('user-info');
+                        if (userStr) {
+                            const User = JSON.parse(userStr);
+                            if (User) {
+                                axiosInstance
+                                    .post(
+                                        '/favorites/toggleFavorite',
+                                        { product_id: data.id },
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${User.data.token}`,
+                                                Accept: 'application/json',
+                                            },
+                                        }
+                                    )
+                                    .then(() => {
+                                        // toast.success(
+                                        //     'Product is sucsesfully aded to favorites'
+                                        // );
+                                        if (isliked) {
+                                            setisliked(false);
+                                        } else {
+                                            setisliked(true);
+                                        }
+                                        queryClient.invalidateQueries({
+                                            queryKey: ['favorites'],
+                                        });
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
                             }
                         } else {
-                            localStorage.setItem(
-                                'liked_Produckts',
-                                `${data.id}`
+                            navigate(
+                                `/${lang}/${
+                                    ROUTES.login[
+                                        lang as keyof typeof ROUTES.login
+                                    ]
+                                }`
                             );
                         }
                     }}

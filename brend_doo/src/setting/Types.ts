@@ -356,6 +356,7 @@ export type Basket = {
     final_price: number;
 };
 export type Order = {
+    order_items_count: number;
     id: number;
     order_number: string;
     status: string;
@@ -368,4 +369,26 @@ export type Order = {
     final_price: string;
     order_date: string;
     order_items: BasketItem[];
+};
+export type Reasons = {
+    title: string;
+    id: number;
+};
+export type TopLine = {
+    data: {
+        id: number;
+        title: string;
+    } | null;
+    top_line: boolean;
+};
+export type Favorite = {
+    id: number;
+    product: Product;
+};
+export type Seo = {
+    id: number;
+    type: string;
+    meta_title: string;
+    meta_description: string;
+    meta_keywords: string;
 };

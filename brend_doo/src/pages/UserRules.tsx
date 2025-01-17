@@ -2,8 +2,9 @@ import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 import GETRequest from '../setting/Request';
 import { Link, useParams } from 'react-router-dom';
-import { RulesType, TranslationsKeys } from '../setting/Types';
+import { RulesType, Seo, TranslationsKeys } from '../setting/Types';
 import Loading from '../components/Loading';
+import { Helmet } from 'react-helmet-async';
 
 export default function UserRules() {
     const { lang } = useParams<{ lang: string }>();
@@ -14,9 +15,30 @@ export default function UserRules() {
     );
     const { data: tarnslation, isLoading: tarnslationLoading } =
         GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
-    if (ruleLoading || tarnslationLoading) return <Loading />;
+    const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
+        `/holidayBanners`,
+        'holidayBanners',
+        [lang]
+    );
+    const SEO = Metas?.find((item) => item.type === 'UserRules');
+    if (ruleLoading || tarnslationLoading || MetasLoading) return <Loading />;
     return (
         <div className="">
+            <Helmet>
+                <title>{SEO?.meta_title || 'My Page Title'}</title>
+                <meta
+                    name="description"
+                    content={
+                        SEO?.meta_description || 'This is the page description'
+                    }
+                />
+                <meta
+                    name="keywords"
+                    content={
+                        SEO?.meta_keywords || 'keyword1, keyword2, keyword3'
+                    }
+                />
+            </Helmet>
             <Header />
             <main className=" lg:mt-[40px]  px-[40px] max-sm:px-4 mb-[100px]  mt-6">
                 <div className="">

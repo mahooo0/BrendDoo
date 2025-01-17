@@ -1,49 +1,55 @@
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import ProductCard from '../../components/ProductCArd';
-import { Product } from '../../setting/Types';
+import { Favorite } from '../../setting/Types';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import Loading from '../../components/Loading';
-import { useQuery } from '@tanstack/react-query';
+import GETRequest from '../../setting/Request';
 
 export default function UserLiked() {
     const { lang = 'ru' } = useParams<{
         lang: string;
     }>();
-    const { data: LikedProducts, isLoading: LikedProductsLOading } = useQuery<
-        Product[]
-    >({
-        queryKey: ['LikedProducts'],
-        queryFn: async () => {
-            try {
-                const Liked_Products_string =
-                    localStorage.getItem('liked_Produckts');
-                const data = await axios
-                    .post(
-                        'https://brendo.avtoicare.az/api/getProducts',
-                        {
-                            product_ids: Liked_Products_string?.split(','),
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept-Language': lang,
+    const { data: favorites, isLoading: loading } = GETRequest<Favorite[]>(
+        `/favorites`,
+        'favorites',
+        [lang]
+    );
+    // const { data: LikedProducts, isLoading: LikedProductsLOading } = useQuery<
+    //     Product[]
+    // >({
+    //     queryKey: ['LikedProducts'],
+    //     queryFn: async () => {
+    //         try {
+    //             const Liked_Products_string =
+    //                 localStorage.getItem('liked_Produckts');
+    //             const data = await axios
+    //                 .post(
+    //                     'https://brendo.avtoicare.az/api/getProducts',
+    //                     {
+    //                         product_ids: Liked_Products_string?.split(','),
+    //                     },
+    //                     {
+    //                         headers: {
+    //                             'Content-Type': 'application/json',
+    //                             'Accept-Language': lang,
 
-                                Authorization: `Bearer YOUR_ACCESS_TOKEN`,
-                            },
-                        }
-                    )
-                    .then((res) => res.data);
-                return data;
-            } catch (error) {
-                // toast.error('Error occurred');
-                console.log(error, ``);
-                throw error;
-            }
-        },
-    });
-    if (LikedProductsLOading) {
+    //                             Authorization: `Bearer YOUR_ACCESS_TOKEN`,
+    //                         },
+    //                     }
+    //                 )
+    //                 .then((res) => res.data);
+    //             return data;
+    //         } catch (error) {
+    //             // toast.error('Error occurred');
+    //             console.log(error, ``);
+    //             throw error;
+    //         }
+    //     },
+    // });
+    console.log('favorites', favorites);
+
+    if (loading) {
         return <Loading />;
     }
     return (
@@ -57,8 +63,8 @@ export default function UserLiked() {
                         Bəyəndiklərim
                     </h1>
                     <div className=" grid lg:grid-cols-3 md:grid-cols-2   grid-cols-1 justify-items-center w-full gap-5 ">
-                        {LikedProducts?.map((item: Product) => (
-                            <ProductCard bg="white" data={item} />
+                        {favorites?.map((item: Favorite) => (
+                            <ProductCard bg="white" data={item.product} />
                         ))}
                     </div>
                 </div>

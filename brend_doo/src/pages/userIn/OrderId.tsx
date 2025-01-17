@@ -2,11 +2,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import GETRequest from '../../setting/Request';
-import { Order } from '../../setting/Types';
+import { Order, TranslationsKeys } from '../../setting/Types';
 import Loading from '../../components/Loading';
+import { cn } from '../../utils/cn';
+import RatingModal from '../../components/rating-modal/rating-modal';
+import { useState } from 'react';
+import CancelModal from '../../components/Modal_censel/modal';
+import ChageAdressModal from '../../components/Change-Adress-Modal';
 
 export default function OrderId() {
     const navigate = useNavigate();
+    const [ProductCommit, setProductCommit] = useState<number>(0);
+    const [Delete, setDelete] = useState<boolean>(false);
+    const [changeadress, setchangeadress] = useState<boolean>(false);
+
     const { lang, slug } = useParams<{
         lang: string;
         page: string;
@@ -17,9 +26,11 @@ export default function OrderId() {
         'getOrderItem',
         [lang]
     );
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     console.log('Order', Order);
 
-    if (OrderLoading) {
+    if (OrderLoading || tarnslationLoading) {
         <Loading />;
     }
     return (
@@ -40,23 +51,77 @@ export default function OrderId() {
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/4e16fbda98176a2fcfc899b69e0f7e3fea7dc9adeb9c74702a0323a7762de95d?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                 />
-                                <div className="self-stretch my-auto">Geri</div>
+                                <div className="self-stretch my-auto">
+                                    {tarnslation?.Geri}
+                                </div>
                             </div>
                             <div className="mt-5 text-3xl font-semibold text-black">
-                                Sifarişim
+                                {tarnslation?.Sifarişim}
                             </div>
                         </div>
 
                         <div className="flex max-md:hidden flex-nowrap gap-2 items-center mt-10 w-full ">
-                            <div>
-                                <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500 " />
-                            </div>
-                            <div className="flex shrink-0 self-stretch my-auto bg-green-500 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
-                            <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500" />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto w-4 h-4  ',
+                                    Order?.status === 'ordered'
+                                        ? 'bg-green-500 rounded-full fill-green-500'
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]',
+                                    Order?.status === 'prepared'
+                                        ? 'bg-green-500 '
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto w-4 h-4  ',
+                                    Order?.status === 'prepared'
+                                        ? 'bg-green-500 rounded-full fill-green-500'
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]',
+                                    Order?.status === 'delivered_to_courier'
+                                        ? 'bg-green-500 '
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto w-4 h-4  ',
+                                    Order?.status === 'delivered_to_courier'
+                                        ? 'bg-green-500 rounded-full fill-green-500'
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]',
+                                    Order?.status === 'delivered'
+                                        ? 'bg-green-500 '
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            <div
+                                className={cn(
+                                    'flex shrink-0 self-stretch my-auto w-4 h-4  ',
+                                    Order?.status === 'delivered'
+                                        ? 'bg-green-500 rounded-full fill-green-500'
+                                        : 'bg-neutral-200'
+                                )}
+                            />
+                            {/* <div className="flex shrink-0 self-stretch my-auto w-4 h-4 bg-green-500 rounded-full fill-green-500" />
                             <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
                             <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
                             <div className="flex shrink-0 self-stretch my-auto bg-neutral-200 h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]" />
-                            <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" />
+                            <div className="flex shrink-0 self-stretch my-auto w-4 h-4 rounded-full bg-neutral-200" /> */}
                         </div>
                         <div className="flex flex-wrap flex-row max-sm:flex-col    gap-2 justify-between self-stretch mt-3 w-full max-md:max-w-full">
                             <div className="flex flex-row gap-3">
@@ -64,7 +129,7 @@ export default function OrderId() {
 
                                 <div className="flex flex-col">
                                     <div className="text-sm w-fit text-black">
-                                        Sifariş verildi
+                                        {tarnslation?.Sifariş_verildi}
                                     </div>
                                     <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                         05.02.2024
@@ -76,7 +141,7 @@ export default function OrderId() {
 
                                 <div className="flex flex-col">
                                     <div className="text-sm w-fit text-black">
-                                        Sifariş verildi
+                                        {tarnslation?.Sifariş_hazırlanır}
                                     </div>
                                     <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                         05.02.2024
@@ -88,7 +153,7 @@ export default function OrderId() {
 
                                 <div className="flex flex-col">
                                     <div className="text-sm w-fit text-black">
-                                        Sifariş verildi
+                                        {tarnslation?.Kuryerə_verildi}
                                     </div>
                                     <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                         05.02.2024
@@ -100,7 +165,7 @@ export default function OrderId() {
 
                                 <div className="flex flex-col">
                                     <div className="text-sm w-fit text-black">
-                                        Sifariş verildi
+                                        {tarnslation?.Çatdırıldı}
                                     </div>
                                     <div className="mt-1.5 text-xs w-fit text-black text-opacity-60">
                                         05.02.2024
@@ -125,38 +190,30 @@ export default function OrderId() {
                     </div>
                     <div className="flex flex-col font-semibold text-[16px] mt-[60px]">
                         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 items-center w-full max-md:max-w-full">
-                            {Array.from({ length: 4 }).map(() => (
+                            {Order?.order_items.map((item) => (
                                 <div className="flex gap-3 items-center flex-wrap">
                                     <img
                                         loading="lazy"
-                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
+                                        src={item.product.image}
+                                        className="object-cover shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
                                     />
                                     <div className="flex flex-col justify-center self-stretch my-auto">
                                         <div className="text-sm text-black text-wrap">
-                                            Zara iki tərəfli kolleksiya pencək
+                                            {item.product.title}{' '}
                                         </div>
-                                        <div className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                                            Məhsulu dəyərləndir
-                                        </div>
+                                        <button
+                                            className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto"
+                                            onClick={() =>
+                                                setProductCommit(
+                                                    item.product.id
+                                                )
+                                            }
+                                        >
+                                            {tarnslation?.Məhsulu_dəyərləndir}
+                                        </button>
                                     </div>
                                 </div>
                             ))}
-                            <div className="flex gap-3 items-center flex-wrap">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f1aada38d8237e05e2eb26c676da63e1b69441ab9b1939b0dbd88f9da64a5a5c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto rounded-3xl aspect-[1.12] w-[134px]"
-                                />
-                                <div className="flex flex-col justify-center self-stretch my-auto">
-                                    <div className="text-sm text-black text-wrap">
-                                        Zara iki tərəfli kolleksiya pencək
-                                    </div>
-                                    <div className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
-                                        Məhsulu dəyərləndir
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div className="flex overflow-hidden max-sm:justify-center flex-wrap gap-10 px-6 py-5 rounded-3xl bg-white bg-opacity-80  justify-between max-md:pr-5 mt-4">
@@ -169,29 +226,29 @@ export default function OrderId() {
                                 />
                                 <div className="flex flex-col self-stretch my-auto">
                                     <div className="text-xs text-black text-opacity-60">
-                                        Sifariş nömrəsi:
+                                        {tarnslation?.Sifariş_nömrəsi}:
                                     </div>
                                     <div className="mt-2 text-base text-black">
-                                        23232323
+                                        {Order?.order_number}
                                     </div>
                                 </div>
                             </div>
                             <div className="shrink-0 self-stretch my-auto w-0 h-11 border border-solid border-zinc-300" />
                             <div className="flex flex-col self-stretch my-auto">
                                 <div className="text-xs text-black text-opacity-60">
-                                    Sifariş tarixi:{' '}
+                                    {tarnslation?.Sifariş_tarixi}:{' '}
                                 </div>
                                 <div className="mt-2 text-base text-black">
-                                    12.07.2024
+                                    {Order?.order_date}
                                 </div>
                             </div>
                             <div className="shrink-0 self-stretch my-auto w-0 h-11 border border-solid border-zinc-300" />
                             <div className="flex flex-col self-stretch my-auto">
                                 <div className="text-xs text-black text-opacity-60">
-                                    Məhsul sayı
+                                    {tarnslation?.Məhsul_sayı}:{' '}
                                 </div>
                                 <div className="mt-2 text-base text-black">
-                                    3 məhsul
+                                    {Order?.order_items_count}
                                 </div>
                             </div>
                         </div>
@@ -202,14 +259,14 @@ export default function OrderId() {
                                 className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                             />
                             <div className="self-stretch my-auto">
-                                Faktura yüklə
+                                Faktura yüklə ///make it worck
                             </div>
                         </button>
                     </div>
                     <div className="flex flex-col mt-[30px]">
                         <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-t-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
                             <div className="self-stretch my-auto max-sm:hidden">
-                                Çatdırılma məlumatları:
+                                {tarnslation?.Çatdırılma_məlumatları}:
                             </div>
                             <div className="self-stretch my-auto">
                                 Ödəniş məlumatları:
@@ -241,7 +298,12 @@ export default function OrderId() {
                                                 24 A. mənzi 45
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 items-center self-start py-0.5 mt-5 text-sm font-medium text-blue-600 border-b border-solid border-b-blue-600">
+                                        <button
+                                            className="flex gap-2 items-center self-start py-0.5 mt-5 text-sm font-medium text-blue-600 border-b border-solid border-b-blue-600"
+                                            onClick={() =>
+                                                setchangeadress(true)
+                                            }
+                                        >
                                             <div className="self-stretch my-auto">
                                                 Ünvan məlumatların dəyiş
                                             </div>
@@ -250,7 +312,7 @@ export default function OrderId() {
                                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/0526326e93674398bc67c3737a2087d7b05c1e7206ef11005491f94e8cb5b1f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                                 className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
                                             />
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="flex flex-col ml-5 w-[56%] max-md:ml-0 max-md:w-full">
@@ -287,9 +349,12 @@ export default function OrderId() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center mt-[40px]">
-                        <div className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]">
-                            Sifarişi ləğ et
-                        </div>
+                        <button
+                            onClick={() => setDelete(true)}
+                            className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]"
+                        >
+                            {tarnslation?.Sifarişin_ləğvi}
+                        </button>
                         <div className="flex gap-2 items-center mt-3.5 text-xs text-black text-opacity-80">
                             <img
                                 loading="lazy"
@@ -297,12 +362,32 @@ export default function OrderId() {
                                 className="object-contain shrink-0 self-stretch my-auto w-4 aspect-square"
                             />
                             <div className="self-stretch my-auto">
-                                Sifariş hazırlanma mərhələsinə qədər ləğv edilə
-                                bilər.
+                                {tarnslation?.Sifariş_hazırlanma}
                             </div>
                         </div>
                     </div>
                 </div>
+                {ProductCommit > 0 && (
+                    <RatingModal
+                        ProductCommit={ProductCommit}
+                        onClose={() => {
+                            setProductCommit(0);
+                        }}
+                    />
+                )}
+                {Delete && (
+                    <CancelModal
+                        onClose={() => {
+                            setDelete(false);
+                        }}
+                    />
+                )}{' '}
+                <ChageAdressModal
+                    isOpen={changeadress}
+                    onClose={() => {
+                        setchangeadress(false);
+                    }}
+                />
             </main>
         </div>
     );

@@ -9,6 +9,7 @@ import {
     Product,
     ProductResponse,
     SubCategory,
+    TopLine,
     TranslationsKeys,
 } from '../../setting/Types';
 import axios from 'axios';
@@ -270,6 +271,9 @@ export default function Header() {
         'basket_items',
         [lang, refetchBaskedState]
     );
+    const { data: top_line } = GETRequest<TopLine>(`/top_line`, 'top_line', [
+        lang,
+    ]);
     console.log('basked:', basked);
 
     useEffect(() => {
@@ -279,9 +283,12 @@ export default function Header() {
     return (
         <div className="  block w-full z-[99999999999] top-0 min-h-[68px]">
             <div className=" lg:flex hidden flex-col relative bg-white">
-                <div className="w-full bg-[#3873C3] h-[40px] text-center text-[14px] font-normal text-white flex items-center justify-center">
-                    p5 noyabr-25 noyabr 30% endirim
-                </div>
+                {top_line?.top_line && (
+                    <div className="w-full bg-[#3873C3] h-[40px] text-center text-[14px] font-normal text-white flex items-center justify-center">
+                        {top_line.data?.title}
+                    </div>
+                )}
+
                 <div className="flex overflow-hidden flex-wrap gap-5  justify-between items-center px-10 py-2.5 w-full text-black border-b border-black border-opacity-10 max-md:px-5 max-md:max-w-full">
                     <Link
                         className="w-[200px]"
@@ -939,13 +946,52 @@ export default function Header() {
                             </div>
                         ) : (
                             <>
-                                <div className="flex flex-col items-center justify-center h-full">
-                                    <div className="text-lg font-semibold text-gray-500">
-                                        {!baskedLoading
-                                            ? 'Your basket is empty.'
-                                            : 'Loading...'}
+                                {baskedLoading ? (
+                                    <>
+                                        <div className="overflow-y-scroll h-[40vh] px-[24px]">
+                                            {[1, 2, 3].map((item) => (
+                                                <div key={item}>
+                                                    <div className="flex gap-8 items-center mt-[4px] justify-between max-md:max-w-full mx-[40px]">
+                                                        <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
+                                                            {/* Image skeleton */}
+                                                            <div className="animate-pulse bg-gray-200 rounded-3xl h-[100px] w-[100px]" />
+                                                            <div className="flex flex-col self-stretch my-auto w-[152px]">
+                                                                {/* Title skeleton */}
+                                                                <div className="w-full h-4 bg-gray-200 rounded animate-pulse" />
+                                                                {/* Options skeleton */}
+                                                                <div className="flex gap-3 items-start mt-2.5">
+                                                                    <div className="h-3 bg-gray-200 rounded w-12 animate-pulse" />
+                                                                    <div className="h-3 bg-gray-200 rounded w-12 animate-pulse" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {/* Quantity controls skeleton */}
+                                                        <div className="flex gap-1 items-center self-stretch my-auto">
+                                                            <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse" />
+                                                            <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse" />
+                                                            <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse" />
+                                                        </div>
+                                                    </div>
+                                                    {/* Price and remove button skeleton */}
+                                                    <div className="flex gap-5 justify-between mt-3 w-full max-w-[431px] max-md:max-w-full mx-[40px]">
+                                                        <div className="flex gap-10 items-center self-start">
+                                                            <div className="h-5 bg-gray-200 rounded w-16 animate-pulse" />
+                                                        </div>
+                                                        <div className="w-7 h-7 bg-gray-200 rounded animate-pulse" />
+                                                    </div>
+                                                    {/* Divider */}
+                                                    <div className="mx-[40px] shrink-0 mt-4 max-w-full h-px border border-solid border-black border-opacity-10 w-[431px]" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center h-full">
+                                        <div className="text-lg font-semibold text-gray-500">
+                                            'Your basket is empty.'
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </>
                         )}
 

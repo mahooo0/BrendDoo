@@ -11,6 +11,7 @@ import ROUTES from '../../setting/routes';
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [currentemail, setemail] = useState<string>('');
+    const [forumValue, setforumValue] = useState<any | null>(null);
     const [variant, setvariant] = useState<1 | 2>(1);
 
     const togglePasswordVisibility = () => {
@@ -42,14 +43,17 @@ const Register = () => {
         phone: string;
         email: string;
         password: string;
+        gender: string;
     }) {
         setemail(values.email);
+        setforumValue(values);
         await axios
             .post('https://brendo.avtoicare.az/api/register', {
                 name: values.name,
                 phone: `${values.phone}`,
                 email: values.email,
                 password: values.password,
+                gender: values.gender,
             })
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
@@ -126,6 +130,7 @@ const Register = () => {
                                     phone: '',
                                     email: '',
                                     password: '',
+                                    gender: '',
                                 }}
                                 validationSchema={validationSchema}
                                 onSubmit={async (values) => {
@@ -135,6 +140,7 @@ const Register = () => {
                                         password: values.password,
                                         email: values.email,
                                         phone: values.phone,
+                                        gender: values.gender,
                                     });
                                 }}
                             >
@@ -229,6 +235,32 @@ const Register = () => {
                                                 component="div"
                                                 className="text-red-500 text-xs mt-1"
                                             />
+
+                                            <Field
+                                                as="select"
+                                                name="gender"
+                                                className="overflow-hidden px-5 py-2 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
+                                            >
+                                                {/* <option value="">
+                                                    {tarnslation?.gender}
+                                                </option> */}
+                                                <option value="man">
+                                                    {lang === 'en'
+                                                        ? 'Male'
+                                                        : 'мужчина'}
+                                                </option>
+                                                <option value="woman">
+                                                    {lang === 'en'
+                                                        ? 'Female'
+                                                        : 'женщина'}
+                                                </option>
+                                            </Field>
+                                            <ErrorMessage
+                                                name="gender"
+                                                component="div"
+                                                className="text-red-500 text-xs mt-1"
+                                            />
+
                                             <div className="flex items-center mt-4">
                                                 <Field
                                                     type="checkbox"
@@ -352,7 +384,49 @@ const Register = () => {
                                 </Form>
                             )}
                         </Formik>
-                        <button className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full">
+                        <button
+                            className="mt-4 cursor-pointer text-base font-semibold text-center text-white text-opacity-80 lg:mt-4  max-md:max-w-full"
+                            onClick={async () => {
+                                await axios
+                                    .post(
+                                        'https://brendo.avtoicare.az/api/register',
+                                        {
+                                            name: forumValue.name,
+                                            phone: `${forumValue.phone}`,
+                                            email: forumValue.email,
+                                            password: forumValue.password,
+                                            gender: forumValue.gender,
+                                        }
+                                    )
+                                    .then((response) => {
+                                        if (
+                                            response.status === 200 ||
+                                            response.status === 201
+                                        ) {
+                                            localStorage.setItem(
+                                                'register-token',
+                                                response.data.token
+                                            );
+                                            toast.success(
+                                                'code was sent to ur email '
+                                            );
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.log('er', error);
+                                        // error.response.data.error.map((item: string) => {
+                                        //     toast.error('aa');
+                                        // });
+                                        if (error.response.data.error) {
+                                            error.response.data.error.map(
+                                                (item: string) => {
+                                                    toast.error(item);
+                                                }
+                                            );
+                                        }
+                                    });
+                            }}
+                        >
                             {tarnslation?.Kodu_yenidən_göndər}
                         </button>
                     </div>
