@@ -328,20 +328,21 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                         alt=""
                     />
                 </div>
-                {data.is_new && (
-                    <div className="bg-[#8E98B8] text-white px-3 py-2 h-fit  rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text-[12px] font-medium leading-[14px]">
-                            Yeni
-                        </p>{' '}
-                    </div>
-                )}
-                {data?.discount && (
-                    <div className="bg-[#FF3C79] text-white px-3 py-2  h-fit rounded-full  absolute top-6 left-6 flex justify-center items-center">
-                        <p className="text-[12px]  font-medium leading-[14px]">
-                            {data?.discount}% {translation?.endirim}
-                        </p>{' '}
-                    </div>
-                )}
+                <div className="absolute top-6 left-6 flex justify-center items-center flex-row gap-2">
+                    {data.is_new && (
+                        <div className="bg-[#8E98B8] text-white px-3 py-2 h-fit  rounded-full   flex justify-center items-center leading-[14px] text-[12px]">
+                            new
+                        </div>
+                    )}
+                    {data?.discount && (
+                        <div className="bg-[#FF3C79] text-white px-3 py-2  h-fit rounded-full   flex justify-center items-center">
+                            <p className="text-[12px]  font-medium leading-[14px]">
+                                {data?.discount}% {translation?.discount}
+                            </p>{' '}
+                        </div>
+                    )}
+                </div>
+
                 <div
                     className="w-full h-[100px] absolute bottom-0 left-0 flex justify-center items-center overflow-hidden"
                     onMouseLeave={() => {

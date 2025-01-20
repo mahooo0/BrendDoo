@@ -19,12 +19,14 @@ import {
     HomeHero,
     LoginBunner,
     ProductResponse,
+    Seo,
     SpecialOffer,
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
 import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
+import { Helmet } from 'react-helmet-async';
 
 export default function Home() {
     //states
@@ -82,10 +84,14 @@ export default function Home() {
         GETRequest<ProductResponse>(`/products?is_season=1`, 'products', [
             lang,
         ]);
+    const { data: PopulyarProducts, isLoading: PopulyarLoading } =
+        GETRequest<ProductResponse>(`/products?is_popular=1`, 'products', [
+            lang,
+        ]);
     const { data: productsByCategory } = GETRequest<HomeCategory[]>(
         `/home_categories`,
         'home_categories',
-        [lang, category_id]
+        [lang]
     );
     const { data: discountedProducts, isLoading: discountedProductsLoading } =
         GETRequest<ProductResponse>(
@@ -103,11 +109,13 @@ export default function Home() {
     >(`/categories`, 'categories', [lang]);
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
-    // const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo>(
-    //     `/holidayBanners`,
-    //     'holidayBanners',
-    //     [lang]
-    // );
+    const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
+        `/seo_pages`,
+        'seo_pages',
+        [lang]
+    );
+    console.log('Metas', Metas);
+
     // loading
     // console.log(
     //     heroLoading ||
@@ -128,6 +136,8 @@ export default function Home() {
     if (
         heroLoading ||
         holidayBannersLoading ||
+        MetasLoading ||
+        PopulyarLoading ||
         // advantagesLoading ||
         brendsLoading ||
         tarnslationLoading ||
@@ -144,6 +154,30 @@ export default function Home() {
 
     return (
         <div className=" relative">
+            <Helmet>
+                <title>
+                    {
+                        Metas?.find((meta) => meta.type === 'home_page')
+                            ?.meta_title
+                    }
+                </title>
+                <meta
+                    name="description"
+                    content={
+                        Metas?.find((meta) => meta.type === 'home_page')
+                            ?.meta_description
+                    }
+                    data-next-head=""
+                ></meta>
+                <meta
+                    name="keywords"
+                    content={
+                        Metas?.find((meta) => meta.type === 'home_page')
+                            ?.meta_keywords
+                    }
+                    data-next-head=""
+                ></meta>
+            </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
@@ -480,19 +514,20 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-fit">
-                    <div className="   flex items-center justify-between">
-                        <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
-                            <div className="flex flex-col w-full">
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
+                    <div className="   flex items-center justify-between w-full mt-10">
+                        <div className="flex flex-col self-stretch  w-full max-md:mt-10">
+                            <div className="flex flex-col w-full justify-start items-start">
                                 <div className="text-4xl font-semibold text-slate-900">
-                                    Mövsüm təklifləri
+                                    {tarnslation?.Mövsüm_təklifləri}
                                 </div>
-                                <div className="mt-5 text-base text-black text-opacity-80">
+                                {/* <div className="mt-5 text-base text-black text-opacity-0">
+                                    {tarnslation?.Mövsüm_təklifləri_desc}
                                     Lorem Ipsum is simply dummy text of the
                                     printing and typesetting industry. Lorem
                                     Ipsum has been the industry's standard dummy
                                     text ever
-                                </div>
+                                </div> */}
                             </div>
                             <div
                                 className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
@@ -511,6 +546,74 @@ export default function Home() {
                         </div>
                     </div>
                     {sesionProducts?.data.map((Product) => (
+                        <div
+                            onClick={() => {
+                                router(
+                                    `/${lang}/${
+                                        ROUTES.product[
+                                            lang as keyof typeof ROUTES.product
+                                        ]
+                                    }/${
+                                        Product.slug[
+                                            lang as keyof typeof Product.slug
+                                        ]
+                                    }`
+                                );
+                            }}
+                            key={Product.id}
+                            className="flex cursor-pointer flex-col w-full min-h-[510px] max-md:ml-0 max-md:w-full rounded-3xl"
+                            style={{
+                                backgroundImage: `url("${Product.image}")`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                            }}
+                        >
+                            <div className="flex overflow-hidden flex-col grow px-3 pt-96 pb-3 text-base justify-end text-black rounded-3xl border border-solid border-neutral-100 max-md:pt-24  max-md:max-w-full">
+                                <div className="flex overflow-hidden flex-col justify-center px-6 py-3.5 rounded-3xl bg-white bg-opacity-80 max-md:px-5">
+                                    <div className="flex flex-col">
+                                        <div>{Product.title}</div>
+                                        <div className="mt-3 font-semibold">
+                                            {Product.discounted_price} AZN
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </section>
+                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
+                    <div className="   flex items-center justify-between w-full mt-10">
+                        <div className="flex flex-col self-stretch  w-full max-md:mt-10">
+                            <div className="flex flex-col w-full justify-start items-start">
+                                <div className="text-4xl font-semibold text-slate-900">
+                                    {tarnslation?.PopTitle}
+                                </div>
+                                {/* <div className="mt-5 text-base text-black text-opacity-0">
+                                    {tarnslation?.Mövsüm_təklifləri_desc}
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry. Lorem
+                                    Ipsum has been the industry's standard dummy
+                                    text ever
+                                </div> */}
+                            </div>
+                            <div
+                                className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }`
+                                    )
+                                }
+                            >
+                                {tarnslation?.Məhsullara_bax}
+                            </div>
+                        </div>
+                    </div>
+                    {PopulyarProducts?.data.map((Product) => (
                         <div
                             onClick={() => {
                                 router(

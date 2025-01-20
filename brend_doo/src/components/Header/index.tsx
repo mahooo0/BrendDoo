@@ -303,7 +303,7 @@ export default function Header() {
                         />
                     </Link>
 
-                    <div className="flex flex-col gap-3 justify-center items-center  my-auto text-base max-md:max-w-full ">
+                    <div className="flex flex-col-reverse gap-3 justify-center items-center  my-auto text-base max-md:max-w-full ">
                         <div className="flex flex-row justify-around gap-3">
                             {categories?.map((category: Category) => (
                                 <Link
@@ -649,6 +649,7 @@ export default function Header() {
                 </div>
                 <div
                     className="absolute w-full min-h-[90vh] bg-black  top-[31vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    onClick={() => setIsClothingOpen(false)}
                     style={{
                         display: isCatalogOpen ? 'block' : 'none',
                     }}
@@ -663,7 +664,11 @@ export default function Header() {
                             //         setIsClothingOpen(value);
                             //     }}
                             // />
-                            <CategoryNavigation />
+                            <CategoryNavigation
+                                handleClose={() => {
+                                    setIsClothingOpen(false);
+                                }}
+                            />
                         )}
                     </div>
                     {/* 
@@ -815,7 +820,7 @@ export default function Header() {
                             enableScrolling();
                         }}
                     />
-                    <div className="flex overflow-hidden max-h-[60vh] flex-col items-center pt-10 bg-white rounded-3xl max-w-[511px] absolute right-4">
+                    <div className="flex overflow-hidden max-h-[60vh] flex-col items-center pt-10 bg-white rounded-3xl w-[511px] absolute right-4">
                         <div className="flex gap-5 justify-between w-full max-w-[432px] max-md:max-w-full mx-[40px]">
                             <div className="text-lg font-semibold text-center text-slate-800">
                                 {translation?.Səbətdəki_məhsullarım}
@@ -987,9 +992,13 @@ export default function Header() {
                                     </>
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-full">
+                                        <img
+                                            src="/images/empty_basked.png"
+                                            className="w-[100px] aspect-square"
+                                        />
                                         <div className="text-lg font-semibold text-gray-500">
-                                            'Your basket is empty.'
-                                        </div>
+                                            {translation?.basket_empty}
+                                        </div>{' '}
                                     </div>
                                 )}
                             </>

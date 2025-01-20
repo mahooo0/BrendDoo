@@ -4,7 +4,23 @@ export type Category = {
     subCategories: SubCategory[];
     filters: Filter[];
 };
+type ThirdCategory = {
+    id: number;
+    title: string;
+};
 
+type CatalogSubCategory = {
+    id: number;
+    title: string;
+    third_categories: ThirdCategory[];
+};
+
+export type CatalogCategory = {
+    id: number;
+    image: string;
+    title: string;
+    subCategories: CatalogSubCategory[];
+};
 export type SubCategory = {
     id: number;
     title: string;
@@ -391,4 +407,10 @@ export type Seo = {
     meta_title: string;
     meta_description: string;
     meta_keywords: string;
+};
+export type Notification = {
+    id: number;
+    title: string;
+    body: string;
+    is_read: boolean;
 };

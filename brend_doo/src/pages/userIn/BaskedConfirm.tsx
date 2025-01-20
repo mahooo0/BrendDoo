@@ -3,7 +3,7 @@ import { Footer } from '../../components/Footer';
 import BaskedForum from '../../components/Basked';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Basket, TranslationsKeys, User } from '../../setting/Types';
-import GETRequest from '../../setting/Request';
+import GETRequest, { axiosInstance } from '../../setting/Request';
 import ROUTES from '../../setting/routes';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -22,6 +22,7 @@ export default function BaskedConfirm() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [Body, setBody] = useState<AdditionalInfo | null>(null);
+    const [FINAL_price, setFINAL_price] = useState(0);
     const navigate = useNavigate();
 
     const { data: tarnslation, isLoading: tarnslationLoading } =
@@ -136,7 +137,9 @@ export default function BaskedConfirm() {
                                                 {tarnslation?.Cəmi_məbləğ}:
                                             </div>
                                             <div className="self-stretch my-auto text-base font-semibold text-blue-600">
-                                                {basked?.final_price}
+                                                {FINAL_price === 0
+                                                    ? basked?.final_price
+                                                    : FINAL_price}
                                                 AZN
                                             </div>
                                         </div>
@@ -167,7 +170,9 @@ export default function BaskedConfirm() {
                                                         delivered_price:
                                                             basked?.delivered_price,
                                                         final_price:
-                                                            basked?.final_price,
+                                                            FINAL_price === 0
+                                                                ? basked?.final_price
+                                                                : FINAL_price,
                                                     },
                                                     {
                                                         headers: {
@@ -228,8 +233,65 @@ export default function BaskedConfirm() {
                                         type="text"
                                         placeholder="Kupon"
                                         className="overflow-hidden px-4 py-3.5 w-full whitespace-nowrap bg-white rounded-[100px] text-black text-opacity-60"
+                                        id="couponInput"
                                     />
-                                    <button className="gap-2.5 self-stretch px-10 py-4 mt-3 w-full font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px]">
+                                    <button
+                                        className="gap-2.5 self-stretch px-10 py-4 mt-3 w-full font-medium text-black border border-solid bg-[#B1C7E4] border-[#B1C7E4] rounded-[100px]"
+                                        onClick={async () => {
+                                            const couponValue = (
+                                                document.getElementById(
+                                                    'couponInput'
+                                                ) as HTMLInputElement
+                                            ).value;
+                                            console.log('Coupon:', couponValue);
+                                            const userStr =
+                                                localStorage.getItem(
+                                                    'user-info'
+                                                );
+                                            if (userStr) {
+                                                const User =
+                                                    JSON.parse(userStr);
+                                                await axiosInstance
+                                                    .post(
+                                                        'applyCoupon',
+                                                        {
+                                                            coupon_code:
+                                                                couponValue,
+                                                            total_price:
+                                                                basked?.final_price,
+                                                        },
+                                                        {
+                                                            headers: {
+                                                                Authorization: `Bearer ${User.data.token}`,
+                                                                Accept: 'application/json',
+                                                            },
+                                                        }
+                                                    )
+                                                    .then((res) => {
+                                                        console.log(
+                                                            'cupon',
+                                                            res.data
+                                                                .discounted_total_price
+                                                        );
+                                                        setFINAL_price(
+                                                            res.data
+                                                                .discounted_total_price
+                                                        );
+                                                        toast.success(
+                                                            'kupon sucsesfully acsepted'
+                                                        );
+                                                    })
+                                                    .catch((error) => {
+                                                        console.log(error);
+
+                                                        toast.error(
+                                                            error.response.data
+                                                                .error
+                                                        );
+                                                    });
+                                            }
+                                        }}
+                                    >
                                         Təsdiq et
                                     </button>
                                 </div>

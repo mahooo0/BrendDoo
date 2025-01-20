@@ -14,14 +14,16 @@ export const CategoryHeader: React.FC<CategoryProps> = ({
     isOpen,
     onToggle,
 }) => (
-    <div className="flex gap-10 min-w-[360px] justify-between items-center w-full">
+    <div
+        className="flex gap-10 min-w-[360px] justify-between items-center w-full hover:bg-slate-50 rounded-md px-2 "
+        onClick={onToggle}
+    >
         <h2 className="self-stretch my-auto text-lg font-medium text-black">
             {title}
         </h2>
         <button
             className="flex overflow-hidden flex-col justify-center self-stretch px-1.5 py-3 my-auto w-6"
             aria-label={isOpen ? 'Close category' : 'Open category'}
-            onClick={onToggle}
         >
             <span
                 className={`flex  transform font-medium text-[30px] transition-transform`}
