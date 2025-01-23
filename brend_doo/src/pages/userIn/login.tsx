@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import GETRequest from '../../setting/Request';
 import { TranslationsKeys } from '../../setting/Types';
 import ROUTES from '../../setting/routes';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -59,6 +60,17 @@ export default function Login() {
         'translates',
         [lang]
     );
+    const handleSuccess = (response: any) => {
+        console.log('Login Success:', response);
+        const credential = response.credential; // The ID token
+        console.log('credential', credential);
+
+        // You can send this credential to your backend for verification
+    };
+
+    const handleError = () => {
+        console.log('Login Failed');
+    };
     return (
         <div className="flex overflow-hidden flex-col bg-white">
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px] max-sm:px-4">
@@ -90,14 +102,19 @@ export default function Login() {
                         </div>
                         <div className="flex flex-col items-center lg:mt-10 mt-4 w-full max-md:max-w-full">
                             <div className="flex gap-3 items-center text-base font-semibold text-center text-white">
-                                <img
+                                <GoogleLogin
+                                    onSuccess={handleSuccess}
+                                    onError={handleError}
+                                />
+
+                                {/* <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/d3022fd65942a1f100f9b4b03e803efbd39acdf620aeebe49dd8d33234dd171c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                                     className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-full"
                                 />
                                 <div className="self-stretch my-auto">
                                     {tarnslation?.Google}
-                                </div>
+                                </div> */}
                             </div>
                             <div className="flex lg:gap-10 gap-5 items-center mt-7 text-xs text-center text-white w-full">
                                 <div className="shrink-0 self-stretch my-auto h-px border border-solid border-white border-opacity-20 w-[35%]" />

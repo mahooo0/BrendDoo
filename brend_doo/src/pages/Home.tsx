@@ -1,32 +1,23 @@
 import Header from '../components/Header';
 import TikTokSlider from '../components/TikTokSwipper';
-import NoneToBlue from '../components/buttons/NoneT0Blue';
-import ProductSwipper from '../components/ProductSwipper.tsx';
-import InstaqramSlider from '../components/InstaqramSwipper/index.tsx';
-import ImageSwipper from '../components/İmgSwipper.tsx/index.tsx';
+
 import { Footer } from '../components/Footer/index.tsx';
 import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
 import { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import ProductSwipper2 from '../components/ProductSwipper2/index.tsx';
+
 import GETRequest from '../setting/Request.ts';
 import {
     // Advanteges,
-    Brand,
-    Category,
     Holideys,
-    HomeCategory,
     HomeHero,
-    LoginBunner,
-    ProductResponse,
     Seo,
-    SpecialOffer,
     Tiktoks,
     TranslationsKeys,
 } from '../setting/Types.ts';
 import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Home() {
     //states
@@ -41,9 +32,9 @@ export default function Home() {
     const { lang = 'ru' } = useParams<{
         lang: string;
     }>();
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-    const category_id = Number(searchParams.get('category_id')) || 0;
+    // const { search } = useLocation();
+    // const searchParams = new URLSearchParams(search);
+    // const category_id = Number(searchParams.get('category_id')) || 0;
     // console.log('salam', category_id);
 
     // requests
@@ -60,11 +51,11 @@ export default function Home() {
     //     Advanteges[]
     // >(`/advantages`, 'HOMEadvantages', [lang]);
 
-    const { data: brends, isLoading: brendsLoading } = GETRequest<Brand[]>(
-        `/brands`,
-        'brands',
-        [lang]
-    );
+    // const { data: brends, isLoading: brendsLoading } = GETRequest<Brand[]>(
+    //     `/brands`,
+    //     'brands',
+    //     [lang]
+    // );
 
     const { data: tiktok, isLoading: tiktokLoading } = GETRequest<Tiktoks>(
         `/tiktoks`,
@@ -74,39 +65,39 @@ export default function Home() {
     const { data: instragrams, isLoading: instragramsLoading } =
         GETRequest<Tiktoks>(`/instagrams`, 'instagrams', [lang]);
 
-    const { data: products } = GETRequest<ProductResponse>(
-        `/products${category_id === 0 ? '' : `?category_id=${category_id}`}`,
-        'products',
-        [lang, category_id]
-    );
+    // const { data: products } = GETRequest<ProductResponse>(
+    //     `/products${category_id === 0 ? '' : `?category_id=${category_id}`}`,
+    //     'products',
+    //     [lang, category_id]
+    // );
 
-    const { data: sesionProducts, isLoading: sesionLoading } =
-        GETRequest<ProductResponse>(`/products?is_season=1`, 'products', [
-            lang,
-        ]);
-    const { data: PopulyarProducts, isLoading: PopulyarLoading } =
-        GETRequest<ProductResponse>(`/products?is_popular=1`, 'products', [
-            lang,
-        ]);
-    const { data: productsByCategory } = GETRequest<HomeCategory[]>(
-        `/home_categories`,
-        'home_categories',
-        [lang]
-    );
-    const { data: discountedProducts, isLoading: discountedProductsLoading } =
-        GETRequest<ProductResponse>(
-            `/products?is_discount=1`,
-            'productsElektroniks',
-            [lang]
-        );
-    const { data: loginBanners, isLoading: loginBannersLoading } =
-        GETRequest<LoginBunner>(`/loginBanners`, 'loginBanners', [lang]);
+    // const { data: sesionProducts, isLoading: sesionLoading } =
+    //     GETRequest<ProductResponse>(`/products?is_season=1`, 'products', [
+    //         lang,
+    //     ]);
+    // const { data: PopulyarProducts, isLoading: PopulyarLoading } =
+    //     GETRequest<ProductResponse>(`/products?is_popular=1`, 'products', [
+    //         lang,
+    //     ]);
+    // const { data: productsByCategory } = GETRequest<HomeCategory[]>(
+    //     `/home_categories`,
+    //     'home_categories',
+    //     [lang]
+    // );
+    // const { data: discountedProducts, isLoading: discountedProductsLoading } =
+    //     GETRequest<ProductResponse>(
+    //         `/products?is_discount=1`,
+    //         'productsElektroniks',
+    //         [lang]
+    //     );
+    // const { data: loginBanners, isLoading: loginBannersLoading } =
+    //     GETRequest<LoginBunner>(`/loginBanners`, 'loginBanners', [lang]);
 
-    const { data: special, isLoading: specialLoading } =
-        GETRequest<SpecialOffer>(`/special`, 'special', [lang]);
-    const { data: categories, isLoading: categoriesLoading } = GETRequest<
-        Category[]
-    >(`/categories`, 'categories', [lang]);
+    // const { data: special, isLoading: specialLoading } =
+    //     GETRequest<SpecialOffer>(`/special`, 'special', [lang]);
+    // const { data: categories, isLoading: categoriesLoading } = GETRequest<
+    //     Category[]
+    // >(`/categories`, 'categories', [lang]);
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
     const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
@@ -114,6 +105,9 @@ export default function Home() {
         'seo_pages',
         [lang]
     );
+    const { data: favicon, isLoading: faviconLoading } = GETRequest<{
+        image: string;
+    }>(`/favicon`, 'favicon', [lang]);
     console.log('Metas', Metas);
 
     // loading
@@ -132,22 +126,15 @@ export default function Home() {
     //         sesionLoading
     // );
 
-    const router = useNavigate();
     if (
+        faviconLoading ||
         heroLoading ||
         holidayBannersLoading ||
         MetasLoading ||
-        PopulyarLoading ||
         // advantagesLoading ||
-        brendsLoading ||
         tarnslationLoading ||
         tiktokLoading ||
-        categoriesLoading ||
-        instragramsLoading ||
-        discountedProductsLoading ||
-        specialLoading ||
-        loginBannersLoading ||
-        sesionLoading
+        instragramsLoading
     ) {
         return <Loading />;
     }
@@ -177,6 +164,7 @@ export default function Home() {
                     }
                     data-next-head=""
                 ></meta>
+                <link rel="icon" href={favicon?.image} type="image/svg+xml" />
             </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
@@ -233,6 +221,53 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+                {Array.from({ length: 3 }).map((_) => (
+                    <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                        <img
+                            src="https://s3-alpha-sig.figma.com/img/12fa/7c40/dbdf4a836239fe447b429bf9f17f47ac?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HIIFnDLIrW9JWwAs9dZFY3sQexI-XQJzOi1Go~lQfLLHYqnXIGu-R9kr-U00lYvJIEcJNYBXnSCpzSDnNqGdwyIRl0joj7lkmFYP4RMCnzuO8WxlW-ryzjl6vI63rtcnBemJOQoWfgWbqyqQFEGvdbksyLPf8BTYg3O-M17UncRmqIZ2TgN6lpsm7txyx1ZZ9DnR2JZrOYcbSfmB15z8ih~qP4eHvaW4ZlzSSe3-0ctCBWQv20KL2RwSqHUMGRMAcTJodauofie8alkIQYwF7-uLQ2larZK512AQRtWmtQ~IxepK81cwrHlbcT9UJtKgppzPyP2GTbBiopMBC9Sk4w__"
+                            alt=""
+                            className="absolute top-0  left-0 w-full h-full object-cover -z-10"
+                        />
+
+                        <div
+                            className=" max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
+                            style={{
+                                background:
+                                    'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',
+                            }}
+                        >
+                            <div className="flex flex-col max-w-full w-[538px]">
+                                <div className="flex flex-col w-full max-md:max-w-full">
+                                    <div className="flex flex-col w-full">
+                                        <div className="text-xl font-medium text-white text-opacity-60 max-md:max-w-full">
+                                            {holidayBanners?.title}{' '}
+                                        </div>
+                                        <div className="mt-3 text-4xl font-semibold text-white max-md:max-w-full">
+                                            {holidayBanners?.value}{' '}
+                                        </div>
+                                    </div>
+                                    {/* <div className="mt-5 text-lg font-medium text-white text-opacity-90 max-md:max-w-full">
+                                        {holidayBanners?.description}
+                                    </div> */}
+                                </div>
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/${lang}/${
+                                                ROUTES.product[
+                                                    lang as keyof typeof ROUTES.product
+                                                ]
+                                            }`
+                                        )
+                                    }
+                                    className="gap-2.5 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
+                                >
+                                    {tarnslation?.Məhsullara_bax}
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                ))}
                 {/* <section className="flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     <div className="flex flex-wrap gap-10 items-center max-md:max-w-full justify-between w-full">
                         {advantages &&
@@ -265,7 +300,7 @@ export default function Home() {
                         }}
                     />{' '}
                 </section>
-                <section className="mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
+                {/* <section className="mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
                     <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
                             {tarnslation?.Ən_çox_satılan_məhsullar}
@@ -273,22 +308,21 @@ export default function Home() {
                         <div
                             style={{
                                 overflow: 'scroll',
-                                scrollbarWidth: 'none' /* For Firefox */,
+                                scrollbarWidth: 'none' ,
                                 msOverflowStyle:
-                                    'none' /* For Internet Explorer and Edge */,
+                                    'none' ,
                             }}
                             className="flex  no-scrollbar  flex-row max-sm:w-full max-sm:overflow-x-scroll max-sm:px-6 justify-between max-sm:justify-around gap-3 "
                         >
                             <NoneToBlue
                                 action={() => {
-                                    // setCurrentCategory(0);
                                     router(`?category_id=${0}`);
                                 }}
                                 isactive={category_id === 0}
                             >
                                 {tarnslation?.All}
                             </NoneToBlue>
-                            {categories?.map((category: Category) => (
+                            {productsByCategory?.map((category) => (
                                 <NoneToBlue
                                     action={() => {
                                         // setCurrentCategory(category.id);
@@ -303,9 +337,9 @@ export default function Home() {
                     </div>
 
                     <ProductSwipper bg="grey" data={products?.data} />
-                </section>{' '}
+                </section> */}
                 {/* ----here---- */}
-                {productsByCategory?.map((item: HomeCategory, i: number) => (
+                {/* {productsByCategory?.map((item: HomeCategory, i: number) => (
                     <section
                         className={`mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${
                             i % 2 === 1 ? '#ffffff' : '#F5F5F5'
@@ -336,27 +370,9 @@ export default function Home() {
                             data={item.products}
                         />
                     </section>
-                ))}
+                ))} */}
                 {/* ----here---- */}
-                {/* <section className="mt-[70px] max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[#F5F5F5] max-sm:py-10 py-[80px]">
-                    <div className="flex max-sm:px-[16px]  flex-row flex-wrap justify-between  gap-4">
-                        <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  ">
-                            {tarnslation?.Eviniz_və_sizin_üçün_elektronika}{' '}
-                        </h2>
-                        <button
-                            onClick={() => navigate('/poducts')}
-                            className="rounded-[100px] duration-300 max-sm:bg-transparent max-sm:text-[#3873C3] max-sm:border-none max-sm:underline  bg-[#3873C3] leading-[14px] h-fit text-white px-[28px] py-[16px] border border-black border-opacity-10"
-                        >
-                            {' '}
-                            {tarnslation?.Hamısına_bax}{' '}
-                        </button>{' '}
-                    </div>
-                    <ProductSwipper
-                        bg="white"
-                        data={productsElektroniks?.data}
-                    />
-                </section> */}
-                <section className="px-[40px] py-5 max-sm:px-4 max-sm:py-10">
+                {/* <section className="px-[40px] py-5 max-sm:px-4 max-sm:py-10">
                     <div className="overflow-hidden rounded-3xl bg-[#8E98B8] ">
                         <div className="flex gap-5 max-md:flex-col-reverse max-sm:py-0">
                             <div className="flex  flex-col w-[33%] max-md:ml-0  max-md:w-full">
@@ -408,8 +424,8 @@ export default function Home() {
                             setIsIstagramSwippen(true);
                         }}
                     />
-                </section>
-                <section className="mt-5  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
+                </section> */}
+                {/* <section className="mt-5  max-sm:mt-[52px]  flex justify-center gap-5 max-sm:px-4 px-[40px] lg:flex-row flex-col-reverse">
                     <ImageSwipper data={discountedProducts?.data} />
                     <div className="flex l:w-[60%] w-full overflow-hidden flex-col items-start px-12 pt-12 pb-32 rounded-3xl bg-[#8E98B8]  max-md:px-5 max-md:pb-24">
                         <div className="text-xl font-semibold text-indigo-200">
@@ -432,8 +448,8 @@ export default function Home() {
                             </button>
                         </div>
                     </div>
-                </section>
-                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-5 max-sm:mt-[52px]">
+                </section> */}
+                {/* <section className="flex  max-sm:px-4 flex-col px-[40px] mt-5 max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
                             {tarnslation?.Brendlər}{' '}
@@ -463,8 +479,8 @@ export default function Home() {
                             ))}
                         </div>
                     </div>
-                </section>
-                <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                </section> */}
+                {/* <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0  left-0 w-full h-full object-cover -z-10"
                         autoPlay
@@ -513,21 +529,15 @@ export default function Home() {
                             </button>
                         </div>
                     </div>
-                </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
+                </section> */}
+                {/* <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
                     <div className="   flex items-center justify-between w-full mt-10">
                         <div className="flex flex-col self-stretch  w-full max-md:mt-10">
                             <div className="flex flex-col w-full justify-start items-start">
                                 <div className="text-4xl font-semibold text-slate-900">
                                     {tarnslation?.Mövsüm_təklifləri}
                                 </div>
-                                {/* <div className="mt-5 text-base text-black text-opacity-0">
-                                    {tarnslation?.Mövsüm_təklifləri_desc}
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever
-                                </div> */}
+                              
                             </div>
                             <div
                                 className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
@@ -581,21 +591,15 @@ export default function Home() {
                             </div>
                         </div>
                     ))}
-                </section>
-                <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
+                </section> */}
+                {/* <section className="grid lg:grid-cols-3 max-sm:hidden md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-4  px-[40px] mt-5 max-sm:mt-[52px] gap-5 w-full">
                     <div className="   flex items-center justify-between w-full mt-10">
                         <div className="flex flex-col self-stretch  w-full max-md:mt-10">
                             <div className="flex flex-col w-full justify-start items-start">
                                 <div className="text-4xl font-semibold text-slate-900">
                                     {tarnslation?.PopTitle}
                                 </div>
-                                {/* <div className="mt-5 text-base text-black text-opacity-0">
-                                    {tarnslation?.Mövsüm_təklifləri_desc}
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever
-                                </div> */}
+                               
                             </div>
                             <div
                                 className="cursor-pointer gap-2.5 leading-[20px] h-fit self-start px-10 py-4 max-sm:mt-5 mt-10 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
@@ -649,8 +653,8 @@ export default function Home() {
                             </div>
                         </div>
                     ))}
-                </section>
-                <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-5 gap-5 w-fit">
+                </section> */}
+                {/* <section className=" flex-col max-sm:flex hidden lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-items-center max-sm:px-0  px-[40px] max-sm:mt-[52px] mt-5 gap-5 w-fit">
                     <div className=" max-sm:px-4   flex items-center justify-between">
                         <div className="flex flex-col self-stretch my-auto w-full max-md:mt-10">
                             <div className="flex flex-col w-full">
@@ -675,7 +679,7 @@ export default function Home() {
                             {tarnslation?.Məhsullara_bax}
                         </button>
                     </div>
-                </section>
+                </section> */}
             </main>
             <Footer />
             {/* <GrabCursorSwiper /> */}

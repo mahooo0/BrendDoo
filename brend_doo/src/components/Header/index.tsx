@@ -303,7 +303,7 @@ export default function Header() {
                         />
                     </Link>
 
-                    <div className="flex flex-col-reverse gap-3 justify-center items-center  my-auto text-base max-md:max-w-full ">
+                    <div className="flex flex-col-reverse gap-3 justify-center items-center  mt-auto text-base max-md:max-w-full ">
                         <div className="flex flex-row justify-around gap-3">
                             {categories?.map((category: Category) => (
                                 <Link
@@ -401,8 +401,42 @@ export default function Header() {
                             />
                         </div>{' '}
                     </div>
-                    <div className="flex gap-6 items-center self-stretch my-auto text-sm">
-                        <div className="flex gap-2 items-center self-stretch my-auto ">
+                    <div className="flex gap-6 items-end justify-end self-end  text-sm">
+                        <div className="flex gap-2 items-center self-stretch h-fit ">
+                            <div
+                                className="flex gap-3 items-center self-stretch my-auto cursor-pointer"
+                                onClick={() => {
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        // const User = JSON.parse(userStr);
+
+                                        // if (User) {
+                                        // }
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.userSettings[
+                                                    lang as keyof typeof ROUTES.userSettings
+                                                ]
+                                            }`
+                                        );
+                                    } else {
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
+                            >
+                                <img
+                                    loading="lazy"
+                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
+                                />
+                            </div>
                             <div className="flex gap-2 self-stretch my-auto text-sm text-black">
                                 <Link
                                     to={`/${lang}/${
@@ -460,40 +494,7 @@ export default function Header() {
                                     )} */}
                                 </div>
                             </div>
-                            <div
-                                className="flex gap-3 items-center self-stretch my-auto cursor-pointer"
-                                onClick={() => {
-                                    const userStr =
-                                        localStorage.getItem('user-info');
-                                    if (userStr) {
-                                        // const User = JSON.parse(userStr);
 
-                                        // if (User) {
-                                        // }
-                                        Navigae(
-                                            `/${lang}/${
-                                                ROUTES.userSettings[
-                                                    lang as keyof typeof ROUTES.userSettings
-                                                ]
-                                            }`
-                                        );
-                                    } else {
-                                        Navigae(
-                                            `/${lang}/${
-                                                ROUTES.login[
-                                                    lang as keyof typeof ROUTES.login
-                                                ]
-                                            }`
-                                        );
-                                    }
-                                }}
-                            >
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c5ef44547ee29c9aeeedd574f237ce849c00eefa59f62c0355b167c347f116?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
-                                />
-                            </div>
                             {/* </Link> */}
 
                             <div className=" flex flex-row gap-2 cursor-pointer">
@@ -647,8 +648,10 @@ export default function Header() {
                         </div>
                     </div> */}
                 </div>
+                {/* katalog bar */}
+
                 <div
-                    className="absolute w-full min-h-[90vh] bg-black  top-[31vh] z-50 bg-opacity-[60%] px-10 py-2"
+                    className="absolute w-full min-h-[90vh] bg-black  top-[100%] z-50 bg-opacity-[60%] px-10 py-2"
                     onClick={() => setIsClothingOpen(false)}
                     style={{
                         display: isCatalogOpen ? 'block' : 'none',
@@ -801,7 +804,7 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
-                {/* search bar */}
+
                 {/* basked bar */}
 
                 <div

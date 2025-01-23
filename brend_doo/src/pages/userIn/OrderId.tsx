@@ -252,7 +252,7 @@ export default function OrderId() {
                                 </div>
                             </div>
                         </div>
-                        <button className="flex gap-2.5 justify-center items-center px-7 py-3.5 my-auto text-base font-medium text-center text-white bg-[#3873C3] rounded-xl border border-solid border-neutral-100 max-md:px-5">
+                        {/* <button className="flex gap-2.5 justify-center items-center px-7 py-3.5 my-auto text-base font-medium text-center text-white bg-[#3873C3] rounded-xl border border-solid border-neutral-100 max-md:px-5">
                             <img
                                 loading="lazy"
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f94626f29baa40253df5d994693071ebb35e01a27694c2109f8aa983ec4265d5?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -261,27 +261,29 @@ export default function OrderId() {
                             <div className="self-stretch my-auto">
                                 Faktura yüklə ///make it worck
                             </div>
-                        </button>
+                        </button> */}
                     </div>
                     <div className="flex flex-col mt-[30px]">
-                        <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-t-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
-                            <div className="self-stretch my-auto max-sm:hidden">
-                                {tarnslation?.Çatdırılma_məlumatları}:
-                            </div>
-                            <div className="self-stretch my-auto">
-                                Ödəniş məlumatları:
-                            </div>
-                            <div className="flex gap-1 items-center self-stretch text-black whitespace-nowrap">
-                                <img
-                                    loading="lazy"
-                                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                    className="object-contain shrink-0 self-stretch my-auto w-8 aspect-square"
-                                />
+                        {Order?.payment_type === 'card' && (
+                            <div className="flex overflow-hidden flex-wrap gap-5 justify-between items-center px-6 py-5 w-full text-base font-medium text-center bg-white rounded-t-3xl text-black text-opacity-80 max-md:px-5 max-md:max-w-full">
+                                <div className="self-stretch my-auto max-sm:hidden">
+                                    {tarnslation?.Çatdırılma_məlumatları}:
+                                </div>
                                 <div className="self-stretch my-auto">
-                                    ****0000
+                                    Ödəniş məlumatları:
+                                </div>
+                                <div className="flex gap-1 items-center self-stretch text-black whitespace-nowrap">
+                                    <img
+                                        loading="lazy"
+                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d4a1a23b873f9a7a617a8408e9f84223a82454a0244d5c030c16308e9e29024?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 self-stretch my-auto w-8 aspect-square"
+                                    />
+                                    <div className="self-stretch my-auto">
+                                        ****0000
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                         <div className="overflow-hidden px-5 pt-5 pb-11 rounded-b-3xl mt-1 w-full bg-white max-md:pl-5 max-md:max-w-full">
                             <div className="flex gap-5 max-md:flex-col">
                                 <div className="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">

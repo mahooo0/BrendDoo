@@ -361,6 +361,16 @@ const DropdownItemFilter = ({
         </div>
     );
 };
+type Data = {
+    id: number;
+    title: string;
+    image: string;
+};
+
+type Response = {
+    data: Data;
+    product_main: boolean;
+};
 export default function Products() {
     // const checkref = useRef<any>();
     const [checked, setChecked] = useState(false);
@@ -416,7 +426,14 @@ export default function Products() {
         'filters',
         [lang]
     );
-    if (categoriesLoading || filtersLoading || tarnslationLoading) {
+    const { data: product_hero, isLoading: product_heroLoading } =
+        GETRequest<Response>(`/product_hero`, 'product_hero', [lang]);
+    if (
+        categoriesLoading ||
+        filtersLoading ||
+        tarnslationLoading ||
+        product_heroLoading
+    ) {
         return <Loading />;
     }
     return (
@@ -427,7 +444,7 @@ export default function Products() {
                     <div className="flex relative flex-col pt-10 pr-20 pb-36 pl-10 w-full min-h-[324px] max-md:px-5 max-md:pb-24 max-md:max-w-full">
                         <img
                             loading="lazy"
-                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/5e2893c3501b317f9f1cc42597715926aaf24262ce6d4db514708a628eb9da64?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                            src={product_hero?.data.image}
                             className="object-cover absolute inset-0 size-full"
                         />
                         <div className="flex relative gap-2 items-center self-start text-base">
@@ -453,8 +470,7 @@ export default function Products() {
                             </div>
                         </div>
                         <div className="relative self-center mt-20 mb-0 text-4xl font-semibold text-white max-md:mt-10 max-md:mb-2.5 max-md:max-w-full">
-                            {tarnslation?.Məhsullar_hero}
-                            \Все продукты, которые вы ищете
+                            {product_hero?.data.title}
                         </div>
                     </div>
                 </section>{' '}

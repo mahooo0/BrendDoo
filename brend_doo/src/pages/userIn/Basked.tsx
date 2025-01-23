@@ -65,7 +65,7 @@ export default function Basked() {
             quantity: number;
         }) => UpdateBasked(id, price, quantity),
         onSuccess: () => {
-            toast.success('Məhsul səbətdən silindi');
+            toast.success('qunantity updated');
             queryClient.invalidateQueries({ queryKey: ['basket_items'] });
         },
         onError: (error) => {
@@ -159,12 +159,19 @@ export default function Basked() {
                                                 </div>
                                                 <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
                                                     <div className="flex gap-3 items-start">
-                                                        <div>
-                                                            -----FILter---
-                                                        </div>
-                                                        <div>
-                                                            -----FILter---
-                                                        </div>
+                                                        {item.options.map(
+                                                            (option) => (
+                                                                <div>
+                                                                    {
+                                                                        option.filter
+                                                                    }{' '}
+                                                                    :{' '}
+                                                                    {
+                                                                        option.option
+                                                                    }
+                                                                </div>
+                                                            )
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

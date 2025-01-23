@@ -1,7 +1,7 @@
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import ProductCard from '../../components/ProductCArd';
-import { Favorite } from '../../setting/Types';
+import { Favorite, TranslationsKeys } from '../../setting/Types';
 import { useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import GETRequest from '../../setting/Request';
@@ -15,6 +15,8 @@ export default function UserLiked() {
         'favorites',
         [lang]
     );
+    const { data: tarnslation, isLoading: tarnslationLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     // const { data: LikedProducts, isLoading: LikedProductsLOading } = useQuery<
     //     Product[]
     // >({
@@ -49,7 +51,7 @@ export default function UserLiked() {
     // });
     console.log('favorites', favorites);
 
-    if (loading) {
+    if (loading || tarnslationLoading) {
         return <Loading />;
     }
     return (
@@ -60,7 +62,7 @@ export default function UserLiked() {
                 <UserAside active={2} />
                 <div className="w-full rounded-[20px] bg-[#F8F8F8] lg:p-[40px] px-4 py-10">
                     <h1 className="text-[28px] font-semibold mb-[40px]">
-                        Bəyəndiklərim
+                        {tarnslation?.Bəyəndiklərim}
                     </h1>
                     <div className=" grid lg:grid-cols-3 md:grid-cols-2   grid-cols-1 justify-items-center w-full gap-5 ">
                         {favorites?.map((item: Favorite) => (

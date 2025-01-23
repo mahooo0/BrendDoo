@@ -16,6 +16,8 @@ import ROUTES from '../../setting/routes';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import ProductGallery from '../../components/product-gallery';
+
 function extractData(input: string) {
     const match = input.match(/(\d+)% \((\d+)\)/);
     if (match) {
@@ -154,16 +156,29 @@ export default function ProductId() {
                         </h6>
                     </div>{' '}
                 </div>
-                <section className="flex lg:flex-row flex-col gap-10 mx-[40px]  max-sm:mx-4">
-                    <div className="relative lg:w-[40%] w-full ">
+                <section className="flex lg:flex-row flex-col gap-10 mx-[40px]  max-sm:mx-4 relative">
+                    <div className=" lg:w-[40%] w-full ">
                         {' '}
-                        {/* Parent container with height */}
-                        <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-auto h-fit  sticky top-[10px]">
+                        <div className=" sticky top-[10px]">
+                            <ProductGallery
+                                images={
+                                    Productslingle?.sliders.map(
+                                        (item) => item.image
+                                    ) || []
+                                }
+                            />
+                            {/* <ImageMagnifier
+                                src="/images/contact.jpg"
+                                width={400}
+                                height={400}
+                            /> */}
+                        </div>
+                        {/* <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-auto h-fit  sticky top-[10px]">
                             <section
                                 className=" sroll- flex flex-col  lg:h-[90vh] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 max-sm:gap-3 custom-scrollbar pb-[0px]"
                                 style={{
-                                    scrollbarWidth: 'thin', // For Firefox
-                                    scrollbarColor: '#888 transparent', // For Firefox
+                                    scrollbarWidth: 'thin',
+                                    scrollbarColor: '#888 transparent',
                                 }}
                             >
                                 <div className="flex overflow-hidden flex-col w-full  min-h-[670px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
@@ -219,7 +234,7 @@ export default function ProductId() {
                                     </div>
                                 )}
                             </section>
-                        </section>
+                        </section> */}
                     </div>
                     <section className="flex flex-col max-w-[650px] mt-[24px]">
                         <div className="flex flex-col w-full max-md:max-w-full">
@@ -241,7 +256,6 @@ export default function ProductId() {
                                     {tarnslation?.Məhsulun_kodu}:
                                     {Productslingle?.code}
                                     <br />
-                                    {/* ------- bura ne yazim 0------------ */}
                                 </div>
                             </div>
                             <div className="flex gap-3 items-center self-start mt-5">
@@ -286,35 +300,6 @@ export default function ProductId() {
                                                     {option.name}
                                                 </div>
                                             ))}{' '}
-                                            {/* {Productslingle?.options.map(
-                                            (option: {
-                                                id: number;
-                                                is_default: number;
-                                                title: string;
-                                                color_code: string | null;
-                                            }) => {
-                                                if (option.color_code === null) {
-                                                    return (
-                                                        <div
-                                                            onClick={() =>
-                                                                setCurrentOption(
-                                                                    option.title
-                                                                )
-                                                            }
-                                                            className={`px-3 min-w-[40px] ${
-                                                                currentOption ===
-                                                                option.title
-                                                                    ? 'bg-black text-white'
-                                                                    : 'bg-white'
-                                                            }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
-                                                        >
-                                                            {option.title}
-                                                        </div>
-                                                    );
-                                                }
-                                                return null;
-                                            }
-                                        )} */}
                                         </div>
                                     </div>
                                 );
@@ -354,35 +339,6 @@ export default function ProductId() {
                                                     />
                                                 </div>
                                             ))}{' '}
-                                            {/* {Productslingle?.options.map(
-                                            (option: {
-                                                id: number;
-                                                is_default: number;
-                                                title: string;
-                                                color_code: string | null;
-                                            }) => {
-                                                if (option.color_code === null) {
-                                                    return (
-                                                        <div
-                                                            onClick={() =>
-                                                                setCurrentOption(
-                                                                    option.title
-                                                                )
-                                                            }
-                                                            className={`px-3 min-w-[40px] ${
-                                                                currentOption ===
-                                                                option.title
-                                                                    ? 'bg-black text-white'
-                                                                    : 'bg-white'
-                                                            }  py-3.5 text-center cursor-pointer aspect-square rounded border border-solid border-neutral-400`}
-                                                        >
-                                                            {option.title}
-                                                        </div>
-                                                    );
-                                                }
-                                                return null;
-                                            }
-                                        )} */}
                                         </div>
                                     </div>
                                 );
@@ -422,11 +378,7 @@ export default function ProductId() {
                                             </svg>
                                         ))}
                                     </div>
-                                    {/* <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c8cb6d7f93b0332f135d17e49a58e6371bc747e917151fb4be5c60f2e035e3f1?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 self-stretch my-auto aspect-[5] w-[120px]"
-                                    /> */}
+
                                     <div className="self-stretch my-auto">
                                         {Productslingle?.avg_star}
                                         {'  '}
@@ -625,7 +577,7 @@ export default function ProductId() {
                             />
                         </div>
                         <div
-                            className="flex rounded-3xl bg-stone-50 max-w-[670px] min-h-[824px] px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col"
+                            className="flex rounded-3xl bg-stone-50 max-w-[670px] h-fit px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col"
                             dangerouslySetInnerHTML={{
                                 __html: '<p>Burara description eleve ele </p>',
                             }}

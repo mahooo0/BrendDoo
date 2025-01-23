@@ -20,68 +20,725 @@ import Register from '../userIn/register';
 import Password from '../userIn/Pasword';
 import SucsesPassword from '../userIn/sucsesPasword';
 import Sucses from '../Sucses';
+import { Helmet } from 'react-helmet-async';
+import GETRequest from '../../setting/Request';
+import { Seo } from '../../setting/Types';
 
 const PageByLang: React.FC = () => {
     const { lang, page } = useParams<{ lang: string; page: string }>();
+
+    const { data: Metas } = GETRequest<Seo[]>(`/seo_pages`, 'seo_pages', [
+        lang,
+    ]);
+    const { data: favicon } = GETRequest<{
+        image: string;
+    }>(`/favicon`, 'favicon', [lang]);
     if (page === ROUTES.home.en || page === ROUTES.home.ru) {
-        return <Home />;
+        return (
+            <div>
+                {' '}
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'home_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'home_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'home_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Home />
+            </div>
+        );
     }
     if (page === ROUTES.about.en || page === ROUTES.about.ru) {
-        return <Aboutus />;
+        return (
+            <div>
+                {' '}
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'about_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'about_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'about_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Aboutus />
+            </div>
+        );
     }
     if (page === ROUTES.product.en || page === ROUTES.product.ru) {
-        return <Products />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'product_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'product_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'product_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Products />
+            </div>
+        );
     }
     if (page === ROUTES.rules.en || page === ROUTES.rules.ru) {
-        return <UserRules />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'using_rules_page'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'using_rules_page'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'using_rules_page'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <UserRules />
+            </div>
+        );
     }
     if (page === ROUTES.deliveryRules.en || page === ROUTES.deliveryRules.ru) {
-        return <DeliveryRules />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'delivery_rules_page'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'delivery_rules_page'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'delivery_rules_page'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <DeliveryRules />
+            </div>
+        );
     }
     if (page === ROUTES.contact.en || page === ROUTES.contact.ru) {
-        return <Contact />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'contact_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'contact_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'contact_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Contact />
+            </div>
+        );
     }
     if (page === ROUTES.brends.en || page === ROUTES.brends.ru) {
-        return <Brends />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'brends_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'brends_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'brends_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Brends />
+            </div>
+        );
     }
     if (page === ROUTES.login.en || page === ROUTES.login.ru) {
-        return <Login />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'login_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'login_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'login_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <Login />
+            </div>
+        );
     }
     if (page === ROUTES.userSettings.en || page === ROUTES.userSettings.ru) {
-        return <UserSettings />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'settings_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'settings_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'settings_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <UserSettings />
+            </div>
+        );
     }
     if (page === ROUTES.orders.en || page === ROUTES.orders.ru) {
-        return <ORder />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'order_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'order_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'order_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <ORder />
+            </div>
+        );
     }
     if (page === ROUTES.liked.en || page === ROUTES.liked.ru) {
-        return <Liked />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'Liked_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'Liked_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'Liked_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Liked />
+            </div>
+        );
     }
     if (page === ROUTES.notification.en || page === ROUTES.notification.ru) {
-        return <Notification />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'Notification_page'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'Notification_page'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'Notification_page'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>
+                <Notification />
+            </div>
+        );
     }
     if (page === ROUTES.order.en || page === ROUTES.order.ru) {
-        return <Basked />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'Basked_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'Basked_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'Basked_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <Basked />
+            </div>
+        );
     }
     if (page === ROUTES.likedUser.en || page === ROUTES.likedUser.ru) {
-        return <UserLiked />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'User_liked_page'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'User_liked_page'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'User_liked_page'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <UserLiked />
+            </div>
+        );
     }
     if (page === ROUTES.ordersConfirm.en || page === ROUTES.ordersConfirm.ru) {
-        return <BaskedConfirm />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'Basked_confrim_page'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'Basked_confrim_page'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'Basked_confrim_page'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <BaskedConfirm />
+            </div>
+        );
     }
     if (page === ROUTES.register.en || page === ROUTES.register.ru) {
-        return <Register />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'register_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'register_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'register_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <Register />
+            </div>
+        );
     }
     if (page === ROUTES.resetPasword.en || page === ROUTES.resetPasword.ru) {
-        return <Password />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'password_page')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'password_page')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'password_page')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <Password />
+            </div>
+        );
     }
     if (
         page === ROUTES.resetPaswordSucses.en ||
         page === ROUTES.resetPaswordSucses.ru
     ) {
-        return <SucsesPassword />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find(
+                                (meta) => meta.type === 'sucses_password'
+                            )?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'sucses_password'
+                            )?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find(
+                                (meta) => meta.type === 'sucses_password'
+                            )?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <SucsesPassword />
+            </div>
+        );
     }
     if (page === ROUTES.BaskedSucses.en || page === ROUTES.BaskedSucses.ru) {
-        return <Sucses />;
+        return (
+            <div>
+                <Helmet>
+                    <title>
+                        {
+                            Metas?.find((meta) => meta.type === 'sucses')
+                                ?.meta_title
+                        }
+                    </title>
+                    <meta
+                        name="description"
+                        content={
+                            Metas?.find((meta) => meta.type === 'sucses')
+                                ?.meta_description
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <meta
+                        name="keywords"
+                        content={
+                            Metas?.find((meta) => meta.type === 'sucses')
+                                ?.meta_keywords
+                        }
+                        data-next-head=""
+                    ></meta>
+                    <link
+                        rel="icon"
+                        href={favicon?.image}
+                        type="image/svg+xml"
+                    />
+                </Helmet>{' '}
+                <Sucses />
+            </div>
+        );
     }
 
     return (

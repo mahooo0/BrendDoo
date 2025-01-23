@@ -5,6 +5,11 @@
     text-align: center;
 }
 
+.my-custom-class {
+    position: absolute !important;
+    z-index: 210000 !important;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;

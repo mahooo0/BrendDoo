@@ -33,14 +33,16 @@ export default function Story() {
                 >
                     {instragrams?.map((item, i: number) => (
                         <SwiperSlide key={item.id} className="!w-fit">
-                            <img
-                                onClick={() => {
-                                    setisStoriesSwipperOpen(true),
-                                        setCurrentSlide(i);
-                                }}
-                                src={item.image}
-                                className="w-12 aspect-square rounded-full bg-black cursor-pointer"
-                            />
+                            <div className=" w-[94px] h-[94px] flex justify-center items-center rounded-full border-2 border-[#5797ED]">
+                                <img
+                                    onClick={() => {
+                                        setisStoriesSwipperOpen(true),
+                                            setCurrentSlide(i);
+                                    }}
+                                    src={item.image}
+                                    className="w-[80px] aspect-square rounded-full bg-black cursor-pointer"
+                                />
+                            </div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
