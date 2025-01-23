@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import GETRequest from '../../setting/Request';
+import GETRequest, { axiosInstance } from '../../setting/Request';
 import { TranslationsKeys } from '../../setting/Types';
 import ROUTES from '../../setting/routes';
 import { GoogleLogin } from '@react-oauth/google';
@@ -64,7 +64,17 @@ export default function Login() {
         console.log('Login Success:', response);
         const credential = response.credential; // The ID token
         console.log('credential', credential);
+        axiosInstance
+            .post('/login/google', { token: credential })
+            .then((response) => {
+                toast.success('login sucsesfylly ,now log in ');
+                console.log('RESPONse', response);
 
+                navigate('/user/login');
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message);
+            });
         // You can send this credential to your backend for verification
     };
 
