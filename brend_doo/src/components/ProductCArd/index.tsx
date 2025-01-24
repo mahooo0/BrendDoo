@@ -118,21 +118,6 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     useEffect(() => {
         // Initial check on render
         checkLikedProducts();
-
-        // Listener for storage changes across tabs
-        // const handleStorageChange = (e: any) => {
-        //     if (e.key === 'liked_Produckts') {
-        //         checkLikedProducts();
-        //     }
-        // };
-
-        // // Add storage event listener
-        // window.addEventListener('storage', handleStorageChange);
-
-        // // Cleanup listener on unmount
-        // return () => {
-        //     window.removeEventListener('storage', handleStorageChange);
-        // };
     }, [favorites]);
 
     // For same-tab updates

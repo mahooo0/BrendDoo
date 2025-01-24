@@ -42,37 +42,38 @@ export default function ORder() {
                                 isactive={status === ''}
                                 action={() => setstaus('')}
                             >
-                                Hamısı
+                                {translation?.Hamısı}
                             </NoneToBlue>
                             <NoneToBlue
                                 isactive={status === 'ordered'}
                                 action={() => setstaus('ordered')}
                             >
-                                ordered
+                                {translation?.ordered}
                             </NoneToBlue>
                             <NoneToBlue
                                 isactive={status === 'prepared'}
                                 action={() => setstaus('prepared')}
                             >
-                                prepared
+                                {translation?.prepared}
                             </NoneToBlue>
                             <NoneToBlue
                                 isactive={status === 'delivered_to_courier'}
                                 action={() => setstaus('delivered_to_courier')}
                             >
-                                delivered_to_courier
+                                {translation?.delivered_to_courier}
                             </NoneToBlue>
                             <NoneToBlue
                                 isactive={status === 'delivered'}
                                 action={() => setstaus('delivered')}
                             >
-                                delivered
+                                {translation?.delivered}
                             </NoneToBlue>
                             <NoneToBlue
                                 isactive={status === 'cancelled'}
                                 action={() => setstaus('cancelled')}
                             >
-                                cancelled
+                                {' '}
+                                {translation?.cancelled}
                             </NoneToBlue>
                         </div>
                     </div>

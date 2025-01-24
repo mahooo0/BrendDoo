@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import GETRequest from '../setting/Request';
 import { Brand, TranslationsKeys } from '../setting/Types';
 import Loading from '../components/Loading';
+import ROUTES from '../setting/routes';
 
 export default function Brends() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
@@ -87,7 +88,11 @@ export default function Brends() {
             <main className=" lg:mt-[40px] mt-0 max-sm:mb-10 mb-[100px]">
                 <div className="px-[40px] max-sm:px-4">
                     <div className="flex items-center gap-2">
-                        <Link to={`${lang}`}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.home]
+                            }`}
+                        >
                             <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>

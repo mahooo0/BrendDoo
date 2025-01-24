@@ -799,7 +799,7 @@ export default function Products() {
                                                             ROUTES.product[
                                                                 lang as keyof typeof ROUTES.product
                                                             ]
-                                                        }?category=${category}?subCategory=${subCategory} `}
+                                                        }?category=${category}&subCategory=${subCategory} `}
                                                     >
                                                         <img
                                                             loading="lazy"

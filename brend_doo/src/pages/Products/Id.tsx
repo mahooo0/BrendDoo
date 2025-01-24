@@ -3,8 +3,9 @@ import { Footer } from '../../components/Footer';
 import CommentsSection from '../../components/Comments';
 import ProductCard from '../../components/ProductCArd';
 import { useNavigate, useParams } from 'react-router-dom';
-import GETRequest from '../../setting/Request';
+import GETRequest, { axiosInstance } from '../../setting/Request';
 import {
+    Favorite,
     ProductDetail,
     ProductResponse,
     TranslationsKeys,
@@ -17,6 +18,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import ProductGallery from '../../components/product-gallery';
+import { useQueryClient } from '@tanstack/react-query';
 
 function extractData(input: string) {
     const match = input.match(/(\d+)% \((\d+)\)/);
@@ -50,6 +52,25 @@ export default function ProductId() {
 
     const [currentColor, setCurrentColor] = useState<string>('');
     const [currentOption, setCurrentOption] = useState<string>('');
+    const [isliked, setisliked] = useState<boolean>(false);
+    const { data: favorites } = GETRequest<Favorite[]>(
+        `/favorites`,
+        'favorites',
+        [lang]
+    );
+    const checkLikedProducts = () => {
+        if (favorites?.some((item) => item.product.id === Productslingle?.id)) {
+            setisliked(true);
+        } else {
+            setisliked(false);
+        }
+    };
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        // Initial check on render
+        checkLikedProducts();
+    }, [favorites]);
     useEffect(() => {
         const CurrentColorNAme = Productslingle?.filters
             .find(
@@ -570,16 +591,74 @@ export default function ProductId() {
                                     </div>
                                 </button>
                             </div>
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/07d431d73088f7a9f3aed7f9493deda18edf1f9e2a2aa01d2a8d1ce05d8757a7?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                className="object-contain max-sm:hidden shrink-0 self-stretch my-auto w-12 aspect-square rounded-[100px]"
-                            />
+                            <div
+                                className="bg-[##F5F5F5]  rounded-full w-11 h-11 flex justify-center items-center"
+                                onClick={async () => {
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        const User = JSON.parse(userStr);
+                                        if (User) {
+                                            axiosInstance
+                                                .post(
+                                                    '/favorites/toggleFavorite',
+                                                    {
+                                                        product_id:
+                                                            Productslingle?.id,
+                                                    },
+                                                    {
+                                                        headers: {
+                                                            Authorization: `Bearer ${User.data.token}`,
+                                                            Accept: 'application/json',
+                                                        },
+                                                    }
+                                                )
+                                                .then(() => {
+                                                    // toast.success(
+                                                    //     'Product is sucsesfully aded to favorites'
+                                                    // );
+                                                    if (isliked) {
+                                                        setisliked(false);
+                                                    } else {
+                                                        setisliked(true);
+                                                    }
+                                                    queryClient.invalidateQueries(
+                                                        {
+                                                            queryKey: [
+                                                                'favorites',
+                                                            ],
+                                                        }
+                                                    );
+                                                })
+                                                .catch((error) => {
+                                                    console.log(error);
+                                                });
+                                        }
+                                    } else {
+                                        navigate(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
+                            >
+                                <img
+                                    src={
+                                        !isliked
+                                            ? '/svg/hartBlack.svg'
+                                            : '/svg/hartRed.svg'
+                                    }
+                                    alt=""
+                                />
+                            </div>
                         </div>
                         <div
                             className="flex rounded-3xl bg-stone-50 max-w-[670px] h-fit px-[40px] py-[48px] max-sm:mt-10 mt-[90px] flex-col"
                             dangerouslySetInnerHTML={{
-                                __html: '<p>Burara description eleve ele </p>',
+                                __html: Productslingle?.description || '',
                             }}
                         />
                     </section>

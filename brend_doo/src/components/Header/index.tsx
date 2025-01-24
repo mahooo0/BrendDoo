@@ -5,6 +5,7 @@ import ROUTES, { getRouteKey } from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import {
     Basket,
+    CatalogCategory,
     Category,
     Product,
     ProductResponse,
@@ -19,6 +20,7 @@ import { RefetchBasked } from '../../setting/StateManagmant';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Story from './story';
 import CategoryNavigation from '../CategoryPop';
+import { ChevronRight } from 'lucide-react';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -44,6 +46,7 @@ export default function Header() {
     const [showaside, setShowAside] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
     const [showSubCAtegoryes, setshowSubCAtegoryes] = useState<number>(-1);
+    const [CurrentCategory, setCurrentCategory] = useState<number>(-1);
     const [currentSubCategoryId, setCurrentSubCategoryId] = useState<number>(0);
     const inputRef = useRef<HTMLInputElement>(null);
     const {
@@ -274,6 +277,11 @@ export default function Header() {
     const { data: top_line } = GETRequest<TopLine>(`/top_line`, 'top_line', [
         lang,
     ]);
+    const { data: catalog_categories } = GETRequest<CatalogCategory[]>(
+        `/catalog_categories`,
+        'catalog_categories',
+        [lang]
+    );
     console.log('basked:', basked);
 
     useEffect(() => {
@@ -1032,11 +1040,7 @@ export default function Header() {
                     <img
                         loading="lazy"
                         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                        className={`object-contain shrink-0 self-stretch aspect-[1.4] duration-300 w-[70px] ${
-                            isSearchOpen || showaside
-                                ? 'opacity-0   '
-                                : 'opacity-100'
-                        } `}
+                        className={`object-contain shrink-0 self-stretch aspect-[1.4] duration-300 w-[70px] `}
                     />
                 </Link>
                 {/* <div className="flex gap-4 items-center"> */}
@@ -1048,7 +1052,6 @@ export default function Header() {
                     } `}
                 >
                     <button
-                        className={`${showaside ? 'opacity-0' : 'opacity-100'}`}
                         onClick={() => {
                             setIsSearchOpen(true);
                         }}
@@ -1136,9 +1139,7 @@ export default function Header() {
                 </div>
 
                 <button
-                    className={`flex gap-3 items-center ${
-                        isSearchOpen || showaside ? 'opacity-0' : 'opacity-100'
-                    }  `}
+                    className={`flex gap-3 items-center opacity-100}  `}
                     onClick={() => {
                         setIsBaskedOpen((prev) => !prev);
                         if (!isBaskedOpen) {
@@ -1164,11 +1165,7 @@ export default function Header() {
                         onClick={() => {
                             setShowAside((prew) => !prew);
                         }}
-                        className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center ${
-                            isSearchOpen || showaside
-                                ? 'opacity-0 '
-                                : 'opacity-100 '
-                        } `}
+                        className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center  `}
                     >
                         <svg
                             width="24"
@@ -1184,7 +1181,7 @@ export default function Header() {
                         </svg>
                     </div>
                 </div>
-                <div
+                {/* <div
                     className="flex flex-row justify-between items-center px-4 border-b mb-2 border-black border-opacity-50 w-full min-h-[68px] absolute top-0  duration-300 left-0 "
                     style={{
                         opacity: showaside ? '100' : '0',
@@ -1234,10 +1231,10 @@ export default function Header() {
                             />
                         </svg>
                     </button>
-                </div>
+                </div> */}
                 {/* </div> */}
             </div>
-            {showaside && categories && (
+            {/* {showaside && categories && (
                 <div className=" max-md:flex fixed top-[68px] left-0 w-full z-[67] h-[100vh] bg-white flex flex-col">
                     <div className=" flex flex-row  justify-around">
                         <Link
@@ -1301,7 +1298,404 @@ export default function Header() {
                         }}
                     />
                 </div>
-            )}
+            )} */}
+            <div
+                className={` w-[100vw] h-[100vh] bg-black fixed top-0   left-0 z-[99999999999] duration-200 ${
+                    showaside ? 'bg-opacity-40 ' : 'bg-opacity-0 z-[-99999999]'
+                }  `}
+            >
+                <div
+                    className={`w-[80vw] h-[100vh]  fixed  top-0  duration-300  right-0  z-[99999999999] bg-white ${
+                        !showaside ? ' translate-x-[100%]' : 'translate-x-[0%]'
+                    }    `}
+                >
+                    <div className=" relative">
+                        <div className="flex flex-row justify-between items-center px-4 py-[16px] border-b mb-2 border-black  w-full   border-opacity-10  duration-300 left-0  min-h-[96px]">
+                            {CurrentCategory === -1 ? (
+                                <Link
+                                    className="w-[200px]"
+                                    to={`/${lang}/${
+                                        ROUTES.home[
+                                            lang as keyof typeof ROUTES.home
+                                        ]
+                                    }`}
+                                >
+                                    <img
+                                        loading="lazy"
+                                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0810c4aeebbd64a3e1b72741797d34b3b9cdb99d6d6af4238830cc7f449ae1bc?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                        className="object-contain shrink-0 self-stretch aspect-[1.4] w-[98px]"
+                                    />
+                                </Link>
+                            ) : (
+                                <div
+                                    onClick={() => setCurrentCategory(-1)}
+                                    className="flex flex-row gap-4"
+                                >
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M15 18L9 12L15 6"
+                                            stroke="black"
+                                            stroke-opacity="0.8"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                    Geri
+                                </div>
+                            )}
+
+                            <svg
+                                onClick={() => setShowAside(false)}
+                                width="40"
+                                height="40"
+                                viewBox="0 0 40 40"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect
+                                    width="40"
+                                    height="40"
+                                    rx="20"
+                                    fill="#F5F5F5"
+                                />
+                                <path
+                                    d="M25 15L15 25"
+                                    stroke="black"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M15 15L25 25"
+                                    stroke="black"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <div className="w-full bg-red max-h-[70%] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                            <Link
+                                to={`/${lang}/${
+                                    ROUTES.product[
+                                        lang as keyof typeof ROUTES.product
+                                    ]
+                                }?discount=true`}
+                            >
+                                <div className="h-[60px] px-[16px] w-full bg-[#FDE4EE]  flex flex-row gap-3   border-opacity-10  items-center justify-between pb-[]">
+                                    <div className="flex flex-row items-center gap-3 text-[#FD0769]">
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9.78133 3.89076C10.3452 3.41023 10.6271 3.16997 10.9219 3.02907C11.6037 2.7032 12.3963 2.7032 13.0781 3.02907C13.3729 3.16997 13.6548 3.41023 14.2187 3.89076C14.4431 4.08201 14.5553 4.17764 14.6752 4.25796C14.9499 4.44209 15.2584 4.56988 15.5828 4.63393C15.7244 4.66188 15.8713 4.6736 16.1653 4.69706C16.9038 4.75599 17.273 4.78546 17.5811 4.89427C18.2936 5.14594 18.8541 5.7064 19.1058 6.41893C19.2146 6.72699 19.244 7.09625 19.303 7.83475C19.3264 8.12868 19.3381 8.27564 19.3661 8.41718C19.4301 8.74163 19.5579 9.05014 19.7421 9.32485C19.8224 9.44469 19.918 9.55691 20.1093 9.78133C20.5898 10.3452 20.8301 10.6271 20.971 10.9219C21.2968 11.6037 21.2968 12.3963 20.971 13.0781C20.8301 13.3729 20.5898 13.6548 20.1093 14.2187C19.918 14.4431 19.8224 14.5553 19.7421 14.6752C19.5579 14.9499 19.4301 15.2584 19.3661 15.5828C19.3381 15.7244 19.3264 15.8713 19.303 16.1653C19.244 16.9038 19.2146 17.273 19.1058 17.5811C18.8541 18.2936 18.2936 18.8541 17.5811 19.1058C17.273 19.2146 16.9038 19.244 16.1653 19.303C15.8713 19.3264 15.7244 19.3381 15.5828 19.3661C15.2584 19.4301 14.9499 19.5579 14.6752 19.7421C14.5553 19.8224 14.4431 19.918 14.2187 20.1093C13.6548 20.5898 13.3729 20.8301 13.0781 20.971C12.3963 21.2968 11.6037 21.2968 10.9219 20.971C10.6271 20.8301 10.3452 20.5898 9.78133 20.1093C9.55691 19.918 9.44469 19.8224 9.32485 19.7421C9.05014 19.5579 8.74163 19.4301 8.41718 19.3661C8.27564 19.3381 8.12868 19.3264 7.83475 19.303C7.09625 19.244 6.72699 19.2146 6.41893 19.1058C5.7064 18.8541 5.14594 18.2936 4.89427 17.5811C4.78546 17.273 4.75599 16.9038 4.69706 16.1653C4.6736 15.8713 4.66188 15.7244 4.63393 15.5828C4.56988 15.2584 4.44209 14.9499 4.25796 14.6752C4.17764 14.5553 4.08201 14.4431 3.89076 14.2187C3.41023 13.6548 3.16997 13.3729 3.02907 13.0781C2.7032 12.3963 2.7032 11.6037 3.02907 10.9219C3.16997 10.6271 3.41023 10.3452 3.89076 9.78133C4.08201 9.55691 4.17764 9.4447 4.25796 9.32485C4.44209 9.05014 4.56988 8.74163 4.63393 8.41718C4.66188 8.27564 4.6736 8.12868 4.69706 7.83475C4.75599 7.09625 4.78546 6.72699 4.89427 6.41893C5.14594 5.7064 5.7064 5.14594 6.41893 4.89427C6.72699 4.78546 7.09625 4.75599 7.83475 4.69706C8.12868 4.6736 8.27564 4.66188 8.41718 4.63393C8.74163 4.56988 9.05014 4.44209 9.32485 4.25796C9.4447 4.17764 9.55691 4.08201 9.78133 3.89076Z"
+                                                stroke="#FF3C79"
+                                                stroke-width="1.5"
+                                            />
+                                            <path
+                                                d="M9 15L15 9"
+                                                stroke="#FF3C79"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                            />
+                                            <path
+                                                d="M15.5 14.5C15.5 15.0523 15.0523 15.5 14.5 15.5C13.9477 15.5 13.5 15.0523 13.5 14.5C13.5 13.9477 13.9477 13.5 14.5 13.5C15.0523 13.5 15.5 13.9477 15.5 14.5Z"
+                                                fill="#FF3C79"
+                                            />
+                                            <path
+                                                d="M10.5 9.5C10.5 10.0523 10.0523 10.5 9.5 10.5C8.94772 10.5 8.5 10.0523 8.5 9.5C8.5 8.94772 8.94772 8.5 9.5 8.5C10.0523 8.5 10.5 8.94772 10.5 9.5Z"
+                                                fill="#FF3C79"
+                                            />
+                                        </svg>
+                                        {translation?.Endirim}
+                                    </div>
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M9 6L15 12L9 18"
+                                            stroke="#FD0769"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </Link>
+
+                            {catalog_categories?.map((item) => (
+                                <div className="h-[60px] w-full bg-white hover:bg-slate-200 flex flex-row gap-3 border-b-2 border-black  border-opacity-10  items-center justify-between pb-[] px-[16px] cursor-pointer">
+                                    <Link
+                                        to={`/${lang}/${
+                                            ROUTES.liked[
+                                                lang as keyof typeof ROUTES.liked
+                                            ]
+                                        }`}
+                                    >
+                                        <div className="flex flex-row items-center gap-3  ">
+                                            <div className="w-10 aspect-square rounded-full bg-[#F0F6FF] flex justify-center items-center">
+                                                <img
+                                                    className="object-contain shrink-0 w-[24px] aspect-square rounded-[100px]"
+                                                    src={item.image}
+                                                />
+                                            </div>
+                                            {item.title}
+                                        </div>
+                                    </Link>
+
+                                    <svg
+                                        onClick={() =>
+                                            setCurrentCategory(item.id)
+                                        }
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M9 6L15 12L9 18"
+                                            stroke="black"
+                                            stroke-opacity="0.8"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            ))}
+                        </div>
+                        <div
+                            className={`w-full bg-white
+                                 absolute top-[102px] h-[80%] duration-300 ${
+                                     CurrentCategory === -1
+                                         ? 'right-[-100%]'
+                                         : 'right-0'
+                                 }`}
+                        >
+                            {catalog_categories
+                                ?.find((item) => item.id === CurrentCategory)
+                                ?.subCategories?.map((item) => (
+                                    <Link
+                                        onClick={() => {
+                                            setShowAside(false);
+                                        }}
+                                        to={`/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }?category=${CurrentCategory}&subCategory=${
+                                            item.id
+                                        }`}
+                                    >
+                                        {' '}
+                                        <div className="h-[60px] w-full bg-white hover:bg-slate-200 flex flex-row gap-3 border-b-2 border-black  border-opacity-10  items-center justify-between pb-[] px-[16px] cursor-pointer">
+                                            <div className="flex flex-row items-center gap-3  ">
+                                                {item.title}
+                                            </div>
+                                            <svg
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M9 6L15 12L9 18"
+                                                    stroke="black"
+                                                    stroke-opacity="0.8"
+                                                    stroke-width="1.5"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </Link>
+                                ))}
+                        </div>
+                        <div className="w-full h-[400px] absolute z-30 bottom-[-100%] bg-[#F5F5F5]">
+                            <Link
+                                onClick={() => {
+                                    setShowAside(false);
+                                }}
+                                to={`/${lang}/${
+                                    ROUTES.product[
+                                        lang as keyof typeof ROUTES.product
+                                    ]
+                                }?category=${CurrentCategory}&subCategory=${1}`}
+                            >
+                                {' '}
+                                <div className="h-[60px] w-full bg-[#F5F5F5]  flex flex-row gap-3 border-b-2 border-black  border-opacity-10  items-center justify-between pb-[] px-[16px] cursor-pointer">
+                                    <div className="flex flex-row items-center gap-3  ">
+                                        <svg
+                                            width="40"
+                                            height="40"
+                                            viewBox="0 0 40 40"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <rect
+                                                width="40"
+                                                height="40"
+                                                rx="20"
+                                                fill="white"
+                                            />
+                                            <g clip-path="url(#clip0_2576_5719)">
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    d="M14.6868 13.6868C13.3043 14.3187 12.2915 15.8218 12.2915 17.6142C12.2915 19.4453 13.0409 20.8568 14.1151 22.0664C15.0004 23.0634 16.0722 23.8896 17.1174 24.6954C17.3657 24.8868 17.6125 25.0771 17.8549 25.2682C18.2932 25.6137 18.6843 25.917 19.0612 26.1373C19.4383 26.3576 19.7418 26.4583 19.9998 26.4583C20.2578 26.4583 20.5614 26.3576 20.9385 26.1373C21.3154 25.917 21.7064 25.6137 22.1448 25.2682C22.3872 25.0771 22.634 24.8868 22.8822 24.6954C23.9275 23.8896 24.9992 23.0634 25.8846 22.0664C26.9588 20.8568 27.7082 19.4453 27.7082 17.6142C27.7082 15.8218 26.6954 14.3187 25.3129 13.6868C23.9698 13.0728 22.1651 13.2354 20.4501 15.0172C20.3323 15.1396 20.1697 15.2088 19.9998 15.2088C19.8299 15.2088 19.6674 15.1396 19.5495 15.0172C17.8346 13.2354 16.0299 13.0728 14.6868 13.6868ZM19.9998 13.7156C18.0731 11.9918 15.9156 11.7507 14.1671 12.5499C12.3204 13.394 11.0415 15.3541 11.0415 17.6142C11.0415 19.8355 11.9669 21.53 13.1804 22.8964C14.1522 23.9907 15.3417 24.9066 16.3922 25.7154C16.6303 25.8988 16.8613 26.0766 17.081 26.2498C17.5079 26.5863 17.9661 26.9452 18.4305 27.2165C18.8947 27.4878 19.4245 27.7083 19.9998 27.7083C20.5752 27.7083 21.105 27.4878 21.5692 27.2165C22.0336 26.9452 22.4918 26.5863 22.9187 26.2498C23.1384 26.0766 23.3693 25.8988 23.6075 25.7154C24.658 24.9066 25.8474 23.9907 26.8192 22.8964C28.0328 21.53 28.9582 19.8355 28.9582 17.6142C28.9582 15.3541 27.6792 13.394 25.8325 12.5499C24.084 11.7507 21.9266 11.9918 19.9998 13.7156Z"
+                                                    fill="black"
+                                                />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_2576_5719">
+                                                    <rect
+                                                        width="20"
+                                                        height="20"
+                                                        fill="white"
+                                                        transform="translate(10 10)"
+                                                    />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                        {translation?.Bəyəndiklərim}{' '}
+                                    </div>
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M9 6L15 12L9 18"
+                                            stroke="black"
+                                            stroke-opacity="0.8"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </Link>{' '}
+                            <div
+                                className="h-[60px] w-full bg-[#F5F5F5] flex flex-row gap-3 border-b-2 border-black  border-opacity-10  items-center justify-between pb-[] px-[16px] cursor-pointer"
+                                onClick={() => {
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        // const User = JSON.parse(userStr);
+
+                                        // if (User) {
+                                        // }
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.userSettings[
+                                                    lang as keyof typeof ROUTES.userSettings
+                                                ]
+                                            }`
+                                        );
+                                    } else {
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
+                            >
+                                <div className="flex flex-row items-center gap-3  ">
+                                    <svg
+                                        width="40"
+                                        height="40"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <rect
+                                            width="40"
+                                            height="40"
+                                            rx="20"
+                                            fill="white"
+                                        />
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M19.9998 11.0417C17.8137 11.0417 16.0415 12.814 16.0415 15.0001C16.0415 17.1862 17.8137 18.9584 19.9998 18.9584C22.186 18.9584 23.9582 17.1862 23.9582 15.0001C23.9582 12.814 22.186 11.0417 19.9998 11.0417ZM17.2915 15.0001C17.2915 13.5043 18.5041 12.2917 19.9998 12.2917C21.4956 12.2917 22.7082 13.5043 22.7082 15.0001C22.7082 16.4959 21.4956 17.7084 19.9998 17.7084C18.5041 17.7084 17.2915 16.4959 17.2915 15.0001Z"
+                                            fill="black"
+                                        />
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M19.9998 20.2084C18.3004 20.2084 16.7311 20.6007 15.565 21.2671C14.4165 21.9233 13.5415 22.9252 13.5415 24.1667C13.5415 25.4083 14.4165 26.4102 15.565 27.0664C16.7311 27.7328 18.3004 28.1251 19.9998 28.1251C21.6993 28.1251 23.2686 27.7328 24.4347 27.0664C25.5832 26.4102 26.4582 25.4083 26.4582 24.1667C26.4582 22.9252 25.5832 21.9233 24.4347 21.2671C23.2686 20.6007 21.6993 20.2084 19.9998 20.2084ZM14.7915 24.1667C14.7915 23.5674 15.2223 22.9025 16.1851 22.3524C17.1302 21.8123 18.4776 21.4584 19.9998 21.4584C21.5221 21.4584 22.8694 21.8123 23.8145 22.3524C24.7773 22.9025 25.2082 23.5674 25.2082 24.1667C25.2082 24.7661 24.7773 25.431 23.8145 25.9811C22.8694 26.5212 21.5221 26.8751 19.9998 26.8751C18.4776 26.8751 17.1302 26.5212 16.1851 25.9811C15.2223 25.431 14.7915 24.7661 14.7915 24.1667Z"
+                                            fill="black"
+                                        />
+                                    </svg>
+                                    {translation?.Şəxsi_kabinet}
+                                </div>
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9 6L15 12L9 18"
+                                        stroke="black"
+                                        stroke-opacity="0.8"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div className=" flex flex-row  m-3">
+                                <div
+                                    onClick={() => HandleSetUrlByLang('en')}
+                                    style={
+                                        lang === 'en'
+                                            ? { color: '#3873C3' }
+                                            : {}
+                                    }
+                                    className="w-[43px] h-[40px] rounded-s-3xl flex justify-center items-center bg-[#ffffff] border-r border-black border-opacity-10"
+                                >
+                                    EN
+                                </div>
+                                <div
+                                    onClick={() => HandleSetUrlByLang('ru')}
+                                    style={
+                                        lang === 'ru'
+                                            ? { color: '#3873C3' }
+                                            : {}
+                                    }
+                                    className="w-[43px] h-[40px] rounded-e-3xl flex  justify-center items-center bg-[#ffffff]"
+                                >
+                                    RU
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

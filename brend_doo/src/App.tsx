@@ -30,15 +30,23 @@ import { RecoilRoot } from 'recoil';
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useLocation } from 'react-router-dom';
 
 const App = () => {
     // const location = useLocation(); // Hook to get the current route
     const queryClient = new QueryClient();
 
+    const location = useLocation();
+
     useEffect(() => {
-        // Scroll to the top of the page whenever the route changes
-        window.scrollTo(0, 0);
-    }, [location]);
+        // Scroll to the top of the page whenever the route changes, except for routes containing 'онас#faq' or 'about#faq'
+        if (
+            !location.pathname.includes('онас#faq') &&
+            !location.pathname.includes('about#faq')
+        ) {
+            window.scrollTo(0, 0);
+        }
+    }, [location.pathname]);
 
     return (
         //PODUCTS

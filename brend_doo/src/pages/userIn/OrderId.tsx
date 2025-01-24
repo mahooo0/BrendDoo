@@ -290,10 +290,13 @@ export default function OrderId() {
                                     <div className="flex flex-col w-full max-md:mt-10 h-full justify-between">
                                         <div className="flex flex-col w-full">
                                             <div className="self-stretch my-auto max-sm:block hidden mb-3">
-                                                Çatdırılma məlumatları:
+                                                {
+                                                    tarnslation?.Çatdırılma_məlumatları
+                                                }
+                                                :
                                             </div>
                                             <div className="text-sm text-black text-opacity-60">
-                                                Ünvan:
+                                                {tarnslation?.Ünvan}:
                                             </div>
                                             <div className="mt-2 text-base text-black">
                                                 Bakı şəhər, Yasamal, Ə.Əhmədov
@@ -307,7 +310,7 @@ export default function OrderId() {
                                             }
                                         >
                                             <div className="self-stretch my-auto">
-                                                Ünvan məlumatların dəyiş
+                                                {tarnslation?.SETÜnvan}:
                                             </div>
                                             <img
                                                 loading="lazy"
@@ -321,28 +324,32 @@ export default function OrderId() {
                                     <div className="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
                                         <div className="flex gap-5 justify-between text-sm max-md:max-w-full">
                                             <div className="text-black text-opacity-60">
-                                                Məhsul məbləği:
+                                                {tarnslation?.Məhsul_məbləği}:
                                             </div>
                                             <div className="font-medium text-center text-black">
-                                                400 AZN
+                                                {Order?.total_price}AZN
                                             </div>
                                         </div>
                                         <div className="shrink-0 mt-5 h-px border border-solid border-zinc-300 max-md:max-w-full" />
                                         <div className="flex gap-5 justify-between mt-3 text-sm max-md:max-w-full">
                                             <div className="text-black text-opacity-60">
-                                                Çatdırılma məbləği:
+                                                {
+                                                    tarnslation?.Çatdırılma_məbləği
+                                                }
+                                                :
                                             </div>
                                             <div className="font-medium text-center text-black">
-                                                10 AZN
+                                                {Order?.delivered_price} AZN
                                             </div>
                                         </div>
                                         <div className="shrink-0 mt-5 h-px border border-solid border-zinc-300 max-md:max-w-full" />
                                         <div className="flex gap-5 justify-between mt-3 max-md:max-w-full">
                                             <div className="my-auto text-sm text-black text-opacity-60">
-                                                Ümumi məbləğ:
+                                                {' '}
+                                                {tarnslation?.Ümumi_məbləğ}:
                                             </div>
                                             <div className="text-lg font-semibold text-center text-green-500">
-                                                410 AZN
+                                                {Order?.total_price}AZN
                                             </div>
                                         </div>
                                     </div>

@@ -15,6 +15,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
+import ROUTES from '../setting/routes';
 
 export default function Contact() {
     const validationSchema = Yup.object().shape({
@@ -68,7 +69,11 @@ export default function Contact() {
                     }}
                 >
                     <div className="flex items-center gap-2">
-                        <Link to={`${lang}`}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.home]
+                            }`}
+                        >
                             <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>
