@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import ClothingMenu, { CategoryHeader } from '../ClothingMenu';
+import { CategoryHeader } from '../ClothingMenu';
 import ROUTES, { getRouteKey } from '../../setting/routes';
 import GETRequest from '../../setting/Request';
 import {
@@ -20,7 +20,6 @@ import { RefetchBasked } from '../../setting/StateManagmant';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Story from './story';
 import CategoryNavigation from '../CategoryPop';
-import { ChevronRight } from 'lucide-react';
 function disableScrolling() {
     // const scrollTop = window.scrollY;
     document.body.style.overflow = 'hidden';
