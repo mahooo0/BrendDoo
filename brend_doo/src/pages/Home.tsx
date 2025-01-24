@@ -7,9 +7,11 @@ import { useState } from 'react';
 
 import GETRequest from '../setting/Request.ts';
 import {
+    Brand,
     // Advanteges,
     Holideys,
     HomeHero,
+    ItemList,
     Seo,
     Tiktoks,
     TranslationsKeys,
@@ -98,11 +100,21 @@ export default function Home() {
     // const { data: categories, isLoading: categoriesLoading } = GETRequest<
     //     Category[]
     // >(`/categories`, 'categories', [lang]);
+    const { data: brends, isLoading: brendsLoading } = GETRequest<Brand[]>(
+        `/brands`,
+        'brands',
+        [lang]
+    );
     const { data: holidayBanners, isLoading: holidayBannersLoading } =
         GETRequest<Holideys>(`/holidayBanners`, 'holidayBanners', [lang]);
     const { data: Metas, isLoading: MetasLoading } = GETRequest<Seo[]>(
         `/seo_pages`,
         'seo_pages',
+        [lang]
+    );
+    const { data: banners, isLoading: bannersLoading } = GETRequest<ItemList>(
+        `/banners`,
+        'banners',
         [lang]
     );
     const { data: favicon, isLoading: faviconLoading } = GETRequest<{
@@ -128,9 +140,11 @@ export default function Home() {
 
     if (
         faviconLoading ||
+        brendsLoading ||
         heroLoading ||
         holidayBannersLoading ||
         MetasLoading ||
+        bannersLoading ||
         // advantagesLoading ||
         tarnslationLoading ||
         tiktokLoading ||
@@ -221,10 +235,10 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-                {Array.from({ length: 3 }).map((_) => (
+                {banners?.map((item) => (
                     <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                         <img
-                            src="https://s3-alpha-sig.figma.com/img/12fa/7c40/dbdf4a836239fe447b429bf9f17f47ac?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HIIFnDLIrW9JWwAs9dZFY3sQexI-XQJzOi1Go~lQfLLHYqnXIGu-R9kr-U00lYvJIEcJNYBXnSCpzSDnNqGdwyIRl0joj7lkmFYP4RMCnzuO8WxlW-ryzjl6vI63rtcnBemJOQoWfgWbqyqQFEGvdbksyLPf8BTYg3O-M17UncRmqIZ2TgN6lpsm7txyx1ZZ9DnR2JZrOYcbSfmB15z8ih~qP4eHvaW4ZlzSSe3-0ctCBWQv20KL2RwSqHUMGRMAcTJodauofie8alkIQYwF7-uLQ2larZK512AQRtWmtQ~IxepK81cwrHlbcT9UJtKgppzPyP2GTbBiopMBC9Sk4w__"
+                            src={item.image}
                             alt=""
                             className="absolute top-0  left-0 w-full h-full object-cover -z-10"
                         />
@@ -240,15 +254,15 @@ export default function Home() {
                                 <div className="flex flex-col w-full max-md:max-w-full">
                                     <div className="flex flex-col w-full">
                                         <div className="text-xl font-medium text-white text-opacity-60 max-md:max-w-full">
-                                            {holidayBanners?.title}{' '}
+                                            {item.title}
                                         </div>
                                         <div className="mt-3 text-4xl font-semibold text-white max-md:max-w-full">
                                             {holidayBanners?.value}{' '}
                                         </div>
                                     </div>
                                     {/* <div className="mt-5 text-lg font-medium text-white text-opacity-90 max-md:max-w-full">
-                                        {holidayBanners?.description}
-                                    </div> */}
+                 {holidayBanners?.description}
+             </div> */}
                                 </div>
                                 <button
                                     onClick={() =>
@@ -257,6 +271,47 @@ export default function Home() {
                                                 ROUTES.product[
                                                     lang as keyof typeof ROUTES.product
                                                 ]
+                                            }?page=1${
+                                                item.filter_conditions
+                                                    .category_id
+                                                    ? `&category=${item.filter_conditions.category_id}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions.brand_id
+                                                    ? `&brand_id=${item.filter_conditions.brand_id}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions.max_price
+                                                    ? `&max_price=${item.filter_conditions.max_price}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions.min_price
+                                                    ? `&min_price=${item.filter_conditions.min_price}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions
+                                                    .is_popular
+                                                    ? `&is_popular=${item.filter_conditions.is_popular}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions.is_season
+                                                    ? `&is_season=${item.filter_conditions.is_season}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions
+                                                    .is_discount
+                                                    ? `&is_discount=${item.filter_conditions.is_discount}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions
+                                                    .sub_category_id
+                                                    ? `&subCategory=${item.filter_conditions.sub_category_id}`
+                                                    : ''
+                                            }${
+                                                item.filter_conditions
+                                                    .third_category_id
+                                                    ? `&third_category_id=${item.filter_conditions.third_category_id}`
+                                                    : ''
                                             }`
                                         )
                                     }
@@ -268,6 +323,7 @@ export default function Home() {
                         </div>
                     </section>
                 ))}
+
                 {/* <section className="flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-[106px] py-9 text-lg font-medium bg-indigo-100 rounded-3xl text-slate-800 max-md:px-5 mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     <div className="flex flex-wrap gap-10 items-center max-md:max-w-full justify-between w-full">
                         {advantages &&
@@ -449,7 +505,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section> */}
-                {/* <section className="flex  max-sm:px-4 flex-col px-[40px] mt-5 max-sm:mt-[52px]">
+                <section className="flex  max-sm:px-4 flex-col px-[40px] mt-5 max-sm:mt-[52px]">
                     <div className="flex flex-wrap gap-10 justify-between items-center max-md:max-w-full">
                         <div className="self-stretch my-auto text-4xl font-semibold text-slate-900">
                             {tarnslation?.Brendlər}{' '}
@@ -457,7 +513,15 @@ export default function Home() {
                         <div className="self-stretch my-auto text-base font-medium text-blue-600 underline decoration-auto decoration-solid underline-offset-auto">
                             <span
                                 className="text-[#3873C3] underline cursor-pointer"
-                                onClick={() => navigate('/brends')}
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.brends[
+                                                lang as keyof typeof ROUTES.brends
+                                            ]
+                                        }`
+                                    )
+                                }
                             >
                                 {tarnslation?.Məhsullara_bax}
                             </span>
@@ -479,7 +543,7 @@ export default function Home() {
                             ))}
                         </div>
                     </div>
-                </section> */}
+                </section>
                 {/* <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                     <video
                         className="absolute top-0  left-0 w-full h-full object-cover -z-10"

@@ -69,7 +69,7 @@ export default function Login() {
             .then((response) => {
                 toast.success('login sucsesfylly ,now log in ');
                 console.log('RESPONse', response);
-
+                localStorage.setItem('user-info', JSON.stringify(response));
                 navigate('/user/login');
             })
             .catch((error) => {

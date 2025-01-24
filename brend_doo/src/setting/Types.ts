@@ -24,6 +24,7 @@ export type CatalogCategory = {
 export type SubCategory = {
     id: number;
     title: string;
+    third_categories: { id: number; title: string }[];
 };
 
 export type Filter = {
@@ -414,3 +415,23 @@ export type Notification = {
     body: string;
     is_read: boolean;
 };
+type FilterConditions = {
+    category_id?: string;
+    brand_id?: string;
+    max_price?: string;
+    min_price?: string;
+    is_popular?: number;
+    is_season?: number;
+    is_discount?: number;
+    sub_category_id?: string;
+    third_category_id?: string;
+};
+
+type Item = {
+    id: number;
+    title: string;
+    image: string;
+    filter_conditions: FilterConditions;
+};
+
+export type ItemList = Item[];

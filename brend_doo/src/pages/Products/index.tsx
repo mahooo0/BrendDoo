@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import ProductCard from '../../components/ProductCArd';
 import { Pagination } from '../../components/Pagination';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import {
     Category,
     Filter,
@@ -16,6 +16,7 @@ import Loading from '../../components/Loading';
 import ROUTES from '../../setting/routes';
 // import Liked from '../Liked';
 const DropdownItem = ({ data }: { data: Category }) => {
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const { lang = 'ru' } = useParams<{
         lang: string;
@@ -50,7 +51,9 @@ const DropdownItem = ({ data }: { data: Category }) => {
                             className="flex overflow-hidden flex-row gap-5 justify-between px-4 py-3.5 w-full bg-neutral-100 rounded-[100px] cursor-pointer"
                             onClick={toggleDropdown}
                         >
-                            <div className="my-auto">{data.title}</div>
+                            <div className="my-auto font-semibold">
+                                {data.title}
+                            </div>
                             <img
                                 style={
                                     isOpen
@@ -76,7 +79,9 @@ const DropdownItem = ({ data }: { data: Category }) => {
                             className="flex overflow-hidden flex-row gap-5 justify-between px-4 py-3.5 w-full bg-neutral-100 rounded-[100px] cursor-pointer"
                             // onClick={toggleDropdown}
                         >
-                            <div className="my-auto">{data.title}</div>
+                            <div className="my-auto  font-semibold">
+                                {data.title}
+                            </div>
                             <img
                                 style={
                                     isOpen
@@ -94,41 +99,102 @@ const DropdownItem = ({ data }: { data: Category }) => {
             )}
 
             {isOpen && (
-                <div className="flex flex-col mt-2 w-full text-sm gap-3">
+                <div className="flex flex-col  w-full text-sm gap-3 my-3 mt-5">
                     {data.subCategories.map((SubCategory) => {
                         console.log(subCategory, SubCategory.id);
 
                         if (subCategory && +subCategory === SubCategory.id) {
                             return (
-                                <Link
-                                    to={`/${lang}/${
-                                        ROUTES.product[
-                                            lang as keyof typeof ROUTES.product
-                                        ]
-                                    }?category=${data.id}`}
-                                    key={SubCategory.id}
-                                >
-                                    <div className="overflow-hidden px-4 py-3.5 w-full text-white bg-[#3873C3] rounded-[100px]">
+                                <div>
+                                    <div
+                                        className="overflow-hidden px-4 py-2.5 w-full text-white bg-[#3873C3] rounded-[100px] flex flex-row justify-between cursor-pointer"
+                                        onClick={() =>
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.product[
+                                                        lang as keyof typeof ROUTES.product
+                                                    ]
+                                                }?category=${data.id}`
+                                            )
+                                        }
+                                    >
                                         {SubCategory.title}
+                                        <img
+                                            style={{
+                                                transform: 'rotate(180deg)',
+                                            }}
+                                            loading="lazy"
+                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/67247d6cece276d38b6843cadeec5ef50381594d81ab035a8f6139f4bac01ffa?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                            className="object-contain shrink-0 w-6 aspect-square"
+                                            alt="Dropdown Icon"
+                                        />
                                     </div>
-                                </Link>
+                                    <div className="bg-[#FAFAFA] mt-1 rounded-xl overflow-hidden">
+                                        {SubCategory.third_categories.map(
+                                            (item) => (
+                                                <p
+                                                    className="h-[44px] w-full  px-[16px] py-[14px] text-[14px] font-normal border-b border-[#E5E5E5] cursor-pointer"
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/${lang}/${
+                                                                ROUTES.product[
+                                                                    lang as keyof typeof ROUTES.product
+                                                                ]
+                                                            }?category=${
+                                                                data.id
+                                                            }&subCategory=${
+                                                                SubCategory.id
+                                                            }&third_category_id=${
+                                                                item.id
+                                                            }`
+                                                        )
+                                                    }
+                                                >
+                                                    {item.title}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
                             );
                         }
                         return (
-                            <Link
-                                to={`/${lang}/${
-                                    ROUTES.product[
-                                        lang as keyof typeof ROUTES.product
-                                    ]
-                                }?category=${data.id}&subCategory=${
-                                    SubCategory.id
-                                }`}
-                                key={SubCategory.id}
+                            // <Link
+                            //     to={`/${lang}/${
+                            //         ROUTES.product[
+                            //             lang as keyof typeof ROUTES.product
+                            //         ]
+                            //     }?category=${data.id}&subCategory=${
+                            //         SubCategory.id
+                            //     }`}
+                            //     key={SubCategory.id}
+                            // >
+                            <div
+                                className="overflow-hidden px-4 py-2.5 w-full text-black bg-[#F5F5F5] rounded-[100px] flex flex-row justify-between cursor-pointer"
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }?category=${data.id}&subCategory=${
+                                            SubCategory.id
+                                        }`
+                                    )
+                                }
                             >
-                                <div className="overflow-hidden px-4 py-3.5 w-full text-black bg-[#F5F5F5] rounded-[100px]">
-                                    {SubCategory.title}
-                                </div>
-                            </Link>
+                                {SubCategory.title}
+                                <img
+                                    style={{
+                                        transform: 'rotate(0deg)',
+                                    }}
+                                    loading="lazy"
+                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/67247d6cece276d38b6843cadeec5ef50381594d81ab035a8f6139f4bac01ffa?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain shrink-0 w-6 aspect-square"
+                                    alt="Dropdown Icon"
+                                />
+                            </div>
+                            // </Link>
                         );
                     })}
                 </div>
@@ -380,16 +446,40 @@ export default function Products() {
     const [maxPrice, setmaxPrice] = useState<number>(0);
     const [options, setoptions] = useState<number[]>([]);
     const location = useLocation();
-    useEffect(() => {
-        console.log('Sort', Sort);
-    }, [Sort]);
+    // useEffect(() => {
+    //     console.log('Sort', Sort);
+    // }, [Sort]);
     // Extract `subCategory` from the query string
     const queryParams = new URLSearchParams(location.search);
     const subCategory = queryParams.get('subCategory');
     const category = queryParams.get('category');
+    const brand_id = queryParams.get('brand_id');
+    const max_price = queryParams.get('max_price');
+    const min_price = queryParams.get('min_price');
+    const is_season = queryParams.get('is_season');
+    const is_popular = queryParams.get('is_popular');
+    const is_discount = queryParams.get('is_discount');
+    const third_category_id = queryParams.get('third_category_id');
+    console.log('price', max_price, min_price);
+
+    //------------
+
+    console.log('State max price', maxPrice);
+
     useEffect(() => {
         setoptions([]);
-    }, [category, subCategory]);
+
+        if (min_price && +min_price > 0) {
+            setminPrice(+min_price);
+        }
+        if (max_price && +max_price > 0) {
+            setmaxPrice(+max_price);
+        }
+        if (is_discount) {
+            setChecked(true);
+        }
+    }, [category, subCategory, max_price, min_price, brand_id, is_discount]);
+
     const { lang = 'ru' } = useParams<{ lang: string }>();
     const { data: categories, isLoading: categoriesLoading } = GETRequest<
         Category[]
@@ -404,6 +494,12 @@ export default function Products() {
                 Sort != '' ? `&sort=${Sort}` : ``
             }${minPrice > 0 ? `&min_price=${minPrice}` : ``}${
                 maxPrice > 0 ? `&max_price=${maxPrice}` : ``
+            }${is_popular ? `&is_popular=${is_popular}` : ``}${
+                is_season ? `&is_season=${is_season}` : ``
+            }${
+                third_category_id
+                    ? `&third_category_id=${third_category_id}`
+                    : ``
             }`,
             'products',
             [
@@ -416,6 +512,9 @@ export default function Products() {
                 Sort,
                 minPrice,
                 maxPrice,
+                is_popular,
+                is_season,
+                third_category_id,
             ],
             { 'option_ids[]': options }
         );
@@ -664,6 +763,43 @@ export default function Products() {
                                                                 lang as keyof typeof ROUTES.product
                                                             ]
                                                         }?category=${category} `}
+                                                    >
+                                                        <img
+                                                            loading="lazy"
+                                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/4cb50113a191ac3232ff04e9cd73f88231de4b607b8e1436abe0365b70e6b221?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                            className="object-contain cursor-pointer shrink-0 self-stretch my-auto w-5 aspect-square"
+                                                        />
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                    {category &&
+                                        subCategory &&
+                                        third_category_id &&
+                                        categories
+                                            ?.filter(
+                                                (item: Category) =>
+                                                    +category === item.id
+                                            )[0]
+                                            .subCategories.filter(
+                                                (item) =>
+                                                    +subCategory === item.id
+                                            )[0]
+                                            .third_categories.filter(
+                                                (item) =>
+                                                    +third_category_id ===
+                                                    item.id
+                                            )
+                                            .map((item) => (
+                                                <div className="flex gap-2.5 justify-center items-center self-start px-7 py-3.5 max-sm:mt-1 mt-5 text-base font-medium text-black whitespace-nowrap border border-solid border-black border-opacity-10 rounded-[100px] max-md:px-5">
+                                                    <div className="self-stretch my-auto">
+                                                        {item.title}
+                                                    </div>
+                                                    <Link
+                                                        to={`/${lang}/${
+                                                            ROUTES.product[
+                                                                lang as keyof typeof ROUTES.product
+                                                            ]
+                                                        }?category=${category}?subCategory=${subCategory} `}
                                                     >
                                                         <img
                                                             loading="lazy"

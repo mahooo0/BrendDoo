@@ -98,9 +98,11 @@ const Register = () => {
         const credential = response.credential; // The ID token
         axiosInstance
             .post('/register/google', { token: credential })
-            .then(() => {
-                toast.success('register sucsesfylly ,now log in ');
-                navigate('/user/login');
+            .then((response) => {
+                toast.success('register sucsesfylly ');
+                localStorage.setItem('user-info', JSON.stringify(response));
+
+                navigate(`/${lang}`);
             })
             .catch((error) => {
                 toast.error(error.response.data.message);
