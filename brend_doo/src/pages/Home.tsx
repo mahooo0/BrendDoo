@@ -3,7 +3,7 @@ import TikTokSlider from '../components/TikTokSwipper';
 
 import { Footer } from '../components/Footer/index.tsx';
 import StoriesSwipper from '../components/StoriesSwipper/index.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import GETRequest from '../setting/Request.ts';
 import {
@@ -26,6 +26,8 @@ export default function Home() {
     const [isStoriesSwipperOpen, setisStoriesSwipperOpen] =
         useState<any>(false);
     const [isIstagramSwippen, setIsIstagramSwippen] = useState<boolean>(false);
+    const [isSpecialOpen, setIsSpecialOpen] = useState(false);
+
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     // const [currentCategory, setCurrentCategory] = useState<number>(0);
     //language
@@ -120,8 +122,24 @@ export default function Home() {
     const { data: favicon, isLoading: faviconLoading } = GETRequest<{
         image: string;
     }>(`/favicon`, 'favicon', [lang]);
+    const { data: special, isLoading: specialLoading } = GETRequest<{
+        data: {
+            id: number;
+            discount: string;
+            description: string;
+            image: string;
+        } | null;
+        is_special: boolean;
+    }>(`/special`, 'special', [lang]);
     console.log('Metas', Metas);
+    useEffect(() => {
+        const hasShownModal = localStorage.getItem('isSpecialShown');
 
+        if (!hasShownModal && special?.is_special) {
+            setIsSpecialOpen(true);
+            localStorage.setItem('isSpecialShown', 'true');
+        }
+    }, [special]);
     // loading
     // console.log(
     //     heroLoading ||
@@ -139,6 +157,7 @@ export default function Home() {
     // );
 
     if (
+        specialLoading ||
         faviconLoading ||
         brendsLoading ||
         heroLoading ||
@@ -182,6 +201,84 @@ export default function Home() {
             </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
+                {isSpecialOpen && special?.is_special && (
+                    <div className="w-[100vw] h-[100vh] bg-opacity-60 z-[9999999999999] fixed top-0 flex justify-center items-center">
+                        <div className="bg-black bg-opacity-60 backdrop-blur-sm absolute top-0 w-full h-full"></div>
+                        <div className="bg-white max-w-[520px] mx-[40px] rounded-3xl z-30 overflow-hidden flex flex-col justify-center items-center relative">
+                            <img
+                                src={special.data?.image}
+                                alt=""
+                                className="w-full max-h-[300px] object-cover"
+                            />
+                            <h5 className="text-[#FD0769] mt-5 text-[28px] font-semibold text-center mx-[40px]">
+                                {special.data?.discount}
+                            </h5>
+                            <p className="text-[16px] font-normal text-black opacity-80 text-center mx-[40px]">
+                                {special.data?.description}
+                            </p>
+                            <button
+                                className="bg-[#3873C3] w-full max-sm:w-[260px] max-w-[440px] mb-10 mt-[28px] px-4 rounded-[100px] text-white min-h-[52px]"
+                                onClick={() =>
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.product[
+                                                lang as keyof typeof ROUTES.product
+                                            ]
+                                        }?is_discount=1`
+                                    )
+                                }
+                            >
+                                {tarnslation?.Məhsullara_bax}
+                            </button>
+
+                            <button
+                                className="absolute top-4 right-4"
+                                onClick={() => setIsSpecialOpen(false)}
+                            >
+                                <svg
+                                    width="48"
+                                    height="48"
+                                    viewBox="0 0 48 48"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="24"
+                                        cy="24"
+                                        r="24"
+                                        fill="#F5F5F5"
+                                    />
+                                    <g clipPath="url(#clip0_2562_5665)">
+                                        <path
+                                            d="M30 18L18 30"
+                                            stroke="black"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M18 18L30 30"
+                                            stroke="black"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_2562_5665">
+                                            <rect
+                                                width="24"
+                                                height="24"
+                                                fill="white"
+                                                transform="translate(12 12)"
+                                            />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     {/* Background Video */}
                     <video
