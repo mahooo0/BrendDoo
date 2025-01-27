@@ -7,10 +7,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import ROUTES from '../../setting/routes.tsx';
+import Loading from '../../components/Loading/index.tsx';
 
 export default function Basked() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
-    const { data: basked } = GETRequest<Basket>(
+    const { data: basked, isLoading: baskedLoading } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
         [lang]
@@ -86,11 +87,11 @@ export default function Basked() {
             console.error(error);
         },
     });
-    const { data: tarnslation } = GETRequest<TranslationsKeys>(
-        `/translates`,
-        'translates',
-        [lang]
-    );
+    const { data: tarnslation, isLoading: translateLoading } =
+        GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    if (translateLoading || baskedLoading) {
+        return <Loading />;
+    }
     return (
         <div>
             <Header />

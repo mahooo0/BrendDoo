@@ -831,13 +831,18 @@ export default function Products() {
                                 ))}
                             </div>
                             <section>
-                                <Pagination
-                                    currentPage={Page}
-                                    totalPages={products?.meta.last_page || 10}
-                                    onPageChange={(page) => {
-                                        setPage(page);
-                                    }}
-                                />
+                                {products?.meta?.last_page &&
+                                    products.meta.last_page > 2 && (
+                                        <Pagination
+                                            currentPage={Page}
+                                            totalPages={
+                                                products?.meta.last_page || 10
+                                            }
+                                            onPageChange={(page) => {
+                                                setPage(page);
+                                            }}
+                                        />
+                                    )}
                             </section>
                         </section>
                     </div>

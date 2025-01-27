@@ -4,6 +4,7 @@ import GETRequest from '../setting/Request';
 import { Link, useParams } from 'react-router-dom';
 import { RulesType, TranslationsKeys } from '../setting/Types';
 import Loading from '../components/Loading';
+import ROUTES from '../setting/routes';
 
 export default function UserRules() {
     const { lang } = useParams<{ lang: string }>();
@@ -21,7 +22,11 @@ export default function UserRules() {
             <main className=" lg:mt-[40px]  px-[40px] max-sm:px-4 mb-[100px]  mt-6">
                 <div className="">
                     <div className="flex items-center gap-2">
-                        <Link to={`${lang}`}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.product]
+                            }`}
+                        >
                             <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>

@@ -145,7 +145,11 @@ export default function ProductId() {
             <main className=" lg:mt-[54px] mt-0 max-sm:mt-3">
                 <div className="px-[40px] max-sm:px-4">
                     <div className="flex items-center gap-2">
-                        <Link to={`${lang}`}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.product]
+                            }`}
+                        >
                             <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>

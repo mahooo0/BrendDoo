@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { About, TranslationsKeys } from '../setting/Types';
 import Loading from '../components/Loading';
 import { Link } from 'react-router-dom';
+import ROUTES from '../setting/routes';
 
 export default function Aboutus() {
     const { lang = 'ru' } = useParams<{
@@ -27,7 +28,11 @@ export default function Aboutus() {
             <main className=" mt-0">
                 <div className="px-[40px] max-sm:px-4 max-sm:pt-6 pt-[40px] mb-[28px]">
                     <div className="flex items-center gap-2">
-                        <Link to={`${lang}`}>
+                        <Link
+                            to={`/${lang}/${
+                                ROUTES.home[lang as keyof typeof ROUTES.product]
+                            }`}
+                        >
                             <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>

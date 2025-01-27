@@ -301,7 +301,7 @@ const Register = () => {
                                                     type="submit"
                                                     className="w-full cursor-pointer"
                                                 >
-                                                    {tarnslation?.login}
+                                                    {tarnslation?.register}
                                                 </button>
                                             </div>
                                         </div>

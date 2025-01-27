@@ -425,7 +425,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                         </div>
                     )}
                     {variant === 3 && (
-                        <div className="flex overflow-hidden flex-col justify-center px-14 lg:py-3 py-auto items-center text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
+                        <div className="flex overflow-hidden min-h-[50px] flex-col justify-center px-14 lg:py-3 py-auto items-center text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
                             <div className="flex gap-2 items-center">
                                 {BtnLoadin ? (
                                     <div className=" h-6 w-6">
