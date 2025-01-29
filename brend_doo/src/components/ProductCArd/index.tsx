@@ -261,7 +261,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                     alt=""
                 />
                 <div
-                    className="bg-[#FFFFFF99]  rounded-full w-11 h-11 absolute top-6 right-6 flex justify-center items-center"
+                    className="bg-[#FFFFFF99]  rounded-full w-[13%] aspect-square absolute top-6 right-6 flex justify-center items-center"
                     onClick={async () => {
                         const userStr = localStorage.getItem('user-info');
                         if (userStr) {
@@ -364,11 +364,11 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                                     );
                                 }
                             }}
-                            className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-16 py-3.5 text-base font-medium text-white bg-blue-600 max-w-[301px] rounded-[100px] duration-300 ${
+                            className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-10 py-[4%] text-base font-medium text-white bg-blue-600 max-w-[301px] w-[80%] rounded-[100px] duration-300 ${
                                 isMauseOn ? ' opacity-100' : ' opacity-0'
                             }`}
                         >
-                            <div className="flex gap-2 items-center">
+                            <div className="flex gap-2 items-center justify-center">
                                 <img
                                     loading="lazy"
                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/ccd2f29609bd70219e8403081a0990ef297d5230b91e7fae2658815da1e44173?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
@@ -425,8 +425,8 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                         </div>
                     )}
                     {variant === 3 && (
-                        <div className="flex overflow-hidden min-h-[50px] flex-col justify-center px-14 lg:py-3 py-auto items-center text-base font-medium bg-slate-300 max-w-[301px] rounded-[100px] text-slate-800">
-                            <div className="flex gap-2 items-center">
+                        <div className="flex overflow-hidden min-h-[50px] flex-col justify-center px-10 py-[4%] items-center text-base font-medium bg-slate-300 w-[80%] max-w-[301px] rounded-[100px] text-slate-800">
+                            <div className="flex gap-2 items-center justify-center">
                                 {BtnLoadin ? (
                                     <div className=" h-6 w-6">
                                         <div className="w-6 h-6 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>

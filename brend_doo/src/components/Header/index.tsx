@@ -441,19 +441,33 @@ export default function Header() {
                                 />
                             </div>
                             <div className="flex gap-2 self-stretch my-auto text-sm text-black">
-                                <Link
-                                    to={`/${lang}/${
-                                        ROUTES.liked[
-                                            lang as keyof typeof ROUTES.liked
-                                        ]
-                                    }`}
-                                >
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                        className="object-contain shrink-0 w-12 aspect-square rounded-[100px]"
-                                    />
-                                </Link>
+                                <img
+                                    onClick={() => {
+                                        if (User) {
+                                            setIsClothingOpen(false);
+                                            setSearchValue('');
+
+                                            Navigae(
+                                                `/${lang}/${
+                                                    ROUTES.liked[
+                                                        lang as keyof typeof ROUTES.liked
+                                                    ]
+                                                }`
+                                            );
+                                        } else {
+                                            Navigae(
+                                                `/${lang}/${
+                                                    ROUTES.login[
+                                                        lang as keyof typeof ROUTES.login
+                                                    ]
+                                                }`
+                                            );
+                                        }
+                                    }}
+                                    loading="lazy"
+                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a474845e97e67198e85a77d82874411bfb561b5013d0a8a987188427aa587c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                    className="object-contain  cursor-pointer shrink-0 w-12 aspect-square rounded-[100px]"
+                                />
 
                                 <div
                                     ref={BaskedBtnRef}

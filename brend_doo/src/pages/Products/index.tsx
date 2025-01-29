@@ -813,7 +813,7 @@ export default function Products() {
                             </div>
 
                             <div
-                                className=" w-full justify-items-center self-center clear-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1  gap-5 mt-10
+                                className=" w-full justify-items-center self-center clear-start grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-5 mt-10
                             "
                             >
                                 {productsLoading &&

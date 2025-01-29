@@ -332,6 +332,18 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+                <section className="mt-5  max-sm:mt-[52px]">
+                    <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-[16px]">
+                        {tarnslation?.Tiktok}{' '}
+                    </h2>
+                    <TikTokSlider
+                        Tiktoks={tiktok}
+                        action={(id) => {
+                            setisStoriesSwipperOpen(true), setCurrentSlide(id);
+                            setIsIstagramSwippen(false);
+                        }}
+                    />{' '}
+                </section>
                 {banners?.map((item) => (
                     <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
                         <img
@@ -441,18 +453,7 @@ export default function Home() {
                             ))}
                     </div>
                 </section> */}
-                <section className="mt-5  max-sm:mt-[52px]">
-                    <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium px-[40px] max-sm:px-[16px]">
-                        {tarnslation?.Tiktok}{' '}
-                    </h2>
-                    <TikTokSlider
-                        Tiktoks={tiktok}
-                        action={(id) => {
-                            setisStoriesSwipperOpen(true), setCurrentSlide(id);
-                            setIsIstagramSwippen(false);
-                        }}
-                    />{' '}
-                </section>
+
                 {/* <section className="mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0] ">
                     <div className="flex flex-row flex-wrap justify-between gap-5  ">
                         <h2 className="lg:text-[40px] md:text-[36px] text-[28px] font-medium  max-sm:px-4 ">
@@ -491,7 +492,6 @@ export default function Home() {
 
                     <ProductSwipper bg="grey" data={products?.data} />
                 </section> */}
-                {/* ----here---- */}
                 {/* {productsByCategory?.map((item: HomeCategory, i: number) => (
                     <section
                         className={`mt-5 max-sm:mt-[52px] px-[40px] max-sm:px-[0px]    bg-[${

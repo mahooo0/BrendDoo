@@ -67,10 +67,10 @@ export default function Login() {
         axiosInstance
             .post('/login/google', { token: credential })
             .then((response) => {
-                toast.success('login sucsesfylly ,now log in ');
+                toast.success('login sucsesfylly ');
                 console.log('RESPONse', response);
                 localStorage.setItem('user-info', JSON.stringify(response));
-                navigate('/user/login');
+                navigate('/user');
             })
             .catch((error) => {
                 toast.error(error.response.data.message);
