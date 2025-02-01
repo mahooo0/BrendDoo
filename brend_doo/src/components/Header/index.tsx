@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CategoryHeader } from '../ClothingMenu';
 import ROUTES, { getRouteKey } from '../../setting/routes';
-import GETRequest from '../../setting/Request';
+import GETRequest, { axiosInstance } from '../../setting/Request';
 import {
     Basket,
     CatalogCategory,
@@ -16,7 +16,10 @@ import {
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRecoilState } from 'recoil';
-import { RefetchBasked } from '../../setting/StateManagmant';
+import {
+    RefetchBasked,
+    RefetchLocalBasked,
+} from '../../setting/StateManagmant';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Story from './story';
 import CategoryNavigation from '../CategoryPop';
@@ -35,6 +38,10 @@ function enableScrolling() {
 export default function Header() {
     const [isCatalogOpen, setIsClothingOpen] = useState<boolean>(false);
     const [isBaskedOpen, setIsBaskedOpen] = useState<boolean>(false);
+    // const [RefetcLocalBasked, setRefetcLocalBasked] = useState<boolean>(false);
+    const [RefetcLocalBasked, setRefetcLocalBasked] =
+        useRecoilState(RefetchLocalBasked);
+    const [Basked, setBasked] = useState<Basket | null>(null);
     // Search
     const [SearchValue, setSearchValue] = useState<string>('');
     const [User, setUser] = useState<any | null>(null);
@@ -62,6 +69,7 @@ export default function Header() {
 
     const BaskedBtnRef = useRef<HTMLDivElement | null>(null);
     const BaskedDiv = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current?.focus(); // Focus the input element
@@ -165,6 +173,31 @@ export default function Header() {
             );
         }
     };
+    function toggleIdInLocalStorage(id: Number) {
+        setRefetcLocalBasked((prew) => !prew);
+        // Step 1: Get the current value from localStorage
+        let storedIds = localStorage.getItem('ids') || '';
+
+        // Step 2: Split the string into an array of IDs and remove any empty strings
+        let idArray = storedIds.split(',').filter(Boolean);
+
+        // Step 3: Check if the ID is already in the array
+        const index = idArray.indexOf(`${id}`);
+
+        if (index === -1) {
+            // If the ID is not in the array, add it
+            idArray.push(`${id}`);
+        } else {
+            // If the ID is in the array, remove it
+            idArray.splice(index, 1);
+        }
+
+        // Step 4: Join the array back into a comma-separated string
+        let updatedIds = idArray.join(',');
+
+        // Step 5: Save the updated string back to localStorage
+        localStorage.setItem('ids', updatedIds);
+    }
     useEffect(() => {
         setRefetchBaskedState((prev) => !prev);
 
@@ -281,6 +314,85 @@ export default function Header() {
         'catalog_categories',
         [lang]
     );
+    const fetchBasked = async () => {
+        try {
+            if (User) {
+                if (basked) {
+                    setBasked(basked);
+                }
+            } else {
+                let storedIds = localStorage.getItem('ids') || '';
+                let idArray = storedIds.split(',').filter(Boolean);
+                console.log('idArray', idArray);
+
+                const res = await axiosInstance.post('/getProducts', {
+                    product_ids: idArray,
+                });
+
+                console.log('res', res);
+
+                const newBasked = {
+                    basket_items: res.data.map((item: Product, i: number) => ({
+                        id: i,
+                        quantity: 1,
+                        price: item.price,
+                        options: [
+                            {
+                                filter: 'filter',
+                                option: 'option',
+                            },
+                        ],
+                        product: item,
+                    })),
+                    total_price: 120,
+                    discount: 0,
+                    delivered_price: 0,
+                    final_price: 120,
+                };
+
+                setBasked(newBasked);
+            }
+        } catch (error) {
+            console.error('Error fetching basked:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch data on initial load
+        fetchBasked();
+
+        // Listen for `storage` events (changes from other tabs)
+        const handleStorageChange = (event: any) => {
+            if (event.key === 'ids') {
+                fetchBasked();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [User, RefetcLocalBasked]); // Add `User` as a dependency
+
+    // Custom logic to handle `localStorage` changes within the same tab
+    useEffect(() => {
+        const handleLocalStorageChange = () => {
+            fetchBasked();
+        };
+
+        // Listen for custom events (triggered within the same tab)
+        window.addEventListener('localStorageChange', handleLocalStorageChange);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener(
+                'localStorageChange',
+                handleLocalStorageChange
+            );
+        };
+    }, [User, RefetcLocalBasked]);
     console.log('basked:', basked);
 
     return (
@@ -487,13 +599,14 @@ export default function Header() {
                                             }
                                             setIsBaskedOpen((prev) => !prev);
                                         } else {
-                                            Navigae(
-                                                `/${lang}/${
-                                                    ROUTES.login[
-                                                        lang as keyof typeof ROUTES.login
-                                                    ]
-                                                }`
-                                            );
+                                            // Navigae(
+                                            //     `/${lang}/${
+                                            //         ROUTES.login[
+                                            //             lang as keyof typeof ROUTES.login
+                                            //         ]
+                                            //     }`
+                                            // );
+                                            setIsBaskedOpen((prev) => !prev);
                                         }
                                     }}
                                 >
@@ -846,17 +959,30 @@ export default function Header() {
                                 {translation?.Səbətdəki_məhsullarım}
                             </div>
                             <div className="flex gap-2 items-center py-0.5 text-sm font-medium text-blue-600 whitespace-nowrap border-b border-solid border-b-blue-600">
-                                <Link
-                                    to={`/${lang}/${
-                                        ROUTES.order[
-                                            lang as keyof typeof ROUTES.order
-                                        ]
-                                    }`}
+                                <div
+                                    onClick={() => {
+                                        if (User) {
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.order[
+                                                        lang as keyof typeof ROUTES.order
+                                                    ]
+                                                }`
+                                            );
+                                        } else {
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.login[
+                                                        lang as keyof typeof ROUTES.login
+                                                    ]
+                                                }`
+                                            );
+                                        }
+                                    }}
+                                    className="self-stretch my-auto"
                                 >
-                                    <div className="self-stretch my-auto">
-                                        {translation?.Səbətim}
-                                    </div>
-                                </Link>
+                                    {translation?.Səbətim}
+                                </div>
 
                                 <img
                                     loading="lazy"
@@ -867,20 +993,20 @@ export default function Header() {
                         </div>
                         {/* onecard */}
 
-                        {basked && basked?.basket_items.length > 0 ? (
+                        {Basked && Basked?.basket_items.length > 0 ? (
                             <div className="overflow-y-scroll h-[40vh] px-[24px]">
-                                {basked.basket_items?.map((item) => (
+                                {Basked.basket_items?.map((item) => (
                                     <div>
                                         <div className="flex gap-8 items-center mt-[4px] justify-between max-md:max-w-full mx-[40px]">
                                             <div className="flex gap-2.5 items-center self-stretch my-auto min-w-[240px]">
                                                 <img
                                                     loading="lazy"
-                                                    src={item.product.image}
+                                                    src={item.product?.image}
                                                     className="object-cover shrink-0 self-stretch my-auto rounded-3xl h-[100px] w-[100px]"
                                                 />
                                                 <div className="flex flex-col self-stretch my-auto w-[152px]">
                                                     <div className="w-full text-sm font-medium text-black">
-                                                        {item.product.title}
+                                                        {item.product?.title}
                                                     </div>
                                                     <div className="flex flex-col items-start mt-2.5 w-full text-xs text-black text-opacity-80">
                                                         <div className="flex gap-3 items-start">
@@ -898,52 +1024,54 @@ export default function Header() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
-                                                <button
-                                                    disabled={
-                                                        item.quantity === 1
-                                                    }
-                                                    onClick={async () => {
-                                                        UpdateBaskedmutation.mutate(
-                                                            {
-                                                                id: item.id,
-                                                                price: item.price,
-                                                                quantity:
-                                                                    item.quantity -
-                                                                    1,
-                                                            }
-                                                        );
-                                                    }}
-                                                >
-                                                    <img
-                                                        loading="lazy"
-                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                                    />
-                                                </button>
-                                                <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
-                                                    {item.quantity}
+                                            {User && (
+                                                <div className="flex gap-1 items-center self-stretch my-auto text-sm text-white whitespace-nowrap">
+                                                    <button
+                                                        disabled={
+                                                            item.quantity === 1
+                                                        }
+                                                        onClick={async () => {
+                                                            UpdateBaskedmutation.mutate(
+                                                                {
+                                                                    id: item.id,
+                                                                    price: item.price,
+                                                                    quantity:
+                                                                        item.quantity -
+                                                                        1,
+                                                                }
+                                                            );
+                                                        }}
+                                                    >
+                                                        <img
+                                                            loading="lazy"
+                                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ef9358261fb5c9b47ddda71283dc2e74a91d2ff5650a77a1cca91a21f654228?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                                        />
+                                                    </button>
+                                                    <div className="overflow-hidden flex justify-center items-center self-stretch px-2.5 my-auto w-8 h-8 rounded-lg bg-slate-400">
+                                                        {item.quantity}
+                                                    </div>
+                                                    <button
+                                                        onClick={async () => {
+                                                            UpdateBaskedmutation.mutate(
+                                                                {
+                                                                    id: item.id,
+                                                                    price: item.price,
+                                                                    quantity:
+                                                                        item.quantity +
+                                                                        1,
+                                                                }
+                                                            );
+                                                        }}
+                                                    >
+                                                        <img
+                                                            loading="lazy"
+                                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                            className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
+                                                        />
+                                                    </button>
                                                 </div>
-                                                <button
-                                                    onClick={async () => {
-                                                        UpdateBaskedmutation.mutate(
-                                                            {
-                                                                id: item.id,
-                                                                price: item.price,
-                                                                quantity:
-                                                                    item.quantity +
-                                                                    1,
-                                                            }
-                                                        );
-                                                    }}
-                                                >
-                                                    <img
-                                                        loading="lazy"
-                                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e3b9ffafd163cac5114cd6b3eb85e5013d893da6f8069d8e1ffe1279f71fe8a3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                        className="object-contain shrink-0 self-stretch my-auto w-8 rounded-lg aspect-square"
-                                                    />
-                                                </button>
-                                            </div>
+                                            )}
                                         </div>
                                         <div className="flex gap-5 justify-between mt-3 w-full text-base font-semibold text-center text-black max-w-[431px] max-md:max-w-full mx-[40px]">
                                             <div className="flex gap-10 items-center self-start">
@@ -953,9 +1081,13 @@ export default function Header() {
                                             </div>
                                             <button
                                                 onClick={() =>
-                                                    RemoveFromBaskedmutation.mutate(
-                                                        item.id
-                                                    )
+                                                    User
+                                                        ? RemoveFromBaskedmutation.mutate(
+                                                              item.id
+                                                          )
+                                                        : toggleIdInLocalStorage(
+                                                              item.product.id
+                                                          )
                                                 }
                                             >
                                                 <img
@@ -1034,11 +1166,26 @@ export default function Header() {
                                     AZN
                                 </div>
                             </div>
-                            <Link to="/user/basked/confirm">
-                                <div className="gap-2.5 self-stretch px-10 py-4 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5">
-                                    {translation?.Sifariş_et}
-                                </div>
-                            </Link>
+                            {/* <Link to="/user/basked/confirm"> */}
+                            <button
+                                onClick={() => {
+                                    if (User) {
+                                        navigate('/user/basked/confirm');
+                                    } else {
+                                        navigate(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
+                                className="gap-2.5 self-stretch px-10 py-4 text-base font-medium text-white bg-blue-600 border border-blue-600 border-solid rounded-[100px] max-md:px-5"
+                            >
+                                {translation?.Sifariş_et}
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

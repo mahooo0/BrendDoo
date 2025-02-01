@@ -12,6 +12,8 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRecoilState } from 'recoil';
+import { RefetchLocalBasked } from '../../setting/StateManagmant';
 interface Props {
     data?: Product;
     isnew?: boolean;
@@ -26,6 +28,9 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
     const [BtnLoadin, setBtnLoadin] = useState<boolean>(false);
     const [variant, setvariant] = useState<number>(1);
+    const [RefetcLocalBasked, setRefetcLocalBasked] =
+        useRecoilState(RefetchLocalBasked);
+
     const navigate = useNavigate();
     // const [refetchBaskedState, setRefetchBaskedState] =
     //     useRecoilState<boolean>(RefetchBasked);
@@ -55,9 +60,8 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     const { data: basked } = GETRequest<Basket>(
         `/basket_items`,
         'basket_items',
-        [lang]
+        [lang, isMauseOn]
     );
-    console.log('basked', basked);
     const addToBasket = async (Data: {
         product_id: number;
         quantity: number;
@@ -164,6 +168,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
         if (includes) {
             setvariant(3);
         }
+        console.log('basked', basked);
 
         // if (data && basked?.includes(data)) {
         //     setvariant(3);
@@ -225,6 +230,33 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
             fetchData();
         }
     }, [variant]);
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (!userStr && data) {
+            let storedIds = localStorage.getItem('ids') || '';
+            let idArray = storedIds.split(',').filter(Boolean);
+            const index = idArray.indexOf(`${data.id}`);
+            if (index === -1) {
+                setvariant(1);
+            } else {
+                setvariant(3);
+            }
+        }
+    }, [data, RefetcLocalBasked]);
+    // useEffect(() => {
+    //     let storedIds = localStorage.getItem('ids') || '';
+
+    //     // Step 2: Split the string into an array of IDs and remove any empty strings
+    //     let idArray = storedIds.split(',').filter(Boolean);
+
+    //     // Step 3: Check if the ID is already in the array
+    //     const index = idArray.indexOf(`${data?.id}`);
+    //     if (index) {
+    //         setvariant(3);
+    //     } else {
+    //         setvariant(1);
+    //     }
+    // }, [RefetcLocalBasked, data]);
     if (!data) {
         return (
             <>
@@ -234,7 +266,31 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
             </>
         );
     }
+    function toggleIdInLocalStorage(id: Number) {
+        // Step 1: Get the current value from localStorage
+        setRefetcLocalBasked(!RefetcLocalBasked);
+        let storedIds = localStorage.getItem('ids') || '';
 
+        // Step 2: Split the string into an array of IDs and remove any empty strings
+        let idArray = storedIds.split(',').filter(Boolean);
+
+        // Step 3: Check if the ID is already in the array
+        const index = idArray.indexOf(`${id}`);
+
+        if (index === -1) {
+            // If the ID is not in the array, add it
+            idArray.push(`${id}`);
+        } else {
+            // If the ID is in the array, remove it
+            idArray.splice(index, 1);
+        }
+
+        // Step 4: Join the array back into a comma-separated string
+        let updatedIds = idArray.join(',');
+
+        // Step 5: Save the updated string back to localStorage
+        localStorage.setItem('ids', updatedIds);
+    }
     return (
         <div className="flex cursor-pointer max-sm:min-w-[300px]  flex-col pb-5 text-base text-black  w-full min-w-full ">
             <div
@@ -355,13 +411,15 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                                         setvariant(3);
                                     }
                                 } else {
-                                    navigate(
-                                        `/${lang}/${
-                                            ROUTES.login[
-                                                lang as keyof typeof ROUTES.login
-                                            ]
-                                        }`
-                                    );
+                                    // navigate(
+                                    //     `/${lang}/${
+                                    //         ROUTES.login[
+                                    //             lang as keyof typeof ROUTES.login
+                                    //         ]
+                                    //     }`
+                                    // );
+                                    toggleIdInLocalStorage(data.id);
+                                    setvariant(3);
                                 }
                             }}
                             className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-10 py-[4%] text-base font-medium text-white bg-blue-600 max-w-[301px] w-[80%] rounded-[100px] duration-300 ${

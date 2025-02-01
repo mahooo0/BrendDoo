@@ -10,7 +10,7 @@ export default function ImageSwipper({
 }: {
     data: Product[] | undefined;
 }) {
-    const swiperRef = useRef<any>();
+    const swiperRef = useRef<any>(null);
     const [currecntProduct, setCurrecntProduct] = useState<number>(0);
     const handleNext = () => {
         if (swiperRef.current && swiperRef.current.swiper) {
