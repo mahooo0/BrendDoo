@@ -517,6 +517,13 @@ export default function ProductId() {
                                                         toast.success(
                                                             'Product sucsesfully aded to basked'
                                                         );
+                                                        queryClient.invalidateQueries(
+                                                            {
+                                                                queryKey: [
+                                                                    'basket_items',
+                                                                ],
+                                                            }
+                                                        );
                                                     })
                                                     .catch((error) => {
                                                         console.log(error);

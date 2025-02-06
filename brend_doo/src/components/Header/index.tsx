@@ -271,7 +271,7 @@ export default function Header() {
             quantity: number;
         }) => UpdateBasked(id, price, quantity),
         onSuccess: () => {
-            toast.success('Məhsul səbətdən silindi');
+            toast.success('Məhsul sayi arti');
             queryClient.invalidateQueries({ queryKey: ['basket_items'] });
         },
         onError: (error) => {

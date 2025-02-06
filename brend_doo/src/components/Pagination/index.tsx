@@ -20,10 +20,10 @@ const PaginationItem: React.FC<PaginationItemProps> = ({
     return (
         <button
             onClick={onClick}
-            className={`px-3 w-[52px] h-[52px] text-black   rounded-full ${
+            className={`px-3 w-[52px] h-[52px] text-black rounded-full ${
                 isActive
                     ? 'text-black bg-[#B1C7E4]'
-                    : 'border border-black border-opacity-15 text-opacity-55 '
+                    : 'border border-black border-opacity-15 text-opacity-55'
             }`}
             aria-current={isActive ? 'page' : undefined}
         >
@@ -49,11 +49,64 @@ export const Pagination: React.FC<PaginationProps> = ({
         }
     };
 
+    const renderPageNumbers = () => {
+        const pages = [];
+        const maxPagesToShow = 3; // Adjust this number to control how many pages are shown
+
+        let startPage = Math.max(
+            1,
+            currentPage - Math.floor(maxPagesToShow / 2)
+        );
+        let endPage = Math.min(totalPages - 1, startPage + maxPagesToShow - 1);
+
+        if (endPage - startPage < maxPagesToShow - 1) {
+            startPage = Math.max(1, endPage - maxPagesToShow + 1);
+        }
+
+        for (let i = startPage + 1; i <= endPage; i++) {
+            // if (i === endPage) {
+            //     return;
+            // }
+            pages.push(
+                <PaginationItem
+                    key={i}
+                    number={i}
+                    isActive={currentPage === i}
+                    onClick={() => onPageChange(i)}
+                />
+            );
+        }
+
+        if (startPage > 1) {
+            pages.unshift(
+                <div
+                    key="start-ellipsis"
+                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15 justify-center items-center"
+                >
+                    ...
+                </div>
+            );
+        }
+
+        if (endPage < totalPages) {
+            pages.push(
+                <div
+                    key="end-ellipsis"
+                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15 justify-center items-center"
+                >
+                    ...
+                </div>
+            );
+        }
+
+        return pages;
+    };
+
     return (
-        <nav aria-label="Pagination navigation" className=" mb-[120px]">
+        <nav aria-label="Pagination navigation" className="mb-[120px]">
             <div className="flex gap-4 justify-center items-center mt-20 text-base font-medium tracking-wide text-center text-blue-800 whitespace-nowrap max-md:mt-10">
                 <button
-                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15  justify-center  items-center "
+                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15 justify-center items-center"
                     onClick={handlePrevious}
                     aria-label="Previous page"
                     disabled={currentPage === 1}
@@ -66,30 +119,13 @@ export const Pagination: React.FC<PaginationProps> = ({
                     />
                 </button>
                 <div className="flex gap-2 items-end self-stretch my-auto">
-                    {Array.from({ length: 10 }, (_, index) => {
-                        const pageNumber = index + 1;
-                        if (
-                            pageNumber < currentPage + 2 &&
-                            index >= currentPage - 2 &&
-                            pageNumber < totalPages &&
-                            !(pageNumber === totalPages)
-                        ) {
-                            return (
-                                <PaginationItem
-                                    key={pageNumber}
-                                    number={pageNumber}
-                                    isActive={currentPage === pageNumber}
-                                    onClick={() => onPageChange(pageNumber)}
-                                />
-                            );
-                        }
-                    })}
-                    {currentPage < totalPages - 2 && (
-                        <div className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15  justify-center  items-center ">
-                            {' '}
-                            ...
-                        </div>
-                    )}
+                    <PaginationItem
+                        key={1}
+                        number={1}
+                        isActive={currentPage === 1}
+                        onClick={() => onPageChange(1)}
+                    />
+                    {renderPageNumbers()}
                     <PaginationItem
                         key={totalPages}
                         number={totalPages}
@@ -98,7 +134,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                     />
                 </div>
                 <button
-                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15  justify-center  items-center "
+                    className="flex w-[52px] h-[52px] rounded-full border border-black opacity-15 justify-center items-center"
                     onClick={handleNext}
                     aria-label="Next page"
                     disabled={currentPage === totalPages}
