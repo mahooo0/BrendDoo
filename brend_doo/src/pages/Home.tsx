@@ -20,11 +20,13 @@ import Loading from '../components/Loading/index.tsx';
 import ROUTES from '../setting/routes.tsx';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
+import TickTokSwipperVertical from '../components/TiktokSwippwrVertical/index.tsx';
 
 export default function Home() {
     //states
     const [isStoriesSwipperOpen, setisStoriesSwipperOpen] =
         useState<any>(false);
+    const [isTiktokOpen, setisTiktokOpen] = useState<any>(false);
     const [isIstagramSwippen, setIsIstagramSwippen] = useState<boolean>(false);
     const [isSpecialOpen, setIsSpecialOpen] = useState(false);
 
@@ -296,17 +298,17 @@ export default function Home() {
                     </video>
 
                     {/* Content */}
-                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:py-16 relative z-10">
+                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:py-[130px] relative z-10">
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
-                                <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl">
+                                <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl max-sm:text-[24px]">
                                     {hero ? (
                                         hero.title
                                     ) : (
                                         <div className="h-10 bg-gray-300 rounded animate-pulse w-3/4" />
                                     )}
                                 </h1>
-                                <div className="mt-5 text-lg font-medium max-md:max-w-full max-sm:hidden">
+                                <div className="mt-5 text-lg font-medium max-md:max-w-full max-sm:text-[14px] max-sm:mt-3 max-sm:mt-10">
                                     {hero ? (
                                         hero.description
                                     ) : (
@@ -339,13 +341,13 @@ export default function Home() {
                     <TikTokSlider
                         Tiktoks={tiktok}
                         action={(id) => {
-                            setisStoriesSwipperOpen(true), setCurrentSlide(id);
+                            setisTiktokOpen(true), setCurrentSlide(id);
                             setIsIstagramSwippen(false);
                         }}
                     />{' '}
                 </section>
                 {banners?.map((item) => (
-                    <section className="relative mt-5  max-sm:mt-[52px] rounded-3xl overflow-hidden max-sm:mx-4 mx-[40px]">
+                    <section className="relative mt-5 max-sm:h-fit   rounded-3xl overflow-hidden max-sm:mx-4 max-sm:mt-4 mx-[40px]">
                         <img
                             src={item.image}
                             alt=""
@@ -353,7 +355,7 @@ export default function Home() {
                         />
 
                         <div
-                            className=" max-sm:px-4 flex overflow-hidden flex-col justify-center items-start px-16 py-24 rounded-3xl max-md:px-5 relative"
+                            className=" max-sm:px-4 flex overflow-hidden flex-col justify-center  max-sm:py-[21px]  items-start max-sm:p-0 px-16 py-24 rounded-3xl max-md:px-5 relative"
                             style={{
                                 background:
                                     'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',
@@ -362,10 +364,10 @@ export default function Home() {
                             <div className="flex flex-col max-w-full w-[538px]">
                                 <div className="flex flex-col w-full max-md:max-w-full">
                                     <div className="flex flex-col w-full">
-                                        <div className="text-xl font-medium text-white text-opacity-60 max-md:max-w-full">
+                                        <div className="text-xl font-medium max-sm:leading-[14px] max-sm:text-[12px] text-white text-opacity-60 max-md:max-w-full">
                                             {item.title}
                                         </div>
-                                        <div className="mt-3 text-4xl font-semibold text-white max-md:max-w-full">
+                                        <div className="mt-3 text-4xl max-sm:leading-[20px] max-sm:mt-3 max-sm:text-[16px] font-semibold text-white max-md:max-w-full">
                                             {holidayBanners?.value}{' '}
                                         </div>
                                     </div>
@@ -424,7 +426,7 @@ export default function Home() {
                                             }`
                                         )
                                     }
-                                    className="gap-2.5 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
+                                    className="gap-2.5 max-sm:mt-5 max-sm:text-[12px] max-sm:px-4 max-sm:py-2 self-start leading-[22px] h-fit px-10 py-4 mt-10 text-lg font-medium text-white hover:bg-[#FFFFFF] hover:text-black duration-300 border border-white border-solid rounded-[100px] max-md:px-5"
                                 >
                                     {tarnslation?.Məhsullara_bax}
                                 </button>
@@ -625,11 +627,11 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col mt-12 w-full  max-md:mt-10 max-md:max-w-full">
-                        <div className="grid flex-wrap max-sm:grid-cols-2 max-lg:grid-cols-5 grid-cols-7 gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
+                        <div className="grid flex-wrap max-sm:grid-cols-3 max-lg:grid-cols-5 grid-cols-7 gap-4 items-center w-full justify-between max-lg:justify-start max-sm:justify-center  ">
                             {brends?.map((brand: Brand) => (
                                 <div
                                     key={brand.id}
-                                    className="flex overflow-hidden flex-col px-8 my-auto w-36 rounded-3xl bg-neutral-100 max-md:px-5"
+                                    className="flex overflow-hidden flex-col px-8 my-auto w-36 max-sm:w-full max-sm:h-[80px] max-sm:   items-center justify-center rounded-3xl bg-neutral-100 max-md:px-5"
                                 >
                                     <img
                                         loading="lazy"
@@ -849,6 +851,12 @@ export default function Home() {
                 Currentslide={currentSlide}
                 isopen={isStoriesSwipperOpen}
                 onclose={() => setisStoriesSwipperOpen(false)}
+            />
+            <TickTokSwipperVertical
+                Tiktoks={tiktok}
+                Currentslide={currentSlide}
+                isopen={isTiktokOpen}
+                onclose={() => setisTiktokOpen(false)}
             />
         </div>
     );

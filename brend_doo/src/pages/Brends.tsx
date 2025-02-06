@@ -10,8 +10,8 @@ import ROUTES from '../setting/routes';
 export default function Brends() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
     const { data: Brends, isLoading: BrendsLoading } = GETRequest<Brand[]>(
-        `/categories`,
-        'categories',
+        `/brands`,
+        'brands',
         [lang]
     );
     const { data: tarnslation, isLoading: tarnslationLoading } =

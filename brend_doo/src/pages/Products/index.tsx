@@ -675,9 +675,7 @@ export default function Products() {
                                 {' '}
                                 <div className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full mt-[44px]">
                                     <div className="my-auto text-base font-medium text-black">
-                                        {products &&
-                                            products?.meta?.last_page * 15}{' '}
-                                        {tarnslation?.məhsul}
+                                        {products?.count} {tarnslation?.məhsul}
                                     </div>
                                     <div className="flex gap-4 items-center flex-wrap">
                                         <div className="self-stretch my-auto text-sm text-black text-opacity-60">

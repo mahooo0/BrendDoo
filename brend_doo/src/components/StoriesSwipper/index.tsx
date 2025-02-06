@@ -29,6 +29,15 @@ export default function StoriesSwipper({
         Currentslide !== currentslide &&
             swiperRef.current.swiper.slideTo(Currentslide);
     }, [Currentslide]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (swiperRef.current && swiperRef.current.swiper) {
+                swiperRef.current.swiper.slideNext();
+            }
+        }, 5000);
+
+        return () => clearInterval(interval); // Cleanup interval on unmount
+    }, []);
     return (
         <section
             className="w-full h-[100vh] bg-black fixed top-0 left-0 z-[99999999999999]"

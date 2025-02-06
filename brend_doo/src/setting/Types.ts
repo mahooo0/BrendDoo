@@ -51,6 +51,7 @@ export type Advanteges = {
 };
 export type ProductResponse = {
     data: Product[];
+    count: number;
     meta: Meta;
 };
 
@@ -280,6 +281,7 @@ export type AuthResponse = {
         name: string;
         email: string;
         phone: string;
+        gender: string;
     };
 };
 

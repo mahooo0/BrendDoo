@@ -54,7 +54,7 @@ const Register = () => {
                 phone: `${values.phone}`,
                 email: values.email,
                 password: values.password,
-                gender: values.gender,
+                gender: values.gender === '' ? 'man' : values.gender,
             })
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {

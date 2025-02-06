@@ -15,10 +15,11 @@ export default function BaskedForum({
     Number: string;
     onSubmit: (valiues: any) => void;
 }) {
-    const [checkbox1, setcheckbox1] = useState<boolean>(false);
-    const [checkbox2, setcheckbox2] = useState<boolean>(false);
-    const [checkbox3, setcheckbox3] = useState<boolean>(true);
+    const [checkbox1] = useState<boolean>(true);
+    const [checkbox2, setcheckbox2] = useState<boolean>(true);
+    const [checkbox3, setcheckbox3] = useState<boolean>(false);
     const { lang = 'ru' } = useParams<{ lang: string }>();
+    console.log(checkbox3);
 
     const { data: tarnslation } = GETRequest<TranslationsKeys>(
         `/translates`,
@@ -115,7 +116,7 @@ export default function BaskedForum({
                                     <div
                                         className={`flex bg-white lg:w-1/2 overflow-hidden flex-1 shrink gap-10 justify-between items-center px-5 py-4 w-full border border-solid basis-0 border-slate-300 min-w-[240px] rounded-[100px] `}
                                         onClick={() => {
-                                            setcheckbox1((prew) => !prew);
+                                            // setcheckbox1((prew) => !prew);
                                             setFieldValue('address', '');
                                         }}
                                     >
@@ -222,7 +223,7 @@ export default function BaskedForum({
                                             )}
                                         </div>
                                     </label>
-                                    <label className="flex lg:w-[50%] w-full items-center gap-3 cursor-pointer">
+                                    {/* <label className="flex lg:w-[50%] w-full items-center gap-3 cursor-pointer">
                                         <Field
                                             type="checkbox"
                                             name="paymentType"
@@ -256,7 +257,7 @@ export default function BaskedForum({
                                                 <div className="w-[20px] h-[20px] rounded-full border border-black border-opacity-15 bg-blue-600"></div>
                                             )}
                                         </div>
-                                    </label>
+                                    </label> */}
                                 </div>
                             </div>
 

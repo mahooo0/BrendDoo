@@ -173,6 +173,9 @@ export default function BaskedConfirm() {
                                                             FINAL_price === 0
                                                                 ? basked?.final_price
                                                                 : FINAL_price,
+                                                        address: Body?.address,
+                                                        additional_info:
+                                                            Body?.additionalInfo,
                                                     },
                                                     {
                                                         headers: {

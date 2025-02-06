@@ -53,13 +53,16 @@ export default function TikTokSlider({
                 className="mySwiper !pl-[40px] max-sm:!pl-[16px]"
             >
                 {Tiktoks?.map((item, i) => (
-                    <SwiperSlide className="!w-[216px]" key={item.id}>
+                    <SwiperSlide
+                        className="!w-[216px] max-sm:!w-[132px]"
+                        key={item.id}
+                    >
                         <div
                             onClick={() => action(i)}
-                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white w-[216px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
+                            className="flex overflow-hidden flex-col justify-center text-xs font-semibold text-white w-[216px] max-sm:w-[132px] max-sm:h-[192px] border-[#A97EFF] border-2 p-2 rounded-[20px]"
                         >
                             <div className="flex overflow-hidden flex-col rounded-3xl bg-neutral-100">
-                                <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714] cursor-pointer">
+                                <div className="flex relative flex-col px-5 pt-5 pb-48 w-full aspect-[0.714] max-sm:h-full cursor-pointer">
                                     <img
                                         loading="lazy"
                                         src={item.image}
