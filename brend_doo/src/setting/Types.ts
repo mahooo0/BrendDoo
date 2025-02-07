@@ -197,6 +197,7 @@ export interface ProductDetail {
     img_alt: string;
     img_title: string;
     description: string;
+    size_image: string;
     slug: {
         en: string;
         ru: string;

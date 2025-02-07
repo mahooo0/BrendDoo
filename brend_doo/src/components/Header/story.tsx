@@ -29,11 +29,11 @@ export default function Story() {
                     grabCursor
                     // navigation
                     // pagination={{ clickable: true }}
-                    className="!w-fit"
+                    className=""
                 >
                     {instragrams?.map((item, i: number) => (
                         <SwiperSlide key={item.id} className="!w-fit">
-                            <div className=" w-[94px] h-[94px] flex justify-center items-center rounded-full border-2 border-[#5797ED]">
+                            <div className=" lg:w-[94px] lg:h-[94px] w-[64px] h-[64px] flex justify-center items-center rounded-full border-2 border-[#5797ED]">
                                 <img
                                     onClick={() => {
                                         setisStoriesSwipperOpen(true),

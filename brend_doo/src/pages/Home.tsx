@@ -21,6 +21,7 @@ import ROUTES from '../setting/routes.tsx';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import TickTokSwipperVertical from '../components/TiktokSwippwrVertical/index.tsx';
+import Story from '../components/Header/story.tsx';
 
 export default function Home() {
     //states
@@ -281,6 +282,9 @@ export default function Home() {
                         </div>
                     </div>
                 )}
+                <section className="lg:hidden block">
+                    <Story />
+                </section>
                 <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     {/* Background Video */}
                     <video

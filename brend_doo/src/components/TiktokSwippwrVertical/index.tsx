@@ -46,20 +46,24 @@ export default function TickTokSwipperVertical({
     return (
         <>
             <div
-                className="w-[100vW] h-[100vh]  fixed top-0 left-0 bg-black z-50 "
+                className="w-[100vW] h-[100vh] text-white  fixed top-0 left-0 bg-black z-50 "
                 style={isopen ? { display: 'block' } : { display: 'none' }}
             >
                 <Swiper
                     direction={isMobile ? 'vertical' : 'horizontal'}
-                    height={1000}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    centeredSlides={isMobile ? false : true} // Center the active slide
+                    spaceBetween={isMobile ? 0 : 100}
                     slidesPerView={isMobile ? 1 : 'auto'}
-                    spaceBetween={isMobile ? '' : 100}
-                    className=""
-                    centeredSlides={true} // Center the active slide
+                    className=" !h-screen"
                 >
                     {Tiktoks?.map((item, i: number) => (
                         <SwiperSlide
-                            className={`${!isMobile ? '!w-fit' : ''}`}
+                            className={`${
+                                !isMobile ? '!w-fit' : ' w-full  !h-screen '
+                            }`}
                             key={i}
                         >
                             <div className="w-full h-[100vh]  flex justify-center items-center">
@@ -80,6 +84,14 @@ export default function TickTokSwipperVertical({
                             </div>
                         </SwiperSlide>
                     ))}
+                    {/* <SwiperSlide>Slide 2</SwiperSlide>
+                    <SwiperSlide>Slide 3</SwiperSlide>
+                    <SwiperSlide>Slide 4</SwiperSlide>
+                    <SwiperSlide>Slide 5</SwiperSlide>
+                    <SwiperSlide>Slide 6</SwiperSlide>
+                    <SwiperSlide>Slide 7</SwiperSlide>
+                    <SwiperSlide>Slide 8</SwiperSlide>
+                    <SwiperSlide>Slide 9</SwiperSlide> */}
                 </Swiper>
                 <svg
                     onClick={onclose}

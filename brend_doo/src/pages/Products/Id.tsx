@@ -79,7 +79,7 @@ export default function ProductId() {
                     item.filter_name === 'Color' || item.filter_name === 'Цвет'
             )
             ?.options.find((item) => item.is_default)?.name;
-        console.log('CurrentColorNAme:', Productslingle);
+        console.log('Productslingle:', Productslingle);
 
         const CurrentOptionNAme = Productslingle?.filters
             .find(
@@ -902,7 +902,7 @@ export default function ProductId() {
                             </div>
                             <img
                                 className=" w-full "
-                                src="https://s3-alpha-sig.figma.com/img/115a/f053/3e47f2d36c4b5decdb91a5aa5006ec69?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=DMUaleRVbB1C-IjDw8O~4A9x0raFy7olR936YaIAux7VbG3b1pz~YR2-S4vyhl6EJ42tPYEHzfPTFZf3OAXuNafxeDg~R~gaa4mDfS95Rxi58n9rDPtlh2enqIobuYC--w1485cSVKjYd8IOiRJXWi85BRhTqPRiPp10TKMbMGqisklfA5wQPOEEPCKrXH~rZ8g9V4SnWgCRxsRrGmdCt~Cb4Kqlz9VankIQXNf0IDdjoedAceEZEpPex~M1wtbFoM9dzWU19mr7sgfxIYltgdjkQZ1fNZQoGs~FpD~fg9TFsu5BFk1uZ55SaVW57udPc~FBVQJQZM~jcRg1cPDq-w__"
+                                src={Productslingle?.size_image}
                                 alt=""
                             />
                         </div>
