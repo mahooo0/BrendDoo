@@ -1191,7 +1191,7 @@ export default function Header() {
                 </div>
             </div>
             {/* mobil header */}
-            <div className="lg:hidden items-center flex h-[68px] px-4 justify-between w-full fixed bg-white z-50">
+            <div className="lg:hidden items-center flex h-[68px] px-4  justify-between w-screen fixed bg-white z-50">
                 {isSearchOpen || (
                     <Link to={'/'}>
                         <img
@@ -1202,197 +1202,369 @@ export default function Header() {
                     </Link>
                 )}
                 {/* <div className="flex gap-4 items-center"> */}
-                <div
-                    className={` top-[14px] flex justify-between ease-in-out  duration-500  pr-[16px] z-[54] ${
-                        isSearchOpen
-                            ? ' left-[16px] h-[40px]  w-full bg-[#F5F5F5] rounded-[100px] '
-                            : ' right-[6rem]  w-fit '
-                    } `}
-                >
-                    <button
-                        onClick={() => {
-                            setIsSearchOpen(true);
-                        }}
-                    >
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 40 40"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <rect
-                                width="40"
-                                height="40"
-                                rx="20"
-                                fill="#F5F5F5"
-                            />
-                            <g clip-path="url(#clip0_921_3507)">
-                                <circle
-                                    cx="19.1667"
-                                    cy="19.1665"
-                                    r="7.5"
-                                    stroke="black"
-                                    stroke-width="1.5"
-                                />
-                                <path
-                                    d="M28.1767 27.4791C28.1244 27.558 28.03 27.6525 27.8411 27.8413C27.6523 28.0302 27.5579 28.1246 27.479 28.1768C27.0168 28.4829 26.3916 28.3251 26.1299 27.8365C26.0853 27.7531 26.0469 27.6252 25.9703 27.3693C25.8865 27.0898 25.8446 26.95 25.8365 26.8517C25.7889 26.2725 26.2723 25.789 26.8515 25.8367C26.9498 25.8448 27.0896 25.8867 27.3691 25.9704C27.625 26.0471 27.7529 26.0854 27.8363 26.1301C28.325 26.3918 28.4827 27.017 28.1767 27.4791Z"
-                                    stroke="black"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_921_3507">
-                                    <rect
-                                        width="20"
-                                        height="20"
-                                        fill="white"
-                                        transform="translate(10 10)"
-                                    />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </button>
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        placeholder="Search"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            const value = e.target.value;
-                            setSearchValue(value);
-                            if (debounceTimeout.current) {
-                                clearTimeout(debounceTimeout.current);
-                            }
-                            debounceTimeout.current = setTimeout(() => {
-                                setDebouncedValue(value);
 
-                                if (value !== '') {
-                                    disableScrolling();
-                                    // Add your additional logic here
-                                } else {
-                                    enableScrolling();
-                                }
-                            }, 300);
-                            // if (e.target.value !== '') {
-                            //     disableScrolling();
-                            //     setIsClothingOpen(false);
-                            //     setIsBaskedOpen(false);
-                            // } else {
-                            //     enableScrolling();
-                            // }
-                        }}
-                        className={`h-full w-full bg-transparent  outline-none  ${
-                            isSearchOpen ? 'opacity-100' : 'hidden'
+                <div className="flex flex-row gap-4 w-full justify-end">
+                    <div
+                        className={` top-[14px] flex justify-between ease-in-out  duration-500  pr-[0] z-[54] ${
+                            isSearchOpen
+                                ? ' left-[16px] h-[40px]  w-full bg-[#F5F5F5] rounded-[100px] '
+                                : ' right-[6rem]  w-fit '
                         } `}
-                        name=""
-                    />
-                    <button
-                        className={` flex justify-center items-center ${
-                            isSearchOpen ? 'opacity-100' : 'opacity-0'
-                        } `}
-                        onClick={() => {
-                            setIsSearchOpen(false);
-                        }}
                     >
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M15 5L5 15"
-                                stroke="black"
-                                stroke-opacity="0.8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                            <path
-                                d="M5 5L15 15"
-                                stroke="black"
-                                stroke-opacity="0.8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-                    </button>
-                    {isSearchOpen && (
-                        <div className="bg-white rounded-md  absolute w-[90%]  left-auto right-auto z-50 max-h-[300px] top-[100%]   overflow-y-auto">
-                            {' '}
-                            {FilteredProduct?.data.map((item) => (
-                                <p
-                                    className="h-[44px] w-full  px-[16px] py-[14px] text-[14px] font-normal border-b border-[#E5E5E5] cursor-pointer"
-                                    onClick={() => {
-                                        navigate(
-                                            `/${lang}/${
-                                                ROUTES.product[
-                                                    lang as keyof typeof ROUTES.product
-                                                ]
-                                            }/${
-                                                item.slug[
-                                                    lang as keyof typeof item.slug
-                                                ]
-                                            }`
-                                        );
-                                        setIsSearchOpen(false);
-                                    }}
-                                >
-                                    {item.title}
-                                </p>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                {isSearchOpen || (
-                    <button
-                        className={`flex gap-3 items-center opacity-100}  `}
-                        onClick={() => {
-                            setIsBaskedOpen((prev) => !prev);
-                            if (!isBaskedOpen) {
-                                setIsClothingOpen(false);
-                                setSearchValue('');
-                                disableScrolling();
-                            } else {
-                                enableScrolling();
-                            }
-                        }}
-                    >
-                        <Link to="/basked/sifarislerim">
-                            <div className="w-[40px] h-[40px] rounded-full bg-[#3873C3] flex justify-center items-center relative">
-                                <img src="/svg/basked.svg" />
-                                <div className="w-[12px] h-[12px] flex justify-center items-center  text-white text-[8px] bg-[#FC394C] rounded-full absolute top-[10px] right-[10px]">
-                                    2
-                                </div>
-                            </div>
-                        </Link>
-                    </button>
-                )}
-                {isSearchOpen || (
-                    <div className="relative ">
-                        <div
+                        <button
                             onClick={() => {
-                                setShowAside((prew) => !prew);
+                                setIsSearchOpen(true);
                             }}
-                            className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center  `}
                         >
                             <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
+                                width="40"
+                                height="40"
+                                viewBox="0 0 40 40"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect
+                                    width="40"
+                                    height="40"
+                                    rx="20"
+                                    fill="#F5F5F5"
+                                />
+                                <g clip-path="url(#clip0_921_3507)">
+                                    <circle
+                                        cx="19.1667"
+                                        cy="19.1665"
+                                        r="7.5"
+                                        stroke="black"
+                                        stroke-width="1.5"
+                                    />
+                                    <path
+                                        d="M28.1767 27.4791C28.1244 27.558 28.03 27.6525 27.8411 27.8413C27.6523 28.0302 27.5579 28.1246 27.479 28.1768C27.0168 28.4829 26.3916 28.3251 26.1299 27.8365C26.0853 27.7531 26.0469 27.6252 25.9703 27.3693C25.8865 27.0898 25.8446 26.95 25.8365 26.8517C25.7889 26.2725 26.2723 25.789 26.8515 25.8367C26.9498 25.8448 27.0896 25.8867 27.3691 25.9704C27.625 26.0471 27.7529 26.0854 27.8363 26.1301C28.325 26.3918 28.4827 27.017 28.1767 27.4791Z"
+                                        stroke="black"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                    />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_921_3507">
+                                        <rect
+                                            width="20"
+                                            height="20"
+                                            fill="white"
+                                            transform="translate(10 10)"
+                                        />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </button>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            placeholder="Search"
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                                const value = e.target.value;
+                                setSearchValue(value);
+                                if (debounceTimeout.current) {
+                                    clearTimeout(debounceTimeout.current);
+                                }
+                                debounceTimeout.current = setTimeout(() => {
+                                    setDebouncedValue(value);
+
+                                    if (value !== '') {
+                                        disableScrolling();
+                                        // Add your additional logic here
+                                    } else {
+                                        enableScrolling();
+                                    }
+                                }, 300);
+                                // if (e.target.value !== '') {
+                                //     disableScrolling();
+                                //     setIsClothingOpen(false);
+                                //     setIsBaskedOpen(false);
+                                // } else {
+                                //     enableScrolling();
+                                // }
+                            }}
+                            className={`h-full w-full bg-transparent  outline-none  ${
+                                isSearchOpen ? 'opacity-100' : 'hidden'
+                            } `}
+                            name=""
+                        />
+                        <button
+                            className={` flex justify-center items-center ${
+                                isSearchOpen ? 'opacity-100' : 'hidden'
+                            } `}
+                            onClick={() => {
+                                setIsSearchOpen(false);
+                            }}
+                        >
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
-                                    d="M4 17.27V16.27H20V17.27H4ZM4 12.5V11.5H20V12.5H4ZM4 7.72998V6.72998H20V7.72998H4Z"
-                                    fill={'white'}
+                                    d="M15 5L5 15"
+                                    stroke="black"
+                                    stroke-opacity="0.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M5 5L15 15"
+                                    stroke="black"
+                                    stroke-opacity="0.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
                                 />
                             </svg>
-                        </div>
+                        </button>
+                        {isSearchOpen && (
+                            <div className="bg-white rounded-md  absolute w-[90%]  left-auto right-auto z-50 max-h-[300px] top-[100%]   overflow-y-auto">
+                                {' '}
+                                {FilteredProduct?.data.map((item) => (
+                                    <p
+                                        className="h-[44px] w-full  px-[16px] py-[14px] text-[14px] font-normal border-b border-[#E5E5E5] cursor-pointer"
+                                        onClick={() => {
+                                            navigate(
+                                                `/${lang}/${
+                                                    ROUTES.product[
+                                                        lang as keyof typeof ROUTES.product
+                                                    ]
+                                                }/${
+                                                    item.slug[
+                                                        lang as keyof typeof item.slug
+                                                    ]
+                                                }`
+                                            );
+                                            setIsSearchOpen(false);
+                                        }}
+                                    >
+                                        {item.title}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                )}
+                    {isSearchOpen || (
+                        <button
+                            className={`flex gap-3 items-center opacity-100}  `}
+                            onClick={() => {
+                                setIsBaskedOpen((prev) => !prev);
+                                if (!isBaskedOpen) {
+                                    setIsClothingOpen(false);
+                                    setSearchValue('');
+                                    disableScrolling();
+                                } else {
+                                    enableScrolling();
+                                }
+                            }}
+                        >
+                            <Link
+                                onClick={() => {
+                                    setShowAside(false);
+                                }}
+                                to={`/${lang}/${
+                                    ROUTES.liked[
+                                        lang as keyof typeof ROUTES.liked
+                                    ]
+                                }`}
+                            >
+                                <div className="w-[40px] h-[40px] rounded-full  flex justify-center items-center relative">
+                                    <svg
+                                        width="40"
+                                        height="40"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <rect
+                                            width="40"
+                                            height="40"
+                                            rx="20"
+                                            fill="#F5F5F5"
+                                        />
+                                        <g clip-path="url(#clip0_2530_5515)">
+                                            <path
+                                                fill-rule="evenodd"
+                                                clip-rule="evenodd"
+                                                d="M14.6868 13.6868C13.3043 14.3187 12.2915 15.8218 12.2915 17.6142C12.2915 19.4453 13.0409 20.8568 14.1151 22.0664C15.0004 23.0634 16.0722 23.8896 17.1174 24.6954C17.3657 24.8868 17.6125 25.0771 17.8549 25.2682C18.2932 25.6137 18.6843 25.917 19.0612 26.1373C19.4383 26.3576 19.7418 26.4583 19.9998 26.4583C20.2578 26.4583 20.5614 26.3576 20.9385 26.1373C21.3154 25.917 21.7064 25.6137 22.1448 25.2682C22.3872 25.0771 22.634 24.8868 22.8822 24.6954C23.9275 23.8896 24.9992 23.0634 25.8846 22.0664C26.9588 20.8568 27.7082 19.4453 27.7082 17.6142C27.7082 15.8218 26.6954 14.3187 25.3129 13.6868C23.9698 13.0728 22.1651 13.2354 20.4501 15.0172C20.3323 15.1396 20.1697 15.2088 19.9998 15.2088C19.8299 15.2088 19.6674 15.1396 19.5495 15.0172C17.8346 13.2354 16.0299 13.0728 14.6868 13.6868ZM19.9998 13.7156C18.0731 11.9918 15.9156 11.7507 14.1671 12.5499C12.3204 13.394 11.0415 15.3541 11.0415 17.6142C11.0415 19.8355 11.9669 21.53 13.1804 22.8964C14.1522 23.9907 15.3417 24.9066 16.3922 25.7154C16.6303 25.8988 16.8613 26.0766 17.081 26.2498C17.5079 26.5863 17.9661 26.9452 18.4305 27.2165C18.8947 27.4878 19.4245 27.7083 19.9998 27.7083C20.5752 27.7083 21.105 27.4878 21.5692 27.2165C22.0336 26.9452 22.4918 26.5863 22.9187 26.2498C23.1384 26.0766 23.3693 25.8988 23.6075 25.7154C24.658 24.9066 25.8474 23.9907 26.8192 22.8964C28.0328 21.53 28.9582 19.8355 28.9582 17.6142C28.9582 15.3541 27.6792 13.394 25.8325 12.5499C24.084 11.7507 21.9266 11.9918 19.9998 13.7156Z"
+                                                fill="black"
+                                            />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_2530_5515">
+                                                <rect
+                                                    width="20"
+                                                    height="20"
+                                                    fill="white"
+                                                    transform="translate(10 10)"
+                                                />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </Link>
+                        </button>
+                    )}
+                    {isSearchOpen || (
+                        <div className="relative ">
+                            <div
+                                onClick={() => {
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        // const User = JSON.parse(userStr);
+
+                                        // if (User) {
+                                        // }
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.userSettings[
+                                                    lang as keyof typeof ROUTES.userSettings
+                                                ]
+                                            }`
+                                        );
+                                    } else {
+                                        Navigae(
+                                            `/${lang}/${
+                                                ROUTES.login[
+                                                    lang as keyof typeof ROUTES.login
+                                                ]
+                                            }`
+                                        );
+                                    }
+                                }}
+                                className={`w-[40px] h-[40px] aspect-square rounded-full duration-300  bg-opacity-40 bg-blur-[4px] flex justify-center items-center  `}
+                            >
+                                <svg
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <rect
+                                        width="40"
+                                        height="40"
+                                        rx="20"
+                                        fill="#F5F5F5"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M19.9998 11.0417C17.8137 11.0417 16.0415 12.814 16.0415 15.0001C16.0415 17.1862 17.8137 18.9584 19.9998 18.9584C22.186 18.9584 23.9582 17.1862 23.9582 15.0001C23.9582 12.814 22.186 11.0417 19.9998 11.0417ZM17.2915 15.0001C17.2915 13.5043 18.5041 12.2917 19.9998 12.2917C21.4956 12.2917 22.7082 13.5043 22.7082 15.0001C22.7082 16.4959 21.4956 17.7084 19.9998 17.7084C18.5041 17.7084 17.2915 16.4959 17.2915 15.0001Z"
+                                        fill="black"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M19.9998 20.2084C18.3004 20.2084 16.7311 20.6007 15.565 21.2671C14.4165 21.9233 13.5415 22.9252 13.5415 24.1667C13.5415 25.4083 14.4165 26.4102 15.565 27.0664C16.7311 27.7328 18.3004 28.1251 19.9998 28.1251C21.6993 28.1251 23.2686 27.7328 24.4347 27.0664C25.5832 26.4102 26.4582 25.4083 26.4582 24.1667C26.4582 22.9252 25.5832 21.9233 24.4347 21.2671C23.2686 20.6007 21.6993 20.2084 19.9998 20.2084ZM14.7915 24.1667C14.7915 23.5674 15.2223 22.9025 16.1851 22.3524C17.1302 21.8123 18.4776 21.4584 19.9998 21.4584C21.5221 21.4584 22.8694 21.8123 23.8145 22.3524C24.7773 22.9025 25.2082 23.5674 25.2082 24.1667C25.2082 24.7661 24.7773 25.431 23.8145 25.9811C22.8694 26.5212 21.5221 26.8751 19.9998 26.8751C18.4776 26.8751 17.1302 26.5212 16.1851 25.9811C15.2223 25.431 14.7915 24.7661 14.7915 24.1667Z"
+                                        fill="black"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+                    {isSearchOpen || (
+                        <button
+                            className={`flex gap-3 items-center opacity-100}  `}
+                            onClick={() => {
+                                setIsBaskedOpen((prev) => !prev);
+                                if (!isBaskedOpen) {
+                                    setIsClothingOpen(false);
+                                    setSearchValue('');
+                                    disableScrolling();
+                                } else {
+                                    enableScrolling();
+                                }
+                            }}
+                        >
+                            <Link to="/basked/sifarislerim">
+                                <div className="w-[40px] h-[40px] rounded-full  flex justify-center items-center relative">
+                                    <svg
+                                        width="40"
+                                        height="40"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <rect
+                                            width="40"
+                                            height="40"
+                                            rx="20"
+                                            fill="#F5F5F5"
+                                        />
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M17.015 12.709C17.2489 12.2159 17.7513 11.875 18.3333 11.875H21.6666C22.2486 11.875 22.751 12.2159 22.9849 12.709C23.5545 12.7131 23.9985 12.7393 24.3948 12.8941C24.8683 13.0792 25.2801 13.3938 25.5832 13.8019C25.889 14.2137 26.0325 14.7414 26.2301 15.4678C26.2402 15.505 26.2505 15.5428 26.261 15.5811L26.7533 17.3869C27.0762 17.5523 27.3588 17.7749 27.5945 18.0768C28.1128 18.7407 28.2046 19.5314 28.1124 20.4384C28.0229 21.3185 27.7459 22.4268 27.399 23.8141L27.377 23.902C27.1577 24.7794 26.9796 25.4917 26.7678 26.0476C26.547 26.6272 26.2667 27.1023 25.8045 27.4631C25.3423 27.824 24.8135 27.9807 24.1976 28.0544C23.607 28.125 22.8727 28.125 21.9684 28.125H18.0315C17.1272 28.125 16.393 28.125 15.8023 28.0544C15.1865 27.9807 14.6576 27.824 14.1954 27.4631C13.7332 27.1023 13.4529 26.6272 13.2321 26.0476C13.0203 25.4917 12.8422 24.7794 12.6229 23.9021L12.6009 23.8141C12.2541 22.4268 11.977 21.3185 11.8875 20.4384C11.7953 19.5314 11.8871 18.7407 12.4054 18.0768C12.6411 17.7749 12.9237 17.5523 13.2466 17.3869L13.739 15.5811C13.7494 15.5428 13.7597 15.505 13.7698 15.4678C13.9674 14.7414 14.1109 14.2137 14.4167 13.8019C14.7198 13.3938 15.1316 13.0792 15.6051 12.8941C16.0014 12.7393 16.4454 12.7131 17.015 12.709ZM17.0162 13.9602C16.4646 13.9657 16.2433 13.9868 16.0602 14.0584C15.8052 14.158 15.5834 14.3274 15.4202 14.5472C15.2735 14.7448 15.1874 15.0209 14.9449 15.91L14.6503 16.9906C15.5151 16.875 16.6316 16.875 18.0188 16.875H21.9811C23.3683 16.875 24.4848 16.875 25.3496 16.9906L25.055 15.91C24.8126 15.0209 24.7264 14.7448 24.5797 14.5472C24.4165 14.3274 24.1947 14.158 23.9398 14.0584C23.7566 13.9868 23.5353 13.9657 22.9838 13.9602C22.7493 14.4519 22.2477 14.7917 21.6666 14.7917H18.3333C17.7523 14.7917 17.2506 14.4519 17.0162 13.9602ZM18.3333 13.125C18.2182 13.125 18.125 13.2183 18.125 13.3333C18.125 13.4484 18.2182 13.5417 18.3333 13.5417H21.6666C21.7817 13.5417 21.875 13.4484 21.875 13.3333C21.875 13.2183 21.7817 13.125 21.6666 13.125H18.3333ZM14.7498 18.2387C13.9905 18.3486 13.6231 18.5485 13.3907 18.8461C13.1583 19.1437 13.0535 19.5487 13.1311 20.312C13.2104 21.0916 13.4639 22.1121 13.8261 23.5611C14.0572 24.4853 14.2181 25.1247 14.4002 25.6026C14.5763 26.0648 14.7487 26.3093 14.9647 26.4779C15.1806 26.6465 15.4596 26.7545 15.9507 26.8132C16.4585 26.874 17.1179 26.875 18.0705 26.875H21.9294C22.8821 26.875 23.5414 26.874 24.0492 26.8132C24.5403 26.7545 24.8193 26.6465 25.0353 26.4779C25.2512 26.3093 25.4236 26.0648 25.5997 25.6026C25.7818 25.1247 25.9427 24.4853 26.1738 23.5611C26.536 22.1121 26.7896 21.0916 26.8688 20.312C26.9464 19.5487 26.8416 19.1437 26.6092 18.8461C26.3769 18.5485 26.0094 18.3486 25.2501 18.2387C24.4746 18.1266 23.423 18.125 21.9294 18.125H18.0705C16.5769 18.125 15.5254 18.1266 14.7498 18.2387Z"
+                                            fill="black"
+                                        />
+                                        <rect
+                                            x="20.6665"
+                                            y="7.3335"
+                                            width="12"
+                                            height="12"
+                                            rx="6"
+                                            fill="#FC394C"
+                                        />
+                                        <path
+                                            d="M24.9625 16.3335V15.7895L27.2425 13.5895C27.4452 13.3975 27.5945 13.2295 27.6905 13.0855C27.7918 12.9362 27.8585 12.8002 27.8905 12.6775C27.9278 12.5495 27.9465 12.4268 27.9465 12.3095C27.9465 12.0215 27.8452 11.7948 27.6425 11.6295C27.4398 11.4642 27.1438 11.3815 26.7545 11.3815C26.4558 11.3815 26.1865 11.4322 25.9465 11.5335C25.7065 11.6295 25.4985 11.7815 25.3225 11.9895L24.7785 11.5175C24.9918 11.2455 25.2772 11.0375 25.6345 10.8935C25.9972 10.7442 26.3945 10.6695 26.8265 10.6695C27.2158 10.6695 27.5545 10.7335 27.8425 10.8615C28.1305 10.9842 28.3518 11.1628 28.5065 11.3975C28.6665 11.6322 28.7465 11.9095 28.7465 12.2295C28.7465 12.4108 28.7225 12.5895 28.6745 12.7655C28.6265 12.9415 28.5358 13.1282 28.4025 13.3255C28.2692 13.5228 28.0772 13.7442 27.8265 13.9895L25.7945 15.9495L25.6025 15.6375H28.9865V16.3335H24.9625Z"
+                                            fill="white"
+                                        />
+                                    </svg>
+                                </div>
+                            </Link>
+                        </button>
+                    )}
+                    {isSearchOpen || (
+                        <div className="relative ">
+                            <div
+                                onClick={() => {
+                                    setShowAside((prew) => !prew);
+                                }}
+                                className={`w-[40px] h-[40px] aspect-square rounded-full duration-300 bg-[#3873C3] bg-opacity-40 bg-blur-[4px] flex justify-center items-center  `}
+                            >
+                                <svg
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <rect
+                                        width="40"
+                                        height="40"
+                                        rx="20"
+                                        fill="#3873C3"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M28.9585 15.8333C28.9585 16.1784 28.6787 16.4583 28.3335 16.4583L11.6668 16.4583C11.3217 16.4583 11.0418 16.1784 11.0418 15.8333C11.0418 15.4881 11.3217 15.2083 11.6668 15.2083L28.3335 15.2083C28.6787 15.2083 28.9585 15.4881 28.9585 15.8333Z"
+                                        fill="white"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M26.4585 20C26.4585 20.3452 26.1787 20.625 25.8335 20.625H14.1668C13.8217 20.625 13.5418 20.3452 13.5418 20C13.5418 19.6548 13.8217 19.375 14.1668 19.375H25.8335C26.1787 19.375 26.4585 19.6548 26.4585 20Z"
+                                        fill="white"
+                                    />
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M23.9585 24.1667C23.9585 24.5119 23.6787 24.7917 23.3335 24.7917H16.6668C16.3217 24.7917 16.0418 24.5119 16.0418 24.1667C16.0418 23.8216 16.3217 23.5417 16.6668 23.5417H23.3335C23.6787 23.5417 23.9585 23.8216 23.9585 24.1667Z"
+                                        fill="white"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {showaside && !isSearchOpen && (
@@ -1632,7 +1804,7 @@ export default function Header() {
                                     ))}
                             </div>
                             <div className="w-full h-[400px] absolute z-30 bottom-[-100%] bg-[#F5F5F5]">
-                                <Link
+                                {/* <Link
                                     onClick={() => {
                                         setShowAside(false);
                                     }}
@@ -1696,8 +1868,8 @@ export default function Header() {
                                             />
                                         </svg>
                                     </div>
-                                </Link>{' '}
-                                <div
+                                </Link>{' '} */}
+                                {/* <div
                                     className="h-[60px] w-full bg-[#F5F5F5] flex flex-row gap-3 border-b-2 border-black  border-opacity-10  items-center justify-between pb-[] px-[16px] cursor-pointer"
                                     onClick={() => {
                                         const userStr =
@@ -1770,7 +1942,7 @@ export default function Header() {
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                </div>
+                                </div> */}
                                 <div className=" flex flex-row  m-3">
                                     <div
                                         onClick={() => HandleSetUrlByLang('en')}
