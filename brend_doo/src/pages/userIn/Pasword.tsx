@@ -30,7 +30,11 @@ export default function Password() {
     });
     const navigate = useNavigate();
     const { lang } = useParams<{ lang: string }>() || { lang: 'ru' };
-
+    const { data: registerImage } = GETRequest<{ image: string }>(
+        `/registerImage`,
+        'registerImage',
+        [lang]
+    );
     const handleSubmit = async (values: { email: string }) => {
         setLoading(true);
         setFormStatus(null); // Reset status message
@@ -66,7 +70,7 @@ export default function Password() {
             <div className="flex relative flex-col w-full h-[100vh] max-md:max-w-full justify-center items-center px-[40px]">
                 <img
                     loading="lazy"
-                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9f57b393c120b19ab9db1e7a4aa3dc11e48fdaa0526b775a0fd5a02c9292e45c?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                    src={registerImage?.image}
                     className="object-cover absolute inset-0 size-full"
                 />
                 <div
