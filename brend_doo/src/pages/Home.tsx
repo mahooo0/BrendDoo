@@ -302,7 +302,7 @@ export default function Home() {
                     </video>
 
                     {/* Content */}
-                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:py-[130px] relative z-10">
+                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:aspect-square relative z-10">
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
                                 <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl max-sm:text-[24px]">

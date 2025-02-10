@@ -478,7 +478,6 @@ export default function Header() {
                         <div className="flex overflow-hidden flex-nowrap gap-10 self-stretch mx-auto h-[50px] py-1.5 pr-1.5 pl-5 whitespace-nowrap bg-neutral-100 rounded-[100px] text-black text-opacity-60 lg:w-[50%] max-w-[514px] w-full justify-between">
                             <input
                                 type="text"
-                                placeholder="Axtar"
                                 value={SearchValue}
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
