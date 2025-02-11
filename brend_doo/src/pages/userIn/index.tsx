@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import { AuthResponse, TranslationsKeys } from '../../setting/Types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request';
 import { Formik } from 'formik';
 import toast from 'react-hot-toast';
@@ -26,14 +26,19 @@ export default function UserSettings() {
         'translates',
         [lang]
     );
+    const navigate = useNavigate();
     useEffect(() => {
         const userStr = localStorage.getItem('user-info');
         if (userStr) {
             const user = JSON.parse(userStr);
             setUserInfo(user.data);
             console.log('user:', user);
+        } else {
+            navigate(`/en/login`);
         }
     }, []);
+    console.log('userInfo', userInfo?.customer.name);
+
     return (
         <div>
             <Header />
@@ -54,12 +59,14 @@ export default function UserSettings() {
                     </div>
 
                     <Formik
+                        enableReinitialize
                         initialValues={{
-                            name: '',
-                            phone: '',
+                            name: userInfo?.customer.name || '',
+                            phone: userInfo?.customer.phone || '',
                             currentPassword: '',
                             newPassword: '',
                             confirmPassword: '',
+                            gender: userInfo?.customer.gender || '',
                         }}
                         onSubmit={async (values) => {
                             if (values.confirmPassword != values.newPassword) {
@@ -80,6 +87,7 @@ export default function UserSettings() {
                                         new_password: values.newPassword,
                                         new_password_confirmation:
                                             values.confirmPassword,
+                                        gender: values.gender,
                                     },
                                     {
                                         headers: {
@@ -114,9 +122,14 @@ export default function UserSettings() {
                             >
                                 <div className="flex flex-wrap gap-3 items-center w-full ">
                                     <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
-                                        <div className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
-                                            {userInfo?.customer.name}
-                                        </div>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder={translation?.Adınız}
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px]"
+                                        />
                                     </div>
                                     <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
                                         <div className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
@@ -173,7 +186,7 @@ export default function UserSettings() {
                                             <img
                                                 loading="lazy"
                                                 src={
-                                                    !showPassword
+                                                    showPassword
                                                         ? 'https://cdn.builder.io/api/v1/image/assets/TEMP/cc75299a447e1f2b81cfaeb2821950c885d45d255e50ae73ad2684fcd9aa2110?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099'
                                                         : '/svg/closedaye.svg'
                                                 }
@@ -190,7 +203,7 @@ export default function UserSettings() {
                                         <div className="flex overflow-hidden gap-5 justify-between px-5 py-4 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px] ">
                                             <input
                                                 type={
-                                                    showPassword2
+                                                    !showPassword2
                                                         ? 'password'
                                                         : 'text'
                                                 }
@@ -216,6 +229,30 @@ export default function UserSettings() {
                                                     )
                                                 }
                                             />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap gap-3 items-center mt-3 w-full text-black text-opacity-60 ">
+                                        <div className="flex flex-col grow shrink self-stretch my-auto lg:min-w-[240px] lg:w-[370px] md:w-[370px] w-full ">
+                                            <select
+                                                name="gender"
+                                                value={values.gender}
+                                                onChange={handleChange}
+                                                className="overflow-hidden px-5 py-5 w-full bg-white border border-solid border-black border-opacity-10 rounded-[100px]"
+                                            >
+                                                <option defaultChecked>
+                                                    {translation?.gender}
+                                                </option>
+                                                <option value="man">
+                                                    {lang === 'en'
+                                                        ? 'Male'
+                                                        : 'мужчина'}
+                                                </option>
+                                                <option value="woman">
+                                                    {lang === 'en'
+                                                        ? 'Female'
+                                                        : 'женщина'}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

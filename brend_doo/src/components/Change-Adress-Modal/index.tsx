@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 interface ModalFormProps {
     isOpen: boolean;
     onClose: () => void;
+    id: number;
 }
 
 interface FormValues {
@@ -19,7 +20,11 @@ const validationSchema = Yup.object({
     additionalInfo: Yup.string(),
 });
 
-export default function ChageAdressModal({ isOpen, onClose }: ModalFormProps) {
+export default function ChageAdressModal({
+    isOpen,
+    onClose,
+    id,
+}: ModalFormProps) {
     if (!isOpen) return null;
     // const { lang, slug } = useParams<{
     //     lang: string;
@@ -65,8 +70,10 @@ export default function ChageAdressModal({ isOpen, onClose }: ModalFormProps) {
                             const User = JSON.parse(userStr);
                             await axiosInstance
                                 .post(
-                                    '/storeOrUpdate',
+                                    '/changeOrderAddress',
                                     {
+                                        order_id: id,
+
                                         address: values.address,
                                         additional_info: values.additionalInfo,
                                     },

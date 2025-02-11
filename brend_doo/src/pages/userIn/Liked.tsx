@@ -2,9 +2,10 @@ import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import ProductCard from '../../components/ProductCArd';
 import { Favorite, TranslationsKeys } from '../../setting/Types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import GETRequest from '../../setting/Request';
+import { useEffect } from 'react';
 
 export default function UserLiked() {
     const { lang = 'ru' } = useParams<{
@@ -17,6 +18,16 @@ export default function UserLiked() {
     );
     const { data: tarnslation, isLoading: tarnslationLoading } =
         GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            console.log('user:', user);
+        } else {
+            navigate(`/en/login`);
+        }
+    }, []);
     // const { data: LikedProducts, isLoading: LikedProductsLOading } = useQuery<
     //     Product[]
     // >({

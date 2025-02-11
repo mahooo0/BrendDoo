@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request';
 import { Store, TranslationsKeys } from '../../setting/Types';
+import toast from 'react-hot-toast';
 
 export default function BaskedForum({
     Name,
@@ -85,6 +86,9 @@ export default function BaskedForum({
                         const NewWalue = values;
                         NewWalue.deliveryType = checkbox1;
                         NewWalue.paymentType = checkbox2;
+                        if (NewWalue.address.length < 5) {
+                            toast.error('add adress');
+                        }
 
                         console.log('Form values:', NewWalue);
                     }}

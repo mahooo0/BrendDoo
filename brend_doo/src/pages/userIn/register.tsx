@@ -37,6 +37,9 @@ const Register = () => {
         acceptTerms: Yup.boolean()
             .oneOf([true], 'İstifadəçi qaydaları ilə razı olmalısınız')
             .required('İstifadəçi qaydaları ilə razı olmalısınız'),
+        gender: Yup.string()
+            .oneOf(['man', 'woman'], 'Gender must be either man or woman')
+            .required('Gender is required'),
     });
     const navigate = useNavigate();
     async function handleRegister(values: {
@@ -265,9 +268,9 @@ const Register = () => {
                                                 name="gender"
                                                 className="overflow-hidden px-5 py-2 w-full h-[56px] text-base whitespace-nowrap bg-white border border-solid border-black border-opacity-10 rounded-[100px] text-black text-opacity-60 mt-3"
                                             >
-                                                {/* <option value="">
+                                                <option defaultChecked>
                                                     {tarnslation?.gender}
-                                                </option> */}
+                                                </option>
                                                 <option value="man">
                                                     {lang === 'en'
                                                         ? 'Male'

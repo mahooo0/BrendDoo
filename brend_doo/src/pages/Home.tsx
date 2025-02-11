@@ -22,6 +22,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import TickTokSwipperVertical from '../components/TiktokSwippwrVertical/index.tsx';
 import Story from '../components/Header/story.tsx';
+import TimedSpecialNotification from '../components/TimedNotification/index.tsx';
 
 export default function Home() {
     //states
@@ -30,6 +31,7 @@ export default function Home() {
     const [isTiktokOpen, setisTiktokOpen] = useState<any>(false);
     const [isIstagramSwippen, setIsIstagramSwippen] = useState<boolean>(false);
     const [isSpecialOpen, setIsSpecialOpen] = useState(false);
+    console.log(isSpecialOpen);
 
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     // const [currentCategory, setCurrentCategory] = useState<number>(0);
@@ -134,7 +136,7 @@ export default function Home() {
         } | null;
         is_special: boolean;
     }>(`/special`, 'special', [lang]);
-    console.log('Metas', Metas);
+    console.log('special', special);
     useEffect(() => {
         const hasShownModal = localStorage.getItem('isSpecialShown');
 
@@ -204,7 +206,7 @@ export default function Home() {
             </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
-                {isSpecialOpen && special?.is_special && (
+                {/* {isSpecialOpen && special?.is_special && (
                     <div className="w-[100vw] h-[100vh] bg-opacity-60 z-[9999999999999] fixed top-0 flex justify-center items-center">
                         <div className="bg-black bg-opacity-60 backdrop-blur-sm absolute top-0 w-full h-full"></div>
                         <div className="bg-white max-w-[520px] mx-[40px] rounded-3xl z-30 overflow-hidden flex flex-col justify-center items-center relative">
@@ -281,7 +283,13 @@ export default function Home() {
                             </button>
                         </div>
                     </div>
-                )}
+                )} */}
+                <TimedSpecialNotification
+                    special={special}
+                    lang={lang}
+                    translation={tarnslation}
+                    ROUTES={ROUTES}
+                />
                 <section className="lg:hidden block">
                     <Story />
                 </section>

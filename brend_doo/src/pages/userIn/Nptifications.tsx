@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import GETRequest, { axiosInstance } from '../../setting/Request';
 import type { Notification, TranslationsKeys } from '../../setting/Types';
 import Loading from '../../components/Loading';
 import NotificationPop from '../../components/NotificationPopUp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function Notification() {
@@ -20,6 +20,16 @@ export default function Notification() {
     const { data: tarnslation, isLoading: tarnslationLoading } =
         GETRequest<TranslationsKeys>(`/translates`, 'translates', [lang]);
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            console.log('user:', user);
+        } else {
+            navigate(`/en/login`);
+        }
+    }, []);
     if (NotificationsLoading || tarnslationLoading) {
         <Loading />;
     }

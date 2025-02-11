@@ -257,15 +257,7 @@ export default function Basked() {
                                                     AZN
                                                 </div>
                                             </div>
-                                            <div className="flex gap-10 justify-between items-center mt-4 w-full">
-                                                <div className="self-stretch my-auto text-black text-opacity-60">
-                                                    {tarnslation?.Çatdırılma}:
-                                                </div>
-                                                <div className="self-stretch my-auto text-right text-black">
-                                                    {basked?.delivered_price}
-                                                    AZN
-                                                </div>
-                                            </div>
+
                                             <div className="flex gap-10 justify-between items-center mt-4 w-full text-rose-500">
                                                 <div className="self-stretch my-auto">
                                                     {tarnslation?.Endirim}:

@@ -389,6 +389,7 @@ export type Order = {
     final_price: string;
     order_date: string;
     order_items: BasketItem[];
+    address: string;
 };
 export type Reasons = {
     title: string;

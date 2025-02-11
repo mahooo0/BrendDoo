@@ -1,12 +1,12 @@
 import Header from '../../components/Header';
 import UserAside from '../../components/userAside';
 import NoneToBlue from '../../components/buttons/NoneT0Blue';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import GETRequest from '../../setting/Request';
 import { Order, TranslationsKeys } from '../../setting/Types';
 import Loading from '../../components/Loading';
 import ROUTES from '../../setting/routes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // https://brendo.avtoicare.az/api/getOrders
 export default function ORder() {
     const { lang = 'ru' } = useParams<{ lang: string }>();
@@ -19,7 +19,16 @@ export default function ORder() {
         [lang, status]
     );
     console.log('Orders:', Orders);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            console.log('user:', user);
+        } else {
+            navigate(`/en/login`);
+        }
+    }, []);
     if (transloationLoading) {
         return <Loading />;
     }

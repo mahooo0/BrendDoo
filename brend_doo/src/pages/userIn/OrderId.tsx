@@ -6,7 +6,7 @@ import { Order, TranslationsKeys } from '../../setting/Types';
 import Loading from '../../components/Loading';
 import { cn } from '../../utils/cn';
 import RatingModal from '../../components/rating-modal/rating-modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CancelModal from '../../components/Modal_censel/modal';
 import ChageAdressModal from '../../components/Change-Adress-Modal';
 
@@ -21,6 +21,15 @@ export default function OrderId() {
         page: string;
         slug: string;
     }>();
+    useEffect(() => {
+        const userStr = localStorage.getItem('user-info');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            console.log('user:', user);
+        } else {
+            navigate(`/en/login`);
+        }
+    }, []);
     const { data: Order, isLoading: OrderLoading } = GETRequest<Order>(
         `/getOrderItem/${slug}`,
         'getOrderItem',
@@ -64,7 +73,11 @@ export default function OrderId() {
                             <div
                                 className={cn(
                                     'flex shrink-0 self-stretch my-auto w-4 h-4  ',
-                                    Order?.status === 'ordered'
+                                    Order?.status === 'ordered' ||
+                                        Order?.status === 'prepared' ||
+                                        Order?.status ===
+                                            'delivered_to_courier' ||
+                                        Order?.status === 'delivered'
                                         ? 'bg-green-500 rounded-full fill-green-500'
                                         : 'bg-neutral-200'
                                 )}
@@ -72,7 +85,10 @@ export default function OrderId() {
                             <div
                                 className={cn(
                                     'flex shrink-0 self-stretch my-auto h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]',
-                                    Order?.status === 'prepared'
+                                    Order?.status === 'prepared' ||
+                                        Order?.status ===
+                                            'delivered_to_courier' ||
+                                        Order?.status === 'delivered'
                                         ? 'bg-green-500 '
                                         : 'bg-neutral-200'
                                 )}
@@ -80,7 +96,10 @@ export default function OrderId() {
                             <div
                                 className={cn(
                                     'flex shrink-0 self-stretch my-auto w-4 h-4  ',
-                                    Order?.status === 'prepared'
+                                    Order?.status === 'prepared' ||
+                                        Order?.status ===
+                                            'delivered_to_courier' ||
+                                        Order?.status === 'delivered'
                                         ? 'bg-green-500 rounded-full fill-green-500'
                                         : 'bg-neutral-200'
                                 )}
@@ -88,7 +107,8 @@ export default function OrderId() {
                             <div
                                 className={cn(
                                     'flex shrink-0 self-stretch my-auto h-[3px]  rounded-[100px] lg:w-[28%] w-[7%]',
-                                    Order?.status === 'delivered_to_courier'
+                                    Order?.status === 'delivered_to_courier' ||
+                                        Order?.status === 'delivered'
                                         ? 'bg-green-500 '
                                         : 'bg-neutral-200'
                                 )}
@@ -96,7 +116,8 @@ export default function OrderId() {
                             <div
                                 className={cn(
                                     'flex shrink-0 self-stretch my-auto w-4 h-4  ',
-                                    Order?.status === 'delivered_to_courier'
+                                    Order?.status === 'delivered_to_courier' ||
+                                        Order?.status === 'delivered'
                                         ? 'bg-green-500 rounded-full fill-green-500'
                                         : 'bg-neutral-200'
                                 )}
@@ -201,16 +222,20 @@ export default function OrderId() {
                                         <div className="text-sm text-black text-wrap">
                                             {item.product.title}{' '}
                                         </div>
-                                        <button
-                                            className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto"
-                                            onClick={() =>
-                                                setProductCommit(
-                                                    item.product.id
-                                                )
-                                            }
-                                        >
-                                            {tarnslation?.Məhsulu_dəyərləndir}
-                                        </button>
+                                        {Order?.status === 'delivered' && (
+                                            <button
+                                                className="mt-4 text-xs w-fit text-wrap text-blue-600 underline decoration-auto decoration-solid underline-offset-auto"
+                                                onClick={() =>
+                                                    setProductCommit(
+                                                        item.product.id
+                                                    )
+                                                }
+                                            >
+                                                {
+                                                    tarnslation?.Məhsulu_dəyərləndir
+                                                }
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))}
@@ -299,8 +324,7 @@ export default function OrderId() {
                                                 {tarnslation?.Ünvan}:
                                             </div>
                                             <div className="mt-2 text-base text-black">
-                                                Bakı şəhər, Yasamal, Ə.Əhmədov
-                                                24 A. mənzi 45
+                                                {Order?.address}
                                             </div>
                                         </div>
                                         <button
@@ -333,13 +357,10 @@ export default function OrderId() {
                                         <div className="shrink-0 mt-5 h-px border border-solid border-zinc-300 max-md:max-w-full" />
                                         <div className="flex gap-5 justify-between mt-3 text-sm max-md:max-w-full">
                                             <div className="text-black text-opacity-60">
-                                                {
-                                                    tarnslation?.Çatdırılma_məbləği
-                                                }
-                                                :
+                                                {tarnslation?.Endirim}:
                                             </div>
                                             <div className="font-medium text-center text-black">
-                                                {Order?.delivered_price} AZN
+                                                {Order?.discount} AZN
                                             </div>
                                         </div>
                                         <div className="shrink-0 mt-5 h-px border border-solid border-zinc-300 max-md:max-w-full" />
@@ -349,7 +370,7 @@ export default function OrderId() {
                                                 {tarnslation?.Ümumi_məbləğ}:
                                             </div>
                                             <div className="text-lg font-semibold text-center text-green-500">
-                                                {Order?.total_price}AZN
+                                                {Order?.final_price}AZN
                                             </div>
                                         </div>
                                     </div>
@@ -358,12 +379,16 @@ export default function OrderId() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center mt-[40px]">
-                        <button
-                            onClick={() => setDelete(true)}
-                            className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]"
-                        >
-                            {tarnslation?.Sifarişin_ləğvi}
-                        </button>
+                        {Order?.status === 'ordered' ||
+                            Order?.status === 'prepared' || (
+                                <button
+                                    onClick={() => setDelete(true)}
+                                    className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]"
+                                >
+                                    {tarnslation?.Sifarişin_ləğvi}
+                                </button>
+                            )}
+
                         <div className="flex gap-2 items-center mt-3.5 text-xs text-black text-opacity-80">
                             <img
                                 loading="lazy"
@@ -392,6 +417,7 @@ export default function OrderId() {
                     />
                 )}{' '}
                 <ChageAdressModal
+                    id={Order?.id || 0}
                     isOpen={changeadress}
                     onClose={() => {
                         setchangeadress(false);

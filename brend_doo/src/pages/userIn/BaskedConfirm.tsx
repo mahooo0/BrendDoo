@@ -112,15 +112,7 @@ export default function BaskedConfirm() {
                                                     AZN
                                                 </div>
                                             </div>
-                                            <div className="flex gap-10 justify-between items-center mt-4 w-full">
-                                                <div className="self-stretch my-auto text-black text-opacity-60">
-                                                    {tarnslation?.Çatdırılma}:
-                                                </div>
-                                                <div className="self-stretch my-auto text-right text-black">
-                                                    {basked?.delivered_price}
-                                                    AZN
-                                                </div>
-                                            </div>
+
                                             <div className="flex gap-10 justify-between items-center mt-4 w-full text-rose-500">
                                                 <div className="self-stretch my-auto">
                                                     {tarnslation?.Endirim}:
@@ -155,6 +147,12 @@ export default function BaskedConfirm() {
                                         className="flex overflow-hidden h-[48px] flex-col justify-center items-center px-16 py-3.5 mt-6 w-full text-base font-medium text-white bg-[#3873C3] rounded-[100px]"
                                         onClick={async () => {
                                             // console.log('BodyBody', Body);
+                                            console.log(Body);
+
+                                            if (Body?.address === '') {
+                                                toast.error('adress is empty ');
+                                                return;
+                                            }
                                             axios
                                                 .post(
                                                     'https://brendo.avtoicare.az/api/storeOrder',
@@ -213,7 +211,7 @@ export default function BaskedConfirm() {
 
                                                     toast.error(
                                                         error.response.data
-                                                            .message
+                                                            .error[0]
                                                     );
                                                 });
                                         }}
