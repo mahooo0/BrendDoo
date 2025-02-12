@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { axiosInstance } from '../../setting/Request';
 import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ModalFormProps {
     isOpen: boolean;
@@ -40,7 +41,7 @@ export default function ChageAdressModal({
         address: '',
         additionalInfo: '',
     };
-
+    const queryClient = useQueryClient();
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Overlay */}
@@ -87,6 +88,9 @@ export default function ChageAdressModal({
                                 .then(() => {
                                     toast.success('adress sucsesfully updated');
                                     onClose();
+                                    queryClient.invalidateQueries({
+                                        queryKey: ['getOrderItem'],
+                                    });
                                 })
                                 .catch((error) => {
                                     console.log(error);

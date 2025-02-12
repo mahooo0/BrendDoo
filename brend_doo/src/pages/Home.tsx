@@ -206,84 +206,6 @@ export default function Home() {
             </Helmet>
             <Header />
             <main className=" flex flex-col justify-center mb-[100px] max-sm:mb-[40px]">
-                {/* {isSpecialOpen && special?.is_special && (
-                    <div className="w-[100vw] h-[100vh] bg-opacity-60 z-[9999999999999] fixed top-0 flex justify-center items-center">
-                        <div className="bg-black bg-opacity-60 backdrop-blur-sm absolute top-0 w-full h-full"></div>
-                        <div className="bg-white max-w-[520px] mx-[40px] rounded-3xl z-30 overflow-hidden flex flex-col justify-center items-center relative">
-                            <img
-                                src={special.data?.image}
-                                alt=""
-                                className="w-full max-h-[300px] object-cover"
-                            />
-                            <h5 className="text-[#FD0769] mt-5 text-[28px] font-semibold text-center mx-[40px]">
-                                {special.data?.discount}
-                            </h5>
-                            <p className="text-[16px] font-normal text-black opacity-80 text-center mx-[40px]">
-                                {special.data?.description}
-                            </p>
-                            <button
-                                className="bg-[#3873C3] w-full max-sm:w-[260px] max-w-[440px] mb-10 mt-[28px] px-4 rounded-[100px] text-white min-h-[52px]"
-                                onClick={() =>
-                                    navigate(
-                                        `/${lang}/${
-                                            ROUTES.product[
-                                                lang as keyof typeof ROUTES.product
-                                            ]
-                                        }?is_discount=1`
-                                    )
-                                }
-                            >
-                                {tarnslation?.Məhsullara_bax}
-                            </button>
-
-                            <button
-                                className="absolute top-4 right-4"
-                                onClick={() => setIsSpecialOpen(false)}
-                            >
-                                <svg
-                                    width="48"
-                                    height="48"
-                                    viewBox="0 0 48 48"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <circle
-                                        cx="24"
-                                        cy="24"
-                                        r="24"
-                                        fill="#F5F5F5"
-                                    />
-                                    <g clipPath="url(#clip0_2562_5665)">
-                                        <path
-                                            d="M30 18L18 30"
-                                            stroke="black"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M18 18L30 30"
-                                            stroke="black"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_2562_5665">
-                                            <rect
-                                                width="24"
-                                                height="24"
-                                                fill="white"
-                                                transform="translate(12 12)"
-                                            />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                )} */}
                 <TimedSpecialNotification
                     special={special}
                     lang={lang}
@@ -293,7 +215,7 @@ export default function Home() {
                 <section className="lg:hidden block">
                     <Story />
                 </section>
-                <section className="relative rounded-[20px] overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
+                <section className="relative rounded-[20px] max-sm:rounded-none max-sm:overflow-visible overflow-hidden mt-[16px] mx-[40px] max-sm:mx-[16px]">
                     {/* Background Video */}
                     <video
                         autoPlay
@@ -310,7 +232,7 @@ export default function Home() {
                     </video>
 
                     {/* Content */}
-                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:aspect-square relative z-10">
+                    <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-52 max-sm:rounded-none rounded-3xl bg-black bg-opacity-20 max-md:px-5 max-md:py-24 max-sm:aspect-square relative z-10">
                         <div className="flex flex-col max-w-full w-[497px]">
                             <div className="flex flex-col w-full text-center text-neutral-100 max-md:max-w-full">
                                 <h1 className="self-center text-5xl font-bold max-md:max-w-full max-md:text-4xl max-sm:text-[24px]">
@@ -359,7 +281,7 @@ export default function Home() {
                     />{' '}
                 </section>
                 {banners?.map((item) => (
-                    <section className="relative mt-5 max-sm:h-fit   rounded-3xl overflow-hidden max-sm:mx-4 max-sm:mt-4 mx-[40px]">
+                    <section className="relative mt-5 max-sm:h-fit max-sm:rounded-none   rounded-3xl overflow-hidden max-sm:mx-4 max-sm:mt-4 mx-[40px]">
                         <img
                             src={item.image}
                             alt=""
@@ -367,7 +289,7 @@ export default function Home() {
                         />
 
                         <div
-                            className=" max-sm:px-4 flex overflow-hidden flex-col justify-center  max-sm:py-[21px]  items-start max-sm:p-0 px-16 py-24 rounded-3xl max-md:px-5 relative"
+                            className=" max-sm:px-4 flex overflow-hidden flex-col justify-center  max-sm:py-[21px] max-sm:rounded-none   items-start max-sm:p-0 px-16 py-24 rounded-3xl max-md:px-5 relative"
                             style={{
                                 background:
                                     'linear-gradient(269.78deg, rgba(0, 0, 0, 0) 44.74%, rgba(0, 0, 0, 0.102252) 54.13%, rgba(0, 0, 0, 0.306484) 60.6%, rgba(0, 0, 0, 0.488446) 71%, rgba(0, 0, 0, 0.6) 77.76%)',

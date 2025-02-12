@@ -161,7 +161,7 @@ export default function ResetPasswordConfrim() {
                                         >
                                             {loading
                                                 ? tarnslation?.yuklenir
-                                                : tarnslation?.login}
+                                                : tarnslation?.passwordReset}
                                         </button>
                                     </Form>
                                 )}

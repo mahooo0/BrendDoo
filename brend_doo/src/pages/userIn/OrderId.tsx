@@ -327,21 +327,24 @@ export default function OrderId() {
                                                 {Order?.address}
                                             </div>
                                         </div>
-                                        <button
-                                            className="flex gap-2 items-center self-start py-0.5 mt-5 text-sm font-medium text-blue-600 border-b border-solid border-b-blue-600"
-                                            onClick={() =>
-                                                setchangeadress(true)
-                                            }
-                                        >
-                                            <div className="self-stretch my-auto">
-                                                {tarnslation?.SETÜnvan}:
-                                            </div>
-                                            <img
-                                                loading="lazy"
-                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0526326e93674398bc67c3737a2087d7b05c1e7206ef11005491f94e8cb5b1f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                                className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-                                            />
-                                        </button>
+                                        {(Order?.status === 'ordered' ||
+                                            Order?.status === 'prepared') && (
+                                            <button
+                                                className="flex gap-2 items-center self-start py-0.5 mt-5 text-sm font-medium text-blue-600 border-b border-solid border-b-blue-600"
+                                                onClick={() =>
+                                                    setchangeadress(true)
+                                                }
+                                            >
+                                                <div className="self-stretch my-auto">
+                                                    {tarnslation?.SETÜnvan}:
+                                                </div>
+                                                <img
+                                                    loading="lazy"
+                                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/0526326e93674398bc67c3737a2087d7b05c1e7206ef11005491f94e8cb5b1f3?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                    className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
+                                                />
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="flex flex-col ml-5 w-[56%] max-md:ml-0 max-md:w-full">
@@ -379,15 +382,15 @@ export default function OrderId() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center mt-[40px]">
-                        {Order?.status === 'ordered' ||
-                            Order?.status === 'prepared' || (
-                                <button
-                                    onClick={() => setDelete(true)}
-                                    className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]"
-                                >
-                                    {tarnslation?.Sifarişin_ləğvi}
-                                </button>
-                            )}
+                        {(Order?.status === 'ordered' ||
+                            Order?.status === 'prepared') && (
+                            <button
+                                onClick={() => setDelete(true)}
+                                className="gap-2.5 self-start px-6 py-3 text-sm font-medium text-rose-500 border border-rose-500 border-solid rounded-[100px]"
+                            >
+                                {tarnslation?.Sifarişin_ləğvi}
+                            </button>
+                        )}
 
                         <div className="flex gap-2 items-center mt-3.5 text-xs text-black text-opacity-80">
                             <img

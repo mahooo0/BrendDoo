@@ -37,7 +37,7 @@ export default function UserSettings() {
             navigate(`/en/login`);
         }
     }, []);
-    console.log('userInfo', userInfo?.customer.name);
+    console.log('userInfo', userInfo?.customer);
 
     return (
         <div>
@@ -96,10 +96,34 @@ export default function UserSettings() {
                                         },
                                     }
                                 )
-                                .then(() => {
+                                .then((res) => {
                                     toast.success(
                                         'user is sucsesfully updated'
                                     );
+                                    console.log('res', res);
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        const user = JSON.parse(userStr);
+                                        console.log(' res.data:', res.data);
+                                        console.log(
+                                            'old user.data:',
+                                            user.data
+                                        );
+                                        user.data.customer = res.data;
+                                        console.log(
+                                            ' new user.data:',
+                                            user.data
+                                        );
+
+                                        setUserInfo(user.data);
+                                        localStorage.setItem(
+                                            'user-info',
+                                            JSON.stringify(user)
+                                        );
+                                    } else {
+                                        navigate(`/en/login`);
+                                    }
                                 })
                                 .catch((error) => {
                                     console.log(error);
@@ -298,10 +322,12 @@ export default function UserSettings() {
                                             },
                                         }
                                     )
-                                    .then(() => {
+                                    .then((res) => {
                                         toast.success(
                                             'Verification code sent to new email'
                                         );
+                                        console.log('res', res);
+
                                         setNewEmail(values.email);
                                         setChangeEmail(false);
                                         setConfrimEmail(true);
@@ -370,10 +396,30 @@ export default function UserSettings() {
                                         },
                                     }
                                 )
-                                .then(() => {
-                                    toast.success(
-                                        'Verification code sent to new email'
-                                    );
+                                .then((res) => {
+                                    toast.success('user sucsesfully changed ');
+                                    console.log('res', res);
+                                    const userStr =
+                                        localStorage.getItem('user-info');
+                                    if (userStr) {
+                                        const user = JSON.parse(userStr);
+                                        console.log(' res.data:', res.data);
+                                        console.log(
+                                            'old user.data:',
+                                            user.data
+                                        );
+                                        user.data.customer = res.data.customer;
+                                        console.log(
+                                            ' new user.data:',
+                                            user.data
+                                        );
+
+                                        setUserInfo(user.data);
+                                        localStorage.setItem(
+                                            'user-info',
+                                            JSON.stringify(user)
+                                        );
+                                    }
                                 })
                                 .catch((error) => {
                                     console.log(error);
