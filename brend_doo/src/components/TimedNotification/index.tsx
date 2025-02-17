@@ -77,10 +77,10 @@ const TimedSpecialNotification: React.FC<any> = ({
                     alt=""
                     className="w-full max-h-[300px] object-cover"
                 />
-                <h5 className="text-[#FD0769] mt-5 text-[28px] font-semibold text-center mx-[40px]">
+                <h5 className="text-[#FD0769] mt-5 text-[28px] font-semibold text-center mx-[40px] max-sm:text-[22px]">
                     {special.data?.discount}
                 </h5>
-                <p className="text-[16px] font-normal text-black opacity-80 text-center mx-[40px]">
+                <p className="text-[16px] font-normal text-black opacity-80 text-center mx-[40px] max-sm:text-[12px]">
                     {special.data?.description}
                 </p>
                 <button

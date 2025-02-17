@@ -29,7 +29,7 @@ export default function Story() {
                     grabCursor
                     // navigation
                     // pagination={{ clickable: true }}
-                    className=""
+                    className="!pl-5"
                 >
                     {instragrams?.map((item, i: number) => (
                         <SwiperSlide key={item.id} className="!w-fit">
@@ -40,7 +40,7 @@ export default function Story() {
                                             setCurrentSlide(i);
                                     }}
                                     src={item.image}
-                                    className="w-[80px] aspect-square rounded-full bg-black cursor-pointer"
+                                    className="w-[80px] aspect-square rounded-full bg-black cursor-pointer object-cover "
                                 />
                             </div>
                         </SwiperSlide>

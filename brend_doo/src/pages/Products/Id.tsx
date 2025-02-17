@@ -5,6 +5,7 @@ import ProductCard from '../../components/ProductCArd';
 import { useNavigate, useParams } from 'react-router-dom';
 import GETRequest, { axiosInstance } from '../../setting/Request';
 import {
+    Basket,
     Favorite,
     ProductDetail,
     ProductResponse,
@@ -53,10 +54,16 @@ export default function ProductId() {
     const [currentColor, setCurrentColor] = useState<string>('');
     const [currentOption, setCurrentOption] = useState<string>('');
     const [isliked, setisliked] = useState<boolean>(false);
+    const [isinbusked, setisinbusked] = useState<boolean>(false);
     const [IsSizeBarOpen, setIsSizeBarOpen] = useState<boolean>(false);
     const { data: favorites } = GETRequest<Favorite[]>(
         `/favorites`,
         'favorites',
+        [lang]
+    );
+    const { data: basked } = GETRequest<Basket>(
+        `/basket_items`,
+        'basket_items',
         [lang]
     );
     const checkLikedProducts = () => {
@@ -67,7 +74,23 @@ export default function ProductId() {
         }
     };
     const queryClient = useQueryClient();
-
+    useEffect(() => {
+        let includes = false;
+        if (basked) {
+            for (let i = 0; i < basked.basket_items?.length; i++) {
+                if (
+                    basked.basket_items[i]?.product?.id === Productslingle?.id
+                ) {
+                    includes = true;
+                }
+            }
+        }
+        if (includes) {
+            // setvariant(3);
+            setisinbusked(true);
+        }
+        console.log('basked', basked);
+    }, [basked, Productslingle]);
     useEffect(() => {
         // Initial check on render
         checkLikedProducts();
@@ -94,6 +117,7 @@ export default function ProductId() {
             setCurrentOption(CurrentOptionNAme);
         }
     }, [Productslingle]);
+
     const addToBasket = async (data: {
         product_id: number;
         quantity: number;
@@ -145,13 +169,13 @@ export default function ProductId() {
             <Header />
             <main className=" lg:mt-[54px] mt-0 max-sm:mt-3">
                 <div className="px-[40px] max-sm:px-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                         <Link
                             to={`/${lang}/${
                                 ROUTES.home[lang as keyof typeof ROUTES.product]
                             }`}
                         >
-                            <h6 className="text-nowrap self-stretch my-auto text-black hover:text-blue-600">
+                            <h6 className="text-nowrap self-stretch max-sm:text-[12px] my-auto text-black hover:text-blue-600">
                                 {tarnslation?.home}{' '}
                             </h6>
                         </Link>
@@ -168,7 +192,7 @@ export default function ProductId() {
                                 ]
                             }`}
                         >
-                            <h6 className="text-nowrap self-stretch my-auto hover:text-blue-600">
+                            <h6 className="text-nowrap self-stretch  max-sm:text-[12px] my-auto hover:text-blue-600">
                                 {tarnslation?.Məhsullar}{' '}
                             </h6>
                         </Link>
@@ -177,7 +201,7 @@ export default function ProductId() {
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/64bb3b3dae771cd265db1accd95aa96f30bd9da3da88a57867743da53bebc0eb?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
                             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                         />
-                        <h6 className="text-nowrap self-stretch my-auto">
+                        <h6 className="text-nowrap self-stretch  max-sm:text-[12px] my-auto">
                             {Productslingle?.title}
                         </h6>
                     </div>{' '}
@@ -193,74 +217,7 @@ export default function ProductId() {
                                     ) || []
                                 }
                             />
-                            {/* <ImageMagnifier
-                                src="/images/contact.jpg"
-                                width={400}
-                                height={400}
-                            /> */}
                         </div>
-                        {/* <section className="flex flex-col rounded-3xl w-full max-w-[670px] lg:h-auto h-fit  sticky top-[10px]">
-                            <section
-                                className=" sroll- flex flex-col  lg:h-[90vh] custom-scrollbar h-fit  overflow-y-scroll mt-[28px] gap-5 max-sm:gap-3 custom-scrollbar pb-[0px]"
-                                style={{
-                                    scrollbarWidth: 'thin',
-                                    scrollbarColor: '#888 transparent',
-                                }}
-                            >
-                                <div className="flex overflow-hidden flex-col w-full  min-h-[670px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
-                                    <img
-                                        loading="lazy"
-                                        src={Productslingle?.sliders[0].image}
-                                        className="object-cover w-full max-sm:h-[345px] h-[670px] max-md:max-w-full"
-                                    />
-                                </div>
-                                <div className=" w-full max-md:max-w-full">
-                                    <div className="flex gap-5 max-sm:gap-3 max-md:flex-col">
-                                        {Productslingle?.sliders[1] && (
-                                            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                                                <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
-                                                    <img
-                                                        loading="lazy"
-                                                        src={
-                                                            Productslingle
-                                                                ?.sliders[1]
-                                                                .image
-                                                        }
-                                                        className="object-cover w-full aspect-[1.07]"
-                                                    />
-                                                </div>
-                                            </div>
-                                        )}
-                                        {Productslingle?.sliders[2] && (
-                                            <div className="flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
-                                                <div className="flex overflow-hidden flex-col grow w-full rounded-3xl bg-neutral-100 ">
-                                                    <img
-                                                        loading="lazy"
-                                                        src={
-                                                            Productslingle
-                                                                ?.sliders[2]
-                                                                .image
-                                                        }
-                                                        className="object-cover w-full aspect-[1.07]"
-                                                    />
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                {Productslingle?.sliders[2] && (
-                                    <div className="flex overflow-hidden flex-col w-full  min-h-[500px] max-sm:min-h-0 rounded-3xl bg-neutral-100 max-md:max-w-full">
-                                        <img
-                                            loading="lazy"
-                                            src={
-                                                Productslingle?.sliders[2].image
-                                            }
-                                            className="object-cover w-full max-sm:h-[345px] h-[500px] max-md:max-w-full"
-                                        />
-                                    </div>
-                                )}
-                            </section>
-                        </section> */}
                     </div>
                     <section className="flex flex-col max-w-[650px] mt-[24px]">
                         <div className="flex flex-col w-full max-md:max-w-full">
@@ -440,6 +397,7 @@ export default function ProductId() {
                         <div className="flex flex-wrap gap-5 items-center mt-7 text-base font-medium max-md:max-w-full">
                             <div className="flex flex-wrap gap-3 items-center self-stretch my-auto min-w-[240px] max-md:max-w-full">
                                 <button
+                                    disabled={isinbusked}
                                     onClick={async () => {
                                         const userStr =
                                             localStorage.getItem('user-info');
@@ -533,25 +491,48 @@ export default function ProductId() {
                                                     });
                                             }
                                         } else {
-                                            navigate(
-                                                `/${lang}/${
-                                                    ROUTES.login[
-                                                        lang as keyof typeof ROUTES.login
-                                                    ]
-                                                }`
-                                            );
+                                            // navigate(
+                                            //     `/${lang}/${
+                                            //         ROUTES.login[
+                                            //             lang as keyof typeof ROUTES.login
+                                            //         ]
+                                            //     }`
+                                            // );
                                         }
                                     }}
-                                    className="flex max-sm:items-center max-sm:w-full overflow-hidden flex-col justify-center self-stretch px-16 py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5"
+                                    style={
+                                        isinbusked
+                                            ? { background: '#B1C7E4 ' }
+                                            : {}
+                                    }
+                                    className="flex max-sm:items-center max-sm:w-full overflow-hidden flex-col justify-center items-center self-stretch  py-3.5 my-auto text-white bg-blue-600 min-w-[240px] rounded-[100px] w-[285px] max-md:px-5"
                                 >
                                     <div className="flex gap-2 items-center">
-                                        <img
-                                            loading="lazy"
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/12162e338001dffe48b2f7720205d57a300942ee6d909f5e9d356e6bce11941f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
-                                            className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-                                        />
-                                        <div className="self-stretch my-auto text-nowrap">
-                                            {tarnslation?.add_to_cart}
+                                        {!isinbusked ? (
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/12162e338001dffe48b2f7720205d57a300942ee6d909f5e9d356e6bce11941f?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
+                                            />
+                                        ) : (
+                                            <img
+                                                loading="lazy"
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/7aea5798032300cff0cb8633f827efc8d9c19b5e90bd7d2d3214a3fe5775d3b4?placeholderIfAbsent=true&apiKey=2d5d82cf417847beb8cd2fbbc5e3c099"
+                                                className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                                            />
+                                        )}
+                                        |
+                                        <div
+                                            className="self-stretch my-auto text-nowrap"
+                                            style={
+                                                isinbusked
+                                                    ? { color: 'black' }
+                                                    : { color: 'white' }
+                                            }
+                                        >
+                                            {!isinbusked
+                                                ? tarnslation?.add_to_cart
+                                                : tarnslation?.added_to_cart}
                                         </div>
                                     </div>
                                 </button>

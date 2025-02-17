@@ -21,7 +21,7 @@ const Register = () => {
 
     // Validation Schema using Yup
     const validationSchema = Yup.object({
-        name: Yup.string().required('Ad daxil edin'),
+        name: Yup.string().required('Please enter your name'),
         phone: Yup.string()
             .required('Phone number is required')
             .matches(
@@ -29,14 +29,14 @@ const Register = () => {
                 'Phone number must be 10 digits long and start with 9 (e.g., 911123456)'
             ),
         email: Yup.string()
-            .email('Email düzgün deyil')
-            .required('Email daxil edin'),
+            .email('Invalid email address')
+            .required('Please enter your email'),
         password: Yup.string()
-            .min(8, 'Şifrə ən az 9 simvoldan ibarət olmalıdır')
-            .required('Şifrə daxil edin'),
+            .min(8, 'Password must be at least 8 characters long')
+            .required('Please enter your password'),
         acceptTerms: Yup.boolean()
-            .oneOf([true], 'İstifadəçi qaydaları ilə razı olmalısınız')
-            .required('İstifadəçi qaydaları ilə razı olmalısınız'),
+            .oneOf([true], 'You must accept the terms and conditions')
+            .required('You must accept the terms and conditions'),
         gender: Yup.string()
             .oneOf(['man', 'woman'], 'Gender must be either man or woman')
             .required('Gender is required'),

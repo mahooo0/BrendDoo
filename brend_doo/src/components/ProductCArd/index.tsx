@@ -12,8 +12,8 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRecoilState } from 'recoil';
-import { RefetchLocalBasked } from '../../setting/StateManagmant';
+// import { useRecoilState } from 'recoil';
+// import { RefetchLocalBasked } from '../../setting/StateManagmant';
 interface Props {
     data?: Product;
     isnew?: boolean;
@@ -28,8 +28,8 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
     const [isMauseOn, setisMauseOn] = useState<boolean>(false);
     const [BtnLoadin, setBtnLoadin] = useState<boolean>(false);
     const [variant, setvariant] = useState<number>(1);
-    const [RefetcLocalBasked, setRefetcLocalBasked] =
-        useRecoilState(RefetchLocalBasked);
+    // const [RefetcLocalBasked, setRefetcLocalBasked] =
+    //     useRecoilState(RefetchLocalBasked);
 
     const navigate = useNavigate();
     // const [refetchBaskedState, setRefetchBaskedState] =
@@ -169,14 +169,6 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
             setvariant(3);
         }
         console.log('basked', basked);
-
-        // if (data && basked?.includes(data)) {
-        //     setvariant(3);
-        //     console.log('incules');
-        // } else {
-        //     console.log('isnot');
-        // }
-        // console.log('data', data);
     }, [basked, data]);
     useEffect(() => {
         let includes = false;
@@ -242,7 +234,7 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                 setvariant(3);
             }
         }
-    }, [data, RefetcLocalBasked]);
+    }, [data]);
     // useEffect(() => {
     //     let storedIds = localStorage.getItem('ids') || '';
 
@@ -266,31 +258,31 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
             </>
         );
     }
-    function toggleIdInLocalStorage(id: Number) {
-        // Step 1: Get the current value from localStorage
-        setRefetcLocalBasked(!RefetcLocalBasked);
-        let storedIds = localStorage.getItem('ids') || '';
+    // function toggleIdInLocalStorage(id: Number) {
+    //     // Step 1: Get the current value from localStorage
+    //     setRefetcLocalBasked(!RefetcLocalBasked);
+    //     let storedIds = localStorage.getItem('ids') || '';
 
-        // Step 2: Split the string into an array of IDs and remove any empty strings
-        let idArray = storedIds.split(',').filter(Boolean);
+    //     // Step 2: Split the string into an array of IDs and remove any empty strings
+    //     let idArray = storedIds.split(',').filter(Boolean);
 
-        // Step 3: Check if the ID is already in the array
-        const index = idArray.indexOf(`${id}`);
+    //     // Step 3: Check if the ID is already in the array
+    //     const index = idArray.indexOf(`${id}`);
 
-        if (index === -1) {
-            // If the ID is not in the array, add it
-            idArray.push(`${id}`);
-        } else {
-            // If the ID is in the array, remove it
-            idArray.splice(index, 1);
-        }
+    //     if (index === -1) {
+    //         // If the ID is not in the array, add it
+    //         idArray.push(`${id}`);
+    //     } else {
+    //         // If the ID is in the array, remove it
+    //         idArray.splice(index, 1);
+    //     }
 
-        // Step 4: Join the array back into a comma-separated string
-        let updatedIds = idArray.join(',');
+    //     // Step 4: Join the array back into a comma-separated string
+    //     let updatedIds = idArray.join(',');
 
-        // Step 5: Save the updated string back to localStorage
-        localStorage.setItem('ids', updatedIds);
-    }
+    //     // Step 5: Save the updated string back to localStorage
+    //     localStorage.setItem('ids', updatedIds);
+    // }
     return (
         <div className="flex cursor-pointer max-sm:min-w-[300px]  flex-col pb-5 text-base text-black  w-full min-w-full ">
             <div
@@ -418,8 +410,15 @@ export default function ProductCard({ data, issale = false, bg }: Props) {
                                     //         ]
                                     //     }`
                                     // );
-                                    toggleIdInLocalStorage(data.id);
-                                    setvariant(3);
+                                    // toggleIdInLocalStorage(data.id);
+                                    // setvariant(3);
+                                    navigate(
+                                        `/${lang}/${
+                                            ROUTES.login[
+                                                lang as keyof typeof ROUTES.login
+                                            ]
+                                        }`
+                                    );
                                 }
                             }}
                             className={`flex max-sm:hidden overflow-hidden flex-col justify-center items-center px-10 py-[4%] text-base font-medium text-white bg-blue-600 max-w-[301px] w-[80%] rounded-[100px] duration-300 ${

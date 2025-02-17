@@ -121,7 +121,7 @@ export default function ResetPasswordConfrim() {
                                             <div className="flex flex-col mt-3 w-full max-md:max-w-full">
                                                 <div className="flex overflow-hidden gap-5 justify-between px-5  w-full h-[56px] text-base bg-white border border-solid border-black border-opacity-10 rounded-full text-black text-opacity-60 max-md:max-w-full">
                                                     <Field
-                                                        type={'password2'}
+                                                        type={'password'}
                                                         name="password2"
                                                         placeholder={
                                                             'password confrim'

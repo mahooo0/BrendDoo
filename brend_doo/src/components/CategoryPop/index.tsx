@@ -33,6 +33,11 @@ export default function CategoryNavigation({
                 <div className="space-y-2">
                     {catalog_categories?.map((item) => (
                         <CategoryLink
+                            link={`/${lang}/${
+                                ROUTES.product[
+                                    lang as keyof typeof ROUTES.product
+                                ]
+                            }?category=${item.id}`}
                             action={() => {
                                 setCurrentCategory(item.id);
                             }}
@@ -183,10 +188,12 @@ function CategoryLink({
     action,
     children,
     active = false,
+    link,
 }: {
     action: () => void;
     children: React.ReactNode;
     active?: boolean;
+    link: string;
 }) {
     return (
         <div
@@ -195,9 +202,11 @@ function CategoryLink({
                 active ? 'text-[#3873C3] font-medium' : 'text-gray-700'
             }`}
         >
-            <span className="flex flex-row gap-2 justify-center items-center">
-                {children}
-            </span>
+            <Link to={link}>
+                <span className="flex flex-row gap-2 justify-center items-center">
+                    {children}
+                </span>
+            </Link>
             <ChevronRight className="h-4 w-4" />
         </div>
     );
